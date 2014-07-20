@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F3D7E17BEA084ECEBB6C9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B61FAD87F37434E965A5EF6 /* libPods.a */; };
+		FD56684B197B6995001BA286 /* SCServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* SCServiceStatusTableViewCell.swift */; };
+		FD5E7DBB197A316F00F438F6 /* SCAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* SCAPIClient.swift */; };
 		FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */; };
-		FD753ED8197A256E00CC5DE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753ED7197A256E00CC5DE3 /* ViewController.swift */; };
 		FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD753ED9197A256E00CC5DE3 /* Main.storyboard */; };
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
 		FD753EE9197A256E00CC5DE3 /* FerryServices_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */; };
+		FD753EF3197A289800CC5DE3 /* SCServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* SCServicesViewController.swift */; };
+		FDE66DCD197A598F008EA4EE /* SCServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE66DCC197A598F008EA4EE /* SCServiceStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,15 +29,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B61FAD87F37434E965A5EF6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBF3A3E328204485AED6C991 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		FD56684A197B6995001BA286 /* SCServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
+		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; };
+		FD5E7DBA197A316F00F438F6 /* SCAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCAPIClient.swift; sourceTree = "<group>"; };
 		FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FerryServices_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753ED4197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FD753ED7197A256E00CC5DE3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FD753EDA197A256E00CC5DE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FD753EDC197A256E00CC5DE3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FerryServices_2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753EE7197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServices_2Tests.swift; sourceTree = "<group>"; };
+		FD753EF2197A289800CC5DE3 /* SCServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCServicesViewController.swift; sourceTree = "<group>"; };
+		FDE66DCC197A598F008EA4EE /* SCServiceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCServiceStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3D7E17BEA084ECEBB6C9AE6 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,12 +65,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6B61FAD87F37434E965A5EF6 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FD5E7DB9197A310600F438F6 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FD753EF2197A289800CC5DE3 /* SCServicesViewController.swift */,
+				FD56684A197B6995001BA286 /* SCServiceStatusTableViewCell.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		FD5E7DBC197A317800F438F6 /* API Client */ = {
+			isa = PBXGroup;
+			children = (
+				FD5E7DBA197A316F00F438F6 /* SCAPIClient.swift */,
+				FDE66DCC197A598F008EA4EE /* SCServiceStatus.swift */,
+			);
+			name = "API Client";
+			sourceTree = "<group>";
+		};
 		FD753EC7197A256E00CC5DE3 = {
 			isa = PBXGroup;
 			children = (
 				FD753ED2197A256E00CC5DE3 /* FerryServices_2 */,
 				FD753EE5197A256E00CC5DE3 /* FerryServices_2Tests */,
 				FD753ED1197A256E00CC5DE3 /* Products */,
+				FBF3A3E328204485AED6C991 /* Pods.xcconfig */,
+				6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,10 +115,12 @@
 			isa = PBXGroup;
 			children = (
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
-				FD753ED7197A256E00CC5DE3 /* ViewController.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
 				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
 				FD753ED3197A256E00CC5DE3 /* Supporting Files */,
+				FD5E7DB9197A310600F438F6 /* View Controllers */,
+				FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */,
+				FD5E7DBC197A317800F438F6 /* API Client */,
 			);
 			path = FerryServices_2;
 			sourceTree = "<group>";
@@ -116,9 +157,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD753EEC197A256E00CC5DE3 /* Build configuration list for PBXNativeTarget "FerryServices_2" */;
 			buildPhases = (
+				44BEF411A32145BAAD7DDE2A /* Check Pods Manifest.lock */,
 				FD753ECC197A256E00CC5DE3 /* Sources */,
 				FD753ECD197A256E00CC5DE3 /* Frameworks */,
 				FD753ECE197A256E00CC5DE3 /* Resources */,
+				BBF92DCA1122475BAD83A58B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -203,13 +246,49 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		44BEF411A32145BAAD7DDE2A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BBF92DCA1122475BAD83A58B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FD753ECC197A256E00CC5DE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD753ED8197A256E00CC5DE3 /* ViewController.swift in Sources */,
+				FD753EF3197A289800CC5DE3 /* SCServicesViewController.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
+				FD5E7DBB197A316F00F438F6 /* SCAPIClient.swift in Sources */,
+				FD56684B197B6995001BA286 /* SCServiceStatusTableViewCell.swift in Sources */,
+				FDE66DCD197A598F008EA4EE /* SCServiceStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,23 +401,30 @@
 		};
 		FD753EED197A256E00CC5DE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBF3A3E328204485AED6C991 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		FD753EEE197A256E00CC5DE3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBF3A3E328204485AED6C991 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -395,6 +481,7 @@
 				FD753EEE197A256E00CC5DE3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FD753EEF197A256E00CC5DE3 /* Build configuration list for PBXNativeTarget "FerryServices_2Tests" */ = {
 			isa = XCConfigurationList;
@@ -403,6 +490,7 @@
 				FD753EF1197A256E00CC5DE3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
