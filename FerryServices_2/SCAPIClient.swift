@@ -50,7 +50,7 @@ class SCAPIClient: NSObject {
                 var results = [SCServiceStatus]()
                 for statusData in statuses {
                     let serviceStatus = SCServiceStatus(data: statusData)
-                    results.append(serviceStatus)
+                    results += serviceStatus
                 }
             
                 completion(serviceStatuses: results, error: nil)
