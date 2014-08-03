@@ -8,14 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		F3D7E17BEA084ECEBB6C9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B61FAD87F37434E965A5EF6 /* libPods.a */; };
-		FD56684B197B6995001BA286 /* SCServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* SCServiceStatusTableViewCell.swift */; };
-		FD5E7DBB197A316F00F438F6 /* SCAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* SCAPIClient.swift */; };
+		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
+		FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* APIClient.swift */; };
 		FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */; };
 		FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD753ED9197A256E00CC5DE3 /* Main.storyboard */; };
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
 		FD753EE9197A256E00CC5DE3 /* FerryServices_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */; };
-		FD753EF3197A289800CC5DE3 /* SCServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* SCServicesViewController.swift */; };
-		FDE66DCD197A598F008EA4EE /* SCServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE66DCC197A598F008EA4EE /* SCServiceStatus.swift */; };
+		FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */; };
+		FDC7760C19844C2B00B3782F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760B19844C2B00B3782F /* Route.swift */; };
+		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
+		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
+		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
+		FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */; };
+		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
+		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
+		FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */; };
+		FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */; };
+		FDEA4B25198C72D70023A5A7 /* RouteDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA4B24198C72D70023A5A7 /* RouteDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,9 +40,9 @@
 /* Begin PBXFileReference section */
 		6B61FAD87F37434E965A5EF6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBF3A3E328204485AED6C991 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		FD56684A197B6995001BA286 /* SCServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
+		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; };
-		FD5E7DBA197A316F00F438F6 /* SCAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCAPIClient.swift; sourceTree = "<group>"; };
+		FD5E7DBA197A316F00F438F6 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FerryServices_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753ED4197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,8 +51,17 @@
 		FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FerryServices_2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753EE7197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServices_2Tests.swift; sourceTree = "<group>"; };
-		FD753EF2197A289800CC5DE3 /* SCServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCServicesViewController.swift; sourceTree = "<group>"; };
-		FDE66DCC197A598F008EA4EE /* SCServiceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCServiceStatus.swift; sourceTree = "<group>"; };
+		FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
+		FDC7760B19844C2B00B3782F /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		FDC7760D19844C3500B3782F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		FDC77612198450AC00B3782F /* timetables.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = timetables.sqlite; sourceTree = "<group>"; };
+		FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
+		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatus.swift; sourceTree = "<group>"; };
+		FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisruptionDetails.swift; sourceTree = "<group>"; };
+		FDEA4B24198C72D70023A5A7 /* RouteDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */,
 				F3D7E17BEA084ECEBB6C9AE6 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,6 +87,7 @@
 		6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FDE0814E1983B9F600760870 /* MapKit.framework */,
 				6B61FAD87F37434E965A5EF6 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -76,8 +96,8 @@
 		FD5E7DB9197A310600F438F6 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FD753EF2197A289800CC5DE3 /* SCServicesViewController.swift */,
-				FD56684A197B6995001BA286 /* SCServiceStatusTableViewCell.swift */,
+				FDEA4B20198C72160023A5A7 /* Services */,
+				FDEA4B21198C721C0023A5A7 /* Service Details */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -85,8 +105,10 @@
 		FD5E7DBC197A317800F438F6 /* API Client */ = {
 			isa = PBXGroup;
 			children = (
-				FD5E7DBA197A316F00F438F6 /* SCAPIClient.swift */,
-				FDE66DCC197A598F008EA4EE /* SCServiceStatus.swift */,
+				FD5E7DBA197A316F00F438F6 /* APIClient.swift */,
+				FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */,
+				FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */,
+				FDEA4B24198C72D70023A5A7 /* RouteDetails.swift */,
 			);
 			name = "API Client";
 			sourceTree = "<group>";
@@ -114,13 +136,16 @@
 		FD753ED2197A256E00CC5DE3 /* FerryServices_2 */ = {
 			isa = PBXGroup;
 			children = (
+				FDC77612198450AC00B3782F /* timetables.sqlite */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
-				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
-				FD753ED3197A256E00CC5DE3 /* Supporting Files */,
 				FD5E7DB9197A310600F438F6 /* View Controllers */,
-				FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */,
 				FD5E7DBC197A317800F438F6 /* API Client */,
+				FDC7761119844C4500B3782F /* Model */,
+				FDDEC68D198E3CFB0060B18F /* Library */,
+				FD753ED3197A256E00CC5DE3 /* Supporting Files */,
+				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
+				FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */,
 			);
 			path = FerryServices_2;
 			sourceTree = "<group>";
@@ -148,6 +173,41 @@
 				FD753EE7197A256E00CC5DE3 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FDC7761119844C4500B3782F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FDC7760B19844C2B00B3782F /* Route.swift */,
+				FDC7760D19844C3500B3782F /* Location.swift */,
+				FDC7760F19844C4000B3782F /* Trip.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		FDDEC68D198E3CFB0060B18F /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		FDEA4B20198C72160023A5A7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */,
+				FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		FDEA4B21198C721C0023A5A7 /* Service Details */ = {
+			isa = PBXGroup;
+			children = (
+				FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */,
+			);
+			name = "Service Details";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +261,11 @@
 				TargetAttributes = {
 					FD753ECF197A256E00CC5DE3 = {
 						CreatedOnToolsVersion = 6.0;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					FD753EE1197A256E00CC5DE3 = {
 						CreatedOnToolsVersion = 6.0;
@@ -234,6 +299,7 @@
 			files = (
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
+				FDC77613198450AC00B3782F /* timetables.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,11 +350,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD753EF3197A289800CC5DE3 /* SCServicesViewController.swift in Sources */,
+				FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
-				FD5E7DBB197A316F00F438F6 /* SCAPIClient.swift in Sources */,
-				FD56684B197B6995001BA286 /* SCServiceStatusTableViewCell.swift in Sources */,
-				FDE66DCD197A598F008EA4EE /* SCServiceStatus.swift in Sources */,
+				FDC7760E19844C3500B3782F /* Location.swift in Sources */,
+				FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */,
+				FDEA4B25198C72D70023A5A7 /* RouteDetails.swift in Sources */,
+				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
+				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
+				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
+				FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */,
+				FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */,
+				FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */,
+				FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
