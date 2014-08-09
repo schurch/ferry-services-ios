@@ -41,7 +41,7 @@ class ServicesViewController: UITableViewController {
     }
     
     // MARK: notifications
-    public func applicationDidBecomeActive(notification: NSNotification) {
+    internal func applicationDidBecomeActive(notification: NSNotification) {
         self.refresh(nil)
     }
     

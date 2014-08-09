@@ -69,23 +69,23 @@ public class APIClient {
         requestManager.GET("/ServiceDisruptions/servicestatusfrontV3.asmx/ListRouteDisruptions_JSON", parameters: nil, success:
             { operations, responseObject in
                 
-                var responseData = responseObject as? [String: [String: AnyObject]]
-                if  (!responseData) {
+                let json = JSONValue(responseObject)
+                if (!json) {
                     completion(disruptionsDetails: nil, routeDetails: nil, error: NSError(domain:APIClient.clientErrorDomain, code:1, userInfo:[NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."]))
                     return
                 }
                 
-//                var disruptionsDetails: DisruptionDetails
-//                if let disruptionData: [String: AnyObject] = responseData!["RouteDisruption"] {
-//                    disruptionsDetails = DisruptionDetails(data: disruptionData)
-//                }
-//                
-//                var routeDetails: RouteDetails
+                var disruptionDetails: DisruptionDetails?
+                if let disruptionData = json["RouteDisruption"].first {
+                    disruptionDetails = DisruptionDetails(data: disruptionData)
+                }
+
+                var routeDetails: RouteDetails?
 //                if let routeData: [String: AnyObject] = responseData!["RouteDetail"] {
 //                    routeDetails = RouteDetails(data: routeData)
 //                }
                 
-                completion(disruptionsDetails: nil, routeDetails: nil, error: nil)
+                completion(disruptionsDetails: disruptionDetails, routeDetails: routeDetails, error: nil)
                 
             }, failure: { operation, error in
                 completion(disruptionsDetails: nil, routeDetails: nil, error: error)

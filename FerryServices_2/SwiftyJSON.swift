@@ -328,14 +328,14 @@ extension JSONValue: Printable {
     }
 }
 
-extension JSONValue: LogicValue {
-    func getLogicValue() -> Bool {
+extension JSONValue: BooleanType {
+    var boolValue: Bool {
         switch self {
         case .JInvalid:
             return false
         default:
             return true
-        }
+            }
     }
 }
 

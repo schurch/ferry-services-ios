@@ -16,6 +16,10 @@ class ServiceDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(5) { disruptionsDetails, routeDetails, error in
+            
+        }
+        
         self.location = Location.fetchLocationsForSericeId(5)
         
         NSLog("")

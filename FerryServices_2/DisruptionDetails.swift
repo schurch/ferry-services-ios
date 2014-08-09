@@ -25,6 +25,17 @@ public class DisruptionDetails {
     public var disruptionStatus: DisruptionDetailsStatus?
     
     init(data: JSONValue) {
+        self.addedBy = data["Area"].string
         
+        if let disruptionDetailsStatus = data["DisruptionStatus"].integer {
+            self.disruptionStatus = DisruptionDetailsStatus.fromRaw(disruptionDetailsStatus)
+        }
+        
+//        self.addedDate = data["Area"].url
+//        self.details = data["Area"].string
+//        self.disruptionEndDate = data["Area"].string
+//        self.lastUpdatedBy = data["Area"].string
+//        self.reason = data["Area"].string
+//        self.updatedDate = data["Area"].string
     }
 }

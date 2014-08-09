@@ -35,7 +35,7 @@ public class Location {
             let name = resultSet.stringForColumn("Name")
             let latitude = resultSet.doubleForColumn("Latitude")
             let longitude = resultSet.doubleForColumn("Longitude")
-            locations += Location(name: name, latitude: latitude, longitude: longitude)
+            locations += [Location(name: name, latitude: latitude, longitude: longitude)]
         }
         
         database.close()
