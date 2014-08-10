@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-public class Location {
+public struct Location {
     
-    public class func fetchLocationsForSericeId(serviceId: Int) -> [Location]? {
+    public static func fetchLocationsForSericeId(serviceId: Int) -> [Location]? {
         let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
         let database = FMDatabase(path: path)
         

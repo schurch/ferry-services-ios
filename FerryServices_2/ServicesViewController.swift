@@ -96,6 +96,6 @@ class ServicesViewController: UITableViewController {
         let serviceDetailViewController = segue.destinationViewController as ServiceDetailTableViewController;
         let indexPath = self.tableView.indexPathForSelectedRow()
         let serviceStatus = self.arrayServiceStatuses[indexPath.row]
-        serviceDetailViewController.serviceId = serviceStatus.routeId
+        serviceDetailViewController.serviceStatus = serviceStatus
     }
 }

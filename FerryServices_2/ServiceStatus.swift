@@ -19,7 +19,7 @@ public struct ServiceStatus {
     public var disruptionStatus: DisriptionStatus?
     public var ferryProvider: String?
     public var route: String?
-    public var routeId: Int?
+    public var serviceId: Int?
     public var sortOrder: Int?
     
     init(data: JSONValue) {
@@ -32,7 +32,7 @@ public struct ServiceStatus {
         
         self.ferryProvider = data["provider"].string
         self.route = data["Route"].string
-        self.routeId = data["RouteID"].integer
+        self.serviceId = data["RouteID"].integer
         self.sortOrder = data["SortOrder"].integer
     }
 }
