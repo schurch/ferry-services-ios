@@ -18,7 +18,7 @@ class ServicesViewController: UITableViewController {
     
     private var arrayServiceStatuses = [ServiceStatus]()
     
-    // MARK: View lifecycle
+    // MARK: - view lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,12 +40,12 @@ class ServicesViewController: UITableViewController {
         self.tableView.deselectRowAtIndexPath(self.tableView.indexPathForSelectedRow(), animated: true)
     }
     
-    // MARK: notifications
+    // MARK: - notifications
     internal func applicationDidBecomeActive(notification: NSNotification) {
         self.refresh(nil)
     }
     
-    // MARK: refresh
+    // MARK: - refresh
     func refresh(sender: UIRefreshControl?) {
         APIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
             if let statuses = serviceStatuses {
@@ -56,7 +56,7 @@ class ServicesViewController: UITableViewController {
         }
     }
     
-    // MARK: tableview datasource
+    // MARK: - tableview datasource
     override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
         return arrayServiceStatuses.count
     }
@@ -90,12 +90,12 @@ class ServicesViewController: UITableViewController {
         
         return serviceStatusCell
     }
-
-    // #pragma mark - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
+    // MARK: - storyboard
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let serviceDetailViewController = segue.destinationViewController as ServiceDetailTableViewController;
+        let indexPath = self.tableView.indexPathForSelectedRow()
+        let serviceStatus = self.arrayServiceStatuses[indexPath.row]
+        serviceDetailViewController.serviceId = serviceStatus.routeId
     }
 }

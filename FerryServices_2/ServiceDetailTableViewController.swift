@@ -11,17 +11,30 @@ import MapKit
 
 class ServiceDetailTableViewController: UITableViewController {
     
-    private var location: [Location]?
+    var serviceId: Int?;
     
+    // MARK: private var
+    private var locations: [Location]?
+    
+    // MARK: view lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(5) { disruptionsDetails, routeDetails, error in
-            
-        }
-        
-        self.location = Location.fetchLocationsForSericeId(5)
+        refresh()
         
         NSLog("")
+    }
+    
+    // MARK: refresh
+    private func refresh () -> () {
+        if let serviceId = self.serviceId {
+            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, routeDetails, error in
+                
+                println(disruptionDetails)
+                println(routeDetails)
+            }
+            
+            self.locations = Location.fetchLocationsForSericeId(serviceId)
+        }
     }
 }

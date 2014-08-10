@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-public class ServiceStatus {
+public struct ServiceStatus {
     
     public enum DisriptionStatus: Int {
         case Unknown = -99

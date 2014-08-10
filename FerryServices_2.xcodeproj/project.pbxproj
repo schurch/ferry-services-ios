@@ -485,7 +485,7 @@
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "800ECF01-8715-40FF-99D7-22D8354AFC88";
+				PROVISIONING_PROFILE = "7A4FEB75-09C4-4C36-BB32-BAD93C3F239E";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};

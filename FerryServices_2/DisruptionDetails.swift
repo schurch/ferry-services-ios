@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-public class DisruptionDetails {
- 
+public struct DisruptionDetails {
+    
     public enum DisruptionDetailsStatus: Int {
         case Normal = 0
         case SailingsAffected = 1
@@ -24,18 +24,22 @@ public class DisruptionDetails {
     public var updatedDate: NSDate?
     public var disruptionStatus: DisruptionDetailsStatus?
     
-    init(data: JSONValue) {
-        self.addedBy = data["Area"].string
-        
-        if let disruptionDetailsStatus = data["DisruptionStatus"].integer {
+    private static let dateFormatter :NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "dd MMM yyyy HH:mm"
+        return formatter
+    }()
+    
+    init(data: [String: JSONValue]) {
+        self.addedBy = data["AddedByUserID"]?.string
+        self.addedDate = DisruptionDetails.dateFormatter.dateFromString(data["AddedTime"]?.string)
+        self.details = data["WebText"]?.string
+        self.disruptionEndDate = DisruptionDetails.dateFormatter.dateFromString(data["DisruptionEndTime"]?.string)
+        self.lastUpdatedBy = data["LastUpdatedBy"]?.string
+        self.reason = data["Reason"]?.string
+        self.updatedDate = DisruptionDetails.dateFormatter.dateFromString(data["UpdatedTime"]?.string)
+        if let disruptionDetailsStatus = data["DisruptionStatus"]?.integer {
             self.disruptionStatus = DisruptionDetailsStatus.fromRaw(disruptionDetailsStatus)
         }
-        
-//        self.addedDate = data["Area"].url
-//        self.details = data["Area"].string
-//        self.disruptionEndDate = data["Area"].string
-//        self.lastUpdatedBy = data["Area"].string
-//        self.reason = data["Area"].string
-//        self.updatedDate = data["Area"].string
     }
 }

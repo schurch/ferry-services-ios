@@ -66,7 +66,7 @@ public class APIClient {
     
     public func fetchDisruptionDetailsForFerryServiceId(ferryServiceId: Int, completion: (disruptionsDetails: DisruptionDetails?, routeDetails: RouteDetails?, error: NSError?) -> ()) {
         
-        requestManager.GET("/ServiceDisruptions/servicestatusfrontV3.asmx/ListRouteDisruptions_JSON", parameters: nil, success:
+        requestManager.GET("/ServiceDisruptions/servicestatusfrontV3.asmx/ListRouteDisruptions_JSON", parameters: ["routeID": ferryServiceId], success:
             { operations, responseObject in
                 
                 let json = JSONValue(responseObject)
@@ -76,14 +76,14 @@ public class APIClient {
                 }
                 
                 var disruptionDetails: DisruptionDetails?
-                if let disruptionData = json["RouteDisruption"].first {
+                if let disruptionData = json["RouteDisruption"].object {
                     disruptionDetails = DisruptionDetails(data: disruptionData)
                 }
 
                 var routeDetails: RouteDetails?
-//                if let routeData: [String: AnyObject] = responseData!["RouteDetail"] {
-//                    routeDetails = RouteDetails(data: routeData)
-//                }
+                if let routeDetailsData = json["RouteDetail"].object {
+                    routeDetails = RouteDetails(data: routeDetailsData)
+                }
                 
                 completion(disruptionsDetails: disruptionDetails, routeDetails: routeDetails, error: nil)
                 
