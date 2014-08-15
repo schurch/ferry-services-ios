@@ -25,22 +25,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FerryServices_2/APIClient.swift"
-            timestampString = "428836124.159805"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "fetchFerryServicesWithCompletion(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "FerryServices_2/SwiftyJSON.swift"
             timestampString = "428836526.628069"
             startingColumnNumber = "9223372036854775807"
@@ -58,29 +42,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FerryServices_2/ServiceDetailTableViewController.swift"
-            timestampString = "429321752.995449"
+            timestampString = "429789522.041243"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "refresh()"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "configureMap()"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FerryServices_2/ServiceDetailTableViewController.swift"
-            timestampString = "429321747.014336"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "refresh()"
-            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FerryServices_2.ServiceDetailTableViewController.configureMap (FerryServices_2.ServiceDetailTableViewController)() -&gt; ()"
+                  moduleName = "FerryServices_2"
+                  urlString = "file:///Users/stefanchurch/Documents/XCode%20Projects/FerryServices_2/FerryServices_2/ServiceDetailTableViewController.swift"
+                  timestampString = "429786192.03103"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "2755">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FerryServices_2.ServiceDetailTableViewController.configureMap (FerryServices_2.ServiceDetailTableViewController)() -&gt; ()"
+                  moduleName = "FerryServices_2"
+                  urlString = "file:///Users/stefanchurch/Documents/XCode%20Projects/FerryServices_2/FerryServices_2/ServiceDetailTableViewController.swift"
+                  timestampString = "429786192.034172"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "2803">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

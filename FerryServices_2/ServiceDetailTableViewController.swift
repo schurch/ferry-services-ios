@@ -11,16 +11,27 @@ import MapKit
 
 class ServiceDetailTableViewController: UITableViewController {
     
+    @IBOutlet var activityViewLoadingDisruptions :UIActivityIndicatorView!
+    @IBOutlet var imageViewDisruption :UIImageView!
+    @IBOutlet var constraintTopSpaceImageViewDisruption :NSLayoutConstraint!
+    @IBOutlet var constraintDisruptionMessageLeadingSpace :NSLayoutConstraint!;
+    @IBOutlet var labelDisruptionDetails: UILabel!
+    @IBOutlet var labelEndTime: UILabel!
+    @IBOutlet var labelEndTimeTitle: UILabel!
+    @IBOutlet var labelLastUpdated: UILabel!
+    @IBOutlet var labelNoDisruptions: UILabel!
+    @IBOutlet var labelReason: UILabel!
+    @IBOutlet var labelReasonTitle: UILabel!
     @IBOutlet var mapView :MKMapView!
     
     var serviceStatus: ServiceStatus?;
     var disruptionDetails: DisruptionDetails?;
     var routeDetails: RouteDetails?;
     
-    // MARK: private vars
+    // MARK: - private vars
     private var locations: [Location]?
     
-    // MARK: view lifecycle
+    // MARK: - view lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,7 +41,7 @@ class ServiceDetailTableViewController: UITableViewController {
         fetchLatestData()
     }
     
-    // MARK: configure view
+    // MARK: - configure view
     private func configureMap() {
         if let serviceId = self.serviceStatus?.serviceId {
             self.locations = Location.fetchLocationsForSericeId(serviceId)
@@ -54,8 +65,8 @@ class ServiceDetailTableViewController: UITableViewController {
         
     }
     
-    // MARK: refresh
-    private func fetchLatestData () {
+    // MARK: - refresh
+    private func fetchLatestData() {
         if let serviceId = self.serviceStatus?.serviceId {
             APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, routeDetails, error in
                 self.disruptionDetails = disruptionDetails
@@ -65,7 +76,15 @@ class ServiceDetailTableViewController: UITableViewController {
         }
     }
     
-    // MARK: utility methods
+    // MARK: - utility methods
+    private func disriptionRowHeight() -> CGFloat {
+        let drawingOpts: NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let attributes = [NSFontAttributeName: self.labelDisruptionDetails.font]
+        let boundingRect = self.labelDisruptionDetails.text.boundingRectWithSize(CGSize(width: self.labelDisruptionDetails.frame.size.width, height: CGFloat.max), options: drawingOpts, attributes: attributes, context: nil)
+        var height = ceil(boundingRect.size.height);
+        return height < 40 ? 60 : height + 74; // Height + padding
+    }
+    
     private func calculateMapRectForAnnotations(annotations: [MKPointAnnotation]) -> MKMapRect {
         var mapRect = MKMapRectNull
         for annotation in annotations {
@@ -73,5 +92,29 @@ class ServiceDetailTableViewController: UITableViewController {
             mapRect = MKMapRectUnion(mapRect, MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
         }
         return mapRect
+    }
+    
+    private func toggleDisruptionHidden(hidden: Bool) {
+        self.imageViewDisruption.hidden = hidden;
+        self.labelDisruptionDetails.hidden = hidden;
+        self.labelLastUpdated.hidden = hidden;
+        self.labelReason.hidden = hidden;
+        self.labelReasonTitle.hidden = hidden;
+        self.labelEndTime.hidden = hidden;
+        self.labelEndTimeTitle.hidden = hidden;
+    }
+    
+    // MARK: - tableview delegate
+    override func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        switch indexPath.section {
+        case 0:
+            return 44
+        case 1:
+            return 130
+        case 2:
+            return self.disriptionRowHeight()
+        default:
+            return 0
+        }
     }
 }

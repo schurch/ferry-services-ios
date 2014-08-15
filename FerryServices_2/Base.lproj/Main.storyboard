@@ -118,10 +118,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlb-c7-4a6">
-                                                    <rect key="frame" x="0.0" y="1" width="600" height="130"/>
+                                                <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlb-c7-4a6">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="129"/>
                                                 </mapView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Xlb-c7-4a6" firstAttribute="top" secondItem="zdf-iJ-bfS" secondAttribute="top" id="CzQ-Bd-5GD"/>
+                                                <constraint firstAttribute="trailing" secondItem="Xlb-c7-4a6" secondAttribute="trailing" id="Gon-pd-EwL"/>
+                                                <constraint firstAttribute="bottom" secondItem="Xlb-c7-4a6" secondAttribute="bottom" id="OMl-bc-4aT"/>
+                                                <constraint firstItem="Xlb-c7-4a6" firstAttribute="leading" secondItem="zdf-iJ-bfS" secondAttribute="leading" id="bbZ-3G-JBR"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -240,6 +246,17 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="activityViewLoadingDisruptions" destination="mpI-8L-QKm" id="78t-iE-pyJ"/>
+                        <outlet property="constraintDisruptionMessageLeadingSpace" destination="0JS-Gz-cJl" id="vJw-qd-tzG"/>
+                        <outlet property="constraintTopSpaceImageViewDisruption" destination="5Jz-L3-lse" id="0hx-wE-zCc"/>
+                        <outlet property="imageViewDisruption" destination="WcO-Xx-n6P" id="x1O-w1-rbS"/>
+                        <outlet property="labelDisruptionDetails" destination="7Md-oe-LaW" id="ZdL-ZZ-tJO"/>
+                        <outlet property="labelEndTime" destination="cVR-IJ-RXC" id="evG-sv-d1d"/>
+                        <outlet property="labelEndTimeTitle" destination="FMK-WX-z8D" id="3Tx-hd-Jpn"/>
+                        <outlet property="labelLastUpdated" destination="Boz-5a-LLl" id="8jv-gd-FB8"/>
+                        <outlet property="labelNoDisruptions" destination="bpi-C3-V18" id="Iqj-dq-Vuz"/>
+                        <outlet property="labelReason" destination="bKs-Uz-gI6" id="S0c-2E-YER"/>
+                        <outlet property="labelReasonTitle" destination="LZu-7T-bxn" id="43Q-bB-Dre"/>
                         <outlet property="mapView" destination="Xlb-c7-4a6" id="HD2-Y7-2pY"/>
                     </connections>
                 </tableViewController>

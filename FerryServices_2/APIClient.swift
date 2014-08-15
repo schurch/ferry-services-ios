@@ -16,7 +16,7 @@ public class APIClient {
         static let baseURL = "http://ws.sitekit.net"
     }
     
-    // MARK: type method
+    // MARK: - type method
     public class var sharedInstance: APIClient {
         struct Static {
             static let instance: APIClient = APIClient()
@@ -25,10 +25,10 @@ public class APIClient {
         return Static.instance
     }
     
-    // MARK: properties
+    // MARK: - properties
     private var requestManager: AFHTTPRequestOperationManager
     
-    // MARK: init
+    // MARK: - init
     init() {
         requestManager = AFHTTPRequestOperationManager(baseURL: NSURL.URLWithString(APICLientConstants.baseURL))
         requestManager.responseSerializer = AFJSONResponseSerializer()
@@ -40,7 +40,7 @@ public class APIClient {
         #endif
     }
     
-    // MARK: methods
+    // MARK: - methods
     public func fetchFerryServicesWithCompletion(completion: (serviceStatuses: [ServiceStatus]?, error: NSError?) -> ()) {
         requestManager.GET("/ServiceDisruptions/servicestatusfrontV3.asmx/ListServiceStatuses_JSON" , parameters: nil, success: { operation, responseObject in
             
