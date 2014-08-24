@@ -79,6 +79,9 @@ public class APIClient {
                 if let disruptionData = json["RouteDisruption"].object {
                     disruptionDetails = DisruptionDetails(data: disruptionData)
                 }
+                else {
+                    disruptionDetails = DisruptionDetails()
+                }
 
                 var routeDetails: RouteDetails?
                 if let routeDetailsData = json["RouteDetail"].object {

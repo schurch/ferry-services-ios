@@ -35,51 +35,5 @@
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FerryServices_2/ServiceDetailTableViewController.swift"
-            timestampString = "429789522.041243"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "configureMap()"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FerryServices_2.ServiceDetailTableViewController.configureMap (FerryServices_2.ServiceDetailTableViewController)() -&gt; ()"
-                  moduleName = "FerryServices_2"
-                  urlString = "file:///Users/stefanchurch/Documents/XCode%20Projects/FerryServices_2/FerryServices_2/ServiceDetailTableViewController.swift"
-                  timestampString = "429786192.03103"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46"
-                  offsetFromSymbolStart = "2755">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FerryServices_2.ServiceDetailTableViewController.configureMap (FerryServices_2.ServiceDetailTableViewController)() -&gt; ()"
-                  moduleName = "FerryServices_2"
-                  urlString = "file:///Users/stefanchurch/Documents/XCode%20Projects/FerryServices_2/FerryServices_2/ServiceDetailTableViewController.swift"
-                  timestampString = "429786192.034172"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46"
-                  offsetFromSymbolStart = "2803">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -30,6 +30,10 @@ public struct DisruptionDetails {
         return formatter
     }()
     
+    init () {
+        self.disruptionStatus = .Normal
+    }
+    
     init(data: [String: JSONValue]) {
         self.addedBy = data["AddedByUserID"]?.string
         self.addedDate = DisruptionDetails.dateFormatter.dateFromString(data["AddedTime"]?.string)

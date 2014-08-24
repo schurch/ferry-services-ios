@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="14A329f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
     </dependencies>
     <scenes>
         <!--Ferry Services-->
@@ -120,6 +120,9 @@
                                             <subviews>
                                                 <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlb-c7-4a6">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="129"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="BDF-Ld-m74" id="HET-eA-Pki"/>
+                                                    </connections>
                                                 </mapView>
                                             </subviews>
                                             <constraints>
@@ -235,6 +238,11 @@
                                                 <constraint firstItem="bpi-C3-V18" firstAttribute="top" secondItem="Ah8-DA-WCf" secondAttribute="top" constant="8" id="wWS-09-393"/>
                                                 <constraint firstItem="bKs-Uz-gI6" firstAttribute="centerY" secondItem="LZu-7T-bxn" secondAttribute="centerY" id="ykk-Yl-Qkh"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Dzl-zj-jZD"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -254,7 +262,7 @@
                         <outlet property="labelEndTime" destination="cVR-IJ-RXC" id="evG-sv-d1d"/>
                         <outlet property="labelEndTimeTitle" destination="FMK-WX-z8D" id="3Tx-hd-Jpn"/>
                         <outlet property="labelLastUpdated" destination="Boz-5a-LLl" id="8jv-gd-FB8"/>
-                        <outlet property="labelNoDisruptions" destination="bpi-C3-V18" id="Iqj-dq-Vuz"/>
+                        <outlet property="labelNoDisruptions" destination="bpi-C3-V18" id="iOJ-G6-u7q"/>
                         <outlet property="labelReason" destination="bKs-Uz-gI6" id="S0c-2E-YER"/>
                         <outlet property="labelReasonTitle" destination="LZu-7T-bxn" id="43Q-bB-Dre"/>
                         <outlet property="mapView" destination="Xlb-c7-4a6" id="HD2-Y7-2pY"/>

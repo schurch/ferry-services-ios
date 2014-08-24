@@ -9,7 +9,16 @@
 import UIKit
 import MapKit
 
-class ServiceDetailTableViewController: UITableViewController {
+class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate {
+    
+    struct MainStoryBoard {
+        struct Constraints {
+            static let imageViewTopSpace: CGFloat = 29
+            static let imageViewTopSpaceReduced: CGFloat = 17
+            static let disruptionDefaultLeadingSpace: CGFloat = 51
+            static let disruptonMinusImageLeadingSpace: CGFloat = 13
+        }
+    }
     
     @IBOutlet var activityViewLoadingDisruptions :UIActivityIndicatorView!
     @IBOutlet var imageViewDisruption :UIImageView!
@@ -37,8 +46,35 @@ class ServiceDetailTableViewController: UITableViewController {
         
         self.title = self.serviceStatus?.area
         
-        configureMap()
-        fetchLatestData()
+        self.configureMap()
+        self.fetchLatestDisruptionData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let selectedIndexPath = self.tableView.indexPathForSelectedRow() {
+            self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
+        }
+    }
+    
+    // MARK: - refresh
+    private func fetchLatestDisruptionData() {
+        if let serviceId = self.serviceStatus?.serviceId {
+            self.prepareForDisruptionDetailsReload()
+            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, routeDetails, error in
+                if (error == nil) {
+                    self.disruptionDetails = disruptionDetails
+                    self.routeDetails = routeDetails
+                    self.configureDisruptionDetails()
+                }
+                else {
+                    self.configureDisruptionErrorState()
+                }
+                
+                self.finalizeDisruptionDetailsReload()
+            }
+        }
     }
     
     // MARK: - configure view
@@ -62,21 +98,102 @@ class ServiceDetailTableViewController: UITableViewController {
     }
     
     private func configureDisruptionDetails() {
-        
-    }
-    
-    // MARK: - refresh
-    private func fetchLatestData() {
-        if let serviceId = self.serviceStatus?.serviceId {
-            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, routeDetails, error in
-                self.disruptionDetails = disruptionDetails
-                self.routeDetails = routeDetails
-                self.configureDisruptionDetails()
+        self.constraintDisruptionMessageLeadingSpace.constant = MainStoryBoard.Constraints.disruptionDefaultLeadingSpace
+
+        if let disruptionStatus = self.disruptionDetails?.disruptionStatus {
+            switch disruptionStatus {
+            case .Normal, .Information:
+                self.configureNoDisruptionsState()
+            default:
+                self.configureDisruptionsState()
             }
         }
     }
     
+    private func configureNoDisruptionsState() {
+        self.imageViewDisruption.image = UIImage(named: "green")
+        self.labelDisruptionDetails.text = "There are currently no disruptions with this service."
+        self.constraintTopSpaceImageViewDisruption.constant = MainStoryBoard.Constraints.imageViewTopSpaceReduced
+        self.imageViewDisruption.hidden = false
+        self.labelNoDisruptions.hidden = false
+    }
+    
+    private func configureDisruptionsState() {
+        self.labelDisruptionDetails.text = self.disruptionDetails?.details
+
+        if let disruptionStatus = self.disruptionDetails?.disruptionStatus {
+            switch disruptionStatus {
+            case .SailingsAffected:
+                self.imageViewDisruption.image = UIImage(named: "amber")
+            case .SailingsCancelled:
+                self.imageViewDisruption.image = UIImage(named: "red")
+            default:
+                self.imageViewDisruption.image = nil
+            }
+        }
+
+        self.labelReason.text = self.disruptionDetails?.reason?.capitalizedString
+        
+        if let date = self.disruptionDetails?.disruptionEndDate {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "dd MMM yyyy HH:mm"
+            self.labelEndTime.text = dateFormatter.stringFromDate(date)
+        }
+        
+        if let disruptionEndDate = self.disruptionDetails?.disruptionEndDate  {
+            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+            let components = calendar.components(NSCalendarUnit.CalendarUnitDay|NSCalendarUnit.CalendarUnitHour|NSCalendarUnit.CalendarUnitMinute, fromDate: disruptionEndDate)
+            
+            var updated: String
+            
+            if components.day > 0 {
+                let dayText = components.day == 1 ? "day" : "days"
+                updated = "\(components.day) \(dayText) ago"
+            }
+            else if components.hour > 0 {
+                let hourText = components.hour == 1 ? "hour" : "hours"
+                updated = "\(components.hour) \(hourText) ago"
+            }
+            else {
+                let minuteText = components.minute == 1 ? "minute" : "minutes"
+                updated = "\(components.minute) \(minuteText) ago"
+            }
+            
+            self.labelLastUpdated.text = "Last updated \(updated)"
+        }
+        else {
+            self.labelLastUpdated.text = "Last updated N/A"
+        }
+        
+        self.toggleDisruptionHidden(false)
+    }
+    
+    private func configureDisruptionErrorState() {
+        self.imageViewDisruption.image = nil
+        self.labelNoDisruptions.text = "Unable to fetch the disruption status for this service."
+        self.constraintTopSpaceImageViewDisruption.constant = MainStoryBoard.Constraints.imageViewTopSpaceReduced
+        self.constraintDisruptionMessageLeadingSpace.constant = MainStoryBoard.Constraints.disruptonMinusImageLeadingSpace
+        self.imageViewDisruption.hidden = true
+        self.labelNoDisruptions.hidden = false
+    }
+    
     // MARK: - utility methods
+    private func prepareForDisruptionDetailsReload() {
+        self.toggleDisruptionHidden(true)
+        self.labelNoDisruptions.hidden = true
+        self.labelDisruptionDetails.hidden = true
+        
+        self.constraintTopSpaceImageViewDisruption.constant = MainStoryBoard.Constraints.imageViewTopSpace
+        
+        self.tableView.reloadData()
+        self.activityViewLoadingDisruptions.startAnimating()
+    }
+    
+    private func finalizeDisruptionDetailsReload() {
+        self.activityViewLoadingDisruptions.stopAnimating()
+        self.tableView.reloadData()
+    }
+    
     private func disriptionRowHeight() -> CGFloat {
         let drawingOpts: NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let attributes = [NSFontAttributeName: self.labelDisruptionDetails.font]
@@ -116,5 +233,10 @@ class ServiceDetailTableViewController: UITableViewController {
         default:
             return 0
         }
+    }
+    
+    // MARK: - mapview delegate
+    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+        mapView.deselectAnnotation(view.annotation, animated: false)
     }
 }
