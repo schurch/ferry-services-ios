@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-public struct Location {
+class Location {
     
-    public static func fetchLocationsForSericeId(serviceId: Int) -> [Location]? {
+    class func fetchLocationsForSericeId(serviceId: Int) -> [Location]? {
         let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
         let database = FMDatabase(path: path)
         
@@ -41,6 +41,32 @@ public struct Location {
         database.close()
         
         return locations
+    }
+    
+    class func fetchLocationWithId(locationId: Int) -> Location? {
+        let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
+        let database = FMDatabase(path: path)
+        
+        if (!database.open()) {
+            return nil
+        }
+        
+        var query = "SELECT l.Name, l.Latitude, l.Longitude FROM Location l WHERE l.LocationId = (?)"
+        
+        let resultSet = database.executeQuery(query, withArgumentsInArray: [locationId])
+        var location: Location? = nil
+        
+        while (resultSet.next()) {
+            let name = resultSet.stringForColumn("Name")
+            let latitude = resultSet.doubleForColumn("Latitude")
+            let longitude = resultSet.doubleForColumn("Longitude")
+            location = Location(name: name, latitude: latitude, longitude: longitude)
+        }
+        
+        database.close()
+        
+        return location
+
     }
     
     var name: String?

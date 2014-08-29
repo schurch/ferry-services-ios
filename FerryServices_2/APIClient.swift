@@ -6,18 +6,18 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-public class APIClient {
-    
-    public class var clientErrorDomain: String {
-        return "APICientErrorDomain"
-    }
+class APIClient {
     
     private struct APICLientConstants {
         static let baseURL = "http://ws.sitekit.net"
     }
-    
+
     // MARK: - type method
-    public class var sharedInstance: APIClient {
+    class var clientErrorDomain: String {
+        return "APICientErrorDomain"
+    }
+
+    class var sharedInstance: APIClient {
         struct Static {
             static let instance: APIClient = APIClient()
         }
@@ -41,7 +41,7 @@ public class APIClient {
     }
     
     // MARK: - methods
-    public func fetchFerryServicesWithCompletion(completion: (serviceStatuses: [ServiceStatus]?, error: NSError?) -> ()) {
+    func fetchFerryServicesWithCompletion(completion: (serviceStatuses: [ServiceStatus]?, error: NSError?) -> ()) {
         requestManager.GET("/ServiceDisruptions/servicestatusfrontV3.asmx/ListServiceStatuses_JSON" , parameters: nil, success: { operation, responseObject in
             
                 let json = JSONValue(responseObject)
@@ -64,7 +64,7 @@ public class APIClient {
             })
     }
     
-    public func fetchDisruptionDetailsForFerryServiceId(ferryServiceId: Int, completion: (disruptionsDetails: DisruptionDetails?, routeDetails: RouteDetails?, error: NSError?) -> ()) {
+    func fetchDisruptionDetailsForFerryServiceId(ferryServiceId: Int, completion: (disruptionsDetails: DisruptionDetails?, routeDetails: RouteDetails?, error: NSError?) -> ()) {
         
         requestManager.GET("/ServiceDisruptions/servicestatusfrontV3.asmx/ListRouteDisruptions_JSON", parameters: ["routeID": ferryServiceId], success:
             { operations, responseObject in

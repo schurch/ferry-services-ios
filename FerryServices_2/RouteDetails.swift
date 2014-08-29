@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-public struct RouteDetails {
+struct RouteDetails {
     
-    public var area: String?
-    public var route: String?
-    public var routeId: Int?
+    var area: String?
+    var route: String?
+    var routeId: Int?
     
     init(data: [String: JSONValue]) {
         self.area = data["Area"]?.string

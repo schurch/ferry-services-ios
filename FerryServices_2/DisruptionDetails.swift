@@ -6,23 +6,23 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-public struct DisruptionDetails {
+struct DisruptionDetails {
     
-    public enum DisruptionDetailsStatus: Int {
+    enum DisruptionDetailsStatus: Int {
         case Normal = 0
         case SailingsAffected = 1
         case SailingsCancelled = 2
         case Information = -1
     }
     
-    public var addedBy: String?
-    public var addedDate: NSDate?
-    public var details: String?
-    public var disruptionEndDate: NSDate?
-    public var lastUpdatedBy: String?
-    public var reason: String?
-    public var updatedDate: NSDate?
-    public var disruptionStatus: DisruptionDetailsStatus?
+    var addedBy: String?
+    var addedDate: NSDate?
+    var details: String?
+    var disruptionEndDate: NSDate?
+    var lastUpdatedBy: String?
+    var reason: String?
+    var updatedDate: NSDate?
+    var disruptionStatus: DisruptionDetailsStatus?
     
     private static let dateFormatter :NSDateFormatter = {
         let formatter = NSDateFormatter()

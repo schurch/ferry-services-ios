@@ -8,6 +8,6 @@
 
 import Foundation
 
-public struct Trip {
+class Trip {
 
 }

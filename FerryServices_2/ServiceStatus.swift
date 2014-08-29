@@ -6,21 +6,21 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-public struct ServiceStatus {
+struct ServiceStatus {
     
-    public enum DisriptionStatus: Int {
+    enum DisriptionStatus: Int {
         case Unknown = -99
         case Normal = -1
         case SailingsAffected = 1
         case SailingsCancelled = 2
     }
     
-    public var area: String?
-    public var disruptionStatus: DisriptionStatus?
-    public var ferryProvider: String?
-    public var route: String?
-    public var serviceId: Int?
-    public var sortOrder: Int?
+    var area: String?
+    var disruptionStatus: DisriptionStatus?
+    var ferryProvider: String?
+    var route: String?
+    var serviceId: Int?
+    var sortOrder: Int?
     
     init(data: JSONValue) {
         
