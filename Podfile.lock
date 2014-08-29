@@ -20,6 +20,9 @@ PODS:
   - AFNetworking/UIKit (2.3.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - FlurrySDK (5.3.0):
+    - FlurrySDK/FlurrySDK
+  - FlurrySDK/FlurrySDK (5.3.0)
   - FMDB (2.3):
     - FMDB/standard
   - FMDB/common (2.3)
@@ -28,10 +31,12 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
+  - FlurrySDK (~> 5.3)
   - FMDB
 
 SPEC CHECKSUMS:
   AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
+  FlurrySDK: e1142ae33e294f8307bd6d2209cc082e79b66e90
   FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
 
 COCOAPODS: 0.33.1
