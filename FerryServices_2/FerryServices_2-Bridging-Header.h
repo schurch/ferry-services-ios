@@ -5,3 +5,4 @@
 #import "AFNetworking.h"
 #import "FMDB.h"
 #import "Flurry.h"
+#import <Crashlytics/Crashlytics.h>

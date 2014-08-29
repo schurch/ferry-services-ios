@@ -14,8 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication!, didFinishLaunchingWithOptions launchOptions: NSDictionary!) -> Bool {
-        Flurry.setCrashReportingEnabled(true)
+        Flurry.setCrashReportingEnabled(false)
         Flurry.startSession("48Q89W7B39FXGJK9BSW6")
+        Crashlytics.startWithAPIKey("9aad7798d2e2d712649ba35bd1747beeac29b07f")
 
         return true
     }
