@@ -140,9 +140,9 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             self.labelEndTime.text = dateFormatter.stringFromDate(date)
         }
         
-        if let disruptionEndDate = self.disruptionDetails?.disruptionEndDate  {
+        if let updatedDate = self.disruptionDetails?.updatedDate  {
             let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-            let components = calendar.components(NSCalendarUnit.CalendarUnitDay|NSCalendarUnit.CalendarUnitHour|NSCalendarUnit.CalendarUnitMinute, fromDate: disruptionEndDate)
+            let components = calendar.components(NSCalendarUnit.CalendarUnitDay|NSCalendarUnit.CalendarUnitHour|NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
             
             var updated: String
             
