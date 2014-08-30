@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ServicesViewController: UITableViewController {
+class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
     private struct MainStoryboard {
         struct TableViewCellIdentifiers {
@@ -17,6 +17,7 @@ class ServicesViewController: UITableViewController {
     }
     
     private var arrayServiceStatuses = [ServiceStatus]()
+    private var arrayFilteredServiceStatuses = [ServiceStatus]()
     
     // MARK: - view lifecycle
     override func viewDidLoad() {
@@ -58,14 +59,28 @@ class ServicesViewController: UITableViewController {
     
     // MARK: - tableview datasource
     override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        return arrayServiceStatuses.count
+        if (tableView == self.searchDisplayController.searchResultsTableView) {
+            return self.arrayFilteredServiceStatuses.count
+        }
+        else {
+            return self.arrayServiceStatuses.count
+        }
     }
     
     override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let serviceStatusCell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.serviceStatusCell, forIndexPath: indexPath) as ServiceStatusTableViewCell
+        let isFiltering = tableView == self.searchDisplayController.searchResultsTableView
         
-        let serviceStatus = arrayServiceStatuses[indexPath.row]
+        // Dequeue cell
+        let serviceStatusCell = isFiltering
+            ? self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.serviceStatusCell) as ServiceStatusTableViewCell
+            : self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.serviceStatusCell, forIndexPath: indexPath) as ServiceStatusTableViewCell
         
+        // Modal object
+        let serviceStatus = isFiltering
+            ? arrayFilteredServiceStatuses[indexPath.row]
+            : arrayServiceStatuses[indexPath.row]
+        
+        // Configure cell with modal object
         serviceStatusCell.labelTitle.text = serviceStatus.area
         serviceStatusCell.labelSubtitle.text = serviceStatus.route
         
@@ -97,5 +112,16 @@ class ServicesViewController: UITableViewController {
         let indexPath = self.tableView.indexPathForSelectedRow()
         let serviceStatus = self.arrayServiceStatuses[indexPath.row]
         serviceDetailViewController.serviceStatus = serviceStatus
+    }
+    
+    // MARK: - UISearchDisplayController
+    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
+        self.arrayFilteredServiceStatuses = self.arrayServiceStatuses.filter { item in
+            return NSString(string: item.area!.lowercaseString).containsString(searchString.lowercaseString)
+                || NSString(string: item.route!.lowercaseString).containsString(searchString.lowercaseString)
+            
+        }
+        
+        return true
     }
 }

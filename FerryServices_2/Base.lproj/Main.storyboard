@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="14A329f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
     </dependencies>
@@ -12,6 +12,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="shJ-HZ-Odo">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="uiG-sM-ILp" id="Zo5-Yv-0Tl"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="serviceStatusCell" id="AGI-Hw-gFy" customClass="ServiceStatusTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="163" width="320" height="44"/>
@@ -74,8 +82,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Ferry Services" id="ndA-Xd-ojl"/>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="pt8-HI-Yzq" id="143-IY-5N0"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t8E-hL-GNH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="pt8-HI-Yzq">
+                    <connections>
+                        <outlet property="delegate" destination="uiG-sM-ILp" id="szy-bW-r6I"/>
+                        <outlet property="searchBar" destination="shJ-HZ-Odo" id="tOf-O5-5rf"/>
+                        <outlet property="searchContentsController" destination="uiG-sM-ILp" id="YCq-fp-PE8"/>
+                        <outlet property="searchResultsDataSource" destination="uiG-sM-ILp" id="kbq-Ha-oin"/>
+                        <outlet property="searchResultsDelegate" destination="uiG-sM-ILp" id="os7-OY-JKy"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="561" y="154"/>
         </scene>
