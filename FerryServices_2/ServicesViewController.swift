@@ -117,9 +117,18 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     // MARK: - UISearchDisplayController
     func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
         self.arrayFilteredServiceStatuses = self.arrayServiceStatuses.filter { item in
-            return NSString(string: item.area!.lowercaseString).containsString(searchString.lowercaseString)
-                || NSString(string: item.route!.lowercaseString).containsString(searchString.lowercaseString)
+            var containsArea = false
+            var containsRoute = false
             
+            if let area = item.area {
+                containsArea = NSString(string: area.lowercaseString).containsString(searchString.lowercaseString)
+            }
+            
+            if let route = item.route {
+                containsRoute = NSString(string: route.lowercaseString).containsString(searchString.lowercaseString)
+            }
+            
+            return containsArea || containsRoute
         }
         
         return true
