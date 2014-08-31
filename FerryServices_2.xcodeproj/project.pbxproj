@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		F3D7E17BEA084ECEBB6C9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B61FAD87F37434E965A5EF6 /* libPods.a */; };
+		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
 		FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* APIClient.swift */; };
+		FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD71167619B2F8E400A81ED5 /* TimetableDateTableViewCell.swift */; };
+		FD71167919B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD71167819B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift */; };
+		FD71167B19B2F91000A81ED5 /* TimetableHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD71167A19B2F91000A81ED5 /* TimetableHeaderTableViewCell.swift */; };
 		FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */; };
 		FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD753ED9197A256E00CC5DE3 /* Main.storyboard */; };
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
@@ -41,9 +45,13 @@
 /* Begin PBXFileReference section */
 		6B61FAD87F37434E965A5EF6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBF3A3E328204485AED6C991 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
 		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FD5E7DBA197A316F00F438F6 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = APIClient.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FD71167619B2F8E400A81ED5 /* TimetableDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableDateTableViewCell.swift; sourceTree = "<group>"; };
+		FD71167819B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableTimeTableViewCell.swift; sourceTree = "<group>"; };
+		FD71167A19B2F91000A81ED5 /* TimetableHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FerryServices_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753ED4197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,11 +105,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FD4F6BD719B183B2007E88A1 /* Timetable */ = {
+			isa = PBXGroup;
+			children = (
+				FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */,
+				FD71167619B2F8E400A81ED5 /* TimetableDateTableViewCell.swift */,
+				FD71167819B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift */,
+				FD71167A19B2F91000A81ED5 /* TimetableHeaderTableViewCell.swift */,
+			);
+			name = Timetable;
+			sourceTree = "<group>";
+		};
 		FD5E7DB9197A310600F438F6 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				FDEA4B20198C72160023A5A7 /* Services */,
 				FDEA4B21198C721C0023A5A7 /* Service Details */,
+				FD4F6BD719B183B2007E88A1 /* Timetable */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -370,13 +390,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD71167B19B2F91000A81ED5 /* TimetableHeaderTableViewCell.swift in Sources */,
 				FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
+				FD71167919B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift in Sources */,
+				FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */,
 				FDC7760E19844C3500B3782F /* Location.swift in Sources */,
 				FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */,
 				FDEA4B25198C72D70023A5A7 /* RouteDetails.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
 				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
+				FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */,
 				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
 				FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */,
 				FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */,

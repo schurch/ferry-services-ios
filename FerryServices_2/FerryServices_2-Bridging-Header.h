@@ -3,6 +3,7 @@
 //
 
 #import "AFNetworking.h"
+#import "AFNetworkActivityIndicatorManager.h"
 #import "FMDB.h"
 #import "Flurry.h"
 #import <Crashlytics/Crashlytics.h>
