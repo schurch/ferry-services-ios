@@ -99,7 +99,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     
     private func configureDisruptionDetails() {
         self.constraintDisruptionMessageLeadingSpace.constant = MainStoryBoard.Constraints.disruptionDefaultLeadingSpace
-
+        
         if let disruptionStatus = self.disruptionDetails?.disruptionStatus {
             switch disruptionStatus {
             case .Normal, .Information:
@@ -120,7 +120,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     
     private func configureDisruptionsState() {
         self.labelDisruptionDetails.text = self.disruptionDetails?.details
-
+        
         if let disruptionStatus = self.disruptionDetails?.disruptionStatus {
             switch disruptionStatus {
             case .SailingsAffected:
@@ -131,7 +131,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
                 self.imageViewDisruption.image = nil
             }
         }
-
+        
         self.labelReason.text = self.disruptionDetails?.reason?.capitalizedString
         
         if let date = self.disruptionDetails?.disruptionEndDate {
@@ -197,9 +197,15 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     private func disriptionRowHeight() -> CGFloat {
         let drawingOpts: NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let attributes = [NSFontAttributeName: self.labelDisruptionDetails.font]
-        let boundingRect = self.labelDisruptionDetails.text.boundingRectWithSize(CGSize(width: self.labelDisruptionDetails.frame.size.width, height: CGFloat.max), options: drawingOpts, attributes: attributes, context: nil)
-        var height = ceil(boundingRect.size.height);
-        return height < 40 ? 60 : height + 74; // Height + padding
+        
+        let size = CGSize(width: self.labelDisruptionDetails.frame.size.width, height: CGFloat.max)
+        
+        if let boundingRect = self.labelDisruptionDetails.text?.boundingRectWithSize(size, options: drawingOpts, attributes: attributes, context: nil) {
+            let height = ceil(boundingRect.size.height);
+            return height < 40 ? 60 : height + 74; // Height + padding
+        }
+        
+        return 60;
     }
     
     private func calculateMapRectForAnnotations(annotations: [MKPointAnnotation]) -> MKMapRect {
@@ -222,7 +228,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     }
     
     // MARK: - tableview delegate
-    override func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
             return 44

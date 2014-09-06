@@ -30,7 +30,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         self.refreshControl = refreshControl
         
         tableView.contentOffset = CGPoint(x: 0, y: -60)
-        self.refreshControl.beginRefreshing()
+        self.refreshControl?.beginRefreshing()
         
         self.refresh(nil)
     }
@@ -38,7 +38,9 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tableView.deselectRowAtIndexPath(self.tableView.indexPathForSelectedRow(), animated: true)
+        if let indexPath = self.tableView.indexPathForSelectedRow() {
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        }
     }
     
     // MARK: - notifications
@@ -53,13 +55,13 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
                 self.arrayServiceStatuses = statuses
             }
             self.tableView.reloadData()
-            self.refreshControl.endRefreshing()
+            self.refreshControl?.endRefreshing()
         }
     }
     
     // MARK: - tableview datasource
-    override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        if (tableView == self.searchDisplayController.searchResultsTableView) {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (tableView == self.searchDisplayController?.searchResultsTableView) {
             return self.arrayFilteredServiceStatuses.count
         }
         else {
@@ -67,8 +69,8 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         }
     }
     
-    override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let isFiltering = tableView == self.searchDisplayController.searchResultsTableView
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let isFiltering = tableView == self.searchDisplayController?.searchResultsTableView
         
         // Dequeue cell
         let serviceStatusCell = isFiltering
@@ -107,11 +109,13 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     // MARK: - storyboard
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         let serviceDetailViewController = segue.destinationViewController as ServiceDetailTableViewController;
-        let indexPath = self.tableView.indexPathForSelectedRow()
-        let serviceStatus = self.arrayServiceStatuses[indexPath.row]
-        serviceDetailViewController.serviceStatus = serviceStatus
+        
+        if let indexPath = self.tableView.indexPathForSelectedRow() {
+            let serviceStatus = self.arrayServiceStatuses[indexPath.row]
+            serviceDetailViewController.serviceStatus = serviceStatus
+        }
     }
     
     // MARK: - UISearchDisplayController
