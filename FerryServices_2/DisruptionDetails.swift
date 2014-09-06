@@ -24,7 +24,7 @@ struct DisruptionDetails {
     var updatedDate: NSDate?
     var disruptionStatus: DisruptionDetailsStatus?
     
-    private static let dateFormatter :NSDateFormatter = {
+    private static let dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "dd MMM yyyy HH:mm"
         return formatter
@@ -36,12 +36,24 @@ struct DisruptionDetails {
     
     init(data: [String: JSONValue]) {
         self.addedBy = data["AddedByUserID"]?.string
-        self.addedDate = DisruptionDetails.dateFormatter.dateFromString(data["AddedTime"]?.string)
+        
+        if let addedDate = data["AddedTime"]?.string {
+            self.addedDate = DisruptionDetails.dateFormatter.dateFromString(addedDate)
+        }
+        
         self.details = data["WebText"]?.string
-        self.disruptionEndDate = DisruptionDetails.dateFormatter.dateFromString(data["DisruptionEndTime"]?.string)
+        
+        if let disruptionDate = data["DisruptionEndTime"]?.string {
+            self.disruptionEndDate = DisruptionDetails.dateFormatter.dateFromString(disruptionDate)
+        }
+        
         self.lastUpdatedBy = data["LastUpdatedBy"]?.string
         self.reason = data["Reason"]?.string
-        self.updatedDate = DisruptionDetails.dateFormatter.dateFromString(data["UpdatedTime"]?.string)
+        
+        if let updatedDate = data["UpdatedTime"]?.string {
+            self.updatedDate = DisruptionDetails.dateFormatter.dateFromString(updatedDate)
+        }
+        
         if let disruptionDetailsStatus = data["DisruptionStatus"]?.integer {
             self.disruptionStatus = DisruptionDetailsStatus.fromRaw(disruptionDetailsStatus)
         }
