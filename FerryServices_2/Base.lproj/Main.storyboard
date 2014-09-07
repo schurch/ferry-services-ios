@@ -367,7 +367,7 @@
                                             <outlet property="labelSelectedDate" destination="TSv-dP-wmO" id="bfy-9M-MQo"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="headerCell" id="xlw-j9-uRE" userLabel="headerCell" customClass="TimetableHeaderViewCell" customModule="FerryServices_2" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="headerCell" id="xlw-j9-uRE" userLabel="headerCell" customClass="TimetableHeaderViewCell" customModule="FerryServices_2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xlw-j9-uRE" id="TbW-hp-7Gx">
@@ -391,6 +391,7 @@
                                                 <constraint firstItem="eii-Wt-p24" firstAttribute="top" secondItem="TbW-hp-7Gx" secondAttribute="topMargin" constant="1.5" id="5Rv-nz-tzc"/>
                                                 <constraint firstItem="eii-Wt-p24" firstAttribute="leading" secondItem="TbW-hp-7Gx" secondAttribute="leadingMargin" constant="15" id="LI2-e3-kf8"/>
                                                 <constraint firstItem="Dp0-X6-goy" firstAttribute="leading" secondItem="eii-Wt-p24" secondAttribute="trailing" constant="10" id="bba-h6-78F"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="eii-Wt-p24" secondAttribute="bottom" constant="1.5" id="qDf-ze-atz"/>
                                                 <constraint firstItem="Dp0-X6-goy" firstAttribute="centerY" secondItem="eii-Wt-p24" secondAttribute="centerY" constant="-1" id="yKl-fe-mGC"/>
                                             </constraints>
                                         </tableViewCellContentView>
