@@ -13,4 +13,13 @@ class TimetableDateTableViewCell: UITableViewCell {
     @IBOutlet var labelSelectedDate: UILabel!
     @IBOutlet var labelDeparturesArrivals: UILabel!
     
+    override func awakeFromNib() {
+        self.labelSelectedDate.text = ""
+        self.labelDeparturesArrivals.text = ""
+    }
+    
+    override func prepareForReuse() {
+        self.labelSelectedDate.text = ""
+        self.labelDeparturesArrivals.text = ""
+    }
 }

@@ -32,9 +32,14 @@ class Route {
             let destination = Location.fetchLocationWithId(Int(resultSet.intForColumn("DestinationLocationId")))
             let source = Location.fetchLocationWithId(Int(resultSet.intForColumn("SourceLocationId")))
             let serviceId = serviceId
-            let trips: [Trip]? = nil
+            
+            let routeId = Int(resultSet.intForColumn("RouteId"))
+            let trips: [Trip]? = Trip.fetchTripsForRouteId(routeId, date: date)
+            
             let routeType = RouteType.fromRaw(Int(resultSet.intForColumn("RouteType")))
-            routes += [Route(destination: destination, source: source, serviceId: serviceId, trips: trips, routeType:routeType)]
+            
+            let route = Route(destination: destination, source: source, serviceId: serviceId, trips: trips, routeType:routeType)
+            routes += [route]
         }
     
         database.close()
@@ -62,6 +67,12 @@ class Route {
     }
     
     func routeDescription() -> String {
-        return "\(self.source?.name) to \(self.destination?.name)"
+        if let source = self.source?.name {
+            if let destination = self.destination?.name {
+                return "\(source) to \(destination)"
+            }
+        }
+        
+        return ""
     }
 }

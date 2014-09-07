@@ -20,8 +20,19 @@ class TimetableTimeTableViewCell: UITableViewCell {
     
     weak var delegate: TimetableTimeTableViewCellDelegate?
     
+    override func awakeFromNib() {
+        self.buttonInfo.hidden = true
+        self.labelTime.text = ""
+        self.labelTimeCounterpart.text = ""
+    }
+    
     @IBAction func touchedButtonInfo(sender: UIButton) {
         self.delegate?.didTouchTimetableInfoButtonForCell(self)
     }
-
+    
+    override func prepareForReuse() {
+        self.buttonInfo.hidden = true
+        self.labelTime.text = ""
+        self.labelTimeCounterpart.text = ""
+    }
 }

@@ -83,7 +83,8 @@ class Trip {
             let arrivalMinute = resultSet.doubleForColumn("ArrivalMinute")
             let notes = resultSet.stringForColumn("Notes")
             
-            trips += [Trip(departureHour: departureHour, departureMinute: departureMinute, arrivalHour: arrivalHour, arrivalMinute: arrivalMinute, notes: notes, routeId: routeId)]
+            let trip = Trip(departureHour: departureHour, departureMinute: departureMinute, arrivalHour: arrivalHour, arrivalMinute: arrivalMinute, notes: notes, routeId: routeId)
+            trips += [trip]
         }
         
         database.close()
@@ -100,7 +101,7 @@ class Trip {
     
     var deparuteTime: String {
         let departureHour = self.padWithZero(self.departureHour)
-        let deparuteMinute = self.padWithZero(self.departureMinute)
+        let departureMinute = self.padWithZero(self.departureMinute)
         return "\(departureHour):\(departureMinute)"
     }
     
@@ -120,7 +121,7 @@ class Trip {
     }
     
     private func padWithZero(number: Double) -> String {
-        return number < 10 ? "0\(number)" : "\(number)"
+        return number < 10 ? "0\(Int(number))" : "\(Int(number))"
     }
     
 }

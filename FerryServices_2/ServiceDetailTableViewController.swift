@@ -33,9 +33,9 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     @IBOutlet var labelReasonTitle: UILabel!
     @IBOutlet var mapView :MKMapView!
     
-    var serviceStatus: ServiceStatus?;
     var disruptionDetails: DisruptionDetails?;
     var routeDetails: RouteDetails?;
+    var serviceStatus: ServiceStatus!;
     
     // MARK: - private vars
     private var locations: [Location]?
@@ -44,7 +44,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = self.serviceStatus?.area
+        self.title = self.serviceStatus.area
         
         self.configureMap()
         self.fetchLatestDisruptionData()
@@ -60,7 +60,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     
     // MARK: - refresh
     private func fetchLatestDisruptionData() {
-        if let serviceId = self.serviceStatus?.serviceId {
+        if let serviceId = self.serviceStatus.serviceId {
             self.prepareForDisruptionDetailsReload()
             APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, routeDetails, error in
                 if (error == nil) {
@@ -79,7 +79,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     
     // MARK: - configure view
     private func configureMap() {
-        if let serviceId = self.serviceStatus?.serviceId {
+        if let serviceId = self.serviceStatus.serviceId {
             self.locations = Location.fetchLocationsForSericeId(serviceId)
             
             let annotations: [MKPointAnnotation]? = self.locations?.map { location in
@@ -91,8 +91,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             
             if annotations != nil {
                 self.mapView.addAnnotations(annotations)
-                let mapRect = calculateMapRectForAnnotations(annotations!)
-                self.mapView.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: 40, left: 20, bottom: 5, right: 20), animated: false)
+                self.mapView.showAnnotations(annotations, animated: false)
             }
         }
     }
@@ -208,15 +207,6 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         return 60;
     }
     
-    private func calculateMapRectForAnnotations(annotations: [MKPointAnnotation]) -> MKMapRect {
-        var mapRect = MKMapRectNull
-        for annotation in annotations {
-            let point = MKMapPointForCoordinate(annotation.coordinate)
-            mapRect = MKMapRectUnion(mapRect, MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
-        }
-        return mapRect
-    }
-    
     private func toggleDisruptionHidden(hidden: Bool) {
         self.imageViewDisruption.hidden = hidden;
         self.labelDisruptionDetails.hidden = hidden;
@@ -244,5 +234,16 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     // MARK: - mapview delegate
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         mapView.deselectAnnotation(view.annotation, animated: false)
+    }
+    
+    // MARK: - storyboard
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        let timetableViewController = segue.destinationViewController as TimetableViewController;
+        
+        if let indexPath = self.tableView.indexPathForSelectedRow() {
+            if let routeId = self.serviceStatus.serviceId {
+                timetableViewController.routeId = routeId
+            }
+        }
     }
 }
