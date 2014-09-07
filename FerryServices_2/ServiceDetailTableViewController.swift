@@ -141,7 +141,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         
         if let updatedDate = self.disruptionDetails?.updatedDate  {
             let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-            let components = calendar.components(NSCalendarUnit.CalendarUnitDay|NSCalendarUnit.CalendarUnitHour|NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
+            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
             
             var updated: String
             

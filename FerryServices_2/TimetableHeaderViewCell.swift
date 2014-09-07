@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TimetableHeaderView: UITableViewHeaderFooterView {
+class TimetableHeaderViewCell: UITableViewCell {
 
     @IBOutlet var labelHeader: UILabel!
     @IBOutlet var imageViewTransportType: UIImageView!
