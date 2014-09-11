@@ -24,6 +24,30 @@
 		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
 		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
 		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
+		FDD15A4719C19DD400B00CE5 /* 10.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A2F19C19DD400B00CE5 /* 10.pdf */; };
+		FDD15A4819C19DD400B00CE5 /* 11.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3019C19DD400B00CE5 /* 11.pdf */; };
+		FDD15A4919C19DD400B00CE5 /* 12.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3119C19DD400B00CE5 /* 12.pdf */; };
+		FDD15A4A19C19DD400B00CE5 /* 13.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3219C19DD400B00CE5 /* 13.pdf */; };
+		FDD15A4B19C19DD400B00CE5 /* 14.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3319C19DD400B00CE5 /* 14.pdf */; };
+		FDD15A4C19C19DD400B00CE5 /* 15.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3419C19DD400B00CE5 /* 15.pdf */; };
+		FDD15A4D19C19DD400B00CE5 /* 16.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3519C19DD400B00CE5 /* 16.pdf */; };
+		FDD15A4E19C19DD400B00CE5 /* 17.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3619C19DD400B00CE5 /* 17.pdf */; };
+		FDD15A4F19C19DD400B00CE5 /* 18.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3719C19DD400B00CE5 /* 18.pdf */; };
+		FDD15A5019C19DD400B00CE5 /* 19.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3819C19DD400B00CE5 /* 19.pdf */; };
+		FDD15A5119C19DD400B00CE5 /* 2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3919C19DD400B00CE5 /* 2.pdf */; };
+		FDD15A5219C19DD400B00CE5 /* 20.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3A19C19DD400B00CE5 /* 20.pdf */; };
+		FDD15A5319C19DD400B00CE5 /* 21.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3B19C19DD400B00CE5 /* 21.pdf */; };
+		FDD15A5419C19DD400B00CE5 /* 22.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3C19C19DD400B00CE5 /* 22.pdf */; };
+		FDD15A5519C19DD400B00CE5 /* 23.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3D19C19DD400B00CE5 /* 23.pdf */; };
+		FDD15A5619C19DD400B00CE5 /* 24.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3E19C19DD400B00CE5 /* 24.pdf */; };
+		FDD15A5719C19DD400B00CE5 /* 25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A3F19C19DD400B00CE5 /* 25.pdf */; };
+		FDD15A5819C19DD400B00CE5 /* 3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A4019C19DD400B00CE5 /* 3.pdf */; };
+		FDD15A5919C19DD400B00CE5 /* 4.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A4119C19DD400B00CE5 /* 4.pdf */; };
+		FDD15A5A19C19DD400B00CE5 /* 5.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A4219C19DD400B00CE5 /* 5.pdf */; };
+		FDD15A5B19C19DD400B00CE5 /* 6.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A4319C19DD400B00CE5 /* 6.pdf */; };
+		FDD15A5C19C19DD400B00CE5 /* 7.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A4419C19DD400B00CE5 /* 7.pdf */; };
+		FDD15A5D19C19DD400B00CE5 /* 8.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A4519C19DD400B00CE5 /* 8.pdf */; };
+		FDD15A5E19C19DD400B00CE5 /* 9.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FDD15A4619C19DD400B00CE5 /* 9.pdf */; };
 		FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
@@ -66,6 +90,30 @@
 		FDC7760D19844C3500B3782F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Location.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Trip.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC77612198450AC00B3782F /* timetables.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = timetables.sqlite; sourceTree = "<group>"; };
+		FDD15A2F19C19DD400B00CE5 /* 10.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 10.pdf; sourceTree = "<group>"; };
+		FDD15A3019C19DD400B00CE5 /* 11.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 11.pdf; sourceTree = "<group>"; };
+		FDD15A3119C19DD400B00CE5 /* 12.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 12.pdf; sourceTree = "<group>"; };
+		FDD15A3219C19DD400B00CE5 /* 13.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 13.pdf; sourceTree = "<group>"; };
+		FDD15A3319C19DD400B00CE5 /* 14.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 14.pdf; sourceTree = "<group>"; };
+		FDD15A3419C19DD400B00CE5 /* 15.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 15.pdf; sourceTree = "<group>"; };
+		FDD15A3519C19DD400B00CE5 /* 16.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 16.pdf; sourceTree = "<group>"; };
+		FDD15A3619C19DD400B00CE5 /* 17.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 17.pdf; sourceTree = "<group>"; };
+		FDD15A3719C19DD400B00CE5 /* 18.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 18.pdf; sourceTree = "<group>"; };
+		FDD15A3819C19DD400B00CE5 /* 19.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 19.pdf; sourceTree = "<group>"; };
+		FDD15A3919C19DD400B00CE5 /* 2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 2.pdf; sourceTree = "<group>"; };
+		FDD15A3A19C19DD400B00CE5 /* 20.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 20.pdf; sourceTree = "<group>"; };
+		FDD15A3B19C19DD400B00CE5 /* 21.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 21.pdf; sourceTree = "<group>"; };
+		FDD15A3C19C19DD400B00CE5 /* 22.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 22.pdf; sourceTree = "<group>"; };
+		FDD15A3D19C19DD400B00CE5 /* 23.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 23.pdf; sourceTree = "<group>"; };
+		FDD15A3E19C19DD400B00CE5 /* 24.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 24.pdf; sourceTree = "<group>"; };
+		FDD15A3F19C19DD400B00CE5 /* 25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 25.pdf; sourceTree = "<group>"; };
+		FDD15A4019C19DD400B00CE5 /* 3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 3.pdf; sourceTree = "<group>"; };
+		FDD15A4119C19DD400B00CE5 /* 4.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 4.pdf; sourceTree = "<group>"; };
+		FDD15A4219C19DD400B00CE5 /* 5.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 5.pdf; sourceTree = "<group>"; };
+		FDD15A4319C19DD400B00CE5 /* 6.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 6.pdf; sourceTree = "<group>"; };
+		FDD15A4419C19DD400B00CE5 /* 7.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 7.pdf; sourceTree = "<group>"; };
+		FDD15A4519C19DD400B00CE5 /* 8.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 8.pdf; sourceTree = "<group>"; };
+		FDD15A4619C19DD400B00CE5 /* 9.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 9.pdf; sourceTree = "<group>"; };
 		FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -160,6 +208,7 @@
 		FD753ED2197A256E00CC5DE3 /* FerryServices_2 */ = {
 			isa = PBXGroup;
 			children = (
+				FDD15A2D19C19DD400B00CE5 /* Static Timetables */,
 				FDC77612198450AC00B3782F /* timetables.sqlite */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
@@ -207,6 +256,45 @@
 				FDC7760F19844C4000B3782F /* Trip.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		FDD15A2D19C19DD400B00CE5 /* Static Timetables */ = {
+			isa = PBXGroup;
+			children = (
+				FDD15A2E19C19DD400B00CE5 /* Summer-2014 */,
+			);
+			path = "Static Timetables";
+			sourceTree = SOURCE_ROOT;
+		};
+		FDD15A2E19C19DD400B00CE5 /* Summer-2014 */ = {
+			isa = PBXGroup;
+			children = (
+				FDD15A3919C19DD400B00CE5 /* 2.pdf */,
+				FDD15A4019C19DD400B00CE5 /* 3.pdf */,
+				FDD15A4119C19DD400B00CE5 /* 4.pdf */,
+				FDD15A4219C19DD400B00CE5 /* 5.pdf */,
+				FDD15A4319C19DD400B00CE5 /* 6.pdf */,
+				FDD15A4419C19DD400B00CE5 /* 7.pdf */,
+				FDD15A4519C19DD400B00CE5 /* 8.pdf */,
+				FDD15A4619C19DD400B00CE5 /* 9.pdf */,
+				FDD15A2F19C19DD400B00CE5 /* 10.pdf */,
+				FDD15A3019C19DD400B00CE5 /* 11.pdf */,
+				FDD15A3119C19DD400B00CE5 /* 12.pdf */,
+				FDD15A3219C19DD400B00CE5 /* 13.pdf */,
+				FDD15A3319C19DD400B00CE5 /* 14.pdf */,
+				FDD15A3419C19DD400B00CE5 /* 15.pdf */,
+				FDD15A3519C19DD400B00CE5 /* 16.pdf */,
+				FDD15A3619C19DD400B00CE5 /* 17.pdf */,
+				FDD15A3719C19DD400B00CE5 /* 18.pdf */,
+				FDD15A3819C19DD400B00CE5 /* 19.pdf */,
+				FDD15A3A19C19DD400B00CE5 /* 20.pdf */,
+				FDD15A3B19C19DD400B00CE5 /* 21.pdf */,
+				FDD15A3C19C19DD400B00CE5 /* 22.pdf */,
+				FDD15A3D19C19DD400B00CE5 /* 23.pdf */,
+				FDD15A3E19C19DD400B00CE5 /* 24.pdf */,
+				FDD15A3F19C19DD400B00CE5 /* 25.pdf */,
+			);
+			path = "Summer-2014";
 			sourceTree = "<group>";
 		};
 		FDDEC68D198E3CFB0060B18F /* Library */ = {
@@ -323,9 +411,33 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDD15A5219C19DD400B00CE5 /* 20.pdf in Resources */,
+				FDD15A5319C19DD400B00CE5 /* 21.pdf in Resources */,
+				FDD15A5019C19DD400B00CE5 /* 19.pdf in Resources */,
+				FDD15A5B19C19DD400B00CE5 /* 6.pdf in Resources */,
+				FDD15A5519C19DD400B00CE5 /* 23.pdf in Resources */,
+				FDD15A4819C19DD400B00CE5 /* 11.pdf in Resources */,
+				FDD15A5719C19DD400B00CE5 /* 25.pdf in Resources */,
+				FDD15A5A19C19DD400B00CE5 /* 5.pdf in Resources */,
+				FDD15A4E19C19DD400B00CE5 /* 17.pdf in Resources */,
+				FDD15A5C19C19DD400B00CE5 /* 7.pdf in Resources */,
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
+				FDD15A4F19C19DD400B00CE5 /* 18.pdf in Resources */,
+				FDD15A5E19C19DD400B00CE5 /* 9.pdf in Resources */,
+				FDD15A5819C19DD400B00CE5 /* 3.pdf in Resources */,
+				FDD15A4A19C19DD400B00CE5 /* 13.pdf in Resources */,
+				FDD15A5919C19DD400B00CE5 /* 4.pdf in Resources */,
+				FDD15A4B19C19DD400B00CE5 /* 14.pdf in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
+				FDD15A5D19C19DD400B00CE5 /* 8.pdf in Resources */,
+				FDD15A4D19C19DD400B00CE5 /* 16.pdf in Resources */,
+				FDD15A5419C19DD400B00CE5 /* 22.pdf in Resources */,
+				FDD15A4919C19DD400B00CE5 /* 12.pdf in Resources */,
+				FDD15A5619C19DD400B00CE5 /* 24.pdf in Resources */,
+				FDD15A4C19C19DD400B00CE5 /* 15.pdf in Resources */,
 				FDC77613198450AC00B3782F /* timetables.sqlite in Resources */,
+				FDD15A4719C19DD400B00CE5 /* 10.pdf in Resources */,
+				FDD15A5119C19DD400B00CE5 /* 2.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,15 +636,16 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stefan Church (N8V73QMGL4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7A4FEB75-09C4-4C36-BB32-BAD93C3F239E";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -546,15 +659,16 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stefan Church (L832SX5MC4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "430FB79E-1608-4A54-AEC2-E8633C075862";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};

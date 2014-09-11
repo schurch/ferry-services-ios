@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.9" systemVersion="14A343f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A343f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
-        <capability name="Constraints with attributes relative to the layout margin" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Ferry Services-->
@@ -118,7 +118,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Timetable" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fm0-5P-uRO">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Departures" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fm0-5P-uRO">
                                                     <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -142,7 +142,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlb-c7-4a6">
+                                                <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlb-c7-4a6">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="129"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="BDF-Ld-m74" id="HET-eA-Pki"/>
@@ -374,13 +374,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ardrossan Harbour to Brodick Harbour" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dp0-X6-goy">
-                                                    <rect key="frame" x="58" y="12.5" width="254" height="17"/>
+                                                    <rect key="frame" x="46" y="12.5" width="254" height="17"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eii-Wt-p24">
-                                                    <rect key="frame" x="23" y="9" width="25" height="25"/>
+                                                    <rect key="frame" x="11" y="9" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="3lE-wj-lOH"/>
                                                         <constraint firstAttribute="height" constant="25" id="uMd-bB-4bd"/>
@@ -389,7 +389,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="eii-Wt-p24" firstAttribute="top" secondItem="TbW-hp-7Gx" secondAttribute="topMargin" constant="1.5" id="5Rv-nz-tzc"/>
-                                                <constraint firstItem="eii-Wt-p24" firstAttribute="leading" secondItem="TbW-hp-7Gx" secondAttribute="leadingMargin" constant="15" id="LI2-e3-kf8"/>
+                                                <constraint firstItem="eii-Wt-p24" firstAttribute="leading" secondItem="TbW-hp-7Gx" secondAttribute="leadingMargin" constant="3" id="LI2-e3-kf8"/>
                                                 <constraint firstItem="Dp0-X6-goy" firstAttribute="leading" secondItem="eii-Wt-p24" secondAttribute="trailing" constant="10" id="bba-h6-78F"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="eii-Wt-p24" secondAttribute="bottom" constant="1.5" id="qDf-ze-atz"/>
                                                 <constraint firstItem="Dp0-X6-goy" firstAttribute="centerY" secondItem="eii-Wt-p24" secondAttribute="centerY" constant="-1" id="yKl-fe-mGC"/>
@@ -408,7 +408,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07:20" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tlf-MS-3Fs">
-                                                    <rect key="frame" x="48" y="11" width="44" height="21"/>
+                                                    <rect key="frame" x="46" y="11" width="44" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="IFq-cY-63C"/>
                                                         <constraint firstAttribute="height" constant="21" id="wKE-UO-XvN"/>
@@ -418,7 +418,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="arriving at 08:05" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rby-Gg-Mld">
-                                                    <rect key="frame" x="90" y="11" width="101" height="21"/>
+                                                    <rect key="frame" x="88" y="11" width="101" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="8Nu-39-Qvb"/>
                                                     </constraints>
@@ -443,7 +443,7 @@
                                             <constraints>
                                                 <constraint firstItem="rby-Gg-Mld" firstAttribute="leading" secondItem="tlf-MS-3Fs" secondAttribute="trailing" constant="-2" id="12h-cC-dMF"/>
                                                 <constraint firstItem="tlf-MS-3Fs" firstAttribute="top" secondItem="GBo-t4-Vff" secondAttribute="topMargin" constant="3" id="2x1-4X-LGS"/>
-                                                <constraint firstItem="tlf-MS-3Fs" firstAttribute="leading" secondItem="GBo-t4-Vff" secondAttribute="leadingMargin" constant="40" id="9Fz-RY-la2"/>
+                                                <constraint firstItem="tlf-MS-3Fs" firstAttribute="leading" secondItem="GBo-t4-Vff" secondAttribute="leadingMargin" constant="38" id="9Fz-RY-la2"/>
                                                 <constraint firstItem="rby-Gg-Mld" firstAttribute="baseline" secondItem="tlf-MS-3Fs" secondAttribute="baseline" constant="0.5" id="Tu0-6k-a9B"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="tlf-MS-3Fs" secondAttribute="bottom" constant="3.5" id="gyQ-wI-Afd"/>
                                                 <constraint firstItem="rby-Gg-Mld" firstAttribute="top" secondItem="GBo-t4-Vff" secondAttribute="topMargin" constant="3" id="lBh-WM-2rl"/>

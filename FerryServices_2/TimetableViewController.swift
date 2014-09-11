@@ -214,7 +214,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
             if indexPath.row == 0 {
                 // date header
                 let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.dateCell) as TimetableDateTableViewCell
-                cell.labelDeparturesArrivals.text = "Departures"
+                cell.labelDeparturesArrivals.text = "Departs on"
                 
                 let date = self.dateFormatter.stringFromDate(self.date)
                 cell.labelSelectedDate.text = "\(date)"
@@ -285,7 +285,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         if indexPath.section == 0 && indexPath.row == 0 {
             if let dateCell = cell as? TimetableDateTableViewCell {
                 if let window = UIApplication.sharedApplication().delegate?.window? {
-                    dateCell.labelSelectedDate.textColor = UIColor.redColor()
+                    dateCell.labelSelectedDate.textColor = window.tintColor
                 }
             }
         }

@@ -36,6 +36,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     var disruptionDetails: DisruptionDetails?;
     var routeDetails: RouteDetails?;
     var serviceStatus: ServiceStatus!;
+    var refreshing: Bool = false
     
     // MARK: - private vars
     private var locations: [Location]?
@@ -46,8 +47,13 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         
         self.title = self.serviceStatus.area
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl = refreshControl
+        
         self.configureMap()
-        self.fetchLatestDisruptionData()
+        
+        self.refresh(nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -59,7 +65,20 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     }
     
     // MARK: - refresh
-    private func fetchLatestDisruptionData() {
+    func refresh(sender: UIRefreshControl?) {
+        if self.refreshing {
+            return
+        }
+        
+        self.refreshing = true
+        
+        self.fetchLatestDisruptionDataWithCompletion {
+            self.refreshing = false
+            self.refreshControl?.endRefreshing()
+        }
+    }
+    
+    private func fetchLatestDisruptionDataWithCompletion(completion: () -> ()) {
         if let serviceId = self.serviceStatus.serviceId {
             self.prepareForDisruptionDetailsReload()
             APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, routeDetails, error in
@@ -73,7 +92,11 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
                 }
                 
                 self.finalizeDisruptionDetailsReload()
+                completion()
             }
+        }
+        else {
+            completion()
         }
     }
     
@@ -91,7 +114,8 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             
             if annotations != nil {
                 self.mapView.addAnnotations(annotations)
-                self.mapView.showAnnotations(annotations, animated: false)
+                let mapRect = calculateMapRectForAnnotations(annotations!)
+                self.mapView.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: 40, left: 20, bottom: 5, right: 20), animated: false)
             }
         }
     }
@@ -205,6 +229,15 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
         
         return 60;
+    }
+    
+    private func calculateMapRectForAnnotations(annotations: [MKPointAnnotation]) -> MKMapRect {
+        var mapRect = MKMapRectNull
+        for annotation in annotations {
+            let point = MKMapPointForCoordinate(annotation.coordinate)
+            mapRect = MKMapRectUnion(mapRect, MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
+        }
+        return mapRect
     }
     
     private func toggleDisruptionHidden(hidden: Bool) {

@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
         
+        self.window?.tintColor = UIColor(red: 230.0/255.0, green: 35.0/255.0, blue: 48.0/255.0, alpha: 1.0)
+        
         return true
     }
 }
