@@ -8,8 +8,9 @@
 
 import UIKit
 import MapKit
+import QuickLook
 
-class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate {
+class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate, QLPreviewControllerDataSource, QLPreviewItem {
     
     struct MainStoryBoard {
         struct TableViewCellIdentifiers {
@@ -33,6 +34,14 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
             
         return false
+    }
+    
+    var previewItemURL: NSURL {
+        return NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("\(self.serviceStatus.serviceId!)", ofType: "pdf")!)
+    }
+    
+    var previewItemTitle: String {
+        return "Summer"
     }
     
     // MARK: - private vars
@@ -96,6 +105,12 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         else {
             completion()
         }
+    }
+    
+    private func showPDFTimetable() {
+        let previewViewController = QLPreviewController()
+        previewViewController.dataSource = self
+        self.navigationController?.pushViewController(previewViewController, animated: true)
     }
 
     // MARK: - tableview datasource
@@ -178,19 +193,38 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
+    // MARK: - tableview controller delegate
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 0 {
+            if self.isTimetableDataAvailable {
+                if indexPath.row == 0 {
+                    if let routeId = self.serviceStatus.serviceId {
+                        let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as TimetableViewController
+                        timetableViewController.routeId = routeId
+                        self.navigationController?.pushViewController(timetableViewController, animated: true)
+                    }
+                }
+                else {
+                    self.showPDFTimetable()
+                }
+            }
+            else {
+                self.showPDFTimetable()
+            }
+        }
+    }
+    
     // MARK: - mapview delegate
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         mapView.deselectAnnotation(view.annotation, animated: false)
     }
     
-    // MARK: - storyboard
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        let timetableViewController = segue.destinationViewController as TimetableViewController;
-        
-        if let indexPath = self.tableView.indexPathForSelectedRow() {
-            if let routeId = self.serviceStatus.serviceId {
-                timetableViewController.routeId = routeId
-            }
-        }
+    // MARK: - preview view controller datasource
+    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController!) -> Int {
+        return 1
+    }
+    
+    func previewController(controller: QLPreviewController!, previewItemAtIndex index: Int) -> QLPreviewItem! {
+        return self
     }
 }

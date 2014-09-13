@@ -256,7 +256,7 @@
                                     <outlet property="mapView" destination="Xlb-c7-4a6" id="i4r-Aa-0Kd"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="basicCell" textLabel="fm0-5P-uRO" rowHeight="44" style="IBUITableViewCellStyleDefault" id="tl9-jW-qQ6" userLabel="Cell - basic">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="basicCell" textLabel="fm0-5P-uRO" rowHeight="44" style="IBUITableViewCellStyleDefault" id="tl9-jW-qQ6" userLabel="Cell - basic">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tl9-jW-qQ6" id="rRe-VT-Nv1">
@@ -272,11 +272,8 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="mNp-3n-A2m" kind="show" identifier="showTimetable" id="bwE-L2-2Db"/>
-                                </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="loadingCell" rowHeight="44" id="2yD-yy-f20" userLabel="Cell - loading">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="loadingCell" rowHeight="44" id="2yD-yy-f20" userLabel="Cell - loading">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2yD-yy-f20" id="2b4-pU-4Be">
@@ -304,7 +301,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="noDisruptionsCell" rowHeight="50" id="ILj-bi-QJe" userLabel="Cell - no disruptions">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="noDisruptionsCell" rowHeight="50" id="ILj-bi-QJe" userLabel="Cell - no disruptions">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ILj-bi-QJe" id="pmU-5t-0Wh">
@@ -360,7 +357,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="errorLoadingCell" rowHeight="44" id="t95-Qg-qKv" userLabel="Cell - error loading disruptions">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="errorLoadingCell" rowHeight="44" id="t95-Qg-qKv" userLabel="Cell - error loading disruptions">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t95-Qg-qKv" id="1JP-Oj-5RR">
@@ -428,7 +425,7 @@
         <!--Timetable View Controller-->
         <scene sceneID="cUn-Yx-I2L">
             <objects>
-                <viewController id="mNp-3n-A2m" customClass="TimetableViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="timetableViewController" id="mNp-3n-A2m" customClass="TimetableViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="j7F-bO-wmt"/>
                         <viewControllerLayoutGuide type="bottom" id="g5o-AI-DTd"/>
