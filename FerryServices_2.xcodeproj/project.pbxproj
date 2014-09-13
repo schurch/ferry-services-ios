@@ -20,6 +20,8 @@
 		FD753EE9197A256E00CC5DE3 /* FerryServices_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */; };
 		FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */; };
 		FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8DDDB119B094B0008479DC /* Crashlytics.framework */; };
+		FD90CEF519C3DEC2009E1D74 /* ServiceDetailMapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF419C3DEC2009E1D74 /* ServiceDetailMapTableViewCell.swift */; };
+		FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */; };
 		FDC7760C19844C2B00B3782F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760B19844C2B00B3782F /* Route.swift */; };
 		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
 		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
@@ -86,6 +88,8 @@
 		FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServices_2Tests.swift; sourceTree = "<group>"; };
 		FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		FD8DDDB119B094B0008479DC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		FD90CEF419C3DEC2009E1D74 /* ServiceDetailMapTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailMapTableViewCell.swift; sourceTree = "<group>"; };
+		FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDisruptionsTableViewCell.swift; sourceTree = "<group>"; };
 		FDC7760B19844C2B00B3782F /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Route.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760D19844C3500B3782F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Location.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Trip.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -208,7 +212,7 @@
 		FD753ED2197A256E00CC5DE3 /* FerryServices_2 */ = {
 			isa = PBXGroup;
 			children = (
-				FDD15A2D19C19DD400B00CE5 /* Static Timetables */,
+				FDD15A2D19C19DD400B00CE5 /* Timetables */,
 				FDC77612198450AC00B3782F /* timetables.sqlite */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
@@ -258,11 +262,12 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		FDD15A2D19C19DD400B00CE5 /* Static Timetables */ = {
+		FDD15A2D19C19DD400B00CE5 /* Timetables */ = {
 			isa = PBXGroup;
 			children = (
 				FDD15A2E19C19DD400B00CE5 /* Summer-2014 */,
 			);
+			name = Timetables;
 			path = "Static Timetables";
 			sourceTree = SOURCE_ROOT;
 		};
@@ -318,6 +323,8 @@
 			isa = PBXGroup;
 			children = (
 				FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */,
+				FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */,
+				FD90CEF419C3DEC2009E1D74 /* ServiceDetailMapTableViewCell.swift */,
 			);
 			name = "Service Details";
 			sourceTree = "<group>";
@@ -511,9 +518,11 @@
 				FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */,
 				FDEA4B25198C72D70023A5A7 /* RouteDetails.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
+				FD90CEF519C3DEC2009E1D74 /* ServiceDetailMapTableViewCell.swift in Sources */,
 				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
 				FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */,
 				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
+				FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,
 				FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */,
 				FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */,
 				FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */,
