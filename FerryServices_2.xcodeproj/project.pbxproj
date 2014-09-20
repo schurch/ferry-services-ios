@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F3D7E17BEA084ECEBB6C9AE6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B61FAD87F37434E965A5EF6 /* libPods.a */; };
 		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
 		FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* APIClient.swift */; };
@@ -22,32 +21,34 @@
 		FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8DDDB119B094B0008479DC /* Crashlytics.framework */; };
 		FD90CEF519C3DEC2009E1D74 /* ServiceDetailMapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF419C3DEC2009E1D74 /* ServiceDetailMapTableViewCell.swift */; };
 		FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */; };
-		FD90CF1319C40AE5009E1D74 /* 10.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFA19C40AE5009E1D74 /* 10.pdf */; };
-		FD90CF1419C40AE5009E1D74 /* 11.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFB19C40AE5009E1D74 /* 11.pdf */; };
-		FD90CF1519C40AE5009E1D74 /* 12.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFC19C40AE5009E1D74 /* 12.pdf */; };
-		FD90CF1619C40AE5009E1D74 /* 13.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFD19C40AE5009E1D74 /* 13.pdf */; };
-		FD90CF1719C40AE5009E1D74 /* 14.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFE19C40AE5009E1D74 /* 14.pdf */; };
-		FD90CF1819C40AE5009E1D74 /* 15.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFF19C40AE5009E1D74 /* 15.pdf */; };
-		FD90CF1919C40AE5009E1D74 /* 16.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0019C40AE5009E1D74 /* 16.pdf */; };
-		FD90CF1A19C40AE5009E1D74 /* 17.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0119C40AE5009E1D74 /* 17.pdf */; };
-		FD90CF1B19C40AE5009E1D74 /* 18.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0219C40AE5009E1D74 /* 18.pdf */; };
-		FD90CF1C19C40AE5009E1D74 /* 19.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0319C40AE5009E1D74 /* 19.pdf */; };
-		FD90CF1D19C40AE5009E1D74 /* 2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0419C40AE5009E1D74 /* 2.pdf */; };
-		FD90CF1E19C40AE5009E1D74 /* 20.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0519C40AE5009E1D74 /* 20.pdf */; };
-		FD90CF1F19C40AE5009E1D74 /* 21.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0619C40AE5009E1D74 /* 21.pdf */; };
-		FD90CF2019C40AE5009E1D74 /* 22.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0719C40AE5009E1D74 /* 22.pdf */; };
-		FD90CF2119C40AE5009E1D74 /* 23.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0819C40AE5009E1D74 /* 23.pdf */; };
-		FD90CF2219C40AE5009E1D74 /* 24.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0919C40AE5009E1D74 /* 24.pdf */; };
-		FD90CF2319C40AE5009E1D74 /* 25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0A19C40AE5009E1D74 /* 25.pdf */; };
-		FD90CF2419C40AE5009E1D74 /* 3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0B19C40AE5009E1D74 /* 3.pdf */; };
-		FD90CF2519C40AE5009E1D74 /* 36.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0C19C40AE5009E1D74 /* 36.pdf */; };
-		FD90CF2619C40AE5009E1D74 /* 4.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0D19C40AE5009E1D74 /* 4.pdf */; };
-		FD90CF2719C40AE5009E1D74 /* 5.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0E19C40AE5009E1D74 /* 5.pdf */; };
-		FD90CF2819C40AE5009E1D74 /* 6.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0F19C40AE5009E1D74 /* 6.pdf */; };
-		FD90CF2919C40AE5009E1D74 /* 7.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF1019C40AE5009E1D74 /* 7.pdf */; };
-		FD90CF2A19C40AE5009E1D74 /* 8.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF1119C40AE5009E1D74 /* 8.pdf */; };
-		FD90CF2B19C40AE5009E1D74 /* 9.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF1219C40AE5009E1D74 /* 9.pdf */; };
+		FD90CF1319C40AE5009E1D74 /* Colonsay_Summer_10.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFA19C40AE5009E1D74 /* Colonsay_Summer_10.pdf */; };
+		FD90CF1419C40AE5009E1D74 /* Mull_Summer_11.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFB19C40AE5009E1D74 /* Mull_Summer_11.pdf */; };
+		FD90CF1519C40AE5009E1D74 /* Mull_Summer_12.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFC19C40AE5009E1D74 /* Mull_Summer_12.pdf */; };
+		FD90CF1619C40AE5009E1D74 /* Iona_Summer_13.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFD19C40AE5009E1D74 /* Iona_Summer_13.pdf */; };
+		FD90CF1719C40AE5009E1D74 /* Ardnamurchan_Summer_14.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFE19C40AE5009E1D74 /* Ardnamurchan_Summer_14.pdf */; };
+		FD90CF1819C40AE5009E1D74 /* Lismore_Summer_15.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CEFF19C40AE5009E1D74 /* Lismore_Summer_15.pdf */; };
+		FD90CF1919C40AE5009E1D74 /* Coll_Summer_16.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0019C40AE5009E1D74 /* Coll_Summer_16.pdf */; };
+		FD90CF1A19C40AE5009E1D74 /* Raasay_Summer_17.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0119C40AE5009E1D74 /* Raasay_Summer_17.pdf */; };
+		FD90CF1B19C40AE5009E1D74 /* Skye_Summer_18.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0219C40AE5009E1D74 /* Skye_Summer_18.pdf */; };
+		FD90CF1C19C40AE5009E1D74 /* Small_Isles_Summer_19.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0319C40AE5009E1D74 /* Small_Isles_Summer_19.pdf */; };
+		FD90CF1D19C40AE5009E1D74 /* Cowal_Summer_2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0419C40AE5009E1D74 /* Cowal_Summer_2.pdf */; };
+		FD90CF1E19C40AE5009E1D74 /* Barra_Summer_20.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0519C40AE5009E1D74 /* Barra_Summer_20.pdf */; };
+		FD90CF1F19C40AE5009E1D74 /* Barra_Summer_21.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0619C40AE5009E1D74 /* Barra_Summer_21.pdf */; };
+		FD90CF2019C40AE5009E1D74 /* North_Uist_Summer_22.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0719C40AE5009E1D74 /* North_Uist_Summer_22.pdf */; };
+		FD90CF2119C40AE5009E1D74 /* North_Uist_Summer_23.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0819C40AE5009E1D74 /* North_Uist_Summer_23.pdf */; };
+		FD90CF2219C40AE5009E1D74 /* Harris_Summer_24.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0919C40AE5009E1D74 /* Harris_Summer_24.pdf */; };
+		FD90CF2319C40AE5009E1D74 /* Lewis_Summer_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0A19C40AE5009E1D74 /* Lewis_Summer_25.pdf */; };
+		FD90CF2419C40AE5009E1D74 /* Bute_Summer_3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0B19C40AE5009E1D74 /* Bute_Summer_3.pdf */; };
+		FD90CF2519C40AE5009E1D74 /* Kintyre_Summer_36.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0C19C40AE5009E1D74 /* Kintyre_Summer_36.pdf */; };
+		FD90CF2619C40AE5009E1D74 /* Bute_Summer_4.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0D19C40AE5009E1D74 /* Bute_Summer_4.pdf */; };
+		FD90CF2719C40AE5009E1D74 /* Arran_Summer_5.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0E19C40AE5009E1D74 /* Arran_Summer_5.pdf */; };
+		FD90CF2819C40AE5009E1D74 /* Arran_Summer_6.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF0F19C40AE5009E1D74 /* Arran_Summer_6.pdf */; };
+		FD90CF2919C40AE5009E1D74 /* Cumbrae_Summer_7.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF1019C40AE5009E1D74 /* Cumbrae_Summer_7.pdf */; };
+		FD90CF2A19C40AE5009E1D74 /* Gigha_Summer_8.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF1119C40AE5009E1D74 /* Gigha_Summer_8.pdf */; };
+		FD90CF2B19C40AE5009E1D74 /* Islay_Summer_9.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FD90CF1219C40AE5009E1D74 /* Islay_Summer_9.pdf */; };
 		FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */; };
+		FD9432D719CD0EA4003BBD23 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9432D619CD0EA4003BBD23 /* libPods.a */; };
+		FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */; };
 		FDC7760C19844C2B00B3782F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760B19844C2B00B3782F /* Route.swift */; };
 		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
 		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
@@ -92,33 +93,37 @@
 		FD8DDDB119B094B0008479DC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		FD90CEF419C3DEC2009E1D74 /* ServiceDetailMapTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailMapTableViewCell.swift; sourceTree = "<group>"; };
 		FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDisruptionsTableViewCell.swift; sourceTree = "<group>"; };
-		FD90CEFA19C40AE5009E1D74 /* 10.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 10.pdf; sourceTree = "<group>"; };
-		FD90CEFB19C40AE5009E1D74 /* 11.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 11.pdf; sourceTree = "<group>"; };
-		FD90CEFC19C40AE5009E1D74 /* 12.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 12.pdf; sourceTree = "<group>"; };
-		FD90CEFD19C40AE5009E1D74 /* 13.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 13.pdf; sourceTree = "<group>"; };
-		FD90CEFE19C40AE5009E1D74 /* 14.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 14.pdf; sourceTree = "<group>"; };
-		FD90CEFF19C40AE5009E1D74 /* 15.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 15.pdf; sourceTree = "<group>"; };
-		FD90CF0019C40AE5009E1D74 /* 16.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 16.pdf; sourceTree = "<group>"; };
-		FD90CF0119C40AE5009E1D74 /* 17.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 17.pdf; sourceTree = "<group>"; };
-		FD90CF0219C40AE5009E1D74 /* 18.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 18.pdf; sourceTree = "<group>"; };
-		FD90CF0319C40AE5009E1D74 /* 19.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 19.pdf; sourceTree = "<group>"; };
-		FD90CF0419C40AE5009E1D74 /* 2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 2.pdf; sourceTree = "<group>"; };
-		FD90CF0519C40AE5009E1D74 /* 20.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 20.pdf; sourceTree = "<group>"; };
-		FD90CF0619C40AE5009E1D74 /* 21.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 21.pdf; sourceTree = "<group>"; };
-		FD90CF0719C40AE5009E1D74 /* 22.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 22.pdf; sourceTree = "<group>"; };
-		FD90CF0819C40AE5009E1D74 /* 23.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 23.pdf; sourceTree = "<group>"; };
-		FD90CF0919C40AE5009E1D74 /* 24.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 24.pdf; sourceTree = "<group>"; };
-		FD90CF0A19C40AE5009E1D74 /* 25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 25.pdf; sourceTree = "<group>"; };
-		FD90CF0B19C40AE5009E1D74 /* 3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 3.pdf; sourceTree = "<group>"; };
-		FD90CF0C19C40AE5009E1D74 /* 36.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 36.pdf; sourceTree = "<group>"; };
-		FD90CF0D19C40AE5009E1D74 /* 4.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 4.pdf; sourceTree = "<group>"; };
-		FD90CF0E19C40AE5009E1D74 /* 5.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 5.pdf; sourceTree = "<group>"; };
-		FD90CF0F19C40AE5009E1D74 /* 6.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 6.pdf; sourceTree = "<group>"; };
-		FD90CF1019C40AE5009E1D74 /* 7.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 7.pdf; sourceTree = "<group>"; };
-		FD90CF1119C40AE5009E1D74 /* 8.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 8.pdf; sourceTree = "<group>"; };
-		FD90CF1219C40AE5009E1D74 /* 9.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = 9.pdf; sourceTree = "<group>"; };
+		FD90CEFA19C40AE5009E1D74 /* Colonsay_Summer_10.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Colonsay_Summer_10.pdf; sourceTree = "<group>"; };
+		FD90CEFB19C40AE5009E1D74 /* Mull_Summer_11.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Mull_Summer_11.pdf; sourceTree = "<group>"; };
+		FD90CEFC19C40AE5009E1D74 /* Mull_Summer_12.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Mull_Summer_12.pdf; sourceTree = "<group>"; };
+		FD90CEFD19C40AE5009E1D74 /* Iona_Summer_13.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Iona_Summer_13.pdf; sourceTree = "<group>"; };
+		FD90CEFE19C40AE5009E1D74 /* Ardnamurchan_Summer_14.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Ardnamurchan_Summer_14.pdf; sourceTree = "<group>"; };
+		FD90CEFF19C40AE5009E1D74 /* Lismore_Summer_15.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Lismore_Summer_15.pdf; sourceTree = "<group>"; };
+		FD90CF0019C40AE5009E1D74 /* Coll_Summer_16.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Coll_Summer_16.pdf; sourceTree = "<group>"; };
+		FD90CF0119C40AE5009E1D74 /* Raasay_Summer_17.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Raasay_Summer_17.pdf; sourceTree = "<group>"; };
+		FD90CF0219C40AE5009E1D74 /* Skye_Summer_18.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Skye_Summer_18.pdf; sourceTree = "<group>"; };
+		FD90CF0319C40AE5009E1D74 /* Small_Isles_Summer_19.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Small_Isles_Summer_19.pdf; sourceTree = "<group>"; };
+		FD90CF0419C40AE5009E1D74 /* Cowal_Summer_2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Cowal_Summer_2.pdf; sourceTree = "<group>"; };
+		FD90CF0519C40AE5009E1D74 /* Barra_Summer_20.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Barra_Summer_20.pdf; sourceTree = "<group>"; };
+		FD90CF0619C40AE5009E1D74 /* Barra_Summer_21.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Barra_Summer_21.pdf; sourceTree = "<group>"; };
+		FD90CF0719C40AE5009E1D74 /* North_Uist_Summer_22.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = North_Uist_Summer_22.pdf; sourceTree = "<group>"; };
+		FD90CF0819C40AE5009E1D74 /* North_Uist_Summer_23.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = North_Uist_Summer_23.pdf; sourceTree = "<group>"; };
+		FD90CF0919C40AE5009E1D74 /* Harris_Summer_24.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Harris_Summer_24.pdf; sourceTree = "<group>"; };
+		FD90CF0A19C40AE5009E1D74 /* Lewis_Summer_25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Lewis_Summer_25.pdf; sourceTree = "<group>"; };
+		FD90CF0B19C40AE5009E1D74 /* Bute_Summer_3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Bute_Summer_3.pdf; sourceTree = "<group>"; };
+		FD90CF0C19C40AE5009E1D74 /* Kintyre_Summer_36.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Kintyre_Summer_36.pdf; sourceTree = "<group>"; };
+		FD90CF0D19C40AE5009E1D74 /* Bute_Summer_4.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Bute_Summer_4.pdf; sourceTree = "<group>"; };
+		FD90CF0E19C40AE5009E1D74 /* Arran_Summer_5.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Arran_Summer_5.pdf; sourceTree = "<group>"; };
+		FD90CF0F19C40AE5009E1D74 /* Arran_Summer_6.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Arran_Summer_6.pdf; sourceTree = "<group>"; };
+		FD90CF1019C40AE5009E1D74 /* Cumbrae_Summer_7.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Cumbrae_Summer_7.pdf; sourceTree = "<group>"; };
+		FD90CF1119C40AE5009E1D74 /* Gigha_Summer_8.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Gigha_Summer_8.pdf; sourceTree = "<group>"; };
+		FD90CF1219C40AE5009E1D74 /* Islay_Summer_9.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Islay_Summer_9.pdf; sourceTree = "<group>"; };
 		FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		FD9432D219CD0DAC003BBD23 /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
+		FD9432D319CD0DAC003BBD23 /* libPods-FMDB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FMDB.a"; path = "Pods/build/Debug-iphoneos/libPods-FMDB.a"; sourceTree = "<group>"; };
+		FD9432D619CD0EA4003BBD23 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
 		FDC7760B19844C2B00B3782F /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Route.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760D19844C3500B3782F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Location.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Trip.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -136,10 +141,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD9432D719CD0EA4003BBD23 /* libPods.a in Frameworks */,
 				FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */,
 				FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */,
 				FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */,
-				F3D7E17BEA084ECEBB6C9AE6 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +161,9 @@
 		6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FD9432D619CD0EA4003BBD23 /* libPods.a */,
+				FD9432D219CD0DAC003BBD23 /* libPods-AFNetworking.a */,
+				FD9432D319CD0DAC003BBD23 /* libPods-FMDB.a */,
 				FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */,
 				FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */,
 				FD8DDDB119B094B0008479DC /* Crashlytics.framework */,
@@ -182,6 +190,7 @@
 				FDEA4B20198C72160023A5A7 /* Services */,
 				FDEA4B21198C721C0023A5A7 /* Service Details */,
 				FD4F6BD719B183B2007E88A1 /* Timetable */,
+				FD9432DA19CD1376003BBD23 /* Timetable Preview */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -271,33 +280,41 @@
 		FD90CEF919C40AE4009E1D74 /* Summer-2014 */ = {
 			isa = PBXGroup;
 			children = (
-				FD90CEFA19C40AE5009E1D74 /* 10.pdf */,
-				FD90CEFB19C40AE5009E1D74 /* 11.pdf */,
-				FD90CEFC19C40AE5009E1D74 /* 12.pdf */,
-				FD90CEFD19C40AE5009E1D74 /* 13.pdf */,
-				FD90CEFE19C40AE5009E1D74 /* 14.pdf */,
-				FD90CEFF19C40AE5009E1D74 /* 15.pdf */,
-				FD90CF0019C40AE5009E1D74 /* 16.pdf */,
-				FD90CF0119C40AE5009E1D74 /* 17.pdf */,
-				FD90CF0219C40AE5009E1D74 /* 18.pdf */,
-				FD90CF0319C40AE5009E1D74 /* 19.pdf */,
-				FD90CF0419C40AE5009E1D74 /* 2.pdf */,
-				FD90CF0519C40AE5009E1D74 /* 20.pdf */,
-				FD90CF0619C40AE5009E1D74 /* 21.pdf */,
-				FD90CF0719C40AE5009E1D74 /* 22.pdf */,
-				FD90CF0819C40AE5009E1D74 /* 23.pdf */,
-				FD90CF0919C40AE5009E1D74 /* 24.pdf */,
-				FD90CF0A19C40AE5009E1D74 /* 25.pdf */,
-				FD90CF0B19C40AE5009E1D74 /* 3.pdf */,
-				FD90CF0C19C40AE5009E1D74 /* 36.pdf */,
-				FD90CF0D19C40AE5009E1D74 /* 4.pdf */,
-				FD90CF0E19C40AE5009E1D74 /* 5.pdf */,
-				FD90CF0F19C40AE5009E1D74 /* 6.pdf */,
-				FD90CF1019C40AE5009E1D74 /* 7.pdf */,
-				FD90CF1119C40AE5009E1D74 /* 8.pdf */,
-				FD90CF1219C40AE5009E1D74 /* 9.pdf */,
+				FD90CEFA19C40AE5009E1D74 /* Colonsay_Summer_10.pdf */,
+				FD90CEFB19C40AE5009E1D74 /* Mull_Summer_11.pdf */,
+				FD90CEFC19C40AE5009E1D74 /* Mull_Summer_12.pdf */,
+				FD90CEFD19C40AE5009E1D74 /* Iona_Summer_13.pdf */,
+				FD90CEFE19C40AE5009E1D74 /* Ardnamurchan_Summer_14.pdf */,
+				FD90CEFF19C40AE5009E1D74 /* Lismore_Summer_15.pdf */,
+				FD90CF0019C40AE5009E1D74 /* Coll_Summer_16.pdf */,
+				FD90CF0119C40AE5009E1D74 /* Raasay_Summer_17.pdf */,
+				FD90CF0219C40AE5009E1D74 /* Skye_Summer_18.pdf */,
+				FD90CF0319C40AE5009E1D74 /* Small_Isles_Summer_19.pdf */,
+				FD90CF0419C40AE5009E1D74 /* Cowal_Summer_2.pdf */,
+				FD90CF0519C40AE5009E1D74 /* Barra_Summer_20.pdf */,
+				FD90CF0619C40AE5009E1D74 /* Barra_Summer_21.pdf */,
+				FD90CF0719C40AE5009E1D74 /* North_Uist_Summer_22.pdf */,
+				FD90CF0819C40AE5009E1D74 /* North_Uist_Summer_23.pdf */,
+				FD90CF0919C40AE5009E1D74 /* Harris_Summer_24.pdf */,
+				FD90CF0A19C40AE5009E1D74 /* Lewis_Summer_25.pdf */,
+				FD90CF0B19C40AE5009E1D74 /* Bute_Summer_3.pdf */,
+				FD90CF0C19C40AE5009E1D74 /* Kintyre_Summer_36.pdf */,
+				FD90CF0D19C40AE5009E1D74 /* Bute_Summer_4.pdf */,
+				FD90CF0E19C40AE5009E1D74 /* Arran_Summer_5.pdf */,
+				FD90CF0F19C40AE5009E1D74 /* Arran_Summer_6.pdf */,
+				FD90CF1019C40AE5009E1D74 /* Cumbrae_Summer_7.pdf */,
+				FD90CF1119C40AE5009E1D74 /* Gigha_Summer_8.pdf */,
+				FD90CF1219C40AE5009E1D74 /* Islay_Summer_9.pdf */,
 			);
 			path = "Summer-2014";
+			sourceTree = "<group>";
+		};
+		FD9432DA19CD1376003BBD23 /* Timetable Preview */ = {
+			isa = PBXGroup;
+			children = (
+				FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */,
+			);
+			name = "Timetable Preview";
 			sourceTree = "<group>";
 		};
 		FDC7761119844C4500B3782F /* Model */ = {
@@ -426,34 +443,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD90CF1E19C40AE5009E1D74 /* 20.pdf in Resources */,
-				FD90CF2819C40AE5009E1D74 /* 6.pdf in Resources */,
-				FD90CF1F19C40AE5009E1D74 /* 21.pdf in Resources */,
-				FD90CF1C19C40AE5009E1D74 /* 19.pdf in Resources */,
-				FD90CF2119C40AE5009E1D74 /* 23.pdf in Resources */,
-				FD90CF1419C40AE5009E1D74 /* 11.pdf in Resources */,
-				FD90CF2B19C40AE5009E1D74 /* 9.pdf in Resources */,
-				FD90CF2319C40AE5009E1D74 /* 25.pdf in Resources */,
-				FD90CF1A19C40AE5009E1D74 /* 17.pdf in Resources */,
+				FD90CF1E19C40AE5009E1D74 /* Barra_Summer_20.pdf in Resources */,
+				FD90CF2819C40AE5009E1D74 /* Arran_Summer_6.pdf in Resources */,
+				FD90CF1F19C40AE5009E1D74 /* Barra_Summer_21.pdf in Resources */,
+				FD90CF1C19C40AE5009E1D74 /* Small_Isles_Summer_19.pdf in Resources */,
+				FD90CF2119C40AE5009E1D74 /* North_Uist_Summer_23.pdf in Resources */,
+				FD90CF1419C40AE5009E1D74 /* Mull_Summer_11.pdf in Resources */,
+				FD90CF2B19C40AE5009E1D74 /* Islay_Summer_9.pdf in Resources */,
+				FD90CF2319C40AE5009E1D74 /* Lewis_Summer_25.pdf in Resources */,
+				FD90CF1A19C40AE5009E1D74 /* Raasay_Summer_17.pdf in Resources */,
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
-				FD90CF1B19C40AE5009E1D74 /* 18.pdf in Resources */,
-				FD90CF2419C40AE5009E1D74 /* 3.pdf in Resources */,
-				FD90CF1619C40AE5009E1D74 /* 13.pdf in Resources */,
-				FD90CF1719C40AE5009E1D74 /* 14.pdf in Resources */,
+				FD90CF1B19C40AE5009E1D74 /* Skye_Summer_18.pdf in Resources */,
+				FD90CF2419C40AE5009E1D74 /* Bute_Summer_3.pdf in Resources */,
+				FD90CF1619C40AE5009E1D74 /* Iona_Summer_13.pdf in Resources */,
+				FD90CF1719C40AE5009E1D74 /* Ardnamurchan_Summer_14.pdf in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
-				FD90CF2519C40AE5009E1D74 /* 36.pdf in Resources */,
-				FD90CF2A19C40AE5009E1D74 /* 8.pdf in Resources */,
-				FD90CF1919C40AE5009E1D74 /* 16.pdf in Resources */,
-				FD90CF2019C40AE5009E1D74 /* 22.pdf in Resources */,
-				FD90CF1519C40AE5009E1D74 /* 12.pdf in Resources */,
-				FD90CF2219C40AE5009E1D74 /* 24.pdf in Resources */,
-				FD90CF2719C40AE5009E1D74 /* 5.pdf in Resources */,
-				FD90CF1819C40AE5009E1D74 /* 15.pdf in Resources */,
+				FD90CF2519C40AE5009E1D74 /* Kintyre_Summer_36.pdf in Resources */,
+				FD90CF2A19C40AE5009E1D74 /* Gigha_Summer_8.pdf in Resources */,
+				FD90CF1919C40AE5009E1D74 /* Coll_Summer_16.pdf in Resources */,
+				FD90CF2019C40AE5009E1D74 /* North_Uist_Summer_22.pdf in Resources */,
+				FD90CF1519C40AE5009E1D74 /* Mull_Summer_12.pdf in Resources */,
+				FD90CF2219C40AE5009E1D74 /* Harris_Summer_24.pdf in Resources */,
+				FD90CF2719C40AE5009E1D74 /* Arran_Summer_5.pdf in Resources */,
+				FD90CF1819C40AE5009E1D74 /* Lismore_Summer_15.pdf in Resources */,
 				FDC77613198450AC00B3782F /* timetables.sqlite in Resources */,
-				FD90CF2919C40AE5009E1D74 /* 7.pdf in Resources */,
-				FD90CF1319C40AE5009E1D74 /* 10.pdf in Resources */,
-				FD90CF1D19C40AE5009E1D74 /* 2.pdf in Resources */,
-				FD90CF2619C40AE5009E1D74 /* 4.pdf in Resources */,
+				FD90CF2919C40AE5009E1D74 /* Cumbrae_Summer_7.pdf in Resources */,
+				FD90CF1319C40AE5009E1D74 /* Colonsay_Summer_10.pdf in Resources */,
+				FD90CF1D19C40AE5009E1D74 /* Cowal_Summer_2.pdf in Resources */,
+				FD90CF2619C40AE5009E1D74 /* Bute_Summer_4.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +538,7 @@
 				FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				FD71167919B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift in Sources */,
+				FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */,
 				FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */,
 				FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */,
 				FDC7760E19844C3500B3782F /* Location.swift in Sources */,
@@ -662,8 +680,13 @@
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				"SWIFT_INCLUDE_PATHS[arch=*]" = "/Users/stefanchurch/Documents/Source/ferry-services-swift/Pods/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -685,6 +708,10 @@
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";

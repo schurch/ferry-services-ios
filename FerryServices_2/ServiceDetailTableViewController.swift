@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import QuickLook
 
-class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate, QLPreviewControllerDataSource, QLPreviewItem {
+class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate {
     
     struct MainStoryBoard {
         struct TableViewCellIdentifiers {
@@ -23,10 +23,10 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
-    var disruptionDetails: DisruptionDetails?;
-    var routeDetails: RouteDetails?;
-    var serviceStatus: ServiceStatus!;
+    var disruptionDetails: DisruptionDetails?
     var refreshing: Bool = false
+    var routeDetails: RouteDetails?
+    var serviceStatus: ServiceStatus!
     
     var isTimetableDataAvailable: Bool {
         if let routeId = self.serviceStatus.serviceId {
@@ -34,14 +34,6 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
             
         return false
-    }
-    
-    var previewItemURL: NSURL {
-        return NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("\(self.serviceStatus.serviceId!)", ofType: "pdf")!)
-    }
-    
-    var previewItemTitle: String {
-        return "Summer"
     }
     
     // MARK: - private vars
@@ -108,12 +100,36 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     }
     
     private func showPDFTimetable() {
-        let previewViewController = QLPreviewController()
-        previewViewController.dataSource = self
-        self.navigationController?.pushViewController(previewViewController, animated: true)
+        let files = NSFileManager.defaultManager().contentsOfDirectoryAtPath(NSBundle.mainBundle().bundlePath, error: nil)
+        
+        let summerTimetableFile: AnyObject? = files?.filter({fileName in
+            let components = fileName.componentsSeparatedByString("_")
+            if components.count > 1 {
+                if let summerString = components[components.count - 2] as? String {
+                    if summerString.lowercaseString == "summer" {
+                        if let serviceIdStringFileName = components[components.count - 1] as? String {
+                            if let serviceIdString = serviceIdStringFileName.componentsSeparatedByString(".").first {
+                                return serviceIdString.toInt() == self.serviceStatus.serviceId!
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return false
+        }).first
+        
+        if let filename = summerTimetableFile as? String {
+            println(filename)
+            let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TimetablePreview") as TimetablePreviewViewController
+            previewViewController.serviceStatus = self.serviceStatus
+            previewViewController.url = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(filename.stringByDeletingPathExtension, ofType: "pdf")!)
+            previewViewController.title = "Summer"
+            self.navigationController?.pushViewController(previewViewController, animated: true)
+        }
     }
 
-    // MARK: - tableview datasource
+    // MARK: - UITableViewDatasource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
     }
@@ -134,7 +150,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return self.serviceStatus.area
+            return self.serviceStatus.route
         case 1:
             return "Map"
         case 2:
@@ -193,7 +209,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
-    // MARK: - tableview controller delegate
+    // MARK: - UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
             if self.isTimetableDataAvailable {
@@ -214,17 +230,8 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
-    // MARK: - mapview delegate
+    // MARK: - MKMapViewDelegate
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         mapView.deselectAnnotation(view.annotation, animated: false)
-    }
-    
-    // MARK: - preview view controller datasource
-    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController!) -> Int {
-        return 1
-    }
-    
-    func previewController(controller: QLPreviewController!, previewItemAtIndex index: Int) -> QLPreviewItem! {
-        return self
     }
 }

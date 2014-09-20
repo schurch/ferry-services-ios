@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Flurry.setCrashReportingEnabled(false)
         Flurry.startSession("48Q89W7B39FXGJK9BSW6")
         
-        Crashlytics.startWithAPIKey("9aad7798d2e2d712649ba35bd1747beeac29b07f")
+//        Crashlytics.startWithAPIKey("9aad7798d2e2d712649ba35bd1747beeac29b07f")
 
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
         

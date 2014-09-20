@@ -55,7 +55,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         self.updateTrips()
     }
     
-    // MARK: - ui actions
+    // MARK: - UI Actions
     @IBAction func dateAction(sender: UIDatePicker) {
         if self.hasInlineDatePicker() {
             self.date = self.stripTimeComponentsFromDate(sender.date)
@@ -63,7 +63,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    // MARK: - utility methods
+    // MARK: - Utility methods
     func updateTrips() {
         if self.routeId != nil && self.date != nil {
             self.arrayOfRoutes = Route.fetchRoutesForServiceId(self.routeId, date: self.date)?.filter { $0.trips?.count > 0 }
@@ -105,7 +105,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         return date!
     }
     
-    // MARK: - inline date picker methods
+    // MARK: - Inline date picker methods
     func hasInlineDatePicker() -> Bool {
         return self.datePickerIndexPath != nil
     }
@@ -183,7 +183,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         self.updateDatePicker()
     }
     
-    // MARK: - uitableview datasource
+    // MARK: - UITableViewDatasource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         var count = 0
         if let routes = self.arrayOfRoutes {
@@ -276,7 +276,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    // MARK: - uitableview delegate
+    // MARK: - UITableViewDelegate
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return self.isPickerAtIndexPath(indexPath) ? CGFloat(self.pickerCellRowHeight) : self.tableView.rowHeight
     }
@@ -302,7 +302,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    // MARK: - timetable time cell delegate
+    // MARK: - TimetableTimeTableViewCellDelegate
     func didTouchTimetableInfoButtonForCell(cell: TimetableTimeTableViewCell) {
         if let indexPath = self.tableView.indexPathForCell(cell) {
             if let trip = self.tripForIndexPath(indexPath) {

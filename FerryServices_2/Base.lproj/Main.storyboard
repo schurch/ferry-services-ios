@@ -374,8 +374,8 @@
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="z7F-Az-7IB"/>
                                                     <exclude reference="j90-vJ-qkn"/>
+                                                    <exclude reference="z7F-Az-7IB"/>
                                                 </mask>
                                             </variation>
                                         </label>
@@ -620,6 +620,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AP7-Yz-zng" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2010" y="154"/>
+        </scene>
+        <!--Timetable Preview View Controller-->
+        <scene sceneID="Wet-TP-UfD">
+            <objects>
+                <viewController storyboardIdentifier="TimetablePreview" id="gbg-aM-v0o" customClass="TimetablePreviewViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eG4-a0-Mfh"/>
+                        <viewControllerLayoutGuide type="bottom" id="wK6-sv-5TR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="v1p-QK-vy3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QqZ-ei-Ke8">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QqZ-ei-Ke8" firstAttribute="top" secondItem="v1p-QK-vy3" secondAttribute="top" id="6de-4s-mnb"/>
+                            <constraint firstItem="wK6-sv-5TR" firstAttribute="top" secondItem="QqZ-ei-Ke8" secondAttribute="bottom" id="6mT-BG-mK1"/>
+                            <constraint firstItem="QqZ-ei-Ke8" firstAttribute="leading" secondItem="v1p-QK-vy3" secondAttribute="leading" id="HVS-1B-zoE"/>
+                            <constraint firstAttribute="trailing" secondItem="QqZ-ei-Ke8" secondAttribute="trailing" id="fFR-5G-Dky"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webview" destination="QqZ-ei-Ke8" id="GF0-pE-Bz4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e0q-Ta-QkP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2208" y="813"/>
         </scene>
     </scenes>
     <resources>
