@@ -10,16 +10,31 @@ import UIKit
 
 class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
+    // MARK: - Variables & Constants
     private struct MainStoryboard {
         struct TableViewCellIdentifiers {
             static let serviceStatusCell = "serviceStatusCell"
         }
     }
     
+    private let userDefaultsKey = "com.ferryservices.userdefaultkeys.tapcount"
+    
+    private let minimumRecentTapCount = 2
+    
+    private let sectionRecent = 0
+    private let sectionServices = 1
+    
+    private let sectionRecentHeader = "Recent"
+    private let sectionServicesHeader = "Services"
+    
     private var arrayServiceStatuses = [ServiceStatus]()
     private var arrayFilteredServiceStatuses = [ServiceStatus]()
+    private var arrayRecentServiceStatues = [ServiceStatus]()
     
-    // MARK: - view lifecycle
+    private var tapCountDictionary = NSUserDefaults.standardUserDefaults().dictionaryForKey("com.ferryservices.userdefaultkeys.tapcount")
+        ?? [NSObject:AnyObject]()
+    
+    // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,34 +58,75 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         }
     }
     
-    // MARK: - notifications
+    override func viewWillDisappear(animated: Bool) {
+        reloadRecents()
+    }
+    
+    // MARK: - Notifications
     func applicationDidBecomeActive(notification: NSNotification) {
         self.refresh(nil)
     }
     
-    // MARK: - refresh
+    // MARK: - Refresh
     func refresh(sender: UIRefreshControl?) {
         APIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
             if let statuses = serviceStatuses {
                 self.arrayServiceStatuses = statuses
+                
+                self.reloadRecents()
             }
             self.tableView.reloadData()
             self.refreshControl?.endRefreshing()
         }
     }
     
-    // MARK: - tableview datasource
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (tableView == self.searchDisplayController?.searchResultsTableView) {
-            return self.arrayFilteredServiceStatuses.count
+    // MARK: - UITableViewDataSource
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if isSearchViewControllerTableView(tableView){
+            // We are "searching" so we only have one section
+            return 1
         }
-        else {
-            return self.arrayServiceStatuses.count
+        
+        return self.arrayRecentServiceStatues.isEmpty ? 1 : 2
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if isSearchViewControllerTableView(tableView) {
+            return nil
+        }
+        
+        if self.arrayRecentServiceStatues.isEmpty {
+            return nil
+        }
+        
+        switch(section) {
+        case sectionRecent:
+            return self.sectionRecentHeader
+        default:
+            return self.sectionServicesHeader
         }
     }
     
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (isSearchViewControllerTableView(tableView)) {
+            return self.arrayFilteredServiceStatuses.count
+        }
+        
+        if self.arrayRecentServiceStatues.isEmpty {
+            return self.arrayServiceStatuses.count
+        }
+        
+        switch (section) {
+        case sectionRecent:
+            return self.arrayRecentServiceStatues.count
+        default:
+            return self.arrayServiceStatuses.count
+        }
+        
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let isFiltering = tableView == self.searchDisplayController?.searchResultsTableView
+        let isFiltering = isSearchViewControllerTableView(tableView)
         
         // Dequeue cell
         let serviceStatusCell = isFiltering
@@ -78,9 +134,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             : self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.serviceStatusCell, forIndexPath: indexPath) as ServiceStatusTableViewCell
         
         // Modal object
-        let serviceStatus = isFiltering
-            ? arrayFilteredServiceStatuses[indexPath.row]
-            : arrayServiceStatuses[indexPath.row]
+        let serviceStatus = serviceStatusForTableView(tableView, indexPath)
         
         // Configure cell with modal object
         serviceStatusCell.labelTitle.text = serviceStatus.area
@@ -108,7 +162,41 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         return serviceStatusCell
     }
     
-    // MARK: - storyboard
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if isSearchViewControllerTableView(tableView) {
+            return false
+        }
+        
+        if self.arrayRecentServiceStatues.isEmpty {
+            return false
+        }
+        
+        if indexPath.section == self.sectionServices {
+            return false
+        }
+        
+        return true
+    }
+    
+    // MARK: - UITableViewDelegate
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if isSearchViewControllerTableView(tableView) {
+            return
+        }
+        
+        let serviceStatus = self.arrayServiceStatuses[indexPath.row]
+        
+        if let id = serviceStatus.serviceId {
+            incrementTapCountForServiceId(id)
+        }
+        
+    }
+    
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .Delete
+    }
+    
+    // MARK: - Storyboard
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         let serviceDetailViewController = segue.destinationViewController as ServiceDetailTableViewController;
         
@@ -137,4 +225,78 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         
         return true
     }
+    
+    // MARK: - Helpers
+    func isSearchViewControllerTableView(tableView: UITableView) -> Bool {
+        return tableView == self.searchDisplayController?.searchResultsTableView
+    }
+    
+    func serviceStatusForTableView(tablewView: UITableView, _ indexPath: NSIndexPath) -> ServiceStatus {
+        // If we are searching...
+        if isSearchViewControllerTableView(tableView) {
+            return self.arrayFilteredServiceStatuses[indexPath.row]
+        }
+        
+        // If we have a single section...
+        if self.numberOfSectionsInTableView(tablewView) == 1 {
+            return self.arrayServiceStatuses[indexPath.row]
+        }
+        
+        // If we have two sections...
+        switch(indexPath.section) {
+        case self.sectionRecent:
+            return self.arrayRecentServiceStatues[indexPath.row]
+        default:
+            return self.arrayServiceStatuses[indexPath.row]
+        }
+    }
+    
+    func incrementTapCountForServiceId(serviceId: Int) {
+        
+        func countTaps() -> Int {
+            if let count: AnyObject = self.tapCountDictionary[String(serviceId)] {
+                return count as Int
+            } else {
+                return 0
+            }
+        }
+        
+        self.tapCountDictionary[String(serviceId)] = countTaps() + 1
+        
+        NSUserDefaults.standardUserDefaults().setObject(self.tapCountDictionary, forKey: self.userDefaultsKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    func recentServiceIds() -> [Int] {
+        var ids = [Int]()
+        
+        for (serviceId, tapCount) in self.tapCountDictionary {
+            let count = tapCount as Int
+            
+            if count < 2 {
+                continue
+            }
+            
+            // How to convert NSObject to Int?
+            // This is not good :(
+            let id = (serviceId as String).toInt()
+            
+            ids.append(id!)
+        }
+        
+        return ids
+    }
+    
+    func reloadRecents() {
+        let ids = self.recentServiceIds()
+        
+        self.arrayRecentServiceStatues = self.arrayServiceStatuses.filter { item in
+            if let id = item.serviceId {
+                return contains(ids, id)
+            }
+            
+            return false
+        }
+    }
+    
 }

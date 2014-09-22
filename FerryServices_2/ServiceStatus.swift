@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-struct ServiceStatus {
+struct ServiceStatus: Equatable {
     
     enum DisriptionStatus: Int {
         case Unknown = -99
@@ -35,4 +35,8 @@ struct ServiceStatus {
         self.serviceId = data["RouteID"].integer
         self.sortOrder = data["SortOrder"].integer
     }
+}
+
+func == (lhs: ServiceStatus, rhs: ServiceStatus) -> Bool {
+    return lhs.serviceId == rhs.serviceId
 }
