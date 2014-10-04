@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
@@ -32,13 +33,16 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     private var arrayRecentServiceStatues = [ServiceStatus]()
     
     private var tapCountDictionary = NSUserDefaults.standardUserDefaults().dictionaryForKey("com.ferryservices.userdefaultkeys.tapcount")
-        ?? [NSObject:AnyObject]()
+        ?? [NSObject: AnyObject]()
     
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        loadDefaultFerryServices()
+        reloadRecents()
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -59,6 +63,8 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         reloadRecents()
     }
     
@@ -72,9 +78,9 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         APIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
             if let statuses = serviceStatuses {
                 self.arrayServiceStatuses = statuses
-                
-                self.reloadRecents()
             }
+            
+            self.reloadRecents()
             self.tableView.reloadData()
             self.refreshControl?.endRefreshing()
         }
@@ -134,7 +140,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             : self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.serviceStatusCell, forIndexPath: indexPath) as ServiceStatusTableViewCell
         
         // Modal object
-        let serviceStatus = serviceStatusForTableView(tableView, indexPath)
+        let serviceStatus = serviceStatusForTableView(tableView, indexPath: indexPath)
         
         // Configure cell with modal object
         serviceStatusCell.labelTitle.text = serviceStatus.area
@@ -209,15 +215,15 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     // MARK: - UISearchDisplayController
     func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
         self.arrayFilteredServiceStatuses = self.arrayServiceStatuses.filter { item in
-            var containsArea = false
-            var containsRoute = false
             
+            var containsArea = false
             if let area = item.area {
-                containsArea = NSString(string: area.lowercaseString).containsString(searchString.lowercaseString)
+                containsArea = (area.lowercaseString as NSString).containsString(searchString)
             }
             
+            var containsRoute = false
             if let route = item.route {
-                containsRoute = NSString(string: route.lowercaseString).containsString(searchString.lowercaseString)
+                containsRoute = (route.lowercaseString as NSString).containsString(searchString)
             }
             
             return containsArea || containsRoute
@@ -227,18 +233,44 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     // MARK: - Helpers
+    func loadDefaultFerryServices() {
+        if let defaultServicesFilePath = NSBundle.mainBundle().pathForResource("services", ofType: "json") {
+            var fileReadError: NSError?
+            let serviceData = NSData.dataWithContentsOfFile(defaultServicesFilePath, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &fileReadError)
+            
+            if fileReadError != nil {
+                NSLog("Error loading default services data: %@", fileReadError!)
+                return
+            }
+            
+            var jsonParseError: NSError?
+            
+            let serviceStatusData: AnyObject? = NSJSONSerialization.JSONObjectWithData(serviceData, options: nil, error: &jsonParseError)
+            if jsonParseError != nil {
+                NSLog("Error parsing service data json: %@", jsonParseError!)
+                return
+            }
+            
+            let json = JSONValue(serviceStatusData!)
+            
+            if let serviceStatuses = json["ServiceStatuses"].array?.map({ json in ServiceStatus(data: json) }) {
+                self.arrayServiceStatuses = serviceStatuses
+            }
+        }
+    }
+    
     func isSearchViewControllerTableView(tableView: UITableView) -> Bool {
         return tableView == self.searchDisplayController?.searchResultsTableView
     }
     
-    func serviceStatusForTableView(tablewView: UITableView, _ indexPath: NSIndexPath) -> ServiceStatus {
+    func serviceStatusForTableView(tableView: UITableView, indexPath: NSIndexPath) -> ServiceStatus {
         // If we are searching...
         if isSearchViewControllerTableView(tableView) {
             return self.arrayFilteredServiceStatuses[indexPath.row]
         }
         
         // If we have a single section...
-        if self.numberOfSectionsInTableView(tablewView) == 1 {
+        if self.numberOfSectionsInTableView(tableView) == 1 {
             return self.arrayServiceStatuses[indexPath.row]
         }
         
