@@ -18,15 +18,20 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         }
     }
     
-    private let userDefaultsKey = "com.ferryservices.userdefaultkeys.tapcount"
-    
-    private let minimumRecentTapCount = 2
-    
-    private let sectionRecent = 0
-    private let sectionServices = 1
-    
-    private let sectionRecentHeader = "Recent"
-    private let sectionServicesHeader = "Services"
+    private struct Constants {
+        struct TableViewSections {
+            static let recent = 0
+            static let services = 1
+        }
+        struct TableViewSectionHeaders {
+            static let recent = "Recent"
+            static let services = "Services"
+        }
+        struct TapCount {
+            static let userDefaultsKey = "com.ferryservices.userdefaultkeys.tapcount"
+            static let minimumCount = 2
+        }
+    }
     
     private var arrayServiceStatuses = [ServiceStatus]()
     private var arrayFilteredServiceStatuses = [ServiceStatus]()
@@ -41,8 +46,10 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
-        loadDefaultFerryServices()
-        reloadRecents()
+        self.loadDefaultFerryServices()
+        self.reloadRecents()
+        
+        self.navigationItem.rightBarButtonItem = self.arrayRecentServiceStatues.count > 0 ? self.editButtonItem() : nil
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -65,7 +72,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        reloadRecents()
+        self.reloadRecents()
     }
     
     // MARK: - Notifications
@@ -88,7 +95,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
     // MARK: - UITableViewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if isSearchViewControllerTableView(tableView){
+        if self.isSearchViewControllerTableView(tableView){
             // We are "searching" so we only have one section
             return 1
         }
@@ -97,7 +104,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if isSearchViewControllerTableView(tableView) {
+        if self.isSearchViewControllerTableView(tableView) {
             return nil
         }
         
@@ -106,15 +113,15 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         }
         
         switch(section) {
-        case sectionRecent:
-            return self.sectionRecentHeader
+        case Constants.TableViewSections.recent:
+            return Constants.TableViewSectionHeaders.recent
         default:
-            return self.sectionServicesHeader
+            return Constants.TableViewSectionHeaders.services
         }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (isSearchViewControllerTableView(tableView)) {
+        if (self.isSearchViewControllerTableView(tableView)) {
             return self.arrayFilteredServiceStatuses.count
         }
         
@@ -123,7 +130,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         }
         
         switch (section) {
-        case sectionRecent:
+        case Constants.TableViewSections.recent:
             return self.arrayRecentServiceStatues.count
         default:
             return self.arrayServiceStatuses.count
@@ -169,47 +176,36 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if isSearchViewControllerTableView(tableView) {
-            return false
+        if !isSearchViewControllerTableView(tableView) && indexPath.section == Constants.TableViewSections.recent {
+            return true
         }
         
-        if self.arrayRecentServiceStatues.isEmpty {
-            return false
-        }
-        
-        if indexPath.section == self.sectionServices {
-            return false
-        }
-        
-        return true
+        return false
     }
     
     // MARK: - UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if isSearchViewControllerTableView(tableView) {
+        if self.isSearchViewControllerTableView(tableView) {
             return
         }
         
         let serviceStatus = self.arrayServiceStatuses[indexPath.row]
         
-        if let id = serviceStatus.serviceId {
-            incrementTapCountForServiceId(id)
+        if let serviceId = serviceStatus.serviceId {
+            self.incrementTapCountForServiceId(serviceId)
         }
-        
     }
     
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .Delete
+        return self.isSearchViewControllerTableView(tableView) ? .Delete : .None
     }
     
     // MARK: - Storyboard
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         let serviceDetailViewController = segue.destinationViewController as ServiceDetailTableViewController;
-        
-        if let indexPath = self.tableView.indexPathForSelectedRow() {
-            let serviceStatus = self.arrayServiceStatuses[indexPath.row]
-            serviceDetailViewController.serviceStatus = serviceStatus
-        }
+        let selectedTableView = self.searchDisplayController!.active ? self.searchDisplayController!.searchResultsTableView : self.tableView
+        let serviceStatus = self.serviceStatusForTableView(selectedTableView, indexPath: selectedTableView.indexPathForSelectedRow()!)
+        serviceDetailViewController.serviceStatus = serviceStatus
     }
     
     // MARK: - UISearchDisplayController
@@ -265,7 +261,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
     func serviceStatusForTableView(tableView: UITableView, indexPath: NSIndexPath) -> ServiceStatus {
         // If we are searching...
-        if isSearchViewControllerTableView(tableView) {
+        if self.isSearchViewControllerTableView(tableView) {
             return self.arrayFilteredServiceStatuses[indexPath.row]
         }
         
@@ -276,7 +272,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         
         // If we have two sections...
         switch(indexPath.section) {
-        case self.sectionRecent:
+        case Constants.TableViewSections.recent:
             return self.arrayRecentServiceStatues[indexPath.row]
         default:
             return self.arrayServiceStatuses[indexPath.row]
@@ -295,12 +291,12 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         
         self.tapCountDictionary[String(serviceId)] = countTaps() + 1
         
-        NSUserDefaults.standardUserDefaults().setObject(self.tapCountDictionary, forKey: self.userDefaultsKey)
+        NSUserDefaults.standardUserDefaults().setObject(self.tapCountDictionary, forKey: Constants.TapCount.userDefaultsKey)
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     func recentServiceIds() -> [Int] {
-        var ids = [Int]()
+        var recentServiceIds = [Int]()
         
         for (serviceId, tapCount) in self.tapCountDictionary {
             let count = tapCount as Int
@@ -313,10 +309,10 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             // This is not good :(
             let id = (serviceId as String).toInt()
             
-            ids.append(id!)
+            recentServiceIds.append(id!)
         }
         
-        return ids
+        return recentServiceIds
     }
     
     func reloadRecents() {

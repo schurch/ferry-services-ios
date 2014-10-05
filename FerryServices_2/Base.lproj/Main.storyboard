@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A343f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -123,8 +123,8 @@
                                                 <constraint firstAttribute="height" constant="24" id="Sk6-iy-rh6"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="533" translatesAutoresizingMaskIntoConstraints="NO" id="7Md-oe-LaW" userLabel="Label - Disruption details">
-                                            <rect key="frame" x="51" y="28" width="533" height="72"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Md-oe-LaW" userLabel="Label - Disruption details">
+                                            <rect key="frame" x="51" y="28" width="533" height="68"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="249" id="GDX-K5-QBL"/>
                                             </constraints>
@@ -212,7 +212,7 @@
                                         <constraint firstItem="Boz-5a-LLl" firstAttribute="leading" secondItem="Ah8-DA-WCf" secondAttribute="leadingMargin" constant="5" id="Tkf-MB-8vL"/>
                                         <constraint firstAttribute="bottom" secondItem="FMK-WX-z8D" secondAttribute="bottom" constant="6" id="a2W-NI-MyS"/>
                                         <constraint firstItem="7Md-oe-LaW" firstAttribute="top" secondItem="Ah8-DA-WCf" secondAttribute="top" constant="28" id="aEg-Vb-jC5"/>
-                                        <constraint firstItem="LZu-7T-bxn" firstAttribute="top" secondItem="7Md-oe-LaW" secondAttribute="bottom" constant="-2" id="hU6-lo-lnN"/>
+                                        <constraint firstItem="LZu-7T-bxn" firstAttribute="top" secondItem="7Md-oe-LaW" secondAttribute="bottom" constant="2" id="hU6-lo-lnN"/>
                                         <constraint firstItem="Boz-5a-LLl" firstAttribute="top" secondItem="Ah8-DA-WCf" secondAttribute="top" constant="5" id="mgD-39-qem"/>
                                         <constraint firstItem="bKs-Uz-gI6" firstAttribute="leading" secondItem="LZu-7T-bxn" secondAttribute="trailing" constant="8" id="qoG-OJ-ims"/>
                                         <constraint firstItem="bKs-Uz-gI6" firstAttribute="centerY" secondItem="LZu-7T-bxn" secondAttribute="centerY" id="ykk-Yl-Qkh"/>
