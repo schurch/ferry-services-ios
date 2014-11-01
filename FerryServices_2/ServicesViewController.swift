@@ -79,7 +79,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         tableView.reloadData()
         
         if selectedIndexPath != nil {
-            tableView.selectRowAtIndexPath(selectedIndexPath!, animated: false, scrollPosition: .None)
+            self.tableView.selectRowAtIndexPath(selectedIndexPath!, animated: false, scrollPosition: .None)
         }
     }
     
@@ -267,26 +267,26 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     func loadDefaultFerryServices() {
         if let defaultServicesFilePath = NSBundle.mainBundle().pathForResource("services", ofType: "json") {
             var fileReadError: NSError?
-            let serviceData = NSData.dataWithContentsOfFile(defaultServicesFilePath, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &fileReadError)
-            
-            if fileReadError != nil {
-                NSLog("Error loading default services data: %@", fileReadError!)
-                return
-            }
-            
-            var jsonParseError: NSError?
-            
-            let serviceStatusData: AnyObject? = NSJSONSerialization.JSONObjectWithData(serviceData, options: nil, error: &jsonParseError)
-            if jsonParseError != nil {
-                NSLog("Error parsing service data json: %@", jsonParseError!)
-                return
-            }
-            
-            let json = JSONValue(serviceStatusData!)
-            
-            if let serviceStatuses = json["ServiceStatuses"].array?.map({ json in ServiceStatus(data: json) }) {
-                self.arrayServiceStatuses = serviceStatuses
-            }
+            if let serviceData = NSData(contentsOfFile: defaultServicesFilePath, options: .DataReadingMappedIfSafe, error: &fileReadError) {
+                if fileReadError != nil {
+                    NSLog("Error loading default services data: %@", fileReadError!)
+                    return
+                }
+                
+                var jsonParseError: NSError?
+                
+                let serviceStatusData: AnyObject? = NSJSONSerialization.JSONObjectWithData(serviceData, options: nil, error: &jsonParseError)
+                if jsonParseError != nil {
+                    NSLog("Error parsing service data json: %@", jsonParseError!)
+                    return
+                }
+                
+                let json = JSONValue(serviceStatusData!)
+                
+                if let serviceStatuses = json["ServiceStatuses"].array?.map({ json in ServiceStatus(data: json) }) {
+                    self.arrayServiceStatuses = serviceStatuses
+                }
+            }            
         }
     }
     

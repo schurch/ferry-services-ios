@@ -91,18 +91,22 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func stripTimeComponentsFromDate(date: NSDate) -> NSDate {
-        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-        calendar.timeZone = NSTimeZone(abbreviation: "UTC")
-        
-        let components = calendar.components(NSCalendarUnit.CalendarUnitYear|NSCalendarUnit.CalendarUnitMonth|NSCalendarUnit.CalendarUnitDay|NSCalendarUnit.CalendarUnitHour|NSCalendarUnit.CalendarUnitMinute|NSCalendarUnit.CalendarUnitSecond, fromDate: date)
-        
-        components.hour = 0
-        components.minute = 0
-        components.second = 0
-        
-        let date = calendar.dateFromComponents(components)
-        
-        return date!
+        if let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian) {
+            calendar.timeZone = NSTimeZone(abbreviation: "UTC")!
+            
+            let components = calendar.components(NSCalendarUnit.CalendarUnitYear|NSCalendarUnit.CalendarUnitMonth|NSCalendarUnit.CalendarUnitDay|NSCalendarUnit.CalendarUnitHour|NSCalendarUnit.CalendarUnitMinute|NSCalendarUnit.CalendarUnitSecond, fromDate: date)
+            
+            components.hour = 0
+            components.minute = 0
+            components.second = 0
+            
+            let date = calendar.dateFromComponents(components)
+            
+            return date!
+        }
+        else {
+            return NSDate()
+        }
     }
     
     // MARK: - Inline date picker methods
@@ -240,9 +244,9 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
                         var image :UIImage
                         switch routeType {
                         case .Ferry:
-                            image = UIImage(named: "ferry_icon")
+                            image = UIImage(named: "ferry_icon")!
                         case .Train:
-                            image = UIImage(named: "train_icon")
+                            image = UIImage(named: "train_icon")!
                         }
                         
                         cell.imageViewTransportType.image = image

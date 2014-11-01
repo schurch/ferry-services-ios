@@ -42,7 +42,7 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
         }
         
         if let updatedDate = disruptionDetails.updatedDate  {
-            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
             let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
             
             var updated: String

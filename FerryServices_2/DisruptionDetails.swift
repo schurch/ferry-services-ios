@@ -55,7 +55,7 @@ struct DisruptionDetails {
         }
         
         if let disruptionDetailsStatus = data["DisruptionStatus"]?.integer {
-            self.disruptionStatus = DisruptionDetailsStatus.fromRaw(disruptionDetailsStatus)
+            self.disruptionStatus = DisruptionDetailsStatus(rawValue: disruptionDetailsStatus)
         }
     }
 }

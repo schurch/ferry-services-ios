@@ -166,14 +166,14 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             
             if self.isTimetableDataAvailable {
                 if indexPath.row == 0 {
-                    cell.textLabel?.text = "Departures"
+                    cell.textLabel.text = "Departures"
                 }
                 else {
-                    cell.textLabel?.text = "Summer timetable"
+                    cell.textLabel.text = "Summer timetable"
                 }
             }
             else {
-                cell.textLabel?.text = "Summer timetable"
+                cell.textLabel.text = "Summer timetable"
             }
             
             return cell

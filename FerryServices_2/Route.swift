@@ -36,7 +36,7 @@ class Route {
             let routeId = Int(resultSet.intForColumn("RouteId"))
             let trips: [Trip]? = Trip.fetchTripsForRouteId(routeId, date: date)
             
-            let routeType = RouteType.fromRaw(Int(resultSet.intForColumn("RouteType")))
+            let routeType = RouteType(rawValue: Int(resultSet.intForColumn("RouteType")))
             
             let route = Route(destination: destination, source: source, serviceId: serviceId, trips: trips, routeType:routeType)
             routes += [route]

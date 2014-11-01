@@ -27,7 +27,7 @@ struct ServiceStatus: Equatable {
         self.area = data["Area"].string
         
         if let disruptionStatus = data["DisruptionStatus"].integer {
-            self.disruptionStatus = DisriptionStatus.fromRaw(disruptionStatus)
+            self.disruptionStatus = DisriptionStatus(rawValue: disruptionStatus)
         }
         
         self.ferryProvider = data["provider"].string

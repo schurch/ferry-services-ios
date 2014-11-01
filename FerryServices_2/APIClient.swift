@@ -30,8 +30,8 @@ class APIClient {
     
     // MARK: - init
     init() {
-        requestManager = AFHTTPRequestOperationManager(baseURL: NSURL.URLWithString(APICLientConstants.baseURL))
-        requestManager.responseSerializer = AFJSONResponseSerializer()
+        requestManager = AFHTTPRequestOperationManager(baseURL: NSURL(string: APICLientConstants.baseURL))
+        requestManager.responseSerializer = AFJSONResponseSerializer() as AFJSONResponseSerializer
         requestManager.requestSerializer.setValue("en-us", forHTTPHeaderField: "Accept-Language")
         requestManager.requestSerializer.setValue("Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D167 (350921184)", forHTTPHeaderField: "User-Agent")
         
