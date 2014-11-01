@@ -64,15 +64,23 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let indexPath = self.tableView.indexPathForSelectedRow() {
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if let indexPath = tableView.indexPathForSelectedRow() {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
         
-        self.reloadRecents()
+        // save before reload so we can reselect
+        let selectedIndexPath = tableView.indexPathForSelectedRow()
+        
+        reloadRecents()
+        tableView.reloadData()
+        
+        if selectedIndexPath != nil {
+            tableView.selectRowAtIndexPath(selectedIndexPath!, animated: false, scrollPosition: .None)
+        }
     }
     
     // MARK: - Notifications
@@ -135,7 +143,6 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         default:
             return self.arrayServiceStatuses.count
         }
-        
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -176,11 +183,35 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if !isSearchViewControllerTableView(tableView) && indexPath.section == Constants.TableViewSections.recent {
-            return true
+        if tableView.numberOfSections() == 1 {
+            return false
         }
-        
-        return false
+        else {
+            return !isSearchViewControllerTableView(tableView) && indexPath.section == Constants.TableViewSections.recent
+        }
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == Constants.TableViewSections.recent && editingStyle == .Delete {
+            
+            let serviceStatus = arrayRecentServiceStatues[indexPath.row]
+            tapCountDictionary.removeValueForKey(String(serviceStatus.serviceId!))
+            
+            NSUserDefaults.standardUserDefaults().setObject(tapCountDictionary, forKey: Constants.TapCount.userDefaultsKey)
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
+            reloadRecents()
+            
+            tableView.beginUpdates()
+            if arrayRecentServiceStatues.count == 0 {
+                tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+                tableView.editing = false
+            }
+            else {
+                tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath.row, inSection: Constants.TableViewSections.recent)], withRowAnimation: .Automatic)
+            }
+            tableView.endUpdates()            
+        }
     }
     
     // MARK: - UITableViewDelegate
@@ -189,15 +220,19 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             return
         }
         
-        let serviceStatus = self.arrayServiceStatuses[indexPath.row]
+        if tableView.numberOfSections() > 1 && indexPath.section == Constants.TableViewSections.recent {
+            // don't increment for recent section
+            return
+        }
         
+        let serviceStatus = self.arrayServiceStatuses[indexPath.row]
         if let serviceId = serviceStatus.serviceId {
             self.incrementTapCountForServiceId(serviceId)
         }
     }
     
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return self.isSearchViewControllerTableView(tableView) ? .Delete : .None
+        return !isSearchViewControllerTableView(tableView) && indexPath.section == Constants.TableViewSections.recent ? .Delete : .None
     }
     
     // MARK: - Storyboard
@@ -280,7 +315,6 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     func incrementTapCountForServiceId(serviceId: Int) {
-        
         func countTaps() -> Int {
             if let count: AnyObject = self.tapCountDictionary[String(serviceId)] {
                 return count as Int
@@ -301,7 +335,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         for (serviceId, tapCount) in self.tapCountDictionary {
             let count = tapCount as Int
             
-            if count < 2 {
+            if count < Constants.TapCount.minimumCount {
                 continue
             }
             
