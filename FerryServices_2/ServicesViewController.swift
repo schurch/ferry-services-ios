@@ -81,6 +81,8 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         if selectedIndexPath != nil {
             self.tableView.selectRowAtIndexPath(selectedIndexPath!, animated: false, scrollPosition: .None)
         }
+        
+        navigationItem.rightBarButtonItem = arrayRecentServiceStatues.count > 0 ? editButtonItem() : nil
     }
     
     // MARK: - Notifications
@@ -96,6 +98,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             }
             
             self.reloadRecents()
+            self.navigationItem.rightBarButtonItem = self.arrayRecentServiceStatues.count > 0 ? self.editButtonItem() : nil
             self.tableView.reloadData()
             self.refreshControl?.endRefreshing()
         }
@@ -205,12 +208,15 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             tableView.beginUpdates()
             if arrayRecentServiceStatues.count == 0 {
                 tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-                tableView.editing = false
+                setEditing(false, animated: false)
             }
             else {
                 tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath.row, inSection: Constants.TableViewSections.recent)], withRowAnimation: .Automatic)
             }
-            tableView.endUpdates()            
+            tableView.endUpdates()
+            
+            navigationItem.rightBarButtonItem = arrayRecentServiceStatues.count > 0 ? editButtonItem() : nil
+            
         }
     }
     
