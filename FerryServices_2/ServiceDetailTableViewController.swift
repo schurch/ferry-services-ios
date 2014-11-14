@@ -12,6 +12,25 @@ import QuickLook
 
 class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate {
     
+    private class Section {
+        var title: String
+        var rows: [Row]
+        
+        init (title: String, rows: [Row]) {
+            self.title = title
+            self.rows = rows
+        }
+    }
+    
+    enum Row {
+        case Basic(identifier: String, title: String, action: () -> ())
+        case Map(identifier: String, [Location])
+        case Disruption(identifier: String, DisruptionDetails)
+        case NoDisruption(identifier: String)
+        case Loading(identifier: String)
+        case Error(identifier: String)
+    }
+    
     struct MainStoryBoard {
         struct TableViewCellIdentifiers {
             static let basicCell = "basicCell"
@@ -23,21 +42,9 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
-    var disruptionDetails: DisruptionDetails?
+    private var dataSource: [Section]!
     var refreshing: Bool = false
-    var routeDetails: RouteDetails?
     var serviceStatus: ServiceStatus!
-    
-    var isTimetableDataAvailable: Bool {
-        if let routeId = self.serviceStatus.serviceId {
-            return Trip.areTripsAvailableForRouteId(routeId)
-        }
-            
-        return false
-    }
-    
-    // MARK: - private vars
-    private var locations: [Location]!
     
     // MARK: - view lifecycle
     override func viewDidLoad() {
@@ -47,10 +54,6 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedRowHeight = 44.0;
-        
-        if let serviceId = self.serviceStatus.serviceId {
-            self.locations = Location.fetchLocationsForSericeId(serviceId)
-        }
         
         self.refresh(nil)
     }
@@ -70,6 +73,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
         
         self.refreshing = true
+        self.dataSource = generateDatasourceWithDisruptionDetails(nil, refreshing: true)
         self.tableView.reloadData()
         
         self.fetchLatestDisruptionDataWithCompletion {
@@ -79,16 +83,81 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
+    private func generateDatasourceWithDisruptionDetails(disruptionDetails: DisruptionDetails?, refreshing: Bool) -> [Section] {
+        var sections = [Section]()
+        
+        // timetable section
+        var timetableRows = [Row]()
+        
+        // depatures if available
+        if let routeId = self.serviceStatus.serviceId {
+            if Trip.areTripsAvailableForRouteId(routeId, afterDate: NSDate()) {
+                let departuresRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Departures", action: {
+                    if let routeId = self.serviceStatus.serviceId {
+                        let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as TimetableViewController
+                        timetableViewController.routeId = routeId
+                        self.navigationController?.pushViewController(timetableViewController, animated: true)
+                    }
+                })
+                timetableRows.append(departuresRow)
+            }
+        }
+        
+        // winter timetable
+        let winterTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Winter timetable", action: {
+            self.showPDFTimetable()
+        })
+        timetableRows.append(winterTimetableRow)
+        
+        sections.append(Section(title: "Timetable", rows: timetableRows))
+        
+        
+        // map section if available
+        if let serviceId = self.serviceStatus.serviceId {
+            let locations = Location.fetchLocationsForSericeId(serviceId)
+            if locations?.count > 0 {
+                let mapSection = Section(title: "Map", rows: [Row.Map(identifier: MainStoryBoard.TableViewCellIdentifiers.mapCell, locations!)])
+                sections.append(mapSection)
+            }
+        }
+        
+        
+        //disruption section
+        var disruptionRow: Row
+        
+        if refreshing {
+            disruptionRow = Row.Loading(identifier: MainStoryBoard.TableViewCellIdentifiers.loadingCell)
+        }
+        else if disruptionDetails == nil {
+            disruptionRow = Row.Error(identifier: MainStoryBoard.TableViewCellIdentifiers.errorCell)
+        }
+        else {
+            if let disruptionStatus = disruptionDetails?.disruptionStatus {
+                switch disruptionStatus {
+                case .Normal, .Information:
+                    disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
+                case .SailingsAffected, .SailingsCancelled:
+                    disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionDetails!)
+                }
+            }
+            else {
+                disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
+            }
+        }
+        
+        sections.append(Section(title: "Disruptions", rows: [disruptionRow]))
+        
+        return sections
+    }
+    
     private func fetchLatestDisruptionDataWithCompletion(completion: () -> ()) {
         if let serviceId = self.serviceStatus.serviceId {
             APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, routeDetails, error in
                 if (error == nil) {
-                    self.disruptionDetails = disruptionDetails
-                    self.routeDetails = routeDetails
+                    self.dataSource = self.generateDatasourceWithDisruptionDetails(disruptionDetails, refreshing: false)
                 }
                 else {
-                    self.disruptionDetails =  nil
-                    self.routeDetails = nil
+                    self.dataSource = self.generateDatasourceWithDisruptionDetails(nil, refreshing: false)
                 }
                 
                 completion()
@@ -131,102 +200,54 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
 
     // MARK: - UITableViewDatasource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return dataSource.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return self.isTimetableDataAvailable ? 2 : 1
-        case 1:
-            return 1
-        case 2:
-            return 1
-        default:
-            return 0
-        }
+        return dataSource[section].rows.count
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return self.serviceStatus.route
-        case 1:
-            return "Map"
-        case 2:
-            return "Disruptions"
-        default:
-            return ""
-        }
+        return dataSource[section].title
     }
-    
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryBoard.TableViewCellIdentifiers.basicCell) as UITableViewCell
-            
-            if self.isTimetableDataAvailable {
-                if indexPath.row == 0 {
-                    cell.textLabel.text = "Departures"
-                }
-                else {
-                    cell.textLabel.text = "Summer timetable"
-                }
-            }
-            else {
-                cell.textLabel.text = "Summer timetable"
-            }
-            
+        let row = dataSource[indexPath.section].rows[indexPath.row]
+        
+        switch row {
+        case let .Basic(identifier, title, _):
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
+            cell.textLabel.text = title
             return cell
-        }
-        else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryBoard.TableViewCellIdentifiers.mapCell) as ServiceDetailMapTableViewCell
+        case let .Map(identifier, locations):
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailMapTableViewCell
             cell.mapView.delegate = self
-            cell.configureCellForLocations(self.locations)
+            cell.configureCellForLocations(locations)
             return cell
-        }
-        else {
-            if self.refreshing {
-                return tableView.dequeueReusableCellWithIdentifier(MainStoryBoard.TableViewCellIdentifiers.loadingCell) as UITableViewCell
-            }
-            else if self.disruptionDetails == nil {
-                return tableView.dequeueReusableCellWithIdentifier(MainStoryBoard.TableViewCellIdentifiers.errorCell) as UITableViewCell
-            }
-            else {
-                if let disruptionStatus = self.disruptionDetails!.disruptionStatus {
-                    switch disruptionStatus {
-                    case .Normal, .Information:
-                        return tableView.dequeueReusableCellWithIdentifier(MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell) as UITableViewCell
-                    default:
-                        let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryBoard.TableViewCellIdentifiers.disruptionsCell) as ServiceDetailDisruptionsTableViewCell
-                        cell.configureWithDisruptionDetails(self.disruptionDetails!)
-                        return cell
-                    }
-                }
-                else {
-                    return tableView.dequeueReusableCellWithIdentifier(MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell) as UITableViewCell
-                }
-            }
+        case let .Disruption(identifier, disruptionDetails):
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailDisruptionsTableViewCell
+            cell.configureWithDisruptionDetails(disruptionDetails)
+            return cell
+        case let .NoDisruption(identifier):
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
+            return cell
+        case let .Loading(identifier):
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
+            return cell
+        case let .Error(identifier):
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
+            return cell
         }
     }
     
     // MARK: - UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0 {
-            if self.isTimetableDataAvailable {
-                if indexPath.row == 0 {
-                    if let routeId = self.serviceStatus.serviceId {
-                        let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as TimetableViewController
-                        timetableViewController.routeId = routeId
-                        self.navigationController?.pushViewController(timetableViewController, animated: true)
-                    }
-                }
-                else {
-                    self.showPDFTimetable()
-                }
-            }
-            else {
-                self.showPDFTimetable()
-            }
+        let row = dataSource[indexPath.section].rows[indexPath.row]
+        switch row {
+        case let .Basic(_, _, action):
+            action()
+        default:
+            println("No action for cell")
         }
     }
     

@@ -18,7 +18,7 @@ class Trip {
         }()
     }
     
-    class func areTripsAvailableForRouteId(routeId: Int) -> Bool {
+    class func areTripsAvailableForRouteId(routeId: Int, afterDate: NSDate) -> Bool {
         let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
         let database = FMDatabase(path: path)
         

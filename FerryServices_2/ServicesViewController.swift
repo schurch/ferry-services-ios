@@ -58,6 +58,8 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         tableView.contentOffset = CGPoint(x: 0, y: -60)
         self.refreshControl?.beginRefreshing()
         
+        self.tableView.rowHeight = 44;
+        
         self.refresh(nil)
     }
     

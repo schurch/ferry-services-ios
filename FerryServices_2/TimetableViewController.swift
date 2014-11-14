@@ -48,6 +48,9 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.title = "Departures"
         
+        self.tableView.estimatedRowHeight = 44
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
         let pickerCell = self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) as UITableViewCell
         self.pickerCellRowHeight = Int(pickerCell.frame.size.height)
         
