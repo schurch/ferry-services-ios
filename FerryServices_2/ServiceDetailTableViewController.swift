@@ -92,8 +92,6 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         
         // depatures if available
         if let routeId = self.serviceStatus.serviceId {
-            
-            
             if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: NSDate()) {
                 let departuresRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Departures", action: {
                     if let routeId = self.serviceStatus.serviceId {
@@ -122,7 +120,12 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             timetableRows.append(winterTimetableRow)
         }
         
-        sections.append(Section(title: "Timetable", rows: timetableRows))
+        var route = "Timetable"
+        if let actualRoute = serviceStatus.route {
+            route = actualRoute
+        }
+        
+        sections.append(Section(title: route, rows: timetableRows))
         
         
         // map section if available
@@ -173,7 +176,6 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
                 else {
                     self.dataSource = self.generateDatasourceWithDisruptionDetails(nil, refreshing: false)
                 }
-                
                 completion()
             }
         }
