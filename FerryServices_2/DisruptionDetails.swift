@@ -41,7 +41,10 @@ struct DisruptionDetails {
             self.addedDate = DisruptionDetails.dateFormatter.dateFromString(addedDate)
         }
         
-        self.details = data["WebText"]?.string
+        if let details = data["WebText"]?.string {
+            // strip out html tags
+            self.details = details.stringByReplacingOccurrencesOfString("<[^>]+>", withString: "", options: .RegularExpressionSearch, range: nil)
+        }
         
         if let disruptionDate = data["DisruptionEndTime"]?.string {
             self.disruptionEndDate = DisruptionDetails.dateFormatter.dateFromString(disruptionDate)
