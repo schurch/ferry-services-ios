@@ -83,6 +83,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
+    // MARK: - Datasource generation
     private func generateDatasourceWithDisruptionDetails(disruptionDetails: DisruptionDetails?, refreshing: Bool) -> [Section] {
         var sections = [Section]()
         
@@ -103,11 +104,21 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             }
         }
         
+        // summer timetable
+        if isSummerTimetableAvailable() {
+            let summerTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Summer timetable", action: {
+                self.showSummerTimetable()
+            })
+            timetableRows.append(summerTimetableRow)
+        }
+        
         // winter timetable
-        let winterTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Winter timetable", action: {
-            self.showPDFTimetable()
-        })
-        timetableRows.append(winterTimetableRow)
+        if isWinterTimetableAvailable() {
+            let winterTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Winter timetable", action: {
+                self.showWinterTimetable()
+            })
+            timetableRows.append(winterTimetableRow)
+        }
         
         sections.append(Section(title: "Timetable", rows: timetableRows))
         
@@ -150,6 +161,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         return sections
     }
     
+    // MARK: - Utility methods
     private func fetchLatestDisruptionDataWithCompletion(completion: () -> ()) {
         if let serviceId = self.serviceStatus.serviceId {
             APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, routeDetails, error in
@@ -168,34 +180,44 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
-    private func showPDFTimetable() {
-        let files = NSFileManager.defaultManager().contentsOfDirectoryAtPath(NSBundle.mainBundle().bundlePath, error: nil)
-        
-        let summerTimetableFile: AnyObject? = files?.filter({fileName in
-            let components = fileName.componentsSeparatedByString("_")
-            if components.count > 1 {
-                if let summerString = components[components.count - 2] as? String {
-                    if summerString.lowercaseString == "summer" {
-                        if let serviceIdStringFileName = components[components.count - 1] as? String {
-                            if let serviceIdString = serviceIdStringFileName.componentsSeparatedByString(".").first {
-                                return serviceIdString.toInt() == self.serviceStatus.serviceId!
-                            }
-                        }
-                    }
-                }
-            }
-            
+    private func isWinterTimetableAvailable() -> Bool {
+        if serviceStatus.serviceId == nil {
             return false
-        }).first
-        
-        if let filename = summerTimetableFile as? String {
-            println(filename)
-            let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TimetablePreview") as TimetablePreviewViewController
-            previewViewController.serviceStatus = self.serviceStatus
-            previewViewController.url = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(filename.stringByDeletingPathExtension, ofType: "pdf")!)
-            previewViewController.title = "Summer"
-            self.navigationController?.pushViewController(previewViewController, animated: true)
         }
+        
+        return NSFileManager.defaultManager().fileExistsAtPath(winterPath())
+    }
+    
+    private func isSummerTimetableAvailable() -> Bool {
+        if serviceStatus.serviceId == nil {
+            return false
+        }
+        
+        return NSFileManager.defaultManager().fileExistsAtPath(summerPath())
+    }
+    
+    private func showWinterTimetable() {
+        showPDFTimetableAtPath(winterPath(), title: "Winter timetable")
+    }
+    
+    private func showSummerTimetable() {
+        showPDFTimetableAtPath(summerPath(), title: "Summer timetable")
+    }
+    
+    private func winterPath() -> String {
+        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2014/Winter/\(serviceStatus.serviceId!).pdf")
+    }
+    
+    private func summerPath() -> String {
+        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2014/Summer/\(serviceStatus.serviceId!).pdf")
+    }
+    
+    private func showPDFTimetableAtPath(path: String, title: String) {
+        let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TimetablePreview") as TimetablePreviewViewController
+        previewViewController.serviceStatus = self.serviceStatus
+        previewViewController.url = NSURL(string: path)
+        previewViewController.title = title
+        self.navigationController?.pushViewController(previewViewController, animated: true)
     }
 
     // MARK: - UITableViewDatasource
