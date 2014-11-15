@@ -18,7 +18,7 @@ class Trip {
         }()
     }
     
-    class func areTripsAvailableForRouteId(routeId: Int, afterDate: NSDate) -> Bool {
+    class func areTripsAvailableForRouteId(routeId: Int, onOrAfterDate: NSDate) -> Bool {
         let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
         let database = FMDatabase(path: path)
         
@@ -26,14 +26,31 @@ class Trip {
             return false
         }
         
+        let strippedDate = NSDate.stripTimeComponentsFromDate(onOrAfterDate)
+        
+        var weekday = self.formatters.weekdayFormatter.stringFromDate(strippedDate)
+        
         var query = "SELECT COUNT(*)\n"
-        query += "FROM Route r\n"
-        query += "INNER JOIN Trip t ON r.RouteId = t.RouteId\n"
-        query += "WHERE r.ServiceId = \(routeId)"
+        query += "FROM CalendarTrip ct,\n"
+        query += "(SELECT c.CalendarId\n"
+        query += "FROM Calendar c\n"
+        query += "WHERE c.EndDate >= (?)\n"
+        query += "AND c.\(weekday) = 1\n"
+        query += "AND c.CalendarId NOT IN (SELECT e.CalendarId\n"
+        query += "FROM Exclusion e\n"
+        query += "WHERE e.ExclusionDate = (?))\n"
+        query += ") as c\n"
+        query += "INNER JOIN Trip t ON t.TripId = ct.TripId\n"
+        query += "INNER JOIN Route r on r.RouteId = t.RouteId\n"
+        query += "WHERE ct.CalendarId = c.CalendarId\n"
+        query += "AND r.routeId = (?)\n"
+        query += "ORDER BY DepartureHour, DepartureMinute"
+        
+        let dateAsEpoc = strippedDate.timeIntervalSince1970
+        
+        let resultSet = database.executeQuery(query, withArgumentsInArray: [dateAsEpoc, dateAsEpoc, routeId])
         
         var count = 0
-        
-        let resultSet = database.executeQuery(query, withArgumentsInArray: nil)
         if resultSet.next() {
             count = Int(resultSet.intForColumnIndex(0))
         }

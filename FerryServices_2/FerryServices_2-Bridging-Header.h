@@ -6,4 +6,4 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "FMDB.h"
 #import "Flurry.h"
-//#import <Crashlytics/Crashlytics.h>
+#import <Crashlytics/Crashlytics.h>

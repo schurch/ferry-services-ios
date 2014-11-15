@@ -54,14 +54,14 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         let pickerCell = self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) as UITableViewCell
         self.pickerCellRowHeight = Int(pickerCell.frame.size.height)
         
-        self.date = self.stripTimeComponentsFromDate(NSDate())
+        self.date = NSDate.stripTimeComponentsFromDate(NSDate())
         self.updateTrips()
     }
     
     // MARK: - UI Actions
     @IBAction func dateAction(sender: UIDatePicker) {
         if self.hasInlineDatePicker() {
-            self.date = self.stripTimeComponentsFromDate(sender.date)
+            self.date = NSDate.stripTimeComponentsFromDate(sender.date)
             self.updateTrips()            
         }
     }
@@ -91,25 +91,6 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         return nil
-    }
-    
-    func stripTimeComponentsFromDate(date: NSDate) -> NSDate {
-        if let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian) {
-            calendar.timeZone = NSTimeZone(abbreviation: "UTC")!
-            
-            let components = calendar.components(NSCalendarUnit.CalendarUnitYear|NSCalendarUnit.CalendarUnitMonth|NSCalendarUnit.CalendarUnitDay|NSCalendarUnit.CalendarUnitHour|NSCalendarUnit.CalendarUnitMinute|NSCalendarUnit.CalendarUnitSecond, fromDate: date)
-            
-            components.hour = 0
-            components.minute = 0
-            components.second = 0
-            
-            let date = calendar.dateFromComponents(components)
-            
-            return date!
-        }
-        else {
-            return NSDate()
-        }
     }
     
     // MARK: - Inline date picker methods

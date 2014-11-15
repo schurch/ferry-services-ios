@@ -92,7 +92,9 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         
         // depatures if available
         if let routeId = self.serviceStatus.serviceId {
-            if Trip.areTripsAvailableForRouteId(routeId, afterDate: NSDate()) {
+            
+            
+            if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: NSDate()) {
                 let departuresRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Departures", action: {
                     if let routeId = self.serviceStatus.serviceId {
                         let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as TimetableViewController
