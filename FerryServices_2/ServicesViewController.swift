@@ -74,15 +74,8 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
-        // save before reload so we can reselect
-        let selectedIndexPath = tableView.indexPathForSelectedRow()
-        
         reloadRecents()
         tableView.reloadData()
-        
-        if selectedIndexPath != nil {
-            self.tableView.selectRowAtIndexPath(selectedIndexPath!, animated: false, scrollPosition: .None)
-        }
         
         navigationItem.rightBarButtonItem = arrayRecentServiceStatues.count > 0 ? editButtonItem() : nil
     }
@@ -224,10 +217,6 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
     // MARK: - UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if self.isSearchViewControllerTableView(tableView) {
-            return
-        }
-        
         if tableView.numberOfSections() > 1 && indexPath.section == Constants.TableViewSections.recent {
             // don't increment for recent section
             return

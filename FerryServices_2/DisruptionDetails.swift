@@ -17,6 +17,7 @@ struct DisruptionDetails {
     
     var addedBy: String?
     var addedDate: NSDate?
+    var additionalInfo: String?
     var details: String?
     var disruptionEndDate: NSDate?
     var lastUpdatedBy: String?
@@ -41,9 +42,12 @@ struct DisruptionDetails {
             self.addedDate = DisruptionDetails.dateFormatter.dateFromString(addedDate)
         }
         
+        if let additionalInfo = data["accessDisruption"]?.string {
+            self.additionalInfo = additionalInfo
+        }
+        
         if let details = data["WebText"]?.string {
-            // strip out html tags
-            self.details = details.stringByReplacingOccurrencesOfString("<[^>]+>", withString: "", options: .RegularExpressionSearch, range: nil)
+            self.details = details
         }
         
         if let disruptionDate = data["DisruptionEndTime"]?.string {

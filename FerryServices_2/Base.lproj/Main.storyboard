@@ -130,13 +130,13 @@
                                                 <constraint firstAttribute="height" constant="24" id="Sk6-iy-rh6"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Md-oe-LaW" userLabel="Label - Disruption details">
-                                            <rect key="frame" x="51" y="28" width="533" height="68"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is a disruption with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Md-oe-LaW" userLabel="Label - Disruption details">
+                                            <rect key="frame" x="51" y="28" width="503" height="68"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="249" id="GDX-K5-QBL"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -205,17 +205,29 @@
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5c-DN-zBE">
+                                            <rect key="frame" x="562" y="61" width="22" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="22" id="dT5-th-yvk"/>
+                                                <constraint firstAttribute="height" constant="22" id="eVy-iP-918"/>
+                                            </constraints>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="FMK-WX-z8D" firstAttribute="leading" secondItem="Ah8-DA-WCf" secondAttribute="leading" constant="51" id="2fn-zb-IBP"/>
                                         <constraint firstItem="WcO-Xx-n6P" firstAttribute="top" secondItem="Ah8-DA-WCf" secondAttribute="top" constant="29" id="5Jz-L3-lse"/>
                                         <constraint firstItem="LZu-7T-bxn" firstAttribute="leading" secondItem="Ah8-DA-WCf" secondAttribute="leading" constant="51" id="AA5-Zx-enn"/>
+                                        <constraint firstItem="k5c-DN-zBE" firstAttribute="leading" secondItem="7Md-oe-LaW" secondAttribute="trailing" constant="8" id="ANi-9j-YDU"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="k5c-DN-zBE" secondAttribute="trailing" constant="8" id="CVN-f8-hYV"/>
                                         <constraint firstItem="WcO-Xx-n6P" firstAttribute="leading" secondItem="Ah8-DA-WCf" secondAttribute="leading" constant="13" id="CaE-Yd-WWp"/>
+                                        <constraint firstAttribute="centerY" secondItem="k5c-DN-zBE" secondAttribute="centerY" id="Ho7-qm-ebz"/>
                                         <constraint firstItem="cVR-IJ-RXC" firstAttribute="centerY" secondItem="FMK-WX-z8D" secondAttribute="centerY" id="Jg8-Lw-hII"/>
                                         <constraint firstItem="cVR-IJ-RXC" firstAttribute="leading" secondItem="FMK-WX-z8D" secondAttribute="trailing" constant="8" id="MGz-pT-dBh"/>
                                         <constraint firstItem="7Md-oe-LaW" firstAttribute="leading" secondItem="WcO-Xx-n6P" secondAttribute="trailing" constant="14" id="N67-r9-hQH"/>
                                         <constraint firstItem="FMK-WX-z8D" firstAttribute="top" secondItem="LZu-7T-bxn" secondAttribute="bottom" constant="-3" id="OfW-Va-4c8"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="7Md-oe-LaW" secondAttribute="trailing" constant="8" id="T8V-9p-Sdb"/>
                                         <constraint firstItem="Boz-5a-LLl" firstAttribute="leading" secondItem="Ah8-DA-WCf" secondAttribute="leadingMargin" constant="5" id="Tkf-MB-8vL"/>
                                         <constraint firstAttribute="bottom" secondItem="FMK-WX-z8D" secondAttribute="bottom" constant="6" id="a2W-NI-MyS"/>
                                         <constraint firstItem="7Md-oe-LaW" firstAttribute="top" secondItem="Ah8-DA-WCf" secondAttribute="top" constant="28" id="aEg-Vb-jC5"/>
@@ -280,7 +292,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green" translatesAutoresizingMaskIntoConstraints="NO" id="9mQ-Bt-hGO">
-                                            <rect key="frame" x="13" y="13" width="24" height="24"/>
+                                            <rect key="frame" x="16" y="13" width="24" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" priority="999" constant="24" id="H8W-9N-tLR"/>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="Mxt-la-QoG"/>
@@ -294,8 +306,8 @@
                                                 </mask>
                                             </variation>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are currently no disruptions with this service." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="249" translatesAutoresizingMaskIntoConstraints="NO" id="CVo-CW-z7B">
-                                            <rect key="frame" x="51" y="4" width="533" height="41"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are currently no disruptions with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="249" translatesAutoresizingMaskIntoConstraints="NO" id="CVo-CW-z7B">
+                                            <rect key="frame" x="54" y="4" width="526" height="41"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="249" id="3dz-EO-cvO"/>
                                                 <constraint firstAttribute="height" constant="41" id="Syu-J3-kDh"/>
@@ -311,38 +323,38 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="CVo-CW-z7B" secondAttribute="trailing" constant="8" id="5J7-m9-CPs"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="CVo-CW-z7B" secondAttribute="trailing" constant="12" id="5J7-m9-CPs"/>
                                         <constraint firstItem="9mQ-Bt-hGO" firstAttribute="top" secondItem="pmU-5t-0Wh" secondAttribute="top" constant="13" id="CsF-Nd-nSf"/>
                                         <constraint firstItem="CVo-CW-z7B" firstAttribute="leading" secondItem="9mQ-Bt-hGO" secondAttribute="trailing" constant="14" id="LbM-w0-lE8"/>
-                                        <constraint firstItem="9mQ-Bt-hGO" firstAttribute="leading" secondItem="pmU-5t-0Wh" secondAttribute="leading" constant="13" id="OJu-jy-spA"/>
+                                        <constraint firstItem="9mQ-Bt-hGO" firstAttribute="leading" secondItem="pmU-5t-0Wh" secondAttribute="leadingMargin" constant="8" id="OJu-jy-spA"/>
                                         <constraint firstAttribute="centerY" secondItem="CVo-CW-z7B" secondAttribute="centerY" id="SSY-SB-3xh"/>
                                         <constraint firstAttribute="bottom" secondItem="9mQ-Bt-hGO" secondAttribute="bottom" constant="12.5" id="hem-l7-t4C"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="errorLoadingCell" rowHeight="44" id="t95-Qg-qKv" userLabel="Cell - error loading disruptions">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="textOnlyCell" id="t95-Qg-qKv" userLabel="Cell - text only cell" customClass="ServiceDetailTextOnlyCell" customModule="FerryServices_2" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t95-Qg-qKv" id="1JP-Oj-5RR">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unable to fetch the disruption status for this service." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="249" translatesAutoresizingMaskIntoConstraints="NO" id="x7z-g3-aoj">
-                                            <rect key="frame" x="21" y="0.0" width="563" height="43.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" priority="999" constant="44" id="sWp-qP-SID"/>
-                                            </constraints>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unable to fetch the disruption status for this service." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7z-g3-aoj">
+                                            <rect key="frame" x="20" y="12" width="560" height="19.5"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="x7z-g3-aoj" secondAttribute="bottom" id="14e-hp-JjM"/>
-                                        <constraint firstItem="x7z-g3-aoj" firstAttribute="leading" secondItem="1JP-Oj-5RR" secondAttribute="leadingMargin" constant="13" id="Old-lm-PlH"/>
-                                        <constraint firstItem="x7z-g3-aoj" firstAttribute="top" secondItem="1JP-Oj-5RR" secondAttribute="top" id="UQv-mq-HmY"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="x7z-g3-aoj" secondAttribute="trailing" constant="8" id="ZtP-Pk-Hzf"/>
+                                        <constraint firstAttribute="bottom" secondItem="x7z-g3-aoj" secondAttribute="bottom" constant="12" id="14e-hp-JjM"/>
+                                        <constraint firstItem="x7z-g3-aoj" firstAttribute="leading" secondItem="1JP-Oj-5RR" secondAttribute="leadingMargin" constant="12" id="Old-lm-PlH"/>
+                                        <constraint firstItem="x7z-g3-aoj" firstAttribute="top" secondItem="1JP-Oj-5RR" secondAttribute="top" constant="12" id="UQv-mq-HmY"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="x7z-g3-aoj" secondAttribute="trailing" constant="12" id="ZtP-Pk-Hzf"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="labelText" destination="x7z-g3-aoj" id="RZo-an-Goo"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="mapCell" id="Nuj-7Z-hR7" userLabel="Cell - mapview" customClass="ServiceDetailMapTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="130"/>
@@ -383,6 +395,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NW6-Rg-h0Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1291" y="153"/>
+        </scene>
+        <!--Web Information View Controller-->
+        <scene sceneID="T5f-hj-VZk">
+            <objects>
+                <viewController storyboardIdentifier="WebInformation" id="L4c-rC-oTP" customClass="WebInformationViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Vi-zB-7LS"/>
+                        <viewControllerLayoutGuide type="bottom" id="t3l-go-uH1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CEN-oh-iPf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fn8-f2-303">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="t3l-go-uH1" firstAttribute="top" secondItem="fn8-f2-303" secondAttribute="bottom" id="Fc9-o3-eMG"/>
+                            <constraint firstItem="fn8-f2-303" firstAttribute="top" secondItem="CEN-oh-iPf" secondAttribute="top" id="GXP-Uc-c8R"/>
+                            <constraint firstAttribute="trailing" secondItem="fn8-f2-303" secondAttribute="trailing" id="RuL-eU-5Xe"/>
+                            <constraint firstItem="fn8-f2-303" firstAttribute="leading" secondItem="CEN-oh-iPf" secondAttribute="leading" id="jcR-E7-zgs"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="webView" destination="fn8-f2-303" id="IHl-Uc-1BO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6hO-O6-P8F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1291" y="828"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2b3-kD-Hbs">

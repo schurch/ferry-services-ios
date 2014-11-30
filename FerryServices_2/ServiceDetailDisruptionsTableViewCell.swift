@@ -18,9 +18,24 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     @IBOutlet var labelReason: UILabel!
     @IBOutlet var labelReasonTitle: UILabel!
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.contentView.layoutSubviews()
+        self.labelDisruptionDetails.preferredMaxLayoutWidth = 100
+        self.contentView.layoutSubviews()
+        super.layoutSubviews()
+    }
+    
     // MARK: - Configure
     func configureWithDisruptionDetails(disruptionDetails: DisruptionDetails) {
-        self.labelDisruptionDetails.text = disruptionDetails.details
+        if let status = disruptionDetails.disruptionStatus {
+            if status == .SailingsCancelled {
+                self.labelDisruptionDetails.text = "Sailings have been cancelled for this service"
+            }
+            else {
+                self.labelDisruptionDetails.text = "There is a disruption with this service"
+            }
+        }
         
         if let disruptionStatus = disruptionDetails.disruptionStatus {
             switch disruptionStatus {

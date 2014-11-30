@@ -105,13 +105,45 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FerryServices_2/ServiceDetailTableViewController.swift"
-            timestampString = "437698380.022287"
+            filePath = "FerryServices_2/ServiceDetailMapTableViewCell.swift"
+            timestampString = "438321125.65719"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "refresh(_:)"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "configureCellForLocations(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FerryServices_2/ServiceDetailTableViewController.swift"
+            timestampString = "438323336.103865"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FerryServices_2/ServiceDetailDisruptionsTableViewCell.swift"
+            timestampString = "439020693.260841"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "configureWithDisruptionDetails(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -12,7 +12,7 @@ import QuickLook
 
 class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate {
     
-    private class Section {
+    class Section {
         var title: String
         var rows: [Row]
         
@@ -25,10 +25,10 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     enum Row {
         case Basic(identifier: String, title: String, action: () -> ())
         case Map(identifier: String, [Location])
-        case Disruption(identifier: String, DisruptionDetails)
+        case Disruption(identifier: String, DisruptionDetails, action: () -> ())
         case NoDisruption(identifier: String)
         case Loading(identifier: String)
-        case Error(identifier: String)
+        case TextOnly(identifier: String, text: String, attributedString: NSAttributedString)
     }
     
     struct MainStoryBoard {
@@ -38,11 +38,11 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             static let disruptionsCell = "disruptionsCell"
             static let noDisruptionsCell = "noDisruptionsCell"
             static let loadingCell = "loadingCell"
-            static let errorCell = "errorLoadingCell"
+            static let textOnlyCell = "textOnlyCell"
         }
     }
     
-    private var dataSource: [Section]!
+    var dataSource: [Section]!
     var refreshing: Bool = false
     var serviceStatus: ServiceStatus!
     
@@ -73,9 +73,10 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
         
         self.refreshing = true
+        
         self.dataSource = generateDatasourceWithDisruptionDetails(nil, refreshing: true)
         self.tableView.reloadData()
-        
+
         self.fetchLatestDisruptionDataWithCompletion {
             self.refreshing = false
             self.refreshControl?.endRefreshing()
@@ -125,7 +126,9 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             route = actualRoute
         }
         
-        sections.append(Section(title: route, rows: timetableRows))
+        if timetableRows.count > 0 {
+            sections.append(Section(title: route, rows: timetableRows))
+        }
         
         
         // map section if available
@@ -145,7 +148,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             disruptionRow = Row.Loading(identifier: MainStoryBoard.TableViewCellIdentifiers.loadingCell)
         }
         else if disruptionDetails == nil {
-            disruptionRow = Row.Error(identifier: MainStoryBoard.TableViewCellIdentifiers.errorCell)
+            disruptionRow = Row.TextOnly(identifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell, text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
         }
         else {
             if let disruptionStatus = disruptionDetails?.disruptionStatus {
@@ -153,7 +156,17 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
                 case .Normal, .Information:
                     disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
                 case .SailingsAffected, .SailingsCancelled:
-                    disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionDetails!)
+                    if let disruptionInfo = disruptionDetails {
+                        disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionInfo, action: {
+                            let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
+                            disruptionViewController.title = "Disruption Information"
+                            disruptionViewController.html = disruptionDetails?.details
+                            self.navigationController?.pushViewController(disruptionViewController, animated: true)
+                        })
+                    }
+                    else {
+                        disruptionRow = Row.TextOnly(identifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell, text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
+                    }
                 }
             }
             else {
@@ -162,6 +175,20 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
         
         sections.append(Section(title: "Disruptions", rows: [disruptionRow]))
+        
+        //additional info section
+        if let additionalInfo = disruptionDetails?.additionalInfo {
+            if !additionalInfo.isEmpty {
+                let additionalInformationRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Additional information", action: {
+                    let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
+                    disruptionViewController.title = "Additional information"
+                    disruptionViewController.html = additionalInfo
+                    self.navigationController?.pushViewController(disruptionViewController, animated: true)
+                })
+                
+                sections.append(Section(title: "", rows: [additionalInformationRow]))
+            }
+        }
         
         return sections
     }
@@ -223,7 +250,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         previewViewController.title = title
         self.navigationController?.pushViewController(previewViewController, animated: true)
     }
-
+    
     // MARK: - UITableViewDatasource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return dataSource.count
@@ -236,7 +263,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return dataSource[section].title
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let row = dataSource[indexPath.section].rows[indexPath.row]
         
@@ -250,7 +277,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             cell.mapView.delegate = self
             cell.configureCellForLocations(locations)
             return cell
-        case let .Disruption(identifier, disruptionDetails):
+        case let .Disruption(identifier, disruptionDetails, _):
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailDisruptionsTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
             return cell
@@ -260,8 +287,14 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         case let .Loading(identifier):
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
             return cell
-        case let .Error(identifier):
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
+        case let .TextOnly(identifier, text, attributedString):
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailTextOnlyCell
+            if text.isEmpty {
+                cell.labelText.attributedText = attributedString
+            }
+            else {
+                cell.labelText.text = text
+            }
             return cell
         }
     }
@@ -271,6 +304,8 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         let row = dataSource[indexPath.section].rows[indexPath.row]
         switch row {
         case let .Basic(_, _, action):
+            action()
+        case let .Disruption(_, _, action):
             action()
         default:
             println("No action for cell")
