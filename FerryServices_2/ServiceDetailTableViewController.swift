@@ -24,7 +24,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     
     enum Row {
         case Basic(identifier: String, title: String, action: () -> ())
-        case Map(identifier: String, [Location])
+        case Map(identifier: String)
         case Disruption(identifier: String, DisruptionDetails, action: () -> ())
         case NoDisruption(identifier: String)
         case Loading(identifier: String)
@@ -42,9 +42,21 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
+    @IBOutlet var mapView: MKMapView!
+    @IBOutlet var mapViewCell: UITableViewCell!
+    
+    var annotations: [MKPointAnnotation]?
     var dataSource: [Section]!
     var refreshing: Bool = false
     var serviceStatus: ServiceStatus!
+    
+    lazy var locations: [Location]? = {
+        if let serviceId = self.serviceStatus.serviceId {
+            return Location.fetchLocationsForSericeId(serviceId)
+        }
+        
+        return nil
+    }()
     
     // MARK: - view lifecycle
     override func viewDidLoad() {
@@ -55,6 +67,12 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedRowHeight = 44.0;
         
+        if let locations = self.locations {
+            if locations.count > 0 {
+                self.configureMapView()
+            }
+        }
+        
         self.refresh(nil)
     }
     
@@ -64,6 +82,49 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         if let selectedIndexPath = self.tableView.indexPathForSelectedRow() {
             self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
         }
+    }
+    
+    // MARK: - mapview configuration
+    func configureMapView() {
+        if let locations = self.locations {
+            if locations.count == 0 {
+                return
+            }
+            
+            if let annotations = self.annotations {
+                self.mapView.removeAnnotations(annotations)
+            }
+            
+            let annotations: [MKPointAnnotation]? = locations.map { location in
+                let annotation = MKPointAnnotation()
+                annotation.title = location.name
+                annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude!, longitude: location.longitude!)
+                return annotation
+            }
+            
+            self.annotations = annotations
+            
+            if self.annotations != nil {
+                self.mapView.addAnnotations(self.annotations!)
+                setVisibleRect()
+            }
+        }
+    }
+    
+    func setVisibleRect() {
+        if let annotations = self.annotations {
+            let mapRect = calculateMapRectForAnnotations(annotations)
+            self.mapView.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: 40, left: 20, bottom: 5, right: 20), animated: false)
+        }
+    }
+    
+    private func calculateMapRectForAnnotations(annotations: [MKPointAnnotation]) -> MKMapRect {
+        var mapRect = MKMapRectNull
+        for annotation in annotations {
+            let point = MKMapPointForCoordinate(annotation.coordinate)
+            mapRect = MKMapRectUnion(mapRect, MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
+        }
+        return mapRect
     }
     
     // MARK: - refresh
@@ -132,10 +193,9 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         
         
         // map section if available
-        if let serviceId = self.serviceStatus.serviceId {
-            let locations = Location.fetchLocationsForSericeId(serviceId)
-            if locations?.count > 0 {
-                let mapSection = Section(title: "Map", rows: [Row.Map(identifier: MainStoryBoard.TableViewCellIdentifiers.mapCell, locations!)])
+        if let locations = self.locations {
+            if locations.count > 0 {
+                let mapSection = Section(title: "Map", rows: [Row.Map(identifier: MainStoryBoard.TableViewCellIdentifiers.mapCell)])
                 sections.append(mapSection)
             }
         }
@@ -272,11 +332,8 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
             cell.textLabel.text = title
             return cell
-        case let .Map(identifier, locations):
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailMapTableViewCell
-            cell.mapView.delegate = self
-            cell.configureCellForLocations(locations)
-            return cell
+        case let .Map(identifier):
+            return self.mapViewCell!
         case let .Disruption(identifier, disruptionDetails, _):
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailDisruptionsTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)

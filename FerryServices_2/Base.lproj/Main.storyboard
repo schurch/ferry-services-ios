@@ -356,34 +356,6 @@
                                     <outlet property="labelText" destination="x7z-g3-aoj" id="RZo-an-Goo"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="mapCell" id="Nuj-7Z-hR7" userLabel="Cell - mapview" customClass="ServiceDetailMapTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="130"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nuj-7Z-hR7" id="zdf-iJ-bfS">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="600" placeholderIntrinsicHeight="129" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlb-c7-4a6">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" priority="999" constant="129" id="KRq-Qj-izT"/>
-                                            </constraints>
-                                            <connections>
-                                                <outlet property="delegate" destination="BDF-Ld-m74" id="HET-eA-Pki"/>
-                                            </connections>
-                                        </mapView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Xlb-c7-4a6" firstAttribute="top" secondItem="zdf-iJ-bfS" secondAttribute="top" id="CzQ-Bd-5GD"/>
-                                        <constraint firstAttribute="trailing" secondItem="Xlb-c7-4a6" secondAttribute="trailing" id="Gon-pd-EwL"/>
-                                        <constraint firstAttribute="bottom" secondItem="Xlb-c7-4a6" secondAttribute="bottom" id="OMl-bc-4aT"/>
-                                        <constraint firstItem="Xlb-c7-4a6" firstAttribute="leading" secondItem="zdf-iJ-bfS" secondAttribute="leading" id="bbZ-3G-JBR"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="mapView" destination="Xlb-c7-4a6" id="i4r-Aa-0Kd"/>
-                                </connections>
-                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -391,8 +363,37 @@
                             <outlet property="delegate" destination="BDF-Ld-m74" id="0lW-9M-WgG"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="mapView" destination="jnL-zy-irC" id="mO3-pg-GLp"/>
+                        <outlet property="mapViewCell" destination="Nuj-7Z-hR7" id="Msy-3O-hKm"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NW6-Rg-h0Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="mapCell" rowHeight="129" id="Nuj-7Z-hR7" userLabel="Cell - mapview" customClass="ServiceDetailMapTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="129"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nuj-7Z-hR7" id="zdf-iJ-bfS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jnL-zy-irC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="128.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="129" id="jJO-fY-Ue6"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="BDF-Ld-m74" id="CM8-HT-kmX"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="jnL-zy-irC" firstAttribute="leading" secondItem="zdf-iJ-bfS" secondAttribute="leading" id="BYA-5v-a0g"/>
+                            <constraint firstAttribute="bottom" secondItem="jnL-zy-irC" secondAttribute="bottom" id="J74-ji-xU9"/>
+                            <constraint firstItem="jnL-zy-irC" firstAttribute="top" secondItem="zdf-iJ-bfS" secondAttribute="top" id="XNf-Mt-9Xd"/>
+                            <constraint firstAttribute="trailing" secondItem="jnL-zy-irC" secondAttribute="trailing" id="b46-wC-wKc"/>
+                        </constraints>
+                    </tableViewCellContentView>
+                </tableViewCell>
             </objects>
             <point key="canvasLocation" x="1291" y="153"/>
         </scene>

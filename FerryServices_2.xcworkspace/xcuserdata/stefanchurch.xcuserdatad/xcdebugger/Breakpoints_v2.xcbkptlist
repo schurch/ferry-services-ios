@@ -105,28 +105,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FerryServices_2/ServiceDetailMapTableViewCell.swift"
-            timestampString = "438321125.65719"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "configureCellForLocations(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "FerryServices_2/ServiceDetailTableViewController.swift"
-            timestampString = "438323336.103865"
+            timestampString = "440812177.65596"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,12 +122,104 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FerryServices_2/ServiceDetailDisruptionsTableViewCell.swift"
-            timestampString = "439020693.260841"
+            timestampString = "439024712.947502"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
             landmarkName = "configureWithDisruptionDetails(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FerryServices_2/ServiceDetailTableViewController.swift"
+            timestampString = "440812367.926785"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "configureMapView()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FerryServices_2.ServiceDetailTableViewController.configureMapView (FerryServices_2.ServiceDetailTableViewController)() -&gt; ()"
+                  moduleName = "FerryServices_2"
+                  urlString = "file:///Users/stefanchurch/Documents/Source/ferry-services-swift/FerryServices_2/ServiceDetailTableViewController.swift"
+                  timestampString = "440811682.492981"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "1825">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FerryServices_2.ServiceDetailTableViewController.(configureMapView (FerryServices_2.ServiceDetailTableViewController) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "FerryServices_2"
+                  urlString = "file:///Users/stefanchurch/Documents/Source/ferry-services-swift/FerryServices_2/ServiceDetailTableViewController.swift"
+                  timestampString = "440811682.494587"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "15">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "reabstraction thunk helper from @callee_owned (@owned FerryServices_2.Location) -&gt; (@owned ObjectiveC.MKPointAnnotation) to @callee_owned (@in FerryServices_2.Location) -&gt; (@out ObjectiveC.MKPointAnnotation)"
+                  moduleName = "FerryServices_2"
+                  urlString = "file:///Users/stefanchurch/Documents/Source/ferry-services-swift/FerryServices_2/ServiceDetailTableViewController.swift"
+                  timestampString = "440811682.494861"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "11">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FerryServices_2/ServiceDetailTableViewController.swift"
+            timestampString = "440812367.926785"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "configureMapView()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FerryServices_2/ServiceDetailTableViewController.swift"
+            timestampString = "440812367.926785"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "setVisibleRect()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

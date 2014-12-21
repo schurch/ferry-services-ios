@@ -18,14 +18,6 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     @IBOutlet var labelReason: UILabel!
     @IBOutlet var labelReasonTitle: UILabel!
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.contentView.layoutSubviews()
-        self.labelDisruptionDetails.preferredMaxLayoutWidth = 100
-        self.contentView.layoutSubviews()
-        super.layoutSubviews()
-    }
-    
     // MARK: - Configure
     func configureWithDisruptionDetails(disruptionDetails: DisruptionDetails) {
         if let status = disruptionDetails.disruptionStatus {
