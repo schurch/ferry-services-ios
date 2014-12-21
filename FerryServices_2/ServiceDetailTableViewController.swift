@@ -58,11 +58,18 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         return nil
     }()
     
+    // MARK: -
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     // MARK: - view lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = self.serviceStatus.area
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedRowHeight = 44.0;
@@ -82,6 +89,10 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         if let selectedIndexPath = self.tableView.indexPathForSelectedRow() {
             self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
         }
+    }
+    
+    func applicationDidBecomeActive(notification: NSNotification) {
+        self.refresh(nil)
     }
     
     // MARK: - mapview configuration
@@ -325,7 +336,8 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
             return cell
         case let .Loading(identifier):
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailLoadingTableViewCell
+            cell.activityIndicatorView.startAnimating()
             return cell
         case let .TextOnly(identifier, text, attributedString):
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailTextOnlyCell

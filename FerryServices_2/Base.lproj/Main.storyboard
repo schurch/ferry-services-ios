@@ -264,13 +264,13 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="loadingCell" rowHeight="44" id="2yD-yy-f20" userLabel="Cell - loading">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="loadingCell" rowHeight="44" id="2yD-yy-f20" userLabel="Cell - loading" customClass="ServiceDetailLoadingTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2yD-yy-f20" id="2b4-pU-4Be">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lzV-PZ-DRb">
+                                        <activityIndicatorView opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lzV-PZ-DRb">
                                             <rect key="frame" x="290" y="12" width="20" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" priority="999" constant="20" id="869-eh-hpj"/>
@@ -284,6 +284,9 @@
                                         <constraint firstAttribute="centerX" secondItem="lzV-PZ-DRb" secondAttribute="centerX" id="rO6-94-S9R"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="activityIndicatorView" destination="lzV-PZ-DRb" id="Ech-ek-f9W"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="noDisruptionsCell" rowHeight="50" id="ILj-bi-QJe" userLabel="Cell - no disruptions">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -376,7 +379,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jnL-zy-irC">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jnL-zy-irC">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="128.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="130" id="0na-cl-fiS"/>

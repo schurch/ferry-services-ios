@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
+		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
 		FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* APIClient.swift */; };
 		FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */; };
 		FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD709DAB1A2082DB00DBD247 /* WebInformationViewController.swift */; };
@@ -55,6 +56,7 @@
 		FBF3A3E328204485AED6C991 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
 		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
+		FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FD5E7DBA197A316F00F438F6 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = APIClient.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableHeaderViewCell.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 			children = (
 				FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */,
 				FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */,
+				FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */,
 				FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */,
 			);
 			name = "Service Details";
@@ -454,6 +457,7 @@
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
 				FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */,
+				FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */,
 				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
 				FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */,
 				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,

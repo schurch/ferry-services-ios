@@ -40,6 +40,11 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     private var tapCountDictionary = NSUserDefaults.standardUserDefaults().dictionaryForKey("com.ferryservices.userdefaultkeys.tapcount")
         ?? [NSObject: AnyObject]()
     
+    // MARK: -
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
