@@ -150,6 +150,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         if let routeId = self.serviceStatus.serviceId {
             if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: NSDate()) {
                 let departuresRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Departures", action: {
+                    [unowned self] in
                     if let routeId = self.serviceStatus.serviceId {
                         let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as TimetableViewController
                         timetableViewController.routeId = routeId
@@ -163,6 +164,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         // summer timetable
         if isSummerTimetableAvailable() {
             let summerTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Summer timetable", action: {
+                [unowned self] in
                 self.showSummerTimetable()
             })
             timetableRows.append(summerTimetableRow)
@@ -171,6 +173,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         // winter timetable
         if isWinterTimetableAvailable() {
             let winterTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Winter timetable", action: {
+                [unowned self] in
                 self.showWinterTimetable()
             })
             timetableRows.append(winterTimetableRow)
@@ -212,6 +215,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
                 case .SailingsAffected, .SailingsCancelled:
                     if let disruptionInfo = disruptionDetails {
                         disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionInfo, action: {
+                            [unowned self] in
                             let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
                             disruptionViewController.title = "Disruption Information"
                             disruptionViewController.html = disruptionDetails?.details
@@ -234,6 +238,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         if let additionalInfo = disruptionDetails?.additionalInfo {
             if !additionalInfo.isEmpty {
                 let additionalInformationRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Additional information", action: {
+                    [unowned self] in
                     let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
                     disruptionViewController.title = "Additional information"
                     disruptionViewController.html = additionalInfo
@@ -324,7 +329,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         switch row {
         case let .Basic(identifier, title, _):
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
-            cell.textLabel.text = title
+            cell.textLabel!.text = title
             return cell
         case let .Map(identifier):
             return self.mapViewCell!
