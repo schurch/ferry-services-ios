@@ -106,25 +106,8 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             
             if self.annotations != nil {
                 self.mapView.addAnnotations(self.annotations!)
-                setVisibleRect()
             }
         }
-    }
-    
-    func setVisibleRect() {
-        if let annotations = self.annotations {
-            let mapRect = calculateMapRectForAnnotations(annotations)
-            self.mapView.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: 40, left: 20, bottom: 5, right: 20), animated: false)
-        }
-    }
-    
-    private func calculateMapRectForAnnotations(annotations: [MKPointAnnotation]) -> MKMapRect {
-        var mapRect = MKMapRectNull
-        for annotation in annotations {
-            let point = MKMapPointForCoordinate(annotation.coordinate)
-            mapRect = MKMapRectUnion(mapRect, MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
-        }
-        return mapRect
     }
     
     // MARK: - refresh
@@ -372,5 +355,9 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     // MARK: - MKMapViewDelegate
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         mapView.deselectAnnotation(view.annotation, animated: false)
+    }
+    
+    func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
+        mapView.showAnnotations(self.annotations, animated: false)
     }
 }

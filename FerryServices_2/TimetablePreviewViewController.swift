@@ -39,7 +39,16 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
     
     //MARK: - Share action
     func share() {
-        let activityViewController = UIActivityViewController(activityItems:[url], applicationActivities: nil)
+        var items = [AnyObject]()
+        
+        if let route = serviceStatus.route {
+            items.append(route)
+        }
+        
+        let pdfData = NSData(contentsOfFile: url.absoluteString!)
+        items.append(pdfData!)
+        
+        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         self.navigationController?.presentViewController(activityViewController, animated: true, completion: {})
     }
 }

@@ -246,12 +246,12 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             
             var containsArea = false
             if let area = item.area {
-                containsArea = (area.lowercaseString as NSString).containsString(searchString)
+                containsArea = (area.lowercaseString as NSString).containsString(searchString.lowercaseString)
             }
             
             var containsRoute = false
             if let route = item.route {
-                containsRoute = (route.lowercaseString as NSString).containsString(searchString)
+                containsRoute = (route.lowercaseString as NSString).containsString(searchString.lowercaseString)
             }
             
             return containsArea || containsRoute
