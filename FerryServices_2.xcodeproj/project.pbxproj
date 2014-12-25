@@ -32,6 +32,8 @@
 		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
 		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
 		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
+		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
+		FDCB33481A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33471A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift */; };
 		FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
@@ -87,6 +89,8 @@
 		FDC7760D19844C3500B3782F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Location.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Trip.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC77612198450AC00B3782F /* timetables.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = timetables.sqlite; sourceTree = "<group>"; };
+		FDCB33441A4BD6D1000033BC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		FDCB33471A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailMapTableViewCell.swift; sourceTree = "<group>"; };
 		FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -152,6 +156,7 @@
 				FD4F6BD719B183B2007E88A1 /* Timetable */,
 				FD9432DA19CD1376003BBD23 /* Timetable Preview */,
 				FD6C45651A2ACEF6005E1FB8 /* Web Information */,
+				FDCB33461A4BD6D6000033BC /* Map */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -257,6 +262,14 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		FDCB33461A4BD6D6000033BC /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				FDCB33441A4BD6D1000033BC /* MapViewController.swift */,
+			);
+			name = Map;
+			sourceTree = "<group>";
+		};
 		FDDEC68D198E3CFB0060B18F /* Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -281,6 +294,7 @@
 				FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */,
 				FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */,
 				FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */,
+				FDCB33471A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift */,
 				FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */,
 			);
 			name = "Service Details";
@@ -453,7 +467,9 @@
 				FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */,
 				FDC7760E19844C3500B3782F /* Location.swift in Sources */,
 				FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */,
+				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
 				FDEA4B25198C72D70023A5A7 /* RouteDetails.swift in Sources */,
+				FDCB33481A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift in Sources */,
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
 				FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */,

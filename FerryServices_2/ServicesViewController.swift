@@ -182,6 +182,13 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             serviceStatusCell.imageViewStatus.image = nil
         }
         
+        if serviceStatusCell.imageViewStatus.image == nil {
+            serviceStatusCell.constraintTitleLeadingSpace.constant = serviceStatusCell.layoutMargins.left
+        }
+        else {
+            serviceStatusCell.constraintTitleLeadingSpace.constant = 42
+        }
+        
         return serviceStatusCell
     }
     

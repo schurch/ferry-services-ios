@@ -24,7 +24,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     
     enum Row {
         case Basic(identifier: String, title: String, action: () -> ())
-        case Map(identifier: String)
+        case Map(identifier: String, action: () -> ())
         case Disruption(identifier: String, DisruptionDetails, action: () -> ())
         case NoDisruption(identifier: String)
         case Loading(identifier: String)
@@ -192,7 +192,21 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         // map section if available
         if let locations = self.locations {
             if locations.count > 0 {
-                let mapSection = Section(title: "Map", rows: [Row.Map(identifier: MainStoryBoard.TableViewCellIdentifiers.mapCell)])
+                let mapSection = Section(title: "Map", rows: [Row.Map(identifier: MainStoryBoard.TableViewCellIdentifiers.mapCell, action: {
+                    [unowned self] in
+                    let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapViewController") as MapViewController
+                    
+                    if let actualRoute = self.serviceStatus.route {
+                        mapViewController.title = actualRoute
+                    }
+                    else {
+                        mapViewController.title = "Map"
+                    }
+                    
+                    mapViewController.annotations = self.annotations
+                    
+                    self.navigationController?.pushViewController(mapViewController, animated: true)
+                })])
                 sections.append(mapSection)
             }
         }
@@ -217,7 +231,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
                         disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionInfo, action: {
                             [unowned self] in
                             let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
-                            disruptionViewController.title = "Disruption Information"
+                            disruptionViewController.title = "Disruption information"
                             disruptionViewController.html = disruptionDetails?.details
                             self.navigationController?.pushViewController(disruptionViewController, animated: true)
                         })
@@ -363,6 +377,8 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         case let .Basic(_, _, action):
             action()
         case let .Disruption(_, _, action):
+            action()
+        case let .Map(_, action):
             action()
         default:
             println("No action for cell")

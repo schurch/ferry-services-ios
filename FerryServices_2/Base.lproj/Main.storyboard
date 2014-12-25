@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14C81f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C81f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -59,20 +59,12 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Zxh-GO-J3P" firstAttribute="top" secondItem="oz8-yh-9eU" secondAttribute="top" constant="20" id="3pf-NE-g0Z"/>
-                                        <constraint firstItem="0Ts-7V-2Sv" firstAttribute="top" secondItem="oz8-yh-9eU" secondAttribute="top" constant="10" id="Nrw-Kf-NLR"/>
                                         <constraint firstItem="0Ts-7V-2Sv" firstAttribute="leading" secondItem="oz8-yh-9eU" secondAttribute="leading" constant="11" id="bzl-gE-chj"/>
-                                        <constraint firstAttribute="bottom" secondItem="0Ts-7V-2Sv" secondAttribute="bottom" constant="9" id="esP-DF-5rR"/>
                                         <constraint firstItem="Vxl-fx-ggN" firstAttribute="leading" secondItem="Zxh-GO-J3P" secondAttribute="leading" id="fmC-nS-OOS"/>
                                         <constraint firstAttribute="centerY" secondItem="0Ts-7V-2Sv" secondAttribute="centerY" id="uCS-Hj-VvE"/>
                                         <constraint firstItem="Vxl-fx-ggN" firstAttribute="leading" secondItem="oz8-yh-9eU" secondAttribute="leading" constant="42" id="uR5-ES-hTJ"/>
                                         <constraint firstItem="Vxl-fx-ggN" firstAttribute="top" secondItem="oz8-yh-9eU" secondAttribute="top" constant="4" id="v4n-N6-Qj9"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="Nrw-Kf-NLR"/>
-                                            <exclude reference="esP-DF-5rR"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -449,6 +441,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pea-YI-F9l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-139" y="155"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="UGc-19-rqN">
+            <objects>
+                <viewController storyboardIdentifier="mapViewController" id="YPO-ou-CUp" customClass="MapViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nVz-Hu-bd5"/>
+                        <viewControllerLayoutGuide type="bottom" id="gY1-2H-0zQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hzf-Z5-UQx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vqg-qS-Gwh">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vqg-qS-Gwh" firstAttribute="leading" secondItem="hzf-Z5-UQx" secondAttribute="leading" id="AL6-ZQ-iyt"/>
+                            <constraint firstItem="vqg-qS-Gwh" firstAttribute="top" secondItem="hzf-Z5-UQx" secondAttribute="top" id="LT9-lS-cGD"/>
+                            <constraint firstAttribute="trailing" secondItem="vqg-qS-Gwh" secondAttribute="trailing" id="P3B-AK-d0S"/>
+                            <constraint firstItem="gY1-2H-0zQ" firstAttribute="top" secondItem="vqg-qS-Gwh" secondAttribute="bottom" id="kIS-Zk-EtQ"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="mapView" destination="vqg-qS-Gwh" id="r2N-Dk-GL7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JsN-Pf-Amj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1949" y="-570"/>
         </scene>
         <!--Timetable View Controller-->
         <scene sceneID="cUn-Yx-I2L">
