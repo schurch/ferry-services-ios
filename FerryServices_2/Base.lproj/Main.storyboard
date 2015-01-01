@@ -295,13 +295,13 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are currently no disruptions with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CVo-CW-z7B">
-                                            <rect key="frame" x="54" y="10" width="500" height="29.5"/>
+                                            <rect key="frame" x="54" y="10" width="492" height="29.5"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j0z-sF-zcf">
-                                            <rect key="frame" x="570" y="13" width="22" height="22"/>
+                                            <rect key="frame" x="562" y="13" width="22" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="22" id="aVN-7c-gMN"/>
                                                 <constraint firstAttribute="height" constant="22" id="qsy-Ow-5ne"/>
@@ -314,13 +314,13 @@
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="CVo-CW-z7B" secondAttribute="bottom" constant="10" id="14K-5e-oyF"/>
                                         <constraint firstItem="j0z-sF-zcf" firstAttribute="leading" secondItem="CVo-CW-z7B" secondAttribute="trailing" constant="16" id="4Dz-Gu-sNS"/>
-                                        <constraint firstAttribute="trailing" secondItem="j0z-sF-zcf" secondAttribute="trailing" constant="8" id="6rn-84-Qd8"/>
                                         <constraint firstAttribute="centerY" secondItem="9mQ-Bt-hGO" secondAttribute="centerY" id="Dfa-43-u0G"/>
                                         <constraint firstItem="CVo-CW-z7B" firstAttribute="leading" secondItem="9mQ-Bt-hGO" secondAttribute="trailing" constant="14" id="LbM-w0-lE8"/>
                                         <constraint firstItem="9mQ-Bt-hGO" firstAttribute="leading" secondItem="pmU-5t-0Wh" secondAttribute="leadingMargin" constant="8" id="OJu-jy-spA"/>
                                         <constraint firstAttribute="centerY" secondItem="CVo-CW-z7B" secondAttribute="centerY" id="SSY-SB-3xh"/>
                                         <constraint firstAttribute="centerY" secondItem="j0z-sF-zcf" secondAttribute="centerY" id="uQ9-hc-yY4"/>
                                         <constraint firstItem="CVo-CW-z7B" firstAttribute="top" secondItem="pmU-5t-0Wh" secondAttribute="top" constant="10" id="yeh-wC-faY"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="j0z-sF-zcf" secondAttribute="trailing" constant="8" id="zVB-5j-glC"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

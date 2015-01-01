@@ -48,6 +48,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             let directionsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 100))
             directionsButton.backgroundColor = UIColor(red:0.13, green:0.75, blue:0.67, alpha:1)
             directionsButton.setImage(UIImage(named: "directions_arrow"), forState: UIControlState.Normal)
+            directionsButton.setImage(UIImage(named: "directions_arrow_highlighted"), forState: UIControlState.Highlighted)
             directionsButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 56, right: 0)
             
             pinView.rightCalloutAccessoryView = directionsButton
