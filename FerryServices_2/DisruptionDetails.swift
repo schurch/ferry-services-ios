@@ -25,6 +25,14 @@ struct DisruptionDetails {
     var updatedDate: NSDate?
     var disruptionStatus: DisruptionDetailsStatus?
     
+    var hasAdditionalInfo: Bool {
+        if self.additionalInfo != nil && !self.additionalInfo!.isEmpty {
+            return true
+        }
+        
+        return false
+    }
+    
     private static let dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "dd MMM yyyy HH:mm"

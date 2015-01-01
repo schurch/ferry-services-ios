@@ -25,7 +25,7 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
                 self.labelDisruptionDetails.text = "Sailings have been cancelled for this service"
             }
             else {
-                self.labelDisruptionDetails.text = "There is a disruption with this service"
+                self.labelDisruptionDetails.text = "There are disruptions with this service"
             }
         }
         

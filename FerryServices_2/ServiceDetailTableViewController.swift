@@ -25,8 +25,8 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     enum Row {
         case Basic(identifier: String, title: String, action: () -> ())
         case Map(identifier: String, action: () -> ())
-        case Disruption(identifier: String, DisruptionDetails, action: () -> ())
-        case NoDisruption(identifier: String)
+        case Disruption(identifier: String, disruptionDetails: DisruptionDetails, action: () -> ())
+        case NoDisruption(identifier: String, disruptionDetails: DisruptionDetails?, action: () -> ())
         case Loading(identifier: String)
         case TextOnly(identifier: String, text: String, attributedString: NSAttributedString)
     }
@@ -224,15 +224,38 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         else {
             if let disruptionStatus = disruptionDetails?.disruptionStatus {
                 switch disruptionStatus {
-                case .Normal, .Information:
-                    disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
+                case .Normal:
+                    disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: disruptionDetails!, {})
+                    
+                case .Information:
+                    var action: () -> () = {}
+                    if disruptionDetails!.hasAdditionalInfo {
+                        action = {
+                            [unowned self] in
+                            let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
+                            disruptionViewController.title = "Additional info"
+                            disruptionViewController.html = disruptionDetails!.additionalInfo!
+                            self.navigationController?.pushViewController(disruptionViewController, animated: true)
+                        }
+                    }
+                    
+                    disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: disruptionDetails!, action)
+                    
                 case .SailingsAffected, .SailingsCancelled:
                     if let disruptionInfo = disruptionDetails {
-                        disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionInfo, action: {
+                        disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionDetails: disruptionInfo, action: {
                             [unowned self] in
                             let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
                             disruptionViewController.title = "Disruption information"
-                            disruptionViewController.html = disruptionDetails?.details
+                            
+                            var disruptionInformation = disruptionInfo.details ?? ""
+                            if disruptionDetails!.hasAdditionalInfo {
+                                disruptionInformation += "</p>"
+                                disruptionInformation += disruptionDetails!.additionalInfo!
+                            }
+                            
+                            disruptionViewController.html = disruptionInformation
+                            
                             self.navigationController?.pushViewController(disruptionViewController, animated: true)
                         })
                     }
@@ -242,26 +265,12 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
                 }
             }
             else {
-                disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
+                // no disruptionStatus
+                disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: nil, {})
             }
         }
         
         sections.append(Section(title: "Disruptions", rows: [disruptionRow]))
-        
-        //additional info section
-        if let additionalInfo = disruptionDetails?.additionalInfo {
-            if !additionalInfo.isEmpty {
-                let additionalInformationRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Additional information", action: {
-                    [unowned self] in
-                    let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
-                    disruptionViewController.title = "Additional information"
-                    disruptionViewController.html = additionalInfo
-                    self.navigationController?.pushViewController(disruptionViewController, animated: true)
-                })
-                
-                sections.append(Section(title: "", rows: [additionalInformationRow]))
-            }
-        }
         
         return sections
     }
@@ -351,8 +360,9 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailDisruptionsTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
             return cell
-        case let .NoDisruption(identifier):
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
+        case let .NoDisruption(identifier, disruptionDetails, _):
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailNoDisruptionTableViewCell
+            cell.configureWithDisruptionDetails(disruptionDetails)
             return cell
         case let .Loading(identifier):
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailLoadingTableViewCell
@@ -380,6 +390,10 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             action()
         case let .Map(_, action):
             action()
+        case let .NoDisruption(_, disruptionDetails, action):
+            if disruptionDetails != nil && disruptionDetails!.hasAdditionalInfo {
+                action()
+            }
         default:
             println("No action for cell")
         }

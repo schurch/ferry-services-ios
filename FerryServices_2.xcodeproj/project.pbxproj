@@ -16,6 +16,7 @@
 		FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD709DAB1A2082DB00DBD247 /* WebInformationViewController.swift */; };
 		FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD71167619B2F8E400A81ED5 /* TimetableDateTableViewCell.swift */; };
 		FD71167919B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD71167819B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift */; };
+		FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */; };
 		FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */; };
 		FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD753ED9197A256E00CC5DE3 /* Main.storyboard */; };
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
@@ -67,6 +68,7 @@
 		FD709DAB1A2082DB00DBD247 /* WebInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInformationViewController.swift; sourceTree = "<group>"; };
 		FD71167619B2F8E400A81ED5 /* TimetableDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableDateTableViewCell.swift; sourceTree = "<group>"; };
 		FD71167819B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableTimeTableViewCell.swift; sourceTree = "<group>"; };
+		FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailNoDisruptionTableViewCell.swift; sourceTree = "<group>"; };
 		FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FerryServices_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753ED4197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */,
 				FDCB33471A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift */,
 				FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */,
+				FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */,
 			);
 			name = "Service Details";
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */,
 				FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */,
 				FDC7760E19844C3500B3782F /* Location.swift in Sources */,
+				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
 				FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */,
 				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
 				FDEA4B25198C72D70023A5A7 /* RouteDetails.swift in Sources */,
