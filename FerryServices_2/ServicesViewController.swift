@@ -31,11 +31,18 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             static let userDefaultsKey = "com.ferryservices.userdefaultkeys.tapcount"
             static let minimumCount = 2
         }
+        struct PullToRefresh {
+            static let refreshOffset = CGFloat(120.0)
+        }
     }
     
     private var arrayServiceStatuses = [ServiceStatus]()
     private var arrayFilteredServiceStatuses = [ServiceStatus]()
     private var arrayRecentServiceStatues = [ServiceStatus]()
+    
+    private var propellerView: PropellerView!
+    
+    private var refreshing = false
     
     private var tapCountDictionary = NSUserDefaults.standardUserDefaults().dictionaryForKey("com.ferryservices.userdefaultkeys.tapcount")
         ?? [NSObject: AnyObject]()
@@ -56,16 +63,15 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         
         self.navigationItem.rightBarButtonItem = self.arrayRecentServiceStatues.count > 0 ? self.editButtonItem() : nil
         
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
-        self.refreshControl = refreshControl
-        
-        tableView.contentOffset = CGPoint(x: 0, y: -60)
-        self.refreshControl?.beginRefreshing()
+        // custom pull to refresh
+        propellerView = PropellerView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+        propellerView.center = CGPoint(x: self.tableView.bounds.size.width/2, y: -24)
+        propellerView.percentComplete = 0.0
+        self.tableView.addSubview(propellerView)
         
         self.tableView.rowHeight = 44;
         
-        self.refresh(nil)
+        refresh()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -87,11 +93,15 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
     // MARK: - Notifications
     func applicationDidBecomeActive(notification: NSNotification) {
-        self.refresh(nil)
+        self.refresh()
     }
     
     // MARK: - Refresh
-    func refresh(sender: UIRefreshControl?) {
+    func refresh() {
+        self.refreshing = true
+        self.propellerView.percentComplete = 1.0
+        self.propellerView.startRotating()
+        
         APIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
             if let statuses = serviceStatuses {
                 self.arrayServiceStatuses = statuses
@@ -100,7 +110,14 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             self.reloadRecents()
             self.navigationItem.rightBarButtonItem = self.arrayRecentServiceStatues.count > 0 ? self.editButtonItem() : nil
             self.tableView.reloadData()
-            self.refreshControl?.endRefreshing()
+            
+            // reset pull to refresh on completion
+            UIView.animateWithDuration(0.25, animations: {
+                self.tableView.contentInset = UIEdgeInsetsZero
+                }, completion: { (finished) -> () in
+                    self.propellerView.stopRotating()
+                    self.refreshing = false
+            })
         }
     }
     
@@ -242,6 +259,31 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
         return !isSearchViewControllerTableView(tableView) && indexPath.section == Constants.TableViewSections.recent ? .Delete : .None
+    }
+    
+    // MARK: - UIScrollViewDelegate
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        if self.refreshing {
+            return
+        }
+        
+        var pullToRefreshPercent = min(abs(scrollView.contentOffset.y) / Constants.PullToRefresh.refreshOffset, 1.0)
+        propellerView.percentComplete = Float(pullToRefreshPercent)
+    }
+    
+    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView.contentOffset.y < -Constants.PullToRefresh.refreshOffset {
+            refresh()
+            
+            let contentOffset = scrollView.contentOffset
+            var newInset = scrollView.contentInset
+            newInset.top = propellerView.bounds.size.height + 14
+            
+            UIView.animateWithDuration(0.25) {
+                scrollView.contentInset = newInset
+                scrollView.contentOffset = contentOffset
+            }
+        }
     }
     
     // MARK: - Storyboard

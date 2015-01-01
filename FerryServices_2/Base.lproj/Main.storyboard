@@ -5,12 +5,12 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Ferry Services-->
+        <!--Ferries-->
         <scene sceneID="CfR-48-wwL">
             <objects>
-                <tableViewController id="uiG-sM-ILp" customClass="ServicesViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="uiG-sM-ILp" customClass="ServicesViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="PzK-zD-OtV">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="shJ-HZ-Odo">
@@ -81,7 +81,8 @@
                             <outlet property="delegate" destination="uiG-sM-ILp" id="9Me-sz-A7N"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Ferry Services" id="ndA-Xd-ojl"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <navigationItem key="navigationItem" title="Ferries" id="ndA-Xd-ojl"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="pt8-HI-Yzq" id="143-IY-5N0"/>
                     </connections>
@@ -104,7 +105,7 @@
             <objects>
                 <tableViewController id="BDF-Ld-m74" customClass="ServiceDetailTableViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="pKD-PB-YuA">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -429,8 +430,9 @@
         <!--Navigation Controller-->
         <scene sceneID="2b3-kD-Hbs">
             <objects>
-                <navigationController id="M6G-w3-Rgm" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tJe-9Z-iYr">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="M6G-w3-Rgm" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="tJe-9Z-iYr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
