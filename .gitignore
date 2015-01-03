@@ -18,3 +18,4 @@ contents.xcworkspacedata
 Crashlytics.framework/Modules/
 FerryServices_2.xcodeproj/project.xcworkspace/xcshareddata/
 Lib/
+APIKeys.swift
