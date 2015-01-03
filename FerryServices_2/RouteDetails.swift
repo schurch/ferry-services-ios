@@ -12,9 +12,9 @@ struct RouteDetails {
     var route: String?
     var routeId: Int?
     
-    init(data: [String: JSONValue]) {
+    init(data: [String: JSON]) {
         self.area = data["Area"]?.string
         self.route = data["Route"]?.string
-        self.routeId = data["RouteID"]?.integer
+        self.routeId = data["RouteID"]?.int
     }
 }
