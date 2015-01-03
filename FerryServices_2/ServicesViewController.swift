@@ -332,7 +332,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
                     return
                 }
                 
-                let json = JSON(serviceStatusData!)
+                let json = JSONValue(serviceStatusData!)
                 
                 if let serviceStatuses = json["ServiceStatuses"].array?.map({ json in ServiceStatus(data: json) }) {
                     self.arrayServiceStatuses = serviceStatuses

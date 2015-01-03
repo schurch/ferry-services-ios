@@ -44,13 +44,13 @@ class APIClient {
     func fetchFerryServicesWithCompletion(completion: (serviceStatuses: [ServiceStatus]?, error: NSError?) -> ()) {
         requestManager.GET("/ServiceDisruptions/servicestatusfrontV3.asmx/ListServiceStatuses_JSON" , parameters: nil, success: { operation, responseObject in
             
-                let json = JSON(responseObject)
-                if  (json == nil) {
+                let json = JSONValue(responseObject)
+                if  (!json) {
                     completion(serviceStatuses: nil, error: NSError(domain:APIClient.clientErrorDomain, code:1, userInfo:[NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."]))
                     return
                 }
             
-                if (json["Success"].int? != 1) {
+                if (json["Success"].integer? != 1) {
                     completion(serviceStatuses: nil, error: NSError(domain:APIClient.clientErrorDomain, code:1, userInfo:[NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."]))
                     return
                 }
@@ -69,14 +69,14 @@ class APIClient {
         requestManager.GET("/ServiceDisruptions/servicestatusfrontV3.asmx/ListRouteDisruptions_JSON", parameters: ["routeID": ferryServiceId], success:
             { operations, responseObject in
                 
-                let json = JSON(responseObject)
-                if (json == nil) {
+                let json = JSONValue(responseObject)
+                if (!json) {
                     completion(disruptionsDetails: nil, routeDetails: nil, error: NSError(domain:APIClient.clientErrorDomain, code:1, userInfo:[NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."]))
                     return
                 }
                 
                 var disruptionDetails: DisruptionDetails?
-                if let disruptionData = json["RouteDisruption"].dictionary {
+                if let disruptionData = json["RouteDisruption"].object {
                     disruptionDetails = DisruptionDetails(data: disruptionData)
                 }
                 else {
@@ -84,7 +84,7 @@ class APIClient {
                 }
 
                 var routeDetails: RouteDetails?
-                if let routeDetailsData = json["RouteDetail"].dictionary {
+                if let routeDetailsData = json["RouteDetail"].object {
                     routeDetails = RouteDetails(data: routeDetailsData)
                 }
                 

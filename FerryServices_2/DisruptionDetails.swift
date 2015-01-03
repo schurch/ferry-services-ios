@@ -43,7 +43,7 @@ struct DisruptionDetails {
         self.disruptionStatus = .Normal
     }
     
-    init(data: [String: JSON]) {
+    init(data: [String: JSONValue]) {
         self.addedBy = data["AddedByUserID"]?.string
         
         if let addedDate = data["AddedTime"]?.string {
@@ -69,7 +69,7 @@ struct DisruptionDetails {
             self.updatedDate = DisruptionDetails.dateFormatter.dateFromString(updatedDate)
         }
         
-        if let disruptionDetailsStatus = data["DisruptionStatus"]?.int {
+        if let disruptionDetailsStatus = data["DisruptionStatus"]?.integer {
             self.disruptionStatus = DisruptionDetailsStatus(rawValue: disruptionDetailsStatus)
         }
     }

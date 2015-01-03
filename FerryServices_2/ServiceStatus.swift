@@ -22,18 +22,18 @@ struct ServiceStatus: Equatable {
     var serviceId: Int?
     var sortOrder: Int?
     
-    init(data: JSON) {
+    init(data: JSONValue) {
         
         self.area = data["Area"].string
         
-        if let disruptionStatus = data["DisruptionStatus"].int {
+        if let disruptionStatus = data["DisruptionStatus"].integer {
             self.disruptionStatus = DisriptionStatus(rawValue: disruptionStatus)
         }
         
         self.ferryProvider = data["provider"].string
         self.route = data["Route"].string
-        self.serviceId = data["RouteID"].int
-        self.sortOrder = data["SortOrder"].int
+        self.serviceId = data["RouteID"].integer
+        self.sortOrder = data["SortOrder"].integer
     }
 }
 
