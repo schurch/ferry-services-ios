@@ -155,11 +155,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: NSDate()) {
                 let departuresRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Departures", action: {
                     [unowned self] in
-                    if let routeId = self.serviceStatus.serviceId {
-                        let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as TimetableViewController
-                        timetableViewController.routeId = routeId
-                        self.navigationController?.pushViewController(timetableViewController, animated: true)
-                    }
+                    self.showDepartures()
                 })
                 timetableRows.append(departuresRow)
             }
@@ -192,29 +188,16 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             sections.append(Section(title: route, rows: timetableRows))
         }
         
-        
         // map section if available
         if let locations = self.locations {
             if locations.count > 0 {
                 let mapSection = Section(title: "Map", rows: [Row.Map(identifier: MainStoryBoard.TableViewCellIdentifiers.mapCell, action: {
                     [unowned self] in
-                    let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapViewController") as MapViewController
-                    
-                    if let actualRoute = self.serviceStatus.route {
-                        mapViewController.title = actualRoute
-                    }
-                    else {
-                        mapViewController.title = "Map"
-                    }
-                    
-                    mapViewController.annotations = self.annotations
-                    
-                    self.navigationController?.pushViewController(mapViewController, animated: true)
+                    self.showMap()
                 })])
                 sections.append(mapSection)
             }
         }
-        
         
         //disruption section
         var disruptionRow: Row
@@ -236,10 +219,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
                     if disruptionDetails!.hasAdditionalInfo {
                         action = {
                             [unowned self] in
-                            let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
-                            disruptionViewController.title = "Additional info"
-                            disruptionViewController.html = disruptionDetails!.additionalInfo!
-                            self.navigationController?.pushViewController(disruptionViewController, animated: true)
+                            self.showWebInfoViewWithTitle("Additional info", content: disruptionDetails!.additionalInfo!)
                         }
                     }
                     
@@ -249,8 +229,6 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
                     if let disruptionInfo = disruptionDetails {
                         disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionDetails: disruptionInfo, action: {
                             [unowned self] in
-                            let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
-                            disruptionViewController.title = "Disruption information"
                             
                             var disruptionInformation = disruptionInfo.details ?? ""
                             if disruptionDetails!.hasAdditionalInfo {
@@ -258,9 +236,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
                                 disruptionInformation += disruptionDetails!.additionalInfo!
                             }
                             
-                            disruptionViewController.html = disruptionInformation
-                            
-                            self.navigationController?.pushViewController(disruptionViewController, animated: true)
+                            self.showWebInfoViewWithTitle("Disruption information", content:disruptionInformation)
                         })
                     }
                     else {
@@ -349,6 +325,35 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         previewViewController.url = NSURL(string: path)
         previewViewController.title = title
         self.navigationController?.pushViewController(previewViewController, animated: true)
+    }
+    
+    private func showMap() {
+        let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapViewController") as MapViewController
+        
+        if let actualRoute = self.serviceStatus.route {
+            mapViewController.title = actualRoute
+        }
+        else {
+            mapViewController.title = "Map"
+        }
+        
+        mapViewController.annotations = self.annotations
+        self.navigationController?.pushViewController(mapViewController, animated: true)
+    }
+    
+    private func showDepartures() {
+        if let routeId = self.serviceStatus.serviceId {
+            let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as TimetableViewController
+            timetableViewController.routeId = routeId
+            self.navigationController?.pushViewController(timetableViewController, animated: true)
+        }
+    }
+    
+    private func showWebInfoViewWithTitle(title: String, content: String) {
+        let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
+        disruptionViewController.title = title
+        disruptionViewController.html = content
+        self.navigationController?.pushViewController(disruptionViewController, animated: true)
     }
     
     // MARK: - UITableViewDatasource
