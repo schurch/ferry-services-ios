@@ -8,10 +8,10 @@
 
 import UIKit
 
-class Weather: Printable {
+struct Weather {
     // See http://openweathermap.org/weather-conditions for list of codes/icons/descriptions
     
-    var weatherId: Double?
+    var weatherId: Int?
     var weatherGroup: String? // the group of weather (Rain, Snow, Extreme etc.)
     var weatherDescription: String? // description for weather within group
     
@@ -20,16 +20,15 @@ class Weather: Printable {
     // http://openweathermap.org/img/w/03n.png
     var icon: String?
     
-    init(data: [String: JSONValue]) {
-        
-    }
-    
-    var description: String {
-        return "WeatherID: \(self.weatherId)"
+    init(data: JSONValue) {
+        self.weatherId = data["id"].integer
+        self.weatherGroup = data["main"].string
+        self.weatherDescription = data["description"].string
+        self.icon = data["icon"].string
     }
 }
 
-class LocationWeather: Printable {
+struct LocationWeather {
     
     var cityId: Int?
     var cityName: String?
@@ -39,8 +38,8 @@ class LocationWeather: Printable {
     var latitude: Double?
     var longitude: Double?
     
-    var sunRise: NSDate?
-    var sunSet: NSDate?
+    var sunrise: NSDate?
+    var sunset: NSDate?
     
     // wind
     var windSpeed: Double? // meters per second
@@ -59,19 +58,65 @@ class LocationWeather: Printable {
     var pressureGroundLevel: Double? // hpa
     var pressureSeaLevel: Double? // hpa
     
-    // weather
-    var weather: [Weather]?
-    
-    var rain: Double? // precipitation volume for last 3 hours, mm
-    var snow: Double? // snow volume for last 3 hours, mm
     var clouds: Double? // cloudiness, %
+    
+    var rain: [String: Double]? // precipitation volume for specified hours, mm
+    var snow: [String: Double]? // snow volume for specified hours, mm
+    
+    // weather descriptions
+    var weather: [Weather]?
     
     init (data: JSONValue) {
         self.cityId = data["id"].integer
+        self.cityName = data["name"].string
+        
+        if let dateReceivedData = data["dt"].double {
+            self.dateReceieved = NSDate(timeIntervalSince1970: dateReceivedData)
+        }
+        
+        self.latitude = data["coord"]["lat"].double
+        self.longitude = data["coord"]["lon"].double
+        
+        if let sunriseData = data["sys"]["sunrise"].double {
+            self.sunrise = NSDate(timeIntervalSince1970: sunriseData)
+        }
+        
+        if let sunsetData = data["sys"]["sunset"].double {
+            self.sunset = NSDate(timeIntervalSince1970: sunsetData)
+        }
+        
+        self.windSpeed = data["wind"]["speed"].double
+        self.gustSpeed = data["wind"]["gust"].double
+        self.windDirection = data["wind"]["deg"].double
+        
+        self.temp = data["main"]["temp"].double
+        self.tempMax = data["main"]["temp_max"].double
+        self.tempMin = data["main"]["temp_min"].double
+        
+        self.humidity = data["main"]["humidity"].double
+        
+        self.pressure = data["main"]["pressure"].double
+        self.pressureGroundLevel = data["main"]["grnd_level"].double
+        self.pressureSeaLevel = data["main"]["sea_level"].double
+        
+        self.clouds = data["clouds"]["all"].double
+        
+        if let rainData = data["rain"].object {
+            var rain = [String: Double]()
+            for (time, volume) in rainData {
+                rain[time] = volume.double
+            }
+            self.rain = rain
+        }
+        
+        if let snowData = data["snow"].object {
+            var snow = [String: Double]()
+            for (time, volume) in snowData {
+                snow[time] = volume.double
+            }
+            self.snow = snow
+        }
+        
+        self.weather = data["weather"].array?.map { json in Weather(data: json) }
     }
-    
-    var description: String {
-        return "CityID: \(self.cityId)"
-    }
-   
 }

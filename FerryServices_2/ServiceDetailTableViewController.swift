@@ -279,7 +279,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             switch (location.latitude, location.longitude) {
             case let (.Some(lat), .Some(lng)):
                 WeatherAPIClient.sharedInstance.fetchWeatherForLat(lat, lng: lng) { weather, error in
-                    println("\(weather)")
+                    println("Fetched weather")
                 }
             default:
                 println("Location does not contain lat and lng")
@@ -377,7 +377,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
             cell.textLabel!.text = title
             return cell
-        case let .Map(identifier):
+        case .Map(_):
             return self.mapViewCell!
         case let .Disruption(identifier, disruptionDetails, _):
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailDisruptionsTableViewCell
