@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */; };
+		FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */; };
 		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
+		FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
 		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
 		FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5BF4E01A539EC4009D799E /* PropellerView.swift */; };
@@ -58,7 +61,10 @@
 /* Begin PBXFileReference section */
 		6B61FAD87F37434E965A5EF6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBF3A3E328204485AED6C991 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
+		FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
+		FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
 		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
 		FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		FD5BF4E01A539EC4009D799E /* PropellerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropellerView.swift; sourceTree = "<group>"; };
@@ -152,6 +158,26 @@
 			name = Timetable;
 			sourceTree = "<group>";
 		};
+		FD5177F61A565E9D00F4B6B0 /* Services Client */ = {
+			isa = PBXGroup;
+			children = (
+				FD5E7DBA197A316F00F438F6 /* APIClient.swift */,
+				FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */,
+				FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */,
+				FDEA4B24198C72D70023A5A7 /* RouteDetails.swift */,
+			);
+			name = "Services Client";
+			sourceTree = "<group>";
+		};
+		FD5177F91A565EDA00F4B6B0 /* Weather Client */ = {
+			isa = PBXGroup;
+			children = (
+				FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */,
+				FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */,
+			);
+			name = "Weather Client";
+			sourceTree = "<group>";
+		};
 		FD5BF4E21A539ED1009D799E /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,10 +202,9 @@
 		FD5E7DBC197A317800F438F6 /* API Client */ = {
 			isa = PBXGroup;
 			children = (
-				FD5E7DBA197A316F00F438F6 /* APIClient.swift */,
-				FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */,
-				FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */,
-				FDEA4B24198C72D70023A5A7 /* RouteDetails.swift */,
+				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
+				FD5177F61A565E9D00F4B6B0 /* Services Client */,
+				FD5177F91A565EDA00F4B6B0 /* Weather Client */,
 			);
 			name = "API Client";
 			sourceTree = "<group>";
@@ -475,6 +500,7 @@
 				FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				FD71167919B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift in Sources */,
+				FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */,
 				FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */,
 				FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */,
 				FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */,
@@ -486,11 +512,13 @@
 				FDEA4B25198C72D70023A5A7 /* RouteDetails.swift in Sources */,
 				FDCB33481A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift in Sources */,
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
+				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
 				FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */,
 				FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */,
 				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
 				FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */,
+				FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */,
 				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
 				FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,
 				FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */,

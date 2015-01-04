@@ -56,7 +56,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
         
         return nil
-    }()
+        }()
     
     // MARK: -
     deinit {
@@ -80,7 +80,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             }
         }
         
-        self.refresh(nil)
+        self.refresh()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -92,7 +92,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     }
     
     func applicationDidBecomeActive(notification: NSNotification) {
-        self.refresh(nil)
+        self.refresh()
     }
     
     // MARK: - mapview configuration
@@ -122,7 +122,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     }
     
     // MARK: - refresh
-    func refresh(sender: UIRefreshControl?) {
+    func refresh() {
         if self.refreshing {
             return
         }
@@ -131,7 +131,11 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         
         self.dataSource = generateDatasourceWithDisruptionDetails(nil, refreshing: true)
         self.tableView.reloadData()
-
+        
+        self.fetchLatestWeatherDataWithCompletion {
+            
+        }
+        
         self.fetchLatestDisruptionDataWithCompletion {
             self.refreshing = false
             self.refreshControl?.endRefreshing()
@@ -290,6 +294,20 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
         else {
             completion()
+        }
+    }
+    
+    private func fetchLatestWeatherDataWithCompletion(completion: () -> ()) {
+        if let locations = self.locations {
+            let location = locations[0]
+            switch (location.latitude, location.longitude) {
+            case let (.Some(lat), .Some(lng)):
+                WeatherAPIClient.sharedInstance.fetchWeatherForLat(lat, lng: lng) { weather, error in
+                    println("\(weather)")
+                }
+            default:
+                println("Location does not contain lat and lng")
+            }
         }
     }
     
