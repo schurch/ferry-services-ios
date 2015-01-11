@@ -47,30 +47,5 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
             dateFormatter.dateFormat = "dd MMM yyyy HH:mm"
             self.labelEndTime.text = dateFormatter.stringFromDate(date)
         }
-        
-        if let updatedDate = disruptionDetails.updatedDate  {
-            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
-            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
-            
-            var updated: String
-            
-            if components.day > 0 {
-                let dayText = components.day == 1 ? "day" : "days"
-                updated = "\(components.day) \(dayText) ago"
-            }
-            else if components.hour > 0 {
-                let hourText = components.hour == 1 ? "hour" : "hours"
-                updated = "\(components.hour) \(hourText) ago"
-            }
-            else {
-                let minuteText = components.minute == 1 ? "minute" : "minutes"
-                updated = "\(components.minute) \(minuteText) ago"
-            }
-            
-            self.labelLastUpdated.text = "Last updated \(updated)"
-        }
-        else {
-            self.labelLastUpdated.text = "Last updated N/A"
-        }
     }
 }

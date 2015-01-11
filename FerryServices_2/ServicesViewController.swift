@@ -56,7 +56,10 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.backgroundColor = UIColor(red: 248/255.0, green: 251/255.0, blue: 250/255.0, alpha: 255/255.0)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
         
         self.loadDefaultFerryServices()
         self.reloadRecents()
@@ -259,6 +262,11 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
         return !isSearchViewControllerTableView(tableView) && indexPath.section == Constants.TableViewSections.recent ? .Delete : .None
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as UITableViewHeaderFooterView
+        header.textLabel.textColor = UIColor(red: 90/255.0, green: 152/255.0, blue: 152/255.0, alpha: 255/255.0)
     }
     
     // MARK: - UIScrollViewDelegate

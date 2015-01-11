@@ -13,12 +13,19 @@ import QuickLook
 class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate {
     
     class Section {
-        var title: String
+        var title: String?
+        var footer: String?
         var rows: [Row]
         
-        init (title: String, rows: [Row]) {
+        var showHeader: Bool
+        var showFooter: Bool
+        
+        init (title: String?, footer: String?, rows: [Row]) {
             self.title = title
+            self.footer = footer
             self.rows = rows
+            self.showHeader = true
+            self.showFooter =  true
         }
     }
     
@@ -68,6 +75,8 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         super.viewDidLoad()
         
         self.title = self.serviceStatus.area
+        
+        self.tableView.backgroundColor = UIColor(red: 248/255.0, green: 251/255.0, blue: 250/255.0, alpha: 255/255.0)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
@@ -147,6 +156,77 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     private func generateDatasourceWithDisruptionDetails(disruptionDetails: DisruptionDetails?, refreshing: Bool) -> [Section] {
         var sections = [Section]()
         
+        // map section if available
+        if let locations = self.locations {
+            if locations.count > 0 {
+                let mapSection = Section(title: nil, footer: nil, rows: [Row.Map(identifier: MainStoryBoard.TableViewCellIdentifiers.mapCell, action: {
+                    [unowned self] in
+                    self.showMap()
+                })])
+                
+                mapSection.showHeader = false
+                sections.append(mapSection)
+            }
+        }
+        
+        //disruption section
+        var disruptionRow: Row
+        var footer: String?
+        
+        if refreshing {
+            disruptionRow = Row.Loading(identifier: MainStoryBoard.TableViewCellIdentifiers.loadingCell)
+        }
+        else if disruptionDetails == nil {
+            disruptionRow = Row.TextOnly(identifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell, text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
+        }
+        else {
+            if let disruptionStatus = disruptionDetails?.disruptionStatus {
+                switch disruptionStatus {
+                case .Normal:
+                    disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: disruptionDetails!, {})
+                    
+                case .Information:
+                    var action: () -> () = {}
+                    if disruptionDetails!.hasAdditionalInfo {
+                        action = {
+                            [unowned self] in
+                            self.showWebInfoViewWithTitle("Additional info", content: disruptionDetails!.additionalInfo!)
+                        }
+                    }
+                    
+                    disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: disruptionDetails!, action)
+                    
+                case .SailingsAffected, .SailingsCancelled:
+                    if let disruptionInfo = disruptionDetails {
+                        footer = disruptionInfo.lastUpdated
+                        
+                        disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionDetails: disruptionInfo, action: {
+                            [unowned self] in
+                            
+                            var disruptionInformation = disruptionInfo.details ?? ""
+                            if disruptionDetails!.hasAdditionalInfo {
+                                disruptionInformation += "</p>"
+                                disruptionInformation += disruptionDetails!.additionalInfo!
+                            }
+                            
+                            self.showWebInfoViewWithTitle("Disruption information", content:disruptionInformation)
+                        })
+                    }
+                    else {
+                        disruptionRow = Row.TextOnly(identifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell, text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
+                    }
+                }
+            }
+            else {
+                // no disruptionStatus
+                disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: nil, {})
+            }
+        }
+        
+        let disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow])
+        sections.append(disruptionSection)
+        
+        
         // timetable section
         var timetableRows = [Row]()
         
@@ -185,72 +265,9 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
         
         if timetableRows.count > 0 {
-            sections.append(Section(title: route, rows: timetableRows))
+            let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
+            sections.append(timetableSection)
         }
-        
-        // map section if available
-        if let locations = self.locations {
-            if locations.count > 0 {
-                let mapSection = Section(title: "Map", rows: [Row.Map(identifier: MainStoryBoard.TableViewCellIdentifiers.mapCell, action: {
-                    [unowned self] in
-                    self.showMap()
-                })])
-                sections.append(mapSection)
-            }
-        }
-        
-        //disruption section
-        var disruptionRow: Row
-        
-        if refreshing {
-            disruptionRow = Row.Loading(identifier: MainStoryBoard.TableViewCellIdentifiers.loadingCell)
-        }
-        else if disruptionDetails == nil {
-            disruptionRow = Row.TextOnly(identifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell, text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
-        }
-        else {
-            if let disruptionStatus = disruptionDetails?.disruptionStatus {
-                switch disruptionStatus {
-                case .Normal:
-                    disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: disruptionDetails!, {})
-                    
-                case .Information:
-                    var action: () -> () = {}
-                    if disruptionDetails!.hasAdditionalInfo {
-                        action = {
-                            [unowned self] in
-                            self.showWebInfoViewWithTitle("Additional info", content: disruptionDetails!.additionalInfo!)
-                        }
-                    }
-                    
-                    disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: disruptionDetails!, action)
-                    
-                case .SailingsAffected, .SailingsCancelled:
-                    if let disruptionInfo = disruptionDetails {
-                        disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionDetails: disruptionInfo, action: {
-                            [unowned self] in
-                            
-                            var disruptionInformation = disruptionInfo.details ?? ""
-                            if disruptionDetails!.hasAdditionalInfo {
-                                disruptionInformation += "</p>"
-                                disruptionInformation += disruptionDetails!.additionalInfo!
-                            }
-                            
-                            self.showWebInfoViewWithTitle("Disruption information", content:disruptionInformation)
-                        })
-                    }
-                    else {
-                        disruptionRow = Row.TextOnly(identifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell, text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
-                    }
-                }
-            }
-            else {
-                // no disruptionStatus
-                disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: nil, {})
-            }
-        }
-        
-        sections.append(Section(title: "Disruptions", rows: [disruptionRow]))
         
         return sections
     }
@@ -275,7 +292,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     
     private func fetchLatestWeatherDataWithCompletion(completion: () -> ()) {
         if let locations = self.locations {
-            let location = locations[0]
+            let location = locations[1]
             switch (location.latitude, location.longitude) {
             case let (.Some(lat), .Some(lng)):
                 WeatherAPIClient.sharedInstance.fetchWeatherForLat(lat, lng: lng) { weather, error in
@@ -361,12 +378,34 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         return dataSource.count
     }
     
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if dataSource[section].showHeader {
+            return UITableViewAutomaticDimension
+        }
+        else {
+            return CGFloat.min
+        }
+    }
+
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if dataSource[section].showFooter {
+            return UITableViewAutomaticDimension
+        }
+        else {
+            return CGFloat.min
+        }
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource[section].rows.count
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return dataSource[section].title
+    }
+    
+    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return dataSource[section].footer
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -420,6 +459,11 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         default:
             println("No action for cell")
         }
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as UITableViewHeaderFooterView
+        header.textLabel.textColor = UIColor(red: 90/255.0, green: 152/255.0, blue: 152/255.0, alpha: 255/255.0)
     }
     
     // MARK: - MKMapViewDelegate
