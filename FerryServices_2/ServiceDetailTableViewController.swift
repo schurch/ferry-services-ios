@@ -76,7 +76,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         
         self.title = self.serviceStatus.area
         
-        self.tableView.backgroundColor = UIColor(red: 248/255.0, green: 251/255.0, blue: 250/255.0, alpha: 255/255.0)
+        self.tableView.backgroundColor = UIColor.tealBackgroundColor()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
@@ -463,7 +463,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as UITableViewHeaderFooterView
-        header.textLabel.textColor = UIColor(red: 90/255.0, green: 152/255.0, blue: 152/255.0, alpha: 255/255.0)
+        header.textLabel.textColor = UIColor.tealTextColor()
     }
     
     // MARK: - MKMapViewDelegate
