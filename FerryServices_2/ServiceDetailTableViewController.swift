@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import QuickLook
 
-class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate {
+class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
     
     class Section {
         var title: String?
@@ -31,7 +31,6 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     
     enum Row {
         case Basic(identifier: String, title: String, action: () -> ())
-        case Map(identifier: String, action: () -> ())
         case Disruption(identifier: String, disruptionDetails: DisruptionDetails, action: () -> ())
         case NoDisruption(identifier: String, disruptionDetails: DisruptionDetails?, action: () -> ())
         case Loading(identifier: String)
@@ -41,21 +40,28 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     struct MainStoryBoard {
         struct TableViewCellIdentifiers {
             static let basicCell = "basicCell"
-            static let mapCell = "mapCell"
             static let disruptionsCell = "disruptionsCell"
             static let noDisruptionsCell = "noDisruptionsCell"
             static let loadingCell = "loadingCell"
             static let textOnlyCell = "textOnlyCell"
         }
+        struct Constants {
+            static let headerMargin = CGFloat(16)
+            static let contentInset = CGFloat(120)
+        }
     }
     
-    @IBOutlet var mapView: MKMapView!
-    @IBOutlet var mapViewCell: UITableViewCell!
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var labelArea: UILabel!
+    @IBOutlet weak var labelRoute: UILabel!
+    @IBOutlet weak var constaintMapViewTop: NSLayoutConstraint!
     
     var annotations: [MKPointAnnotation]?
-    var dataSource: [Section]!
+    var dataSource: [Section] = []
     var refreshing: Bool = false
     var serviceStatus: ServiceStatus!
+    var headerHeight: CGFloat!
     
     lazy var locations: [Location]? = {
         if let serviceId = self.serviceStatus.serviceId {
@@ -76,7 +82,29 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         
         self.title = self.serviceStatus.area
         
-        self.tableView.backgroundColor = UIColor.tealBackgroundColor()
+        self.labelArea.text = self.serviceStatus.area
+        self.labelRoute.text = self.serviceStatus.route
+        
+        self.labelArea.preferredMaxLayoutWidth = self.view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
+        self.labelRoute.preferredMaxLayoutWidth = self.view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
+        
+        self.tableView.tableHeaderView!.setNeedsLayout()
+        self.tableView.tableHeaderView!.layoutIfNeeded()
+        
+        self.headerHeight = self.tableView.tableHeaderView!.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        self.tableView.tableHeaderView!.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.headerHeight)
+        
+        // if the visualeffect view goes past the top of the screen we want to keep showing mapview blur
+        self.constaintMapViewTop.constant = -self.headerHeight
+        
+        self.tableView.backgroundColor = UIColor.clearColor()
+        self.tableView.contentInset = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
+        
+        let backgroundView = UIView(frame: CGRectMake(0, self.headerHeight, self.view.bounds.size.width, 1000))
+        backgroundView.backgroundColor = UIColor.tealBackgroundColor()
+        self.tableView.addSubview(backgroundView)
+        self.tableView.sendSubviewToBack(backgroundView)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
@@ -130,6 +158,11 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
+    // MARK: - ui actions
+    @IBAction func touchedButtonShowMap(sender: UIButton) {
+        self.showMap()
+    }
+    
     // MARK: - refresh
     func refresh() {
         if self.refreshing {
@@ -147,7 +180,6 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         
         self.fetchLatestDisruptionDataWithCompletion {
             self.refreshing = false
-            self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
         }
     }
@@ -155,19 +187,6 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     // MARK: - Datasource generation
     private func generateDatasourceWithDisruptionDetails(disruptionDetails: DisruptionDetails?, refreshing: Bool) -> [Section] {
         var sections = [Section]()
-        
-        // map section if available
-        if let locations = self.locations {
-            if locations.count > 0 {
-                let mapSection = Section(title: nil, footer: nil, rows: [Row.Map(identifier: MainStoryBoard.TableViewCellIdentifiers.mapCell, action: {
-                    [unowned self] in
-                    self.showMap()
-                })])
-                
-                mapSection.showHeader = false
-                sections.append(mapSection)
-            }
-        }
         
         //disruption section
         var disruptionRow: Row
@@ -372,13 +391,23 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         disruptionViewController.html = content
         self.navigationController?.pushViewController(disruptionViewController, animated: true)
     }
+
+    private func calculateMapRectForAnnotations(annotations: [MKPointAnnotation]) -> MKMapRect {
+        var mapRect = MKMapRectNull
+        for annotation in annotations {
+            let point = MKMapPointForCoordinate(annotation.coordinate)
+            mapRect = MKMapRectUnion(mapRect, MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
+        }
+        return mapRect
+    }
+
     
     // MARK: - UITableViewDatasource
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return dataSource.count
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if dataSource[section].showHeader {
             return UITableViewAutomaticDimension
         }
@@ -387,7 +416,7 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
 
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if dataSource[section].showFooter {
             return UITableViewAutomaticDimension
         }
@@ -396,19 +425,19 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource[section].rows.count
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return dataSource[section].title
     }
     
-    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return dataSource[section].footer
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let row = dataSource[indexPath.section].rows[indexPath.row]
         
         switch row {
@@ -416,8 +445,6 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
             cell.textLabel!.text = title
             return cell
-        case .Map(_):
-            return self.mapViewCell!
         case let .Disruption(identifier, disruptionDetails, _):
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailDisruptionsTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
@@ -443,14 +470,12 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     }
     
     // MARK: - UITableViewDelegate
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let row = dataSource[indexPath.section].rows[indexPath.row]
         switch row {
         case let .Basic(_, _, action):
             action()
         case let .Disruption(_, _, action):
-            action()
-        case let .Map(_, action):
             action()
         case let .NoDisruption(_, disruptionDetails, action):
             if disruptionDetails != nil && disruptionDetails!.hasAdditionalInfo {
@@ -461,9 +486,33 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
         }
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as UITableViewHeaderFooterView
         header.textLabel.textColor = UIColor.tealTextColor()
+    }
+    
+    // MARK: - UIScrollViewDelegate
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if self.locations == nil {
+            return
+        }
+        
+        if self.mapView.annotations.count < self.locations!.count {
+            return
+        }
+        
+        let offsetFromZero = scrollView.contentOffset.y + MainStoryBoard.Constants.contentInset
+        let maxZoomLevelPoints = CGFloat(100)
+        // offset > 0 = pushing the scrollview up
+        let percentZoom = offsetFromZero > 0 ? 0 : (min(abs(offsetFromZero), maxZoomLevelPoints) / maxZoomLevelPoints)
+
+        
+        let currentCoord = self.mapView.centerCoordinate
+        let viewRegion = MKCoordinateRegionMakeWithDistance(currentCoord, 500, 500)
+        let adjustedRegion = self.mapView.regionThatFits(viewRegion)
+//        self.mapView.setRegion(adjustedRegion, animated: false)
+        
+        println("Percent: \(percentZoom)")
     }
     
     // MARK: - MKMapViewDelegate
@@ -472,6 +521,10 @@ class ServiceDetailTableViewController: UITableViewController, MKMapViewDelegate
     }
     
     func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
-        mapView.showAnnotations(self.annotations, animated: false)
+        let rect = self.calculateMapRectForAnnotations(self.annotations!)
+        let topInset = MainStoryBoard.Constants.contentInset + 20
+        let bottomInset = self.mapView.frame.size.height - (MainStoryBoard.Constants.contentInset * 2) + 60
+        let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset, 35, bottomInset, 35))
+        self.mapView.setVisibleMapRect(visibleRect, animated: false)
     }
 }

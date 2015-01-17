@@ -56,7 +56,16 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.backgroundView = nil
         self.tableView.backgroundColor = UIColor.tealBackgroundColor()
+        
+        for subview in self.tableView.subviews {
+            if let view = subview as? UIView {
+                if view.frame.origin.y < 0 {
+                    view.alpha = 0.0
+                }
+            }
+        }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
