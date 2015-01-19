@@ -16,9 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication!, didFinishLaunchingWithOptions launchOptions: NSDictionary!) -> Bool {
         
         Flurry.setCrashReportingEnabled(false)
-        Flurry.startSession("48Q89W7B39FXGJK9BSW6")
+        Flurry.startSession(APIKeys.FlurryAPIKey)
         
-        Crashlytics.startWithAPIKey("9aad7798d2e2d712649ba35bd1747beeac29b07f")
+        Crashlytics.startWithAPIKey(APIKeys.CrashlyticsAPIKey)
 
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
         

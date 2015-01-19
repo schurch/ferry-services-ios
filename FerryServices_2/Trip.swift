@@ -20,9 +20,19 @@ class Trip {
     
     class func areTripsAvailableForRouteId(routeId: Int, onOrAfterDate: NSDate) -> Bool {
         let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
+        if path == nil {
+            Flurry.logEvent("Missing timetable database path")
+            return false
+        }
+        
         let database = FMDatabase(path: path)
+        if database == nil {
+            Flurry.logEvent("Unable to create database file")
+            return false
+        }
         
         if (!database.open()) {
+            Flurry.logEvent("Unable to open database")
             return false
         }
         
@@ -48,11 +58,14 @@ class Trip {
         
         let dateAsEpoc = strippedDate.timeIntervalSince1970
         
-        let resultSet = database.executeQuery(query, withArgumentsInArray: [dateAsEpoc, dateAsEpoc, routeId])
-        
         var count = 0
-        if resultSet.next() {
-            count = Int(resultSet.intForColumnIndex(0))
+        if let resultSet = database.executeQuery(query, withArgumentsInArray: [dateAsEpoc, dateAsEpoc, routeId]) {
+            if resultSet.next() {
+                count = Int(resultSet.intForColumnIndex(0))
+            }
+        }
+        else {
+            Flurry.logEvent("NO result set for 'areTripsAvailableForRouteId:onOrAfterDate' method")
         }
         
         database.close()

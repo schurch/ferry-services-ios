@@ -61,6 +61,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+        Flurry.logEvent("Show driving directions to port")
         
         let annotation = view.annotation
         

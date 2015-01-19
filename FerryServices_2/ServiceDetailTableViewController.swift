@@ -237,6 +237,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                     if disruptionDetails!.hasAdditionalInfo {
                         action = {
                             [unowned self] in
+                            Flurry.logEvent("Show additional info")
                             self.showWebInfoViewWithTitle("Additional info", content: disruptionDetails!.additionalInfo!)
                         }
                     }
@@ -249,6 +250,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                         
                         disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionDetails: disruptionInfo, action: {
                             [unowned self] in
+                            Flurry.logEvent("Show disruption information")
                             
                             var disruptionInformation = disruptionInfo.details ?? ""
                             if disruptionDetails!.hasAdditionalInfo {
@@ -368,10 +370,12 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func showWinterTimetable() {
+        Flurry.logEvent("Show winter timetable")
         showPDFTimetableAtPath(winterPath(), title: "Winter timetable")
     }
     
     private func showSummerTimetable() {
+        Flurry.logEvent("Show summer timetable")
         showPDFTimetableAtPath(summerPath(), title: "Summer timetable")
     }
     
@@ -392,6 +396,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func showMap() {
+        Flurry.logEvent("Show map")
         let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapViewController") as MapViewController
         
         if let actualRoute = self.serviceStatus.route {
@@ -406,6 +411,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func showDepartures() {
+        Flurry.logEvent("Show departures")
         if let routeId = self.serviceStatus.serviceId {
             let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as TimetableViewController
             timetableViewController.routeId = routeId

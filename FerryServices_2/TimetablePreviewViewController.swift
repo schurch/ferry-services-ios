@@ -39,6 +39,8 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
     
     //MARK: - Share action
     func share() {
+        Flurry.logEvent("Shared timetable")
+        
         var items = [AnyObject]()
         
         if let route = serviceStatus.route {

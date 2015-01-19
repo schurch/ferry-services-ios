@@ -204,7 +204,6 @@
 		FD5E7DBC197A317800F438F6 /* API Client */ = {
 			isa = PBXGroup;
 			children = (
-				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
 				FD5177F61A565E9D00F4B6B0 /* Services Client */,
 				FD5177F91A565EDA00F4B6B0 /* Weather Client */,
 			);
@@ -244,6 +243,7 @@
 			children = (
 				FDC77612198450AC00B3782F /* timetables.sqlite */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
+				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
 				FD5E7DB9197A310600F438F6 /* View Controllers */,
 				FD5BF4E21A539ED1009D799E /* Views */,

@@ -308,6 +308,14 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         let serviceDetailViewController = segue.destinationViewController as ServiceDetailTableViewController;
         let selectedTableView = self.searchDisplayController!.active ? self.searchDisplayController!.searchResultsTableView : self.tableView
         let serviceStatus = self.serviceStatusForTableView(selectedTableView, indexPath: selectedTableView.indexPathForSelectedRow()!)
+        
+        if let route = serviceStatus.route {
+            Flurry.logEvent("Viewed service detail", withParameters: ["Route": serviceStatus.route!])
+        }
+        else {
+            Flurry.logEvent("Viewed service detail")
+        }
+        
         serviceDetailViewController.serviceStatus = serviceStatus
     }
     
