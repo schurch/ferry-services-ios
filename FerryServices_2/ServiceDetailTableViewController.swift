@@ -62,6 +62,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     var annotations: [MKPointAnnotation]?
     var dataSource: [Section] = []
+    var mapMotionEffect: UIMotionEffectGroup!
     var refreshing: Bool = false
     var serviceStatus: ServiceStatus!
     var headerHeight: CGFloat!
@@ -123,9 +124,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.tableView.sendSubviewToBack(mapButton)
         
         // map motion effect
-        self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
-        self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
-        
         let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: UIInterpolatingMotionEffectType.TiltAlongHorizontalAxis)
         horizontalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
         horizontalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
@@ -134,10 +132,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         vertiacalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
         vertiacalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
         
-        let motionEffectGroup = UIMotionEffectGroup()
-        motionEffectGroup.motionEffects = [horizontalMotionEffect, vertiacalMotionEffect]
-        
-        self.mapView.addMotionEffect(motionEffectGroup)
+        self.mapMotionEffect = UIMotionEffectGroup()
+        self.mapMotionEffect.motionEffects = [horizontalMotionEffect, vertiacalMotionEffect]
         
         if let locations = self.locations {
             if locations.count > 0 {
@@ -151,9 +147,23 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        // extend the mapview as the motion effect moves the edges
+        self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
+        self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
+        self.mapView.addMotionEffect(self.mapMotionEffect)
+        
         if let selectedIndexPath = self.tableView.indexPathForSelectedRow() {
             self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // reset the mapview edges as they would be visible from an interactive pop gesture
+        self.constraintMapViewLeading.constant = 0
+        self.constraintMapViewTrailing.constant = 0
+        self.mapView.removeMotionEffect(self.mapMotionEffect)
     }
     
     func applicationDidBecomeActive(notification: NSNotification) {
