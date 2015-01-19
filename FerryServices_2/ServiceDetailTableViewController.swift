@@ -202,10 +202,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.dataSource = generateDatasourceWithDisruptionDetails(nil, refreshing: true)
         self.tableView.reloadData()
         
-        self.fetchLatestWeatherDataWithCompletion {
-            
-        }
-        
         self.fetchLatestDisruptionDataWithCompletion {
             self.refreshing = false
             self.tableView.reloadData()
