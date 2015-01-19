@@ -172,15 +172,6 @@
                                     <outlet property="delegate" destination="ISC-5h-72Q" id="B14-nf-FBx"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quy-an-736">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchedButtonShowMap:" destination="ISC-5h-72Q" eventType="touchUpInside" id="Nep-bg-BIT"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="pKD-PB-YuA">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -191,13 +182,22 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="77"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Hello" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="320" translatesAutoresizingMaskIntoConstraints="NO" id="goM-eX-csF">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vr2-81-D2o" userLabel="Show map">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="77"/>
+                                                <state key="normal">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchedButtonShowMap:" destination="ISC-5h-72Q" eventType="touchUpInside" id="CDn-Il-toZ"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Arran" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="320" translatesAutoresizingMaskIntoConstraints="NO" id="goM-eX-csF" userLabel="Area">
                                                 <rect key="frame" x="16" y="16" width="568" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Hello" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="320" translatesAutoresizingMaskIntoConstraints="NO" id="Mkm-Ib-seo">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Adrossan - Brodick" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="320" translatesAutoresizingMaskIntoConstraints="NO" id="Mkm-Ib-seo" userLabel="Route">
                                                 <rect key="frame" x="16" y="44" width="568" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -206,8 +206,12 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="Mkm-Ib-seo" secondAttribute="bottom" constant="16" id="4kD-d7-F17"/>
+                                            <constraint firstAttribute="trailing" secondItem="Vr2-81-D2o" secondAttribute="trailing" id="5Ho-FK-aV9"/>
                                             <constraint firstItem="Mkm-Ib-seo" firstAttribute="top" secondItem="goM-eX-csF" secondAttribute="bottom" constant="4" id="7JM-LP-Arp"/>
+                                            <constraint firstItem="Vr2-81-D2o" firstAttribute="top" secondItem="qlI-GT-Hxc" secondAttribute="top" id="CIr-Xb-0ns"/>
+                                            <constraint firstItem="Vr2-81-D2o" firstAttribute="leading" secondItem="qlI-GT-Hxc" secondAttribute="leading" id="Eol-zy-Dsh"/>
                                             <constraint firstItem="Mkm-Ib-seo" firstAttribute="trailing" secondItem="goM-eX-csF" secondAttribute="trailing" id="Olu-yV-Lpm"/>
+                                            <constraint firstAttribute="bottom" secondItem="Vr2-81-D2o" secondAttribute="bottom" id="RFC-pT-hxz"/>
                                             <constraint firstItem="Mkm-Ib-seo" firstAttribute="leading" secondItem="goM-eX-csF" secondAttribute="leading" id="TgT-gO-hjs"/>
                                             <constraint firstItem="goM-eX-csF" firstAttribute="top" secondItem="qlI-GT-Hxc" secondAttribute="top" constant="16" id="cmq-MR-IXy"/>
                                             <constraint firstItem="goM-eX-csF" firstAttribute="leading" secondItem="qlI-GT-Hxc" secondAttribute="leading" constant="16" id="iNB-Zg-z1s"/>
@@ -458,22 +462,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="quy-an-736" firstAttribute="top" secondItem="dSu-df-ofQ" secondAttribute="bottom" id="6Cs-0T-2PP"/>
                             <constraint firstItem="pKD-PB-YuA" firstAttribute="leading" secondItem="hen-jj-MOU" secondAttribute="leading" id="6Ya-s1-fti"/>
-                            <constraint firstAttribute="trailing" secondItem="quy-an-736" secondAttribute="trailing" id="Lf5-wu-Xai"/>
                             <constraint firstItem="jnL-zy-irC" firstAttribute="leading" secondItem="hen-jj-MOU" secondAttribute="leading" id="R1C-3X-b87"/>
-                            <constraint firstItem="Ify-K7-wFo" firstAttribute="top" secondItem="quy-an-736" secondAttribute="bottom" id="VkM-Ev-luE"/>
                             <constraint firstItem="pKD-PB-YuA" firstAttribute="top" secondItem="hen-jj-MOU" secondAttribute="top" id="cLb-TE-ZwU"/>
                             <constraint firstItem="jnL-zy-irC" firstAttribute="top" secondItem="dSu-df-ofQ" secondAttribute="bottom" id="drT-mK-Evi"/>
                             <constraint firstAttribute="trailing" secondItem="jnL-zy-irC" secondAttribute="trailing" id="hD4-ar-4F3"/>
                             <constraint firstAttribute="trailing" secondItem="pKD-PB-YuA" secondAttribute="trailing" id="kBP-9b-8hX"/>
                             <constraint firstItem="Ify-K7-wFo" firstAttribute="top" secondItem="pKD-PB-YuA" secondAttribute="bottom" id="pMH-04-KYb"/>
                             <constraint firstItem="Ify-K7-wFo" firstAttribute="top" secondItem="jnL-zy-irC" secondAttribute="bottom" id="yQT-Hg-cNl"/>
-                            <constraint firstItem="quy-an-736" firstAttribute="leading" secondItem="hen-jj-MOU" secondAttribute="leading" id="ydE-P9-q7Q"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="constaintMapViewTop" destination="drT-mK-Evi" id="kM9-rY-dpo"/>
+                        <outlet property="constraintMapViewLeading" destination="R1C-3X-b87" id="1IX-Jy-47M"/>
+                        <outlet property="constraintMapViewTop" destination="drT-mK-Evi" id="Bwp-6P-pIc"/>
+                        <outlet property="constraintMapViewTrailing" destination="hD4-ar-4F3" id="AXy-XU-VqX"/>
                         <outlet property="labelArea" destination="goM-eX-csF" id="4m7-yA-5HV"/>
                         <outlet property="labelRoute" destination="Mkm-Ib-seo" id="Rgi-gf-dzI"/>
                         <outlet property="mapView" destination="jnL-zy-irC" id="Cle-RG-q96"/>

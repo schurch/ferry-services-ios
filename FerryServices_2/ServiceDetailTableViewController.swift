@@ -48,14 +48,17 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         struct Constants {
             static let headerMargin = CGFloat(16)
             static let contentInset = CGFloat(120)
+            static let motionEffectAmount = CGFloat(10)
         }
     }
     
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var constraintMapViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var constraintMapViewTop: NSLayoutConstraint!
+    @IBOutlet weak var constraintMapViewTrailing: NSLayoutConstraint!
     @IBOutlet weak var labelArea: UILabel!
     @IBOutlet weak var labelRoute: UILabel!
-    @IBOutlet weak var constaintMapViewTop: NSLayoutConstraint!
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var tableView: UITableView!
     
     var annotations: [MKPointAnnotation]?
     var dataSource: [Section] = []
@@ -82,6 +85,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         self.title = self.serviceStatus.area
         
+        // configure header
         self.labelArea.text = self.serviceStatus.area
         self.labelRoute.text = self.serviceStatus.route
         
@@ -95,8 +99,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.tableView.tableHeaderView!.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.headerHeight)
         
         // if the visualeffect view goes past the top of the screen we want to keep showing mapview blur
-        self.constaintMapViewTop.constant = -self.headerHeight
+        self.constraintMapViewTop.constant = -self.headerHeight
         
+        // configure tableview
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.contentInset = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
         self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
@@ -110,6 +115,29 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedRowHeight = 44.0;
+        
+        // map button
+        let mapButton = UIButton(frame: CGRectMake(0, -MainStoryBoard.Constants.contentInset, self.view.bounds.size.width, self.view.bounds.size.height))
+        mapButton.addTarget(self, action: "touchedButtonShowMap:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.tableView.addSubview(mapButton)
+        self.tableView.sendSubviewToBack(mapButton)
+        
+        // map motion effect
+        self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
+        self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
+        
+        let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: UIInterpolatingMotionEffectType.TiltAlongHorizontalAxis)
+        horizontalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
+        horizontalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
+        
+        let vertiacalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: UIInterpolatingMotionEffectType.TiltAlongVerticalAxis)
+        vertiacalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
+        vertiacalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
+        
+        let motionEffectGroup = UIMotionEffectGroup()
+        motionEffectGroup.motionEffects = [horizontalMotionEffect, vertiacalMotionEffect]
+        
+        self.mapView.addMotionEffect(motionEffectGroup)
         
         if let locations = self.locations {
             if locations.count > 0 {
@@ -489,30 +517,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as UITableViewHeaderFooterView
         header.textLabel.textColor = UIColor.tealTextColor()
-    }
-    
-    // MARK: - UIScrollViewDelegate
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if self.locations == nil {
-            return
-        }
-        
-        if self.mapView.annotations.count < self.locations!.count {
-            return
-        }
-        
-        let offsetFromZero = scrollView.contentOffset.y + MainStoryBoard.Constants.contentInset
-        let maxZoomLevelPoints = CGFloat(100)
-        // offset > 0 = pushing the scrollview up
-        let percentZoom = offsetFromZero > 0 ? 0 : (min(abs(offsetFromZero), maxZoomLevelPoints) / maxZoomLevelPoints)
-
-        
-        let currentCoord = self.mapView.centerCoordinate
-        let viewRegion = MKCoordinateRegionMakeWithDistance(currentCoord, 500, 500)
-        let adjustedRegion = self.mapView.regionThatFits(viewRegion)
-//        self.mapView.setRegion(adjustedRegion, animated: false)
-        
-        println("Percent: \(percentZoom)")
     }
     
     // MARK: - MKMapViewDelegate
