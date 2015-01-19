@@ -25,6 +25,7 @@
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
 		FD753EE9197A256E00CC5DE3 /* FerryServices_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */; };
 		FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */; };
+		FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */; };
 		FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8DDDB119B094B0008479DC /* Crashlytics.framework */; };
 		FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */; };
 		FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */; };
@@ -39,7 +40,6 @@
 		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
 		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
-		FDCB33481A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33471A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift */; };
 		FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
@@ -85,6 +85,7 @@
 		FD753EE7197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServices_2Tests.swift; sourceTree = "<group>"; };
 		FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
+		FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailWeatherCell.swift; sourceTree = "<group>"; };
 		FD8DDDB119B094B0008479DC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDisruptionsTableViewCell.swift; sourceTree = "<group>"; };
 		FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -102,7 +103,6 @@
 		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Trip.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC77612198450AC00B3782F /* timetables.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = timetables.sqlite; sourceTree = "<group>"; };
 		FDCB33441A4BD6D1000033BC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		FDCB33471A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailMapTableViewCell.swift; sourceTree = "<group>"; };
 		FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -335,9 +335,9 @@
 				FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */,
 				FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */,
 				FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */,
-				FDCB33471A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift */,
 				FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */,
 				FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */,
+				FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */,
 			);
 			name = "Service Details";
 			sourceTree = "<group>";
@@ -510,11 +510,11 @@
 				FDA0ECE81A69E3FE00EDF5DA /* UIColor_extensions.swift in Sources */,
 				FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */,
 				FDC7760E19844C3500B3782F /* Location.swift in Sources */,
+				FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */,
 				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
 				FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */,
 				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
 				FDEA4B25198C72D70023A5A7 /* RouteDetails.swift in Sources */,
-				FDCB33481A4BD97B000033BC /* ServiceDetailMapTableViewCell.swift in Sources */,
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,

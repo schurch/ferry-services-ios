@@ -35,6 +35,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         case NoDisruption(identifier: String, disruptionDetails: DisruptionDetails?, action: () -> ())
         case Loading(identifier: String)
         case TextOnly(identifier: String, text: String, attributedString: NSAttributedString)
+        case Weather(identifier: String, weather: LocationWeather?)
     }
     
     struct MainStoryBoard {
@@ -44,6 +45,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             static let noDisruptionsCell = "noDisruptionsCell"
             static let loadingCell = "loadingCell"
             static let textOnlyCell = "textOnlyCell"
+            static let weatherCell = "weatherCell"
         }
         struct Constants {
             static let headerMargin = CGFloat(16)
@@ -105,7 +107,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         // configure tableview
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.contentInset = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
         
         let backgroundView = UIView(frame: CGRectMake(0, self.headerHeight, self.view.bounds.size.width, 1000))
         backgroundView.backgroundColor = UIColor.tealBackgroundColor()
@@ -281,7 +282,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         let disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow])
         sections.append(disruptionSection)
         
-        
         // timetable section
         var timetableRows = [Row]()
         
@@ -324,6 +324,21 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             sections.append(timetableSection)
         }
         
+        // weather sections
+        var weatherRows = [Row]()
+        
+        if let locations = self.locations {
+            for location in locations {
+                switch (location.latitude, location.longitude) {
+                case let (.Some(lat), .Some(lng)):
+                    let row = Row.Weather(identifier: MainStoryBoard.TableViewCellIdentifiers.weatherCell, weather: nil)
+                    sections.append(Section(title: location.name, footer: nil, rows: [row]))
+                default:
+                    println("Location does not contain lat and lng")
+                }
+            }
+        }
+        
         return sections
     }
     
@@ -347,14 +362,19 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     private func fetchLatestWeatherDataWithCompletion(completion: () -> ()) {
         if let locations = self.locations {
-            let location = locations[1]
-            switch (location.latitude, location.longitude) {
-            case let (.Some(lat), .Some(lng)):
-                WeatherAPIClient.sharedInstance.fetchWeatherForLat(lat, lng: lng) { weather, error in
-                    println("Fetched weather")
+            for location in locations {
+                switch (location.latitude, location.longitude) {
+                case let (.Some(lat), .Some(lng)):
+                    WeatherAPIClient.sharedInstance.fetchWeatherForLat(lat, lng: lng) { weather, error in
+//                        self.dataSource = self.generateDatasourceWithDisruptionDetails(nil, refreshing: false)
+//                        self.tableView.reloadData()
+                        println("Fetched weather")
+                    }
+                default:
+//                    self.dataSource = self.generateDatasourceWithDisruptionDetails(nil, refreshing: false)
+//                    self.tableView.reloadData()
+                    println("Location does not contain lat and lng")
                 }
-            default:
-                println("Location does not contain lat and lng")
             }
         }
     }
@@ -506,7 +526,13 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 cell.labelText.text = text
             }
             return cell
+        case let .Weather(identifier, weather):
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailWeatherCell
+            cell.selectionStyle = .None
+            cell.configureWithWeather(weather)
+            return cell
         }
+        
     }
     
     // MARK: - UITableViewDelegate

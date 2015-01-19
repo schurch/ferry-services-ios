@@ -14,7 +14,6 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     @IBOutlet var labelDisruptionDetails: UILabel!
     @IBOutlet var labelEndTime: UILabel!
     @IBOutlet var labelEndTimeTitle: UILabel!
-    @IBOutlet var labelLastUpdated: UILabel!
     @IBOutlet var labelReason: UILabel!
     @IBOutlet var labelReasonTitle: UILabel!
     
