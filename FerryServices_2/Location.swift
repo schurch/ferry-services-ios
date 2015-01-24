@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-class Location {
+class Location : Hashable {
     
     class func fetchLocationsForSericeId(serviceId: Int) -> [Location]? {
         let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
@@ -72,10 +72,22 @@ class Location {
     var name: String?
     var latitude: Double?
     var longitude: Double?
+
+    var hashValue: Int {
+        return "\(self.name)\(self.latitude)\(self.longitude)".hashValue
+    }
+    
+    var weather: LocationWeather?
+    var weatherFetchError: NSError?
     
     init(name: String?, latitude: Double?, longitude: Double?) {
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
     }
+}
+
+// MARK: -
+func == (lhs: Location, rhs: Location) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }

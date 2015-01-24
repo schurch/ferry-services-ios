@@ -357,14 +357,14 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="loadingCell" rowHeight="44" id="2yD-yy-f20" userLabel="Cell - loading" customClass="ServiceDetailLoadingTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="loadingCell" rowHeight="50" id="2yD-yy-f20" userLabel="Cell - loading" customClass="ServiceDetailLoadingTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2yD-yy-f20" id="2b4-pU-4Be">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <activityIndicatorView opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lzV-PZ-DRb">
-                                                    <rect key="frame" x="290" y="12" width="20" height="20"/>
+                                                    <rect key="frame" x="290" y="12" width="20" height="26"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" priority="999" constant="20" id="869-eh-hpj"/>
                                                         <constraint firstAttribute="width" constant="20" id="QJw-Rs-97o"/>
@@ -443,7 +443,7 @@
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Drizzle pants, weather pants, uh oh pants" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MiC-JI-vCU">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Drizzle" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="136" translatesAutoresizingMaskIntoConstraints="NO" id="MiC-JI-vCU">
                                                             <rect key="frame" x="12" y="31" width="276" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -520,6 +520,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="labelConditions" destination="MiC-JI-vCU" id="uc5-lv-2sM"/>
+                                            <outlet property="labelWindDirection" destination="N3m-Cb-5dF" id="ow7-B2-UBq"/>
                                             <outlet property="labelWindSpeed" destination="CVP-0m-FVF" id="1g1-xq-afw"/>
                                         </connections>
                                     </tableViewCell>

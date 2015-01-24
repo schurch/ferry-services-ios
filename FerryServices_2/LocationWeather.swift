@@ -30,6 +30,8 @@ struct Weather {
 
 struct LocationWeather {
     
+    static let windDirections = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
+    
     var cityId: Int?
     var cityName: String?
     
@@ -43,8 +45,11 @@ struct LocationWeather {
     
     // wind
     var windSpeed: Double? // meters per second
+    var windSpeedMph: Double? // meters mph
     var gustSpeed: Double? // meters per second
+    var gustSpeedMph: Double? // meters mph
     var windDirection: Double? // degrees (meteorological)
+    var windDirectionCardinal: String? // wind direction in N-S-E-W etc
     
     // temp
     var temp: Double? // kelvin
@@ -65,6 +70,7 @@ struct LocationWeather {
     
     // weather descriptions
     var weather: [Weather]?
+    var combinedWeatherDescription: String?
     
     init (data: JSONValue) {
         self.cityId = data["id"].integer
@@ -86,8 +92,20 @@ struct LocationWeather {
         }
         
         self.windSpeed = data["wind"]["speed"].double
+        if let windSpeed = self.windSpeed {
+            self.windSpeedMph = windSpeed * 2.236936284
+        }
+        
         self.gustSpeed = data["wind"]["gust"].double
+        if let gustSpeed = self.gustSpeed {
+            self.gustSpeedMph = gustSpeed * 2.236936284
+        }
+        
         self.windDirection = data["wind"]["deg"].double
+        if let windDirection = self.windDirection {
+            let i = Int((windDirection + 11.25) / 22.5)
+            self.windDirectionCardinal = LocationWeather.windDirections[i % 16]
+        }
         
         self.temp = data["main"]["temp"].double
         self.tempMax = data["main"]["temp_max"].double
@@ -118,5 +136,15 @@ struct LocationWeather {
         }
         
         self.weather = data["weather"].array?.map { json in Weather(data: json) }
+        
+        if let weather = self.weather {
+            let descriptions = weather.filter { $0.weatherDescription != nil }.map { $0.weatherDescription! }
+            let joinedDescription =  ", ".join(descriptions)
+            
+            if !joinedDescription.isEmpty {
+                // capitalize first letter
+                self.combinedWeatherDescription = prefix(joinedDescription, 1).capitalizedString + suffix(joinedDescription, countElements(joinedDescription) - 1).lowercaseString
+            }
+        }
     }
 }

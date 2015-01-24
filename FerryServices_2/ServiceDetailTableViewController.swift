@@ -67,6 +67,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var mapMotionEffect: UIMotionEffectGroup!
     var refreshing: Bool = false
     var serviceStatus: ServiceStatus!
+    var disruptionDetails: DisruptionDetails?
     var headerHeight: CGFloat!
     
     lazy var locations: [Location]? = {
@@ -135,6 +136,11 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         self.mapMotionEffect = UIMotionEffectGroup()
         self.mapMotionEffect.motionEffects = [horizontalMotionEffect, vertiacalMotionEffect]
+        self.mapView.addMotionEffect(self.mapMotionEffect)
+        
+        // extend edges of map as motion effect will move them
+        self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
+        self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
         
         if let locations = self.locations {
             if locations.count > 0 {
@@ -148,23 +154,27 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        // extend the mapview as the motion effect moves the edges
-        self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
-        self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
-        self.mapView.addMotionEffect(self.mapMotionEffect)
+        // clip bounds so map doesn't expand over the edges when we animated to/from view
+        self.view.clipsToBounds = true
         
         if let selectedIndexPath = self.tableView.indexPathForSelectedRow() {
             self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // don't clip bounds as map extends past top allowing blur view to be pushed up and not 
+        // have nasty effect as it gets near top
+        self.view.clipsToBounds = false
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        // reset the mapview edges as they would be visible from an interactive pop gesture
-        self.constraintMapViewLeading.constant = 0
-        self.constraintMapViewTrailing.constant = 0
-        self.mapView.removeMotionEffect(self.mapMotionEffect)
+        // clip bounds so map doesn't expand over the edges when we animated to/from view
+        self.view.clipsToBounds = true
     }
     
     func applicationDidBecomeActive(notification: NSNotification) {
@@ -210,24 +220,28 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         self.refreshing = true
         
-        self.dataSource = generateDatasourceWithDisruptionDetails(nil, refreshing: true)
+        self.dataSource = generateDatasource()
         self.tableView.reloadData()
+        
+        self.fetchLatestWeatherData()
         
         self.fetchLatestDisruptionDataWithCompletion {
             self.refreshing = false
+            
+            self.dataSource = self.generateDatasource()
             self.tableView.reloadData()
         }
     }
     
     // MARK: - Datasource generation
-    private func generateDatasourceWithDisruptionDetails(disruptionDetails: DisruptionDetails?, refreshing: Bool) -> [Section] {
+    private func generateDatasource() -> [Section] {
         var sections = [Section]()
         
         //disruption section
         var disruptionRow: Row
         var footer: String?
         
-        if refreshing {
+        if self.refreshing {
             disruptionRow = Row.Loading(identifier: MainStoryBoard.TableViewCellIdentifiers.loadingCell)
         }
         else if disruptionDetails == nil {
@@ -245,7 +259,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                         action = {
                             [unowned self] in
                             Flurry.logEvent("Show additional info")
-                            self.showWebInfoViewWithTitle("Additional info", content: disruptionDetails!.additionalInfo!)
+                            self.showWebInfoViewWithTitle("Additional info", content: self.disruptionDetails!.additionalInfo!)
                         }
                     }
                     
@@ -260,9 +274,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                             Flurry.logEvent("Show disruption information")
                             
                             var disruptionInformation = disruptionInfo.details ?? ""
-                            if disruptionDetails!.hasAdditionalInfo {
+                            if self.disruptionDetails!.hasAdditionalInfo {
                                 disruptionInformation += "</p>"
-                                disruptionInformation += disruptionDetails!.additionalInfo!
+                                disruptionInformation += self.disruptionDetails!.additionalInfo!
                             }
                             
                             self.showWebInfoViewWithTitle("Disruption information", content:disruptionInformation)
@@ -329,9 +343,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         if let locations = self.locations {
             for location in locations {
-                switch (location.latitude, location.longitude) {
-                case let (.Some(lat), .Some(lng)):
-                    let row = Row.Weather(identifier: MainStoryBoard.TableViewCellIdentifiers.weatherCell, weather: nil)
+                switch (location.latitude, location.longitude, location.weather) {
+                case let (.Some(lat), .Some(lng), weather):
+                    let row = Row.Weather(identifier: MainStoryBoard.TableViewCellIdentifiers.weatherCell, weather: weather)
                     sections.append(Section(title: location.name, footer: nil, rows: [row]))
                 default:
                     println("Location does not contain lat and lng")
@@ -345,13 +359,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Utility methods
     private func fetchLatestDisruptionDataWithCompletion(completion: () -> ()) {
         if let serviceId = self.serviceStatus.serviceId {
-            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, routeDetails, error in
-                if (error == nil) {
-                    self.dataSource = self.generateDatasourceWithDisruptionDetails(disruptionDetails, refreshing: false)
-                }
-                else {
-                    self.dataSource = self.generateDatasourceWithDisruptionDetails(nil, refreshing: false)
-                }
+            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _, _ in
+                self.disruptionDetails = disruptionDetails
                 completion()
             }
         }
@@ -360,20 +369,23 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
     }
     
-    private func fetchLatestWeatherDataWithCompletion(completion: () -> ()) {
+    private func fetchLatestWeatherData() {
         if let locations = self.locations {
             for location in locations {
-                switch (location.latitude, location.longitude) {
-                case let (.Some(lat), .Some(lng)):
-                    WeatherAPIClient.sharedInstance.fetchWeatherForLat(lat, lng: lng) { weather, error in
-//                        self.dataSource = self.generateDatasourceWithDisruptionDetails(nil, refreshing: false)
-//                        self.tableView.reloadData()
-                        println("Fetched weather")
-                    }
-                default:
-//                    self.dataSource = self.generateDatasourceWithDisruptionDetails(nil, refreshing: false)
-//                    self.tableView.reloadData()
-                    println("Location does not contain lat and lng")
+                location.weather = nil
+                location.weatherFetchError = nil
+            }
+            
+            self.dataSource = self.generateDatasource()
+            self.tableView.reloadData()
+            
+            for location in locations {
+                WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
+                    location.weather = weather
+                    location.weatherFetchError = error
+                    
+                    self.dataSource = self.generateDatasource()
+                    self.tableView.reloadData()
                 }
             }
         }
