@@ -307,15 +307,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             }
         }
         
-        // summer timetable
-        if isSummerTimetableAvailable() {
-            let summerTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Summer timetable", action: {
-                [unowned self] in
-                self.showSummerTimetable()
-            })
-            timetableRows.append(summerTimetableRow)
-        }
-        
         // winter timetable
         if isWinterTimetableAvailable() {
             let winterTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Winter timetable", action: {
@@ -323,6 +314,15 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 self.showWinterTimetable()
             })
             timetableRows.append(winterTimetableRow)
+        }
+        
+        // summer timetable
+        if isSummerTimetableAvailable() {
+            let summerTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Summer timetable", action: {
+                [unowned self] in
+                self.showSummerTimetable()
+            })
+            timetableRows.append(summerTimetableRow)
         }
         
         var route = "Timetable"
@@ -426,7 +426,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func summerPath() -> String {
-        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2014/Summer/\(serviceStatus.serviceId!).pdf")
+        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2015/Summer/\(serviceStatus.serviceId!).pdf")
     }
     
     private func showPDFTimetableAtPath(path: String, title: String) {

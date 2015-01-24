@@ -176,7 +176,7 @@
 		"provider": "calmac",
 	}, {
 		"Area": "SOUTH UIST",
-		"Route": "Mallaig - Lochboisdale (NEW Pilot service 12 November 2013 to 1 April 2014)",
+		"Route": "Mallaig/Oban - Lochboisdale",
 		"SortOrder": 29,
 		"DisruptionStatus": -99,
 		"RouteID": 37,
