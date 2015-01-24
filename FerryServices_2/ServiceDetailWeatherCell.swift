@@ -10,9 +10,18 @@ import UIKit
 
 class ServiceDetailWeatherCell: UITableViewCell {
 
+    @IBOutlet weak var constraintViewSeparatorWidth: NSLayoutConstraint!
     @IBOutlet weak var labelConditions: UILabel!
     @IBOutlet weak var labelWindDirection: UILabel!
     @IBOutlet weak var labelWindSpeed: UILabel!
+    @IBOutlet weak var viewSeparator: UIView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        // 0.5 separator width
+        self.constraintViewSeparatorWidth.constant = 1 / UIScreen.mainScreen().scale
+    }
     
     // MARK: - Configure
     func configureWithWeather(weather: LocationWeather?) {

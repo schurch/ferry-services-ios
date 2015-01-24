@@ -12,7 +12,7 @@ class WeatherAPIClient {
 
     private struct APICLientConstants {
         static let baseURL = "http://api.openweathermap.org"
-        static let cacheTimeoutSeconds = 3600.0 // 10 minutes
+        static let cacheTimeoutSeconds = 600.0 // 10 minutes
     }
     
     // MARK: - type method

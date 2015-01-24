@@ -357,14 +357,14 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="loadingCell" rowHeight="50" id="2yD-yy-f20" userLabel="Cell - loading" customClass="ServiceDetailLoadingTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="loadingCell" rowHeight="55" id="2yD-yy-f20" userLabel="Cell - loading" customClass="ServiceDetailLoadingTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2yD-yy-f20" id="2b4-pU-4Be">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <activityIndicatorView opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lzV-PZ-DRb">
-                                                    <rect key="frame" x="290" y="12" width="20" height="26"/>
+                                                    <rect key="frame" x="290" y="18" width="20" height="18.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" priority="999" constant="20" id="869-eh-hpj"/>
                                                         <constraint firstAttribute="width" constant="20" id="QJw-Rs-97o"/>
@@ -372,8 +372,8 @@
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="lzV-PZ-DRb" firstAttribute="top" secondItem="2b4-pU-4Be" secondAttribute="top" constant="12" id="PVe-xW-0Dj"/>
-                                                <constraint firstAttribute="bottom" secondItem="lzV-PZ-DRb" secondAttribute="bottom" constant="11.5" id="ZL1-Ly-A6K"/>
+                                                <constraint firstItem="lzV-PZ-DRb" firstAttribute="top" secondItem="2b4-pU-4Be" secondAttribute="top" constant="18" id="PVe-xW-0Dj"/>
+                                                <constraint firstAttribute="bottom" secondItem="lzV-PZ-DRb" secondAttribute="bottom" constant="18" id="ZL1-Ly-A6K"/>
                                                 <constraint firstAttribute="centerX" secondItem="lzV-PZ-DRb" secondAttribute="centerX" id="rO6-94-S9R"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -519,9 +519,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="constraintViewSeparatorWidth" destination="oM0-ZJ-6Db" id="OsA-N1-FeH"/>
                                             <outlet property="labelConditions" destination="MiC-JI-vCU" id="uc5-lv-2sM"/>
                                             <outlet property="labelWindDirection" destination="N3m-Cb-5dF" id="ow7-B2-UBq"/>
                                             <outlet property="labelWindSpeed" destination="CVP-0m-FVF" id="1g1-xq-afw"/>
+                                            <outlet property="viewSeparator" destination="IEB-LE-9kV" id="IA3-fH-nnU"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="textOnlyCell" id="t95-Qg-qKv" userLabel="Cell - text only cell" customClass="ServiceDetailTextOnlyCell" customModule="FerryServices_2" customModuleProvider="target">

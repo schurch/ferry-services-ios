@@ -69,6 +69,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var serviceStatus: ServiceStatus!
     var disruptionDetails: DisruptionDetails?
     var headerHeight: CGFloat!
+    var viewBackground: UIView!
     
     lazy var locations: [Location]? = {
         if let serviceId = self.serviceStatus.serviceId {
@@ -109,10 +110,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.contentInset = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
         
-        let backgroundView = UIView(frame: CGRectMake(0, self.headerHeight, self.view.bounds.size.width, 1000))
-        backgroundView.backgroundColor = UIColor.tealBackgroundColor()
-        self.tableView.addSubview(backgroundView)
-        self.tableView.sendSubviewToBack(backgroundView)
+        self.viewBackground = UIView(frame: CGRectMake(0, self.headerHeight, self.view.bounds.size.width, self.view.bounds.size.height))
+        self.viewBackground.backgroundColor = UIColor.tealBackgroundColor()
+        self.tableView.addSubview(self.viewBackground)
+        self.tableView.sendSubviewToBack(self.viewBackground)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
@@ -220,21 +221,17 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         self.refreshing = true
         
-        self.dataSource = generateDatasource()
-        self.tableView.reloadData()
+        self.reloadData()
         
         self.fetchLatestWeatherData()
-        
         self.fetchLatestDisruptionDataWithCompletion {
             self.refreshing = false
-            
-            self.dataSource = self.generateDatasource()
-            self.tableView.reloadData()
+            self.reloadData()
         }
     }
     
     // MARK: - Datasource generation
-    private func generateDatasource() -> [Section] {
+    private func generateDatasource() {
         var sections = [Section]()
         
         //disruption section
@@ -353,10 +350,20 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             }
         }
         
-        return sections
+        self.dataSource = sections
     }
     
     // MARK: - Utility methods
+    private func reloadData() {
+        self.generateDatasource()
+        self.tableView.reloadData()
+        
+        var backgroundViewFrame = self.viewBackground.frame
+        backgroundViewFrame.size.height = self.tableView.contentSize.height + (UIScreen.mainScreen().bounds.size.height)
+        println("\(backgroundViewFrame.size.height)")
+        self.viewBackground.frame = backgroundViewFrame
+    }
+    
     private func fetchLatestDisruptionDataWithCompletion(completion: () -> ()) {
         if let serviceId = self.serviceStatus.serviceId {
             APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _, _ in
@@ -376,16 +383,13 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 location.weatherFetchError = nil
             }
             
-            self.dataSource = self.generateDatasource()
-            self.tableView.reloadData()
+            self.reloadData()
             
             for location in locations {
                 WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
                     location.weather = weather
                     location.weatherFetchError = error
-                    
-                    self.dataSource = self.generateDatasource()
-                    self.tableView.reloadData()
+                    self.reloadData()
                 }
             }
         }
@@ -479,24 +483,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         return dataSource.count
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if dataSource[section].showHeader {
-            return UITableViewAutomaticDimension
-        }
-        else {
-            return CGFloat.min
-        }
-    }
-
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if dataSource[section].showFooter {
-            return UITableViewAutomaticDimension
-        }
-        else {
-            return CGFloat.min
-        }
-    }
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource[section].rows.count
     }
@@ -544,7 +530,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             cell.configureWithWeather(weather)
             return cell
         }
-        
     }
     
     // MARK: - UITableViewDelegate
@@ -564,9 +549,40 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let row = dataSource[indexPath.section].rows[indexPath.row]
+        
+        switch row {
+        case let .Weather(_, _):
+            if let weatherCell = cell as? ServiceDetailWeatherCell {
+                weatherCell.viewSeparator.backgroundColor = tableView.separatorColor
+            }
+        default:
+            break
+        }
+    }
+    
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as UITableViewHeaderFooterView
         header.textLabel.textColor = UIColor.tealTextColor()
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if dataSource[section].showHeader {
+            return UITableViewAutomaticDimension
+        }
+        else {
+            return CGFloat.min
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if dataSource[section].showFooter {
+            return UITableViewAutomaticDimension
+        }
+        else {
+            return CGFloat.min
+        }
     }
     
     // MARK: - MKMapViewDelegate
