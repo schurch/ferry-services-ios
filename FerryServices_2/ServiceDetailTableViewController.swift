@@ -30,12 +30,12 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     enum Row {
-        case Basic(identifier: String, title: String, action: () -> ())
-        case Disruption(identifier: String, disruptionDetails: DisruptionDetails, action: () -> ())
-        case NoDisruption(identifier: String, disruptionDetails: DisruptionDetails?, action: () -> ())
-        case Loading(identifier: String)
-        case TextOnly(identifier: String, text: String, attributedString: NSAttributedString)
-        case Weather(identifier: String, weather: LocationWeather?)
+        case Basic(title: String, subtitle: String?, action: (() -> ())?)
+        case Disruption(disruptionDetails: DisruptionDetails, action: () -> ())
+        case NoDisruption(disruptionDetails: DisruptionDetails?, action: () -> ())
+        case Loading
+        case TextOnly(text: String, attributedString: NSAttributedString)
+        case Weather(weather: LocationWeather?)
     }
     
     struct MainStoryBoard {
@@ -239,16 +239,16 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         var footer: String?
         
         if self.refreshing {
-            disruptionRow = Row.Loading(identifier: MainStoryBoard.TableViewCellIdentifiers.loadingCell)
+            disruptionRow = Row.Loading
         }
         else if disruptionDetails == nil {
-            disruptionRow = Row.TextOnly(identifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell, text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
+            disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
         }
         else {
             if let disruptionStatus = disruptionDetails?.disruptionStatus {
                 switch disruptionStatus {
                 case .Normal:
-                    disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: disruptionDetails!, {})
+                    disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, {})
                     
                 case .Information:
                     var action: () -> () = {}
@@ -260,13 +260,13 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                         }
                     }
                     
-                    disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: disruptionDetails!, action)
+                    disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action)
                     
                 case .SailingsAffected, .SailingsCancelled:
                     if let disruptionInfo = disruptionDetails {
                         footer = disruptionInfo.lastUpdated
                         
-                        disruptionRow = Row.Disruption(identifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell, disruptionDetails: disruptionInfo, action: {
+                        disruptionRow = Row.Disruption(disruptionDetails: disruptionInfo, action: {
                             [unowned self] in
                             Flurry.logEvent("Show disruption information")
                             
@@ -280,13 +280,13 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                         })
                     }
                     else {
-                        disruptionRow = Row.TextOnly(identifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell, text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
+                        disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
                     }
                 }
             }
             else {
                 // no disruptionStatus
-                disruptionRow = Row.NoDisruption(identifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell, disruptionDetails: nil, {})
+                disruptionRow = Row.NoDisruption(disruptionDetails: nil, {})
             }
         }
         
@@ -299,7 +299,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         // depatures if available
         if let routeId = self.serviceStatus.serviceId {
             if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: NSDate()) {
-                let departuresRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Departures", action: {
+                let departuresRow: Row = Row.Basic(title: "Departures", subtitle: nil,  action: {
                     [unowned self] in
                     self.showDepartures()
                 })
@@ -309,7 +309,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         // winter timetable
         if isWinterTimetableAvailable() {
-            let winterTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Winter timetable", action: {
+            let winterTimetableRow: Row = Row.Basic(title: "Winter timetable", subtitle: nil, action: {
                 [unowned self] in
                 self.showWinterTimetable()
             })
@@ -318,7 +318,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         // summer timetable
         if isSummerTimetableAvailable() {
-            let summerTimetableRow: Row = Row.Basic(identifier: MainStoryBoard.TableViewCellIdentifiers.basicCell, title: "Summer timetable", action: {
+            let summerTimetableRow: Row = Row.Basic(title: "Summer timetable", subtitle: nil, action: {
                 [unowned self] in
                 self.showSummerTimetable()
             })
@@ -336,14 +336,22 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         
         // weather sections
-        var weatherRows = [Row]()
         
         if let locations = self.locations {
             for location in locations {
+                var weatherRows = [Row]()
+                
                 switch (location.latitude, location.longitude, location.weather) {
                 case let (.Some(lat), .Some(lng), weather):
-                    let row = Row.Weather(identifier: MainStoryBoard.TableViewCellIdentifiers.weatherCell, weather: weather)
-                    sections.append(Section(title: location.name, footer: nil, rows: [row]))
+                    let weatherRow = Row.Weather(weather: weather)
+                    weatherRows.append(weatherRow)
+                    
+                    if let gusts = weather?.gustSpeedMph {
+                        let gustRow = Row.Basic(title: "Gusts", subtitle: "Up to \(gusts)", action: nil)
+                        weatherRows.append(gustRow)
+                    }
+                    
+                    sections.append(Section(title: location.name, footer: nil, rows: weatherRows))
                 default:
                     println("Location does not contain lat and lng")
                 }
@@ -499,23 +507,32 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         let row = dataSource[indexPath.section].rows[indexPath.row]
         
         switch row {
-        case let .Basic(identifier, title, _):
+        case let .Basic(title, subtitle, action):
+            let identifier = MainStoryBoard.TableViewCellIdentifiers.basicCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
             cell.textLabel!.text = title
+            if let subtitle = subtitle {
+                cell.detailTextLabel!.text = subtitle
+            }
+            cell.accessoryType = action == nil ? .None : .DisclosureIndicator
             return cell
-        case let .Disruption(identifier, disruptionDetails, _):
+        case let .Disruption(disruptionDetails, _):
+            let identifier = MainStoryBoard.TableViewCellIdentifiers.disruptionsCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailDisruptionsTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
             return cell
-        case let .NoDisruption(identifier, disruptionDetails, _):
+        case let .NoDisruption(disruptionDetails, _):
+            let identifier = MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailNoDisruptionTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
             return cell
-        case let .Loading(identifier):
+        case let .Loading:
+            let identifier = MainStoryBoard.TableViewCellIdentifiers.loadingCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailLoadingTableViewCell
             cell.activityIndicatorView.startAnimating()
             return cell
-        case let .TextOnly(identifier, text, attributedString):
+        case let .TextOnly(text, attributedString):
+            let identifier = MainStoryBoard.TableViewCellIdentifiers.textOnlyCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailTextOnlyCell
             if text.isEmpty {
                 cell.labelText.attributedText = attributedString
@@ -524,7 +541,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 cell.labelText.text = text
             }
             return cell
-        case let .Weather(identifier, weather):
+        case let .Weather(weather):
+            let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailWeatherCell
             cell.selectionStyle = .None
             cell.configureWithWeather(weather)
@@ -536,16 +554,18 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let row = dataSource[indexPath.section].rows[indexPath.row]
         switch row {
-        case let .Basic(_, _, action):
+        case let .Basic(_, _, possibleAction):
+            if let action = possibleAction {
+                action()
+            }
+        case let .Disruption(_, action):
             action()
-        case let .Disruption(_, _, action):
-            action()
-        case let .NoDisruption(_, disruptionDetails, action):
+        case let .NoDisruption(disruptionDetails, action):
             if disruptionDetails != nil && disruptionDetails!.hasAdditionalInfo {
                 action()
             }
         default:
-            println("No action for cell")
+            break;
         }
     }
     
@@ -553,7 +573,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         let row = dataSource[indexPath.section].rows[indexPath.row]
         
         switch row {
-        case let .Weather(_, _):
+        case let .Weather(_):
             if let weatherCell = cell as? ServiceDetailWeatherCell {
                 weatherCell.viewSeparator.backgroundColor = tableView.separatorColor
             }

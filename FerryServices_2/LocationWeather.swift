@@ -53,6 +53,7 @@ struct LocationWeather {
     
     // temp
     var temp: Double? // kelvin
+    var tempCelsius: Double? // Celsius
     var tempMin: Double? // kelvin
     var tempMax: Double? // kelvin
     
@@ -108,6 +109,10 @@ struct LocationWeather {
         }
         
         self.temp = data["main"]["temp"].double
+        if let temp = self.temp {
+            self.tempCelsius = temp - 273.15
+        }
+        
         self.tempMax = data["main"]["temp_max"].double
         self.tempMin = data["main"]["temp_min"].double
         
@@ -144,6 +149,17 @@ struct LocationWeather {
             if !joinedDescription.isEmpty {
                 // capitalize first letter
                 self.combinedWeatherDescription = prefix(joinedDescription, 1).capitalizedString + suffix(joinedDescription, countElements(joinedDescription) - 1).lowercaseString
+            }
+            
+            if let temp = self.tempCelsius {
+                let tempText = "\(Int(round(temp)))ºC"
+                
+                if self.combinedWeatherDescription != nil && !self.combinedWeatherDescription!.isEmpty {
+                    self.combinedWeatherDescription = "\(self.combinedWeatherDescription!)\n\(tempText)"
+                }
+                else {
+                    self.combinedWeatherDescription = tempText
+                }
             }
         }
     }
