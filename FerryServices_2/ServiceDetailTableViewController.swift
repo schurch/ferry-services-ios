@@ -336,7 +336,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         
         // weather sections
-        
         if let locations = self.locations {
             for location in locations {
                 var weatherRows = [Row]()
@@ -368,7 +367,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         var backgroundViewFrame = self.viewBackground.frame
         backgroundViewFrame.size.height = self.tableView.contentSize.height + (UIScreen.mainScreen().bounds.size.height)
-        println("\(backgroundViewFrame.size.height)")
         self.viewBackground.frame = backgroundViewFrame
     }
     
@@ -603,6 +601,11 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         else {
             return CGFloat.min
         }
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        // this stops the table view jumping around
+        return 100.0
     }
     
     // MARK: - MKMapViewDelegate
