@@ -8,6 +8,10 @@
 
 import UIKit
 
+func == (lhs: LocationWeather, rhs: LocationWeather) -> Bool {
+    return lhs.cityId == rhs.cityId
+}
+
 struct Weather {
     // See http://openweathermap.org/weather-conditions for list of codes/icons/descriptions
     
@@ -28,7 +32,7 @@ struct Weather {
     }
 }
 
-struct LocationWeather {
+struct LocationWeather: Equatable {
     
     static let windDirections = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
     
@@ -143,22 +147,24 @@ struct LocationWeather {
         self.weather = data["weather"].array?.map { json in Weather(data: json) }
         
         if let weather = self.weather {
+            if let temp = self.tempCelsius {
+                self.combinedWeatherDescription = "\(Int(round(temp)))ºC"
+            }
+            
             let descriptions = weather.filter { $0.weatherDescription != nil }.map { $0.weatherDescription! }
             let joinedDescription =  ", ".join(descriptions)
             
             if !joinedDescription.isEmpty {
                 // capitalize first letter
-                self.combinedWeatherDescription = prefix(joinedDescription, 1).capitalizedString + suffix(joinedDescription, countElements(joinedDescription) - 1).lowercaseString
-            }
-            
-            if let temp = self.tempCelsius {
-                let tempText = "\(Int(round(temp)))ºC"
+                let correctCaseDescription = prefix(joinedDescription, 1).capitalizedString + suffix(joinedDescription, countElements(joinedDescription) - 1).lowercaseString
                 
-                if self.combinedWeatherDescription != nil && !self.combinedWeatherDescription!.isEmpty {
-                    self.combinedWeatherDescription = "\(self.combinedWeatherDescription!)\n\(tempText)"
-                }
-                else {
-                    self.combinedWeatherDescription = tempText
+                if self.combinedWeatherDescription != nil {
+                    if self.combinedWeatherDescription!.isEmpty {
+                        self.combinedWeatherDescription! = correctCaseDescription
+                    }
+                    else {
+                        self.combinedWeatherDescription! = self.combinedWeatherDescription! + "\n" + correctCaseDescription
+                    }
                 }
             }
         }

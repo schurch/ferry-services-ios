@@ -24,8 +24,8 @@ class ServiceDetailWeatherCell: UITableViewCell {
     }
     
     // MARK: - Configure
-    func configureWithWeather(weather: LocationWeather?) {
-        if let locationWeather = weather {
+    func configureWithLocation(location: Location) {
+        if let locationWeather = location.weather {
             if let weatherDescription = locationWeather.combinedWeatherDescription {
                 self.labelConditions.text = weatherDescription
             }

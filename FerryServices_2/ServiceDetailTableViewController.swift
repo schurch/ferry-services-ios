@@ -35,7 +35,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         case NoDisruption(disruptionDetails: DisruptionDetails?, action: () -> ())
         case Loading
         case TextOnly(text: String, attributedString: NSAttributedString)
-        case Weather(weather: LocationWeather?)
+        case Weather(location: Location)
     }
     
     struct MainStoryBoard {
@@ -65,7 +65,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var annotations: [MKPointAnnotation]?
     var dataSource: [Section] = []
     var mapMotionEffect: UIMotionEffectGroup!
-    var refreshing: Bool = false
+    var refreshingDisruptionInfo: Bool = true // show table as refreshing initially
     var serviceStatus: ServiceStatus!
     var disruptionDetails: DisruptionDetails?
     var headerHeight: CGFloat!
@@ -143,12 +143,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
         self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
         
-        if let locations = self.locations {
-            if locations.count > 0 {
-                self.configureMapView()
-            }
-        }
-        
+        self.configureMapView()
+        self.initializeTable()
         self.refresh()
     }
     
@@ -215,19 +211,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     // MARK: - refresh
     func refresh() {
-        if self.refreshing {
-            return
-        }
-        
-        self.refreshing = true
-        
-        self.reloadData()
-        
         self.fetchLatestWeatherData()
-        self.fetchLatestDisruptionDataWithCompletion {
-            self.refreshing = false
-            self.reloadData()
-        }
+        self.fetchLatestDisruptionData()
     }
     
     // MARK: - Datasource generation
@@ -238,21 +223,21 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         var disruptionRow: Row
         var footer: String?
         
-        if self.refreshing {
+        if self.refreshingDisruptionInfo {
             disruptionRow = Row.Loading
         }
-        else if disruptionDetails == nil {
+        else if self.disruptionDetails == nil {
             disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
         }
         else {
-            if let disruptionStatus = disruptionDetails?.disruptionStatus {
+            if let disruptionStatus = self.disruptionDetails?.disruptionStatus {
                 switch disruptionStatus {
                 case .Normal:
                     disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, {})
                     
                 case .Information:
                     var action: () -> () = {}
-                    if disruptionDetails!.hasAdditionalInfo {
+                    if self.disruptionDetails!.hasAdditionalInfo {
                         action = {
                             [unowned self] in
                             Flurry.logEvent("Show additional info")
@@ -340,19 +325,13 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             for location in locations {
                 var weatherRows = [Row]()
                 
-                switch (location.latitude, location.longitude, location.weather) {
-                case let (.Some(lat), .Some(lng), weather):
-                    let weatherRow = Row.Weather(weather: weather)
+                switch (location.latitude, location.longitude) {
+                case let (.Some(lat), .Some(lng)):
+                    let weatherRow = Row.Weather(location: location)
                     weatherRows.append(weatherRow)
-                    
-                    if let gusts = weather?.gustSpeedMph {
-                        let gustRow = Row.Basic(title: "Gusts", subtitle: "Up to \(gusts)", action: nil)
-                        weatherRows.append(gustRow)
-                    }
-                    
                     sections.append(Section(title: location.name, footer: nil, rows: weatherRows))
                 default:
-                    println("Location does not contain lat and lng")
+                    break;
                 }
             }
         }
@@ -361,7 +340,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     // MARK: - Utility methods
-    private func reloadData() {
+    private func initializeTable() {
         self.generateDatasource()
         self.tableView.reloadData()
         
@@ -370,35 +349,66 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.viewBackground.frame = backgroundViewFrame
     }
     
-    private func fetchLatestDisruptionDataWithCompletion(completion: () -> ()) {
+    private func fetchLatestDisruptionData() {
+        let reloadServiceInfo: () -> () = {
+            self.refreshingDisruptionInfo = false
+            self.generateDatasource()
+            
+            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+        }
+        
         if let serviceId = self.serviceStatus.serviceId {
             APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _, _ in
                 self.disruptionDetails = disruptionDetails
-                completion()
+                reloadServiceInfo()
             }
         }
         else {
-            completion()
+            reloadServiceInfo()
         }
     }
     
     private func fetchLatestWeatherData() {
         if let locations = self.locations {
             for location in locations {
-                location.weather = nil
-                location.weatherFetchError = nil
-            }
-            
-            self.reloadData()
-            
-            for location in locations {
                 WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
                     location.weather = weather
                     location.weatherFetchError = error
-                    self.reloadData()
+                    self.reloadWeatherForLocation(location, animated: true)
                 }
             }
         }
+    }
+    
+    private func reloadWeatherForLocation(location: Location, animated: Bool) {
+        if let indexPath = self.indexPathForLocation(location) {
+            let rowAnimation = animated ? UITableViewRowAnimation.Fade : UITableViewRowAnimation.None
+            self.tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: rowAnimation)
+        }
+    }
+
+    private func indexPathForLocation(location: Location) -> NSIndexPath? {
+        var sectionCount = 0
+        var rowCount = 0
+        
+        for section in self.dataSource {
+            for row in section.rows {
+                switch row {
+                case let .Weather(rowLocation):
+                    if location == rowLocation {
+                        return NSIndexPath(forRow: rowCount, inSection: sectionCount)
+                    }
+                default:
+                    break
+                }
+                
+                rowCount += 1
+            }
+            
+            sectionCount += 1
+        }
+        
+        return nil
     }
     
     private func isWinterTimetableAvailable() -> Bool {
@@ -509,10 +519,16 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let identifier = MainStoryBoard.TableViewCellIdentifiers.basicCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
             cell.textLabel!.text = title
+            
             if let subtitle = subtitle {
                 cell.detailTextLabel!.text = subtitle
             }
+            else {
+                cell.detailTextLabel!.text = ""
+            }
+            
             cell.accessoryType = action == nil ? .None : .DisclosureIndicator
+            
             return cell
         case let .Disruption(disruptionDetails, _):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.disruptionsCell
@@ -539,11 +555,11 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 cell.labelText.text = text
             }
             return cell
-        case let .Weather(weather):
+        case let .Weather(location):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailWeatherCell
             cell.selectionStyle = .None
-            cell.configureWithWeather(weather)
+            cell.configureWithLocation(location)
             return cell
         }
     }
