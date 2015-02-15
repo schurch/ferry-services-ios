@@ -117,8 +117,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-        self.tableView.estimatedRowHeight = 44.0;
+        self.tableView.registerNib(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
+        self.tableView.registerNib(UINib(nibName: "NoDisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
         
         // map button
         let mapButton = UIButton(frame: CGRectMake(0, -MainStoryBoard.Constants.contentInset, self.view.bounds.size.width, self.view.bounds.size.height))
@@ -374,24 +374,24 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
                     location.weather = weather
                     location.weatherFetchError = error
-                    self.reloadWeatherForLocation(location, animated: true)
+                    self.reloadWeatherForLocation(location)
                 }
             }
         }
     }
     
-    private func reloadWeatherForLocation(location: Location, animated: Bool) {
+    private func reloadWeatherForLocation(location: Location) {
         if let indexPath = self.indexPathForLocation(location) {
-            let rowAnimation = animated ? UITableViewRowAnimation.Fade : UITableViewRowAnimation.None
-            self.tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: rowAnimation)
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
     }
 
     private func indexPathForLocation(location: Location) -> NSIndexPath? {
         var sectionCount = 0
-        var rowCount = 0
         
         for section in self.dataSource {
+            
+            var rowCount = 0
             for row in section.rows {
                 switch row {
                 case let .Weather(rowLocation):
@@ -565,6 +565,27 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     // MARK: - UITableViewDelegate
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let row = dataSource[indexPath.section].rows[indexPath.row]
+        
+        switch row {
+        case .Basic:
+            return 44.0
+        case let .Disruption(disruptionDetails, _):
+            let height = ServiceDetailDisruptionsTableViewCell.heightWithDisruptionDetails(disruptionDetails, tableView: tableView)
+            return height
+        case let .NoDisruption(disruptionDetails, _):
+            let height = ServiceDetailNoDisruptionTableViewCell.heightWithDisruptionDetails(disruptionDetails, tableView: tableView)
+            return height
+        case .Loading:
+            return 55.0
+        case .TextOnly:
+            return 44.0
+        case .Weather:
+            return 84.0
+        }
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let row = dataSource[indexPath.section].rows[indexPath.row]
         switch row {
@@ -617,11 +638,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         else {
             return CGFloat.min
         }
-    }
-    
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        // this stops the table view jumping around
-        return 100.0
     }
     
     // MARK: - MKMapViewDelegate

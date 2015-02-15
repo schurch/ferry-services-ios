@@ -17,6 +17,38 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     @IBOutlet var labelReason: UILabel!
     @IBOutlet var labelReasonTitle: UILabel!
     
+    struct SizingCell {
+        static let instance = UINib(nibName: "DisruptionsCell", bundle: nil)
+            .instantiateWithOwner(nil, options: nil).first as ServiceDetailDisruptionsTableViewCell
+    }
+    
+    class func heightWithDisruptionDetails(disruptionDetails: DisruptionDetails, tableView: UITableView) -> CGFloat {
+        let cell = self.SizingCell.instance
+        
+        cell.configureWithDisruptionDetails(disruptionDetails)
+        cell.bounds = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: cell.bounds.size.height)
+        
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
+        
+        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        
+        let separatorHeight = UIScreen.mainScreen().scale / 2.0
+        
+        return height + separatorHeight
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.contentView.setNeedsLayout()
+        self.contentView.layoutSubviews()
+        
+        self.labelDisruptionDetails.preferredMaxLayoutWidth = self.labelDisruptionDetails.bounds.size.width
+        
+        super.layoutSubviews()
+    }
+    
     // MARK: - Configure
     func configureWithDisruptionDetails(disruptionDetails: DisruptionDetails) {
         if let status = disruptionDetails.disruptionStatus {
