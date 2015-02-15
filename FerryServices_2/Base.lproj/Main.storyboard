@@ -366,30 +366,6 @@
                                             <outlet property="viewSeparator" destination="IEB-LE-9kV" id="IA3-fH-nnU"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="textOnlyCell" id="t95-Qg-qKv" userLabel="Cell - text only cell" customClass="ServiceDetailTextOnlyCell" customModule="FerryServices_2" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t95-Qg-qKv" id="1JP-Oj-5RR">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unable to fetch the disruption status for this service." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7z-g3-aoj">
-                                                    <rect key="frame" x="20" y="12" width="560" height="19.5"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="x7z-g3-aoj" secondAttribute="bottom" constant="12" id="14e-hp-JjM"/>
-                                                <constraint firstItem="x7z-g3-aoj" firstAttribute="leading" secondItem="1JP-Oj-5RR" secondAttribute="leadingMargin" constant="12" id="Old-lm-PlH"/>
-                                                <constraint firstItem="x7z-g3-aoj" firstAttribute="top" secondItem="1JP-Oj-5RR" secondAttribute="top" constant="12" id="UQv-mq-HmY"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="x7z-g3-aoj" secondAttribute="trailing" constant="12" id="ZtP-Pk-Hzf"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="labelText" destination="x7z-g3-aoj" id="RZo-an-Goo"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </prototypes>
                                 <sections/>
                                 <connections>

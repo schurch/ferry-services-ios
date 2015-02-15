@@ -34,7 +34,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         case Disruption(disruptionDetails: DisruptionDetails, action: () -> ())
         case NoDisruption(disruptionDetails: DisruptionDetails?, action: () -> ())
         case Loading
-        case TextOnly(text: String, attributedString: NSAttributedString)
+        case TextOnly(text: String)
         case Weather(location: Location)
     }
     
@@ -119,6 +119,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         self.tableView.registerNib(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
         self.tableView.registerNib(UINib(nibName: "NoDisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
+        self.tableView.registerNib(UINib(nibName: "TextOnlyCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell)
         
         // map button
         let mapButton = UIButton(frame: CGRectMake(0, -MainStoryBoard.Constants.contentInset, self.view.bounds.size.width, self.view.bounds.size.height))
@@ -227,7 +228,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             disruptionRow = Row.Loading
         }
         else if self.disruptionDetails == nil {
-            disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
+            disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.")
         }
         else {
             if let disruptionStatus = self.disruptionDetails?.disruptionStatus {
@@ -265,7 +266,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                         })
                     }
                     else {
-                        disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.", attributedString: NSAttributedString())
+                        disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.")
                     }
                 }
             }
@@ -545,15 +546,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailLoadingTableViewCell
             cell.activityIndicatorView.startAnimating()
             return cell
-        case let .TextOnly(text, attributedString):
+        case let .TextOnly(text):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.textOnlyCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailTextOnlyCell
-            if text.isEmpty {
-                cell.labelText.attributedText = attributedString
-            }
-            else {
-                cell.labelText.text = text
-            }
+            cell.labelText.text = text
             return cell
         case let .Weather(location):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
@@ -579,8 +575,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             return height
         case .Loading:
             return 55.0
-        case .TextOnly:
-            return 44.0
+        case let .TextOnly(text):
+            let height = ServiceDetailTextOnlyCell.heightWithText(text, tableView: tableView)
+            return height
         case .Weather:
             return 84.0
         }

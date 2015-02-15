@@ -23,6 +23,7 @@
 		FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */; };
 		FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD74D0A11A90124300013095 /* DisruptionsCell.xib */; };
 		FD74D0A41A90125700013095 /* NoDisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */; };
+		FD74D0A61A9020E200013095 /* TextOnlyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD74D0A51A9020E200013095 /* TextOnlyCell.xib */; };
 		FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */; };
 		FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD753ED9197A256E00CC5DE3 /* Main.storyboard */; };
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
@@ -82,6 +83,7 @@
 		FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailNoDisruptionTableViewCell.swift; sourceTree = "<group>"; };
 		FD74D0A11A90124300013095 /* DisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisruptionsCell.xib; sourceTree = "<group>"; };
 		FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoDisruptionsCell.xib; sourceTree = "<group>"; };
+		FD74D0A51A9020E200013095 /* TextOnlyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextOnlyCell.xib; sourceTree = "<group>"; };
 		FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FerryServices_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753ED4197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
 				FD74D0A11A90124300013095 /* DisruptionsCell.xib */,
 				FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */,
+				FD74D0A51A9020E200013095 /* TextOnlyCell.xib */,
 				FD5E7DB9197A310600F438F6 /* View Controllers */,
 				FD5BF4E21A539ED1009D799E /* Views */,
 				FD5E7DBC197A317800F438F6 /* API Client */,
@@ -444,6 +447,7 @@
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
 				FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */,
 				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
+				FD74D0A61A9020E200013095 /* TextOnlyCell.xib in Resources */,
 				FDC77613198450AC00B3782F /* timetables.sqlite in Resources */,
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				FDC03DE919DFDD8D000CE1FA /* services.json in Resources */,
