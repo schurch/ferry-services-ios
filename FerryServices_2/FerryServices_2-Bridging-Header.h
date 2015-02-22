@@ -7,3 +7,4 @@
 #import "FMDB.h"
 #import "Flurry.h"
 #import <Crashlytics/Crashlytics.h>
+#import <Parse/Parse.h>
