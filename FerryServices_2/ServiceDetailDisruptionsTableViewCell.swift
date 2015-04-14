@@ -73,7 +73,7 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
         
         self.labelReason.text = disruptionDetails.reason?.capitalizedString
         
-        if let date = disruptionDetails.disruptionEndDate {
+        if let date = disruptionDetails.updatedDate {
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "dd MMM yyyy HH:mm"
             self.labelEndTime.text = dateFormatter.stringFromDate(date)

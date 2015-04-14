@@ -10,30 +10,28 @@ struct ServiceStatus: Equatable {
     
     enum DisriptionStatus: Int {
         case Unknown = -99
-        case Normal = -1
+        case Normal = 0
         case SailingsAffected = 1
         case SailingsCancelled = 2
     }
     
-    var area: String?
-    var disruptionStatus: DisriptionStatus?
-    var ferryProvider: String?
-    var route: String?
     var serviceId: Int?
     var sortOrder: Int?
+    var area: String?
+    var route: String?
+    var disruptionStatus: DisriptionStatus?
     
     init(data: JSONValue) {
         
-        self.area = data["Area"].string
+        self.area = data["area"].string
         
-        if let disruptionStatus = data["DisruptionStatus"].integer {
+        if let disruptionStatus = data["status"].integer {
             self.disruptionStatus = DisriptionStatus(rawValue: disruptionStatus)
         }
         
-        self.ferryProvider = data["provider"].string
-        self.route = data["Route"].string
-        self.serviceId = data["RouteID"].integer
-        self.sortOrder = data["SortOrder"].integer
+        self.route = data["route"].string
+        self.serviceId = data["service_id"].integer
+        self.sortOrder = data["sort_order"].integer
     }
 }
 

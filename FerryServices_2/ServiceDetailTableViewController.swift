@@ -234,20 +234,20 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             if let disruptionStatus = self.disruptionDetails?.disruptionStatus {
                 switch disruptionStatus {
                 case .Normal:
-                    disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, {})
-                    
-                case .Information:
-                    var action: () -> () = {}
                     if self.disruptionDetails!.hasAdditionalInfo {
+                        var action: () -> () = {}
+                        
                         action = {
                             [unowned self] in
                             Flurry.logEvent("Show additional info")
                             self.showWebInfoViewWithTitle("Additional info", content: self.disruptionDetails!.additionalInfo!)
                         }
+                        
+                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action)
                     }
-                    
-                    disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action)
-                    
+                    else {
+                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, {})
+                    }
                 case .SailingsAffected, .SailingsCancelled:
                     if let disruptionInfo = disruptionDetails {
                         footer = disruptionInfo.lastUpdated
@@ -359,7 +359,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         
         if let serviceId = self.serviceStatus.serviceId {
-            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _, _ in
+            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _ in
                 self.disruptionDetails = disruptionDetails
                 reloadServiceInfo()
             }

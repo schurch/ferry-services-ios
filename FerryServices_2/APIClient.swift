@@ -9,7 +9,7 @@
 class APIClient {
     
     private struct APICLientConstants {
-        static let baseURL = "http://ws.sitekit.net"
+        static let baseURL = "http://stefanchurch.com:4567"
     }
 
     // MARK: - type method
@@ -32,17 +32,11 @@ class APIClient {
     init() {
         requestManager = AFHTTPRequestOperationManager(baseURL: NSURL(string: APICLientConstants.baseURL))
         requestManager.responseSerializer = AFJSONResponseSerializer() as AFJSONResponseSerializer
-        requestManager.requestSerializer.setValue("en-us", forHTTPHeaderField: "Accept-Language")
-        requestManager.requestSerializer.setValue("Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D167 (350921184)", forHTTPHeaderField: "User-Agent")
-        
-        #if DEBUG
-            requestManager.responseSerializer.acceptableContentTypes = NSSet("text/plain", "application/json", 2)
-        #endif
     }
     
     // MARK: - methods
     func fetchFerryServicesWithCompletion(completion: (serviceStatuses: [ServiceStatus]?, error: NSError?) -> ()) {
-        requestManager.GET("/ServiceDisruptions/servicestatusfrontV3.asmx/ListServiceStatuses_JSON" , parameters: nil, success: { operation, responseObject in
+        requestManager.GET("/services/" , parameters: nil, success: { operation, responseObject in
             
                 let json = JSONValue(responseObject)
                 if  (!json) {
@@ -50,12 +44,8 @@ class APIClient {
                     return
                 }
             
-                if (json["Success"].integer? != 1) {
-                    completion(serviceStatuses: nil, error: NSError(domain:APIClient.clientErrorDomain, code:1, userInfo:[NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."]))
-                    return
-                }
-            
-                let results = json["ServiceStatuses"].array?.map{ json in ServiceStatus(data: json) }
+                var results = json.array?.map { json in ServiceStatus(data: json) }
+                results?.sort{ $0.sortOrder < $1.sortOrder }
             
                 completion(serviceStatuses: results, error: nil)
             
@@ -64,34 +54,26 @@ class APIClient {
             })
     }
     
-    func fetchDisruptionDetailsForFerryServiceId(ferryServiceId: Int, completion: (disruptionsDetails: DisruptionDetails?, routeDetails: RouteDetails?, error: NSError?) -> ()) {
+    func fetchDisruptionDetailsForFerryServiceId(ferryServiceId: Int, completion: (disruptionsDetails: DisruptionDetails?, error: NSError?) -> ()) {
         
-        requestManager.GET("/ServiceDisruptions/servicestatusfrontV3.asmx/ListRouteDisruptions_JSON", parameters: ["routeID": ferryServiceId], success:
+        requestManager.GET("/services/\(ferryServiceId)", parameters: nil, success:
             { operations, responseObject in
                 
                 let json = JSONValue(responseObject)
-                if (!json) {
-                    completion(disruptionsDetails: nil, routeDetails: nil, error: NSError(domain:APIClient.clientErrorDomain, code:1, userInfo:[NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."]))
-                    return
-                }
                 
                 var disruptionDetails: DisruptionDetails?
-                if let disruptionData = json["RouteDisruption"].object {
-                    disruptionDetails = DisruptionDetails(data: disruptionData)
+                if json {
+                    disruptionDetails = DisruptionDetails(data: json)
                 }
                 else {
+                    NSLog("There was an error fetching the data. Please try again.")
                     disruptionDetails = DisruptionDetails()
                 }
-
-                var routeDetails: RouteDetails?
-                if let routeDetailsData = json["RouteDetail"].object {
-                    routeDetails = RouteDetails(data: routeDetailsData)
-                }
                 
-                completion(disruptionsDetails: disruptionDetails, routeDetails: routeDetails, error: nil)
+                completion(disruptionsDetails: disruptionDetails, error: nil)
                 
             }, failure: { operation, error in
-                completion(disruptionsDetails: nil, routeDetails: nil, error: error)
+                completion(disruptionsDetails: nil, error: error)
             })
     }
 }
