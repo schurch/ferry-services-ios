@@ -75,7 +75,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var viewBackground: UIView!
     
     lazy var parseChannel: String = {
-        return "C\(self.serviceStatus.serviceId!)"
+        return "\(AppConstants.parseChannelPrefix)\(self.serviceStatus.serviceId!)"
     }()
     
     lazy var locations: [Location]? = {

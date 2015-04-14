@@ -8,6 +8,10 @@
 
 import UIKit
 
+struct AppConstants {
+    static let parseChannelPrefix = "S"
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
                             
