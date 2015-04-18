@@ -6,19 +6,12 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-struct DisruptionDetails {
-    
-    enum DisriptionStatus: Int {
-        case Normal = 0
-        case SailingsAffected = 1
-        case SailingsCancelled = 2
-    }
+class DisruptionDetails: ServiceStatus {
     
     var additionalInfo: String?
     var details: String?
     var reason: String?
-    var updatedDate: NSDate?
-    var disruptionStatus: DisriptionStatus?
+    var disruptionUpdatedDate: NSDate?
     
     var hasAdditionalInfo: Bool {
         if self.additionalInfo != nil && !self.additionalInfo!.isEmpty {
@@ -29,7 +22,7 @@ struct DisruptionDetails {
     }
     
     var lastUpdated: String? {
-        if let updatedDate = self.updatedDate  {
+        if let updatedDate = self.disruptionUpdatedDate  {
             let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
             let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
             
@@ -54,18 +47,13 @@ struct DisruptionDetails {
         return nil
     }
     
-    private static let dateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
-        //2015-04-14T08:47:00+00:00
-        formatter.dateFormat = "yyyy-MM-ddTHH:mm:ss+00:00"
-        return formatter
-    }()
-    
-    init () {
-        self.disruptionStatus = .Normal
+    override init() {
+        super.init()
     }
     
-    init(data: JSONValue) {
+    override init(data: JSONValue) {
+        super.init(data: data)
+        
         if let additionalInfo = data["additional_info"].string {
             self.additionalInfo = additionalInfo
         }
@@ -80,8 +68,8 @@ struct DisruptionDetails {
         
         self.reason = data["disruption_reason"].string
         
-        if let updatedDate = data["disruption_date"].string {
-            self.updatedDate = DisruptionDetails.dateFormatter.dateFromString(updatedDate)
+        if let disruptionUpdatedDate = data["disruption_date"].string {
+            self.disruptionUpdatedDate = DisruptionDetails.dateFormatter.dateFromString(disruptionUpdatedDate)
         }
         
         if let disruptionDetailsStatus = data["status"].integer {

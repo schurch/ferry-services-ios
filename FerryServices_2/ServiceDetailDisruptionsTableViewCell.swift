@@ -12,8 +12,6 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     
     @IBOutlet var imageViewDisruption :UIImageView!
     @IBOutlet var labelDisruptionDetails: UILabel!
-    @IBOutlet var labelEndTime: UILabel!
-    @IBOutlet var labelEndTimeTitle: UILabel!
     @IBOutlet var labelReason: UILabel!
     @IBOutlet var labelReasonTitle: UILabel!
     
@@ -72,11 +70,5 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
         }
         
         self.labelReason.text = disruptionDetails.reason?.capitalizedString
-        
-        if let date = disruptionDetails.updatedDate {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "dd MMM yyyy HH:mm"
-            self.labelEndTime.text = dateFormatter.stringFromDate(date)
-        }
     }
 }

@@ -6,7 +6,14 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-struct ServiceStatus: Equatable {
+class ServiceStatus: Equatable {
+    
+    static let dateFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        //2015-04-14T08:47:00+00:00
+        formatter.dateFormat = "yyyy-MM-ddTHH:mm:ss+00:00"
+        return formatter
+    }()
     
     enum DisriptionStatus: Int {
         case Unknown = -99
@@ -20,6 +27,10 @@ struct ServiceStatus: Equatable {
     var area: String?
     var route: String?
     var disruptionStatus: DisriptionStatus?
+    
+    init() {
+        self.disruptionStatus = .Normal
+    }
     
     init(data: JSONValue) {
         

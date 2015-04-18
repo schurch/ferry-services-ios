@@ -221,7 +221,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         var sections = [Section]()
         
         //disruption section
-        var disruptionRow: Row
+        var disruptionRow: Row?
         var footer: String?
         
         if self.refreshingDisruptionInfo {
@@ -268,6 +268,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                     else {
                         disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.")
                     }
+                case .Unknown:
+                    break
                 }
             }
             else {
@@ -275,9 +277,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 disruptionRow = Row.NoDisruption(disruptionDetails: nil, action: {})
             }
         }
-        
-        let disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow])
-        sections.append(disruptionSection)
+        if let disruptionRow = disruptionRow {
+            let disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow])
+            sections.append(disruptionSection)            
+        }
         
         // timetable section
         var timetableRows = [Row]()
@@ -439,7 +442,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func winterPath() -> String {
-        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2014/Winter/\(serviceStatus.serviceId!).pdf")
+        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2015/Winter/\(serviceStatus.serviceId!).pdf")
     }
     
     private func summerPath() -> String {

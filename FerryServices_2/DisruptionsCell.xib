@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -21,7 +21,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is a disruption with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oUP-Fa-M1A" userLabel="Label - Disruption details">
-                        <rect key="frame" x="51" y="8" width="495" height="88"/>
+                        <rect key="frame" x="51" y="8" width="495" height="98"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="249" id="een-VY-Cj0"/>
                         </constraints>
@@ -35,7 +35,7 @@
                         </variation>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWy-Zc-Kln">
-                        <rect key="frame" x="51" y="98" width="66" height="21"/>
+                        <rect key="frame" x="51" y="108" width="66" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="900" constant="21" id="Swf-0F-Dh2"/>
                             <constraint firstAttribute="width" constant="66" id="tSX-kM-IOy"/>
@@ -44,18 +44,8 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End time:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m6-YT-pqd">
-                        <rect key="frame" x="51" y="116" width="66" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="66" id="o00-jM-R1F"/>
-                            <constraint firstAttribute="height" priority="900" constant="21" id="ywM-ph-Whp"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="adverse weather" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avP-up-Xz5">
-                        <rect key="frame" x="125" y="100" width="106.5" height="17"/>
+                        <rect key="frame" x="125" y="110" width="107" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="175" id="n1M-qL-REi"/>
                             <constraint firstAttribute="height" constant="21" id="tx0-NR-29I"/>
@@ -65,24 +55,8 @@
                         <nil key="highlightedColor"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="tx0-NR-29I"/>
                                 <exclude reference="n1M-qL-REi"/>
-                            </mask>
-                        </variation>
-                    </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28 Dec 2013" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Liv-74-mED">
-                        <rect key="frame" x="125" y="118" width="82" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="2QS-Jw-eId"/>
-                            <constraint firstAttribute="width" constant="175" id="am1-Nn-d5Z"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="am1-Nn-d5Z"/>
-                                <exclude reference="2QS-Jw-eId"/>
+                                <exclude reference="tx0-NR-29I"/>
                             </mask>
                         </variation>
                     </label>
@@ -98,32 +72,27 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Liv-74-mED" firstAttribute="leading" secondItem="1m6-YT-pqd" secondAttribute="trailing" constant="8" id="5By-GG-DUr"/>
                     <constraint firstItem="oUP-Fa-M1A" firstAttribute="leading" secondItem="YaS-9t-96x" secondAttribute="trailing" constant="14" id="6AC-6d-ke1"/>
-                    <constraint firstItem="1m6-YT-pqd" firstAttribute="top" secondItem="rWy-Zc-Kln" secondAttribute="bottom" constant="-3" id="ElA-Xa-bLk"/>
                     <constraint firstItem="YaS-9t-96x" firstAttribute="leading" secondItem="fdL-5i-bb3" secondAttribute="leading" constant="13" id="I7A-AW-R8C"/>
                     <constraint firstItem="avP-up-Xz5" firstAttribute="leading" secondItem="rWy-Zc-Kln" secondAttribute="trailing" constant="8" id="Np8-Q6-3vG"/>
                     <constraint firstItem="EQT-RL-17a" firstAttribute="leading" secondItem="oUP-Fa-M1A" secondAttribute="trailing" constant="16" id="R1h-0o-DkC"/>
-                    <constraint firstAttribute="bottom" secondItem="1m6-YT-pqd" secondAttribute="bottom" constant="6" id="UPS-w8-XAX"/>
                     <constraint firstItem="oUP-Fa-M1A" firstAttribute="top" secondItem="fdL-5i-bb3" secondAttribute="top" constant="8" id="WDV-nf-5pz"/>
                     <constraint firstAttribute="centerY" secondItem="EQT-RL-17a" secondAttribute="centerY" id="XSc-lq-rgm"/>
                     <constraint firstItem="avP-up-Xz5" firstAttribute="centerY" secondItem="rWy-Zc-Kln" secondAttribute="centerY" id="ZlG-8B-opf"/>
                     <constraint firstItem="rWy-Zc-Kln" firstAttribute="leading" secondItem="fdL-5i-bb3" secondAttribute="leading" constant="51" id="bdy-36-4bR"/>
                     <constraint firstItem="YaS-9t-96x" firstAttribute="top" secondItem="fdL-5i-bb3" secondAttribute="top" constant="10" id="g8X-VG-mDw"/>
                     <constraint firstItem="rWy-Zc-Kln" firstAttribute="top" secondItem="oUP-Fa-M1A" secondAttribute="bottom" constant="2" id="hl5-9u-oym"/>
-                    <constraint firstItem="Liv-74-mED" firstAttribute="centerY" secondItem="1m6-YT-pqd" secondAttribute="centerY" id="k6x-Ie-9rs"/>
                     <constraint firstAttribute="trailingMargin" secondItem="EQT-RL-17a" secondAttribute="trailing" constant="8" id="mM2-dr-TEE"/>
-                    <constraint firstItem="1m6-YT-pqd" firstAttribute="leading" secondItem="fdL-5i-bb3" secondAttribute="leading" constant="51" id="mQc-Aj-19c"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="rWy-Zc-Kln" secondAttribute="bottom" constant="6" id="sTg-Ij-qdE"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="imageViewDisruption" destination="YaS-9t-96x" id="t54-j5-e60"/>
                 <outlet property="labelDisruptionDetails" destination="oUP-Fa-M1A" id="edI-Ss-CDv"/>
-                <outlet property="labelEndTime" destination="Liv-74-mED" id="Gs7-UV-Azb"/>
-                <outlet property="labelEndTimeTitle" destination="1m6-YT-pqd" id="WR4-SL-CYP"/>
                 <outlet property="labelReason" destination="avP-up-Xz5" id="eKP-Ti-Igp"/>
                 <outlet property="labelReasonTitle" destination="rWy-Zc-Kln" id="kMd-pq-SMC"/>
             </connections>
+            <point key="canvasLocation" x="272" y="233"/>
         </tableViewCell>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>
