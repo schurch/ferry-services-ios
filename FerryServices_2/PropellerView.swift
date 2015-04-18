@@ -28,13 +28,13 @@ class PropellerView: UIView {
         }
     }
     
-    override var bounds : CGRect {
+    override var bounds: CGRect {
         didSet {
             redrawPropeller()
         }
     }
     
-    override var frame : CGRect {
+    override var frame: CGRect {
         didSet {
             redrawPropeller()
         }
@@ -48,7 +48,7 @@ class PropellerView: UIView {
     }
     
     // MARK: init
-    convenience init () {
+    convenience init() {
         self.init(frame:CGRectZero)
     }
     
