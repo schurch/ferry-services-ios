@@ -44,11 +44,11 @@ class PropellerView: UIView {
     
     // MARK: convenience
     var propellerLayer: CAShapeLayer {
-        return layer as CAShapeLayer
+        return layer as! CAShapeLayer
     }
     
     // MARK: init
-    convenience override init () {
+    convenience init () {
         self.init(frame:CGRectZero)
     }
     

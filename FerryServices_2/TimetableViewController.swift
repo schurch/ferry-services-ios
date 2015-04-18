@@ -51,7 +51,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.estimatedRowHeight = 44
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        let pickerCell = self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) as UITableViewCell
+        let pickerCell = self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) as! UITableViewCell
         self.pickerCellRowHeight = Int(pickerCell.frame.size.height)
         
         self.date = NSDate.stripTimeComponentsFromDate(NSDate())
@@ -201,7 +201,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 // date header
-                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.dateCell) as TimetableDateTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.dateCell) as! TimetableDateTableViewCell
                 cell.labelDeparturesArrivals.text = "Departs on"
                 
                 let date = self.dateFormatter.stringFromDate(self.date)
@@ -211,7 +211,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
             }
             else {
                 // date picker
-                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) as UITableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) as! UITableViewCell
                 return cell
             }
         }
@@ -219,7 +219,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
             let routeForIndexPath = self.routeForIndexPath(indexPath)
             if indexPath.row == 0 {
                 // routes
-                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.headerCell) as TimetableHeaderViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.headerCell) as! TimetableHeaderViewCell
                 
                 if let route = routeForIndexPath {
                     cell.labelHeader.text = route.routeDescription()
@@ -241,7 +241,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
             }
             else {
                 // trips
-                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.timeCell) as TimetableTimeTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.timeCell) as! TimetableTimeTableViewCell
                 
                 cell.delegate = self
                 
@@ -250,7 +250,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
                     cell.labelTimeCounterpart.text = "arriving at \(trip.arrivalTime)"
                     
                     if let notes = trip.notes?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
-                        if countElements(notes) > 0 {
+                        if count(notes) > 0 {
                             cell.buttonInfo.hidden = false
                         }
                         else {
@@ -272,8 +272,8 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             if let dateCell = cell as? TimetableDateTableViewCell {
-                if let window = UIApplication.sharedApplication().delegate?.window? {
-                    dateCell.labelSelectedDate.textColor = window.tintColor
+                if let window = UIApplication.sharedApplication().delegate?.window {
+                    dateCell.labelSelectedDate.textColor = window!.tintColor
                 }
             }
         }

@@ -19,7 +19,7 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     
     struct SizingCell {
         static let instance = UINib(nibName: "DisruptionsCell", bundle: nil)
-            .instantiateWithOwner(nil, options: nil).first as ServiceDetailDisruptionsTableViewCell
+            .instantiateWithOwner(nil, options: nil).first as! ServiceDetailDisruptionsTableViewCell
     }
     
     class func heightWithDisruptionDetails(disruptionDetails: DisruptionDetails, tableView: UITableView) -> CGFloat {

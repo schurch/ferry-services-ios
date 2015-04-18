@@ -156,7 +156,7 @@ struct LocationWeather: Equatable {
             
             if !joinedDescription.isEmpty {
                 // capitalize first letter
-                let correctCaseDescription = prefix(joinedDescription, 1).capitalizedString + suffix(joinedDescription, countElements(joinedDescription) - 1).lowercaseString
+                let correctCaseDescription = prefix(joinedDescription, 1).capitalizedString + suffix(joinedDescription, count(joinedDescription) - 1).lowercaseString
                 
                 if self.combinedWeatherDescription != nil {
                     if self.combinedWeatherDescription!.isEmpty {

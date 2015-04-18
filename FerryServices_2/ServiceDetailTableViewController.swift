@@ -243,10 +243,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                             self.showWebInfoViewWithTitle("Additional info", content: self.disruptionDetails!.additionalInfo!)
                         }
                         
-                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action)
+                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action: action)
                     }
                     else {
-                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, {})
+                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action: {})
                     }
                 case .SailingsAffected, .SailingsCancelled:
                     if let disruptionInfo = disruptionDetails {
@@ -272,7 +272,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             }
             else {
                 // no disruptionStatus
-                disruptionRow = Row.NoDisruption(disruptionDetails: nil, {})
+                disruptionRow = Row.NoDisruption(disruptionDetails: nil, action: {})
             }
         }
         
@@ -447,7 +447,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func showPDFTimetableAtPath(path: String, title: String) {
-        let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TimetablePreview") as TimetablePreviewViewController
+        let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TimetablePreview") as! TimetablePreviewViewController
         previewViewController.serviceStatus = self.serviceStatus
         previewViewController.url = NSURL(string: path)
         previewViewController.title = title
@@ -456,7 +456,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     private func showMap() {
         Flurry.logEvent("Show map")
-        let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapViewController") as MapViewController
+        let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapViewController") as! MapViewController
         
         if let actualRoute = self.serviceStatus.route {
             mapViewController.title = actualRoute
@@ -472,14 +472,14 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     private func showDepartures() {
         Flurry.logEvent("Show departures")
         if let routeId = self.serviceStatus.serviceId {
-            let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as TimetableViewController
+            let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as! TimetableViewController
             timetableViewController.routeId = routeId
             self.navigationController?.pushViewController(timetableViewController, animated: true)
         }
     }
     
     private func showWebInfoViewWithTitle(title: String, content: String) {
-        let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
+        let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as! WebInformationViewController
         disruptionViewController.title = title
         disruptionViewController.html = content
         self.navigationController?.pushViewController(disruptionViewController, animated: true)
@@ -518,7 +518,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         switch row {
         case let .Basic(title, subtitle, action):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.basicCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! UITableViewCell
             cell.textLabel!.text = title
             
             if let subtitle = subtitle {
@@ -533,27 +533,27 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             return cell
         case let .Disruption(disruptionDetails, _):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.disruptionsCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailDisruptionsTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailDisruptionsTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
             return cell
         case let .NoDisruption(disruptionDetails, _):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailNoDisruptionTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailNoDisruptionTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
             return cell
         case let .Loading:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.loadingCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailLoadingTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailLoadingTableViewCell
             cell.activityIndicatorView.startAnimating()
             return cell
         case let .TextOnly(text):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.textOnlyCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailTextOnlyCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailTextOnlyCell
             cell.labelText.text = text
             return cell
         case let .Weather(location):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailWeatherCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailWeatherCell
             cell.selectionStyle = .None
             cell.configureWithLocation(location)
             return cell
@@ -615,7 +615,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header = view as UITableViewHeaderFooterView
+        let header = view as! UITableViewHeaderFooterView
         header.textLabel.textColor = UIColor.tealTextColor()
     }
     

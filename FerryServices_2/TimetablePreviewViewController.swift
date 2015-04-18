@@ -30,8 +30,8 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
     
     // MARK: -
     override func viewDidLayoutSubviews() {
-        for view in self.webview.subviews as [UIView] {
-            for subview in view.subviews as [UIView] {
+        for view in self.webview.subviews as! [UIView] {
+            for subview in view.subviews as! [UIView] {
                 subview.backgroundColor = UIColor.whiteColor()
             }
         }
