@@ -10,8 +10,9 @@ class ServiceStatus: Equatable {
     
     static let dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        //2015-04-14T08:47:00+00:00
-        formatter.dateFormat = "yyyy-MM-ddTHH:mm:ss+00:00"
+        //"2015-04-18T23:08:00+00:00"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss+00:00"
+        formatter.timeZone = NSTimeZone(abbreviation: "UTC")
         return formatter
     }()
     
@@ -26,6 +27,7 @@ class ServiceStatus: Equatable {
     var sortOrder: Int?
     var area: String?
     var route: String?
+    var updated: NSDate?
     var disruptionStatus: DisriptionStatus?
     
     init() {
@@ -38,6 +40,10 @@ class ServiceStatus: Equatable {
         
         if let disruptionStatus = data["status"].integer {
             self.disruptionStatus = DisriptionStatus(rawValue: disruptionStatus)
+        }
+        
+        if let updatedDate = data["updated"].string {
+            self.updated = DisruptionDetails.dateFormatter.dateFromString(updatedDate)
         }
         
         self.route = data["route"].string

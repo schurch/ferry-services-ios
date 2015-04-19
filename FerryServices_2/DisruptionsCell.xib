@@ -21,7 +21,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is a disruption with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oUP-Fa-M1A" userLabel="Label - Disruption details">
-                        <rect key="frame" x="51" y="8" width="495" height="98"/>
+                        <rect key="frame" x="51" y="8" width="495" height="106"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="249" id="een-VY-Cj0"/>
                         </constraints>
@@ -35,17 +35,16 @@
                         </variation>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWy-Zc-Kln">
-                        <rect key="frame" x="51" y="108" width="66" height="21"/>
+                        <rect key="frame" x="51" y="116" width="54" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="900" constant="21" id="Swf-0F-Dh2"/>
-                            <constraint firstAttribute="width" constant="66" id="tSX-kM-IOy"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="adverse weather" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avP-up-Xz5">
-                        <rect key="frame" x="125" y="110" width="107" height="17"/>
+                        <rect key="frame" x="113" y="118" width="107" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="175" id="n1M-qL-REi"/>
                             <constraint firstAttribute="height" constant="21" id="tx0-NR-29I"/>
@@ -83,7 +82,7 @@
                     <constraint firstItem="YaS-9t-96x" firstAttribute="top" secondItem="fdL-5i-bb3" secondAttribute="top" constant="10" id="g8X-VG-mDw"/>
                     <constraint firstItem="rWy-Zc-Kln" firstAttribute="top" secondItem="oUP-Fa-M1A" secondAttribute="bottom" constant="2" id="hl5-9u-oym"/>
                     <constraint firstAttribute="trailingMargin" secondItem="EQT-RL-17a" secondAttribute="trailing" constant="8" id="mM2-dr-TEE"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="rWy-Zc-Kln" secondAttribute="bottom" constant="6" id="sTg-Ij-qdE"/>
+                    <constraint firstAttribute="bottom" secondItem="rWy-Zc-Kln" secondAttribute="bottom" constant="6" id="sTg-Ij-qdE"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

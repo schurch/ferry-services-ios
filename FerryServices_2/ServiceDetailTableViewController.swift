@@ -50,7 +50,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         struct Constants {
             static let headerMargin = CGFloat(16)
             static let contentInset = CGFloat(120)
-            static let motionEffectAmount = CGFloat(10)
+            static let motionEffectAmount = CGFloat(20)
         }
     }
     

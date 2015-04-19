@@ -62,18 +62,10 @@ class DisruptionDetails: ServiceStatus {
             self.details = details
         }
         
-//        if let disruptionDate = data["disruption_date"].string {
-//            self.disruptionEndDate = DisruptionDetails.dateFormatter.dateFromString(disruptionDate)
-//        }
+        if let disruptionDate = data["disruption_date"].string {
+            self.disruptionUpdatedDate = DisruptionDetails.dateFormatter.dateFromString(disruptionDate)
+        }
         
         self.reason = data["disruption_reason"].string
-        
-        if let disruptionUpdatedDate = data["disruption_date"].string {
-            self.disruptionUpdatedDate = DisruptionDetails.dateFormatter.dateFromString(disruptionUpdatedDate)
-        }
-        
-        if let disruptionDetailsStatus = data["status"].integer {
-            self.disruptionStatus = DisriptionStatus(rawValue: disruptionDetailsStatus)
-        }
     }
 }
