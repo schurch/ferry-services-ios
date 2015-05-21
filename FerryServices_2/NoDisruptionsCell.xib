@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,20 +12,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green" translatesAutoresizingMaskIntoConstraints="NO" id="hWH-we-tLs">
-                        <rect key="frame" x="16" y="13" width="24" height="24"/>
+                        <rect key="frame" x="13" y="13" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="PpP-Qg-CFc"/>
                             <constraint firstAttribute="height" constant="24" id="iPU-4G-rNZ"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are currently no disruptions with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwi-47-JFA">
-                        <rect key="frame" x="54" y="10" width="492" height="29.5"/>
+                        <rect key="frame" x="51" y="10" width="498" height="29"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AA-Kt-fjM">
-                        <rect key="frame" x="562" y="13" width="22" height="22"/>
+                        <rect key="frame" x="565" y="13" width="22" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="5hZ-bi-QMa"/>
                             <constraint firstAttribute="height" constant="22" id="cKa-0u-9hd"/>
@@ -38,8 +37,8 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="rwi-47-JFA" firstAttribute="top" secondItem="AV8-Kk-OoI" secondAttribute="top" constant="10" id="0Te-hg-mQm"/>
-                    <constraint firstItem="hWH-we-tLs" firstAttribute="leading" secondItem="AV8-Kk-OoI" secondAttribute="leadingMargin" constant="8" id="EVm-3W-p2O"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="3AA-Kt-fjM" secondAttribute="trailing" constant="8" id="GF6-h3-W0G"/>
+                    <constraint firstItem="hWH-we-tLs" firstAttribute="leading" secondItem="AV8-Kk-OoI" secondAttribute="leading" constant="13" id="EVm-3W-p2O"/>
+                    <constraint firstAttribute="trailing" secondItem="3AA-Kt-fjM" secondAttribute="trailing" constant="13" id="GF6-h3-W0G"/>
                     <constraint firstAttribute="centerY" secondItem="hWH-we-tLs" secondAttribute="centerY" id="MUw-b9-5wM"/>
                     <constraint firstAttribute="centerY" secondItem="3AA-Kt-fjM" secondAttribute="centerY" id="NvQ-Gf-vJQ"/>
                     <constraint firstItem="3AA-Kt-fjM" firstAttribute="leading" secondItem="rwi-47-JFA" secondAttribute="trailing" constant="16" id="O3b-tE-HqB"/>

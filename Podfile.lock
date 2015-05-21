@@ -1,11 +1,11 @@
 PODS:
   - AFNetworking (2.3.1):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-    - AFNetworking/UIKit
+    - AFNetworking/NSURLConnection (= 2.3.1)
+    - AFNetworking/NSURLSession (= 2.3.1)
+    - AFNetworking/Reachability (= 2.3.1)
+    - AFNetworking/Security (= 2.3.1)
+    - AFNetworking/Serialization (= 2.3.1)
+    - AFNetworking/UIKit (= 2.3.1)
   - AFNetworking/NSURLConnection (2.3.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
@@ -21,10 +21,10 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - FlurrySDK (5.3.0):
-    - FlurrySDK/FlurrySDK
+    - FlurrySDK/FlurrySDK (= 5.3.0)
   - FlurrySDK/FlurrySDK (5.3.0)
   - FMDB (2.3):
-    - FMDB/standard
+    - FMDB/standard (= 2.3)
   - FMDB/common (2.3)
   - FMDB/standard (2.3):
     - FMDB/common
@@ -35,8 +35,8 @@ DEPENDENCIES:
   - FMDB
 
 SPEC CHECKSUMS:
-  AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
-  FlurrySDK: e1142ae33e294f8307bd6d2209cc082e79b66e90
-  FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
+  AFNetworking: 05b9f6e3aa5ac45bc383b4bb108ef338080a26c7
+  FlurrySDK: a3b6d2b35787c721fa5019075f2416d59cbbc104
+  FMDB: 773d79bb74226959b7e2286b1d6e0bd857c88915
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.36.4

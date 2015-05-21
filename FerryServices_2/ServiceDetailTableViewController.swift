@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import QuickLook
 
-class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
+class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, ServiceDetailWeatherCellDelegate {
     
     class Section {
         var title: String?
@@ -376,8 +376,13 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         if let locations = self.locations {
             for location in locations {
                 WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
+                    if (error != nil) {
+                        NSLog("Error loading weather: \(error)")
+                    }
+                    
                     location.weather = weather
                     location.weatherFetchError = error
+                    
                     self.reloadWeatherForLocation(location)
                 }
             }
@@ -559,6 +564,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailWeatherCell
             cell.selectionStyle = .None
             cell.configureWithLocation(location)
+            cell.delegate = self
             return cell
         }
     }
@@ -651,5 +657,28 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         let bottomInset = self.mapView.frame.size.height - (MainStoryBoard.Constants.contentInset * 2) + 60
         let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset, 35, bottomInset, 35))
         self.mapView.setVisibleMapRect(visibleRect, animated: false)
+    }
+    
+    // MARK: - ServiceDetailWeatherCellDelegate
+    func didTouchReloadForWeatherCell(cell: ServiceDetailWeatherCell) {
+        let indexPath = tableView.indexPathForCell(cell)!
+        let row = dataSource[indexPath.section].rows[indexPath.row]
+        
+        switch row {
+        case let .Weather(location):
+            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
+                if (error != nil) {
+                    NSLog("Error loading weather: \(error)")
+                }
+                
+                location.weather = weather
+                location.weatherFetchError = error
+                
+                self.reloadWeatherForLocation(location)
+            }
+        default:
+            break
+        }
+        
     }
 }
