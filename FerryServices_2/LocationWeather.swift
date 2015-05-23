@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 func == (lhs: LocationWeather, rhs: LocationWeather) -> Bool {
     return lhs.cityId == rhs.cityId
@@ -147,26 +148,12 @@ struct LocationWeather: Equatable {
         self.weather = data["weather"].array?.map { json in Weather(data: json) }
         
         if let weather = self.weather {
-            if let temp = self.tempCelsius {
-                self.combinedWeatherDescription = "\(Int(round(temp)))ºC"
-            }
+            let descriptions = weather.filter { $0.weatherDescription != nil }.map { $0.weatherDescription!.lowercaseString }
             
-            let descriptions = weather.filter { $0.weatherDescription != nil }.map { $0.weatherDescription! }
-            let joinedDescription =  ", ".join(descriptions)
+            var combined =  ", ".join(descriptions)
+            combined.replaceRange(combined.startIndex...combined.startIndex, with: String(combined[combined.startIndex]).capitalizedString)
             
-            if !joinedDescription.isEmpty {
-                // capitalize first letter
-                let correctCaseDescription = prefix(joinedDescription, 1).capitalizedString + suffix(joinedDescription, count(joinedDescription) - 1).lowercaseString
-                
-                if self.combinedWeatherDescription != nil {
-                    if self.combinedWeatherDescription!.isEmpty {
-                        self.combinedWeatherDescription! = correctCaseDescription
-                    }
-                    else {
-                        self.combinedWeatherDescription! = self.combinedWeatherDescription! + "\n" + correctCaseDescription
-                    }
-                }
-            }
+            self.combinedWeatherDescription = combined
         }
     }
 }
