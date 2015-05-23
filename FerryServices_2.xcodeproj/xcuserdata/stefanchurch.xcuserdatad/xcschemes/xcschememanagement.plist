@@ -3,7 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>SchemeUserState</key>
-	<dict/>
+	<dict>
+		<key>Ferries WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>FD753ECF197A256E00CC5DE3</key>
@@ -12,6 +18,11 @@
 			<true/>
 		</dict>
 		<key>FD753EE1197A256E00CC5DE3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FD9CC13B1B105EF20056C6F8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

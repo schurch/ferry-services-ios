@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="7701"/>
+    </dependencies>
+    <scenes>
+        <!--Service List Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="ServiceListInterfaceController" customModule="Ferries_WatchKit_Extension">
+                    <items>
+                        <table alignment="left" id="IDD-oR-G3f">
+                            <items>
+                                <tableRow identifier="serviceRow" id="cce-6f-j5S" customClass="ServiceRow" customModule="Ferries_WatchKit_Extension">
+                                    <group key="rootItem" width="1" height="30" alignment="left" id="vRM-yS-5TB">
+                                        <items>
+                                            <imageView width="15" height="15" alignment="left" verticalAlignment="center" image="green" id="eGl-nV-XSB"/>
+                                            <label alignment="left" verticalAlignment="center" text="Arran" id="Gvh-ZA-YjB"/>
+                                        </items>
+                                        <connections>
+                                            <segue destination="qCk-NX-pvi" kind="push" id="0jG-bZ-hW4"/>
+                                        </connections>
+                                    </group>
+                                    <connections>
+                                        <outlet property="serviceLabel" destination="Gvh-ZA-YjB" id="JSh-5h-sZy"/>
+                                        <outlet property="serviceStatusImage" destination="eGl-nV-XSB" id="Ocb-hy-Xea"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="table" destination="IDD-oR-G3f" id="C9u-T4-7kc"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="245" y="224"/>
+        </scene>
+        <!--Interface Controller-->
+        <scene sceneID="C2c-d4-DqD">
+            <objects>
+                <controller id="qCk-NX-pvi">
+                    <items>
+                        <label alignment="center" text="Arran" id="1dz-Zb-9SN"/>
+                        <label alignment="left" text="Bob loblaw" id="q2Q-Lv-ISO"/>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="471" y="224"/>
+        </scene>
+    </scenes>
+</document>
