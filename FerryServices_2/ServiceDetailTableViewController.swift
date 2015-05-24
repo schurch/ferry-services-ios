@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import QuickLook
 
-class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
+class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, ServiceDetailWeatherCellDelegate {
     
     class Section {
         var title: String?
@@ -52,7 +52,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         struct Constants {
             static let headerMargin = CGFloat(16)
             static let contentInset = CGFloat(120)
-            static let motionEffectAmount = CGFloat(10)
+            static let motionEffectAmount = CGFloat(20)
         }
     }
     
@@ -129,13 +129,13 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.tableView.registerNib(UINib(nibName: "TextOnlyCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell)
         
         // alert cell
-        self.alertCell = UINib(nibName: "AlertCell", bundle: nil).instantiateWithOwner(nil, options: nil).first as ServiceDetailReceiveAlertCellTableViewCell
+        self.alertCell = UINib(nibName: "AlertCell", bundle: nil).instantiateWithOwner(nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
         self.alertCell.switchAlert.addTarget(self, action: Selector("alertSwitchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
         self.alertCell.configureLoading()
         
         PFPush.getSubscribedChannelsInBackgroundWithBlock { [unowned self] (channels, error) in
             if channels != nil {
-                self.alertCell.configureLoadedWithSwitchOn(channels.containsObject(self.parseChannel))
+//                self.alertCell.configureLoadedWithSwitchOn(channels.containsObject(self.parseChannel))
             }
             else {
                 self.alertCell.configureLoadedWithSwitchOn(false)
@@ -263,7 +263,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         var sections = [Section]()
         
         //disruption section
-        var disruptionRow: Row
+        var disruptionRow: Row?
         var footer: String?
         
         if self.refreshingDisruptionInfo {
@@ -276,20 +276,20 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             if let disruptionStatus = self.disruptionDetails?.disruptionStatus {
                 switch disruptionStatus {
                 case .Normal:
-                    disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, {})
-                    
-                case .Information:
-                    var action: () -> () = {}
                     if self.disruptionDetails!.hasAdditionalInfo {
+                        var action: () -> () = {}
+                        
                         action = {
                             [unowned self] in
                             Flurry.logEvent("Show additional info")
                             self.showWebInfoViewWithTitle("Additional info", content: self.disruptionDetails!.additionalInfo!)
                         }
+                        
+                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action: action)
                     }
-                    
-                    disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action)
-                    
+                    else {
+                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action: {})
+                    }
                 case .SailingsAffected, .SailingsCancelled:
                     if let disruptionInfo = disruptionDetails {
                         footer = disruptionInfo.lastUpdated
@@ -310,18 +310,23 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                     else {
                         disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.")
                     }
+                case .Unknown:
+                    break
                 }
             }
             else {
                 // no disruptionStatus
-                disruptionRow = Row.NoDisruption(disruptionDetails: nil, {})
+                disruptionRow = Row.NoDisruption(disruptionDetails: nil, action: {})
             }
         }
         
-        let alertRow = Row.Alert
+        if let disruptionRow = disruptionRow {
+            let alertRow = Row.Alert
+            
+            let disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow, alertRow])
+            sections.append(disruptionSection)
+        }
         
-        let disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow, alertRow])
-        sections.append(disruptionSection)
         
         // timetable section
         var timetableRows = [Row]()
@@ -403,7 +408,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         
         if let serviceId = self.serviceStatus.serviceId {
-            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _, _ in
+            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _ in
                 self.disruptionDetails = disruptionDetails
                 reloadServiceInfo()
             }
@@ -417,8 +422,13 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         if let locations = self.locations {
             for location in locations {
                 WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
+                    if (error != nil) {
+                        NSLog("Error loading weather: \(error)")
+                    }
+                    
                     location.weather = weather
                     location.weatherFetchError = error
+                    
                     self.reloadWeatherForLocation(location)
                 }
             }
@@ -483,7 +493,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func winterPath() -> String {
-        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2014/Winter/\(serviceStatus.serviceId!).pdf")
+        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2015/Winter/\(serviceStatus.serviceId!).pdf")
     }
     
     private func summerPath() -> String {
@@ -491,7 +501,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func showPDFTimetableAtPath(path: String, title: String) {
-        let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TimetablePreview") as TimetablePreviewViewController
+        let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TimetablePreview") as! TimetablePreviewViewController
         previewViewController.serviceStatus = self.serviceStatus
         previewViewController.url = NSURL(string: path)
         previewViewController.title = title
@@ -500,7 +510,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     private func showMap() {
         Flurry.logEvent("Show map")
-        let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapViewController") as MapViewController
+        let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapViewController") as! MapViewController
         
         if let actualRoute = self.serviceStatus.route {
             mapViewController.title = actualRoute
@@ -516,14 +526,14 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     private func showDepartures() {
         Flurry.logEvent("Show departures")
         if let routeId = self.serviceStatus.serviceId {
-            let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as TimetableViewController
+            let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as! TimetableViewController
             timetableViewController.routeId = routeId
             self.navigationController?.pushViewController(timetableViewController, animated: true)
         }
     }
     
     private func showWebInfoViewWithTitle(title: String, content: String) {
-        let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as WebInformationViewController
+        let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as! WebInformationViewController
         disruptionViewController.title = title
         disruptionViewController.html = content
         self.navigationController?.pushViewController(disruptionViewController, animated: true)
@@ -562,7 +572,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         switch row {
         case let .Basic(title, subtitle, action):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.basicCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! UITableViewCell
             cell.textLabel!.text = title
             
             if let subtitle = subtitle {
@@ -577,29 +587,30 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             return cell
         case let .Disruption(disruptionDetails, _):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.disruptionsCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailDisruptionsTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailDisruptionsTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
             return cell
         case let .NoDisruption(disruptionDetails, _):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailNoDisruptionTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailNoDisruptionTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
             return cell
         case let .Loading:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.loadingCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailLoadingTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailLoadingTableViewCell
             cell.activityIndicatorView.startAnimating()
             return cell
         case let .TextOnly(text):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.textOnlyCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailTextOnlyCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailTextOnlyCell
             cell.labelText.text = text
             return cell
         case let .Weather(location):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as ServiceDetailWeatherCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailWeatherCell
             cell.selectionStyle = .None
             cell.configureWithLocation(location)
+            cell.delegate = self
             return cell
         case let .Alert:
             return self.alertCell
@@ -663,7 +674,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header = view as UITableViewHeaderFooterView
+        let header = view as! UITableViewHeaderFooterView
         header.textLabel.textColor = UIColor.tealTextColor()
     }
     
@@ -696,5 +707,27 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         let bottomInset = self.mapView.frame.size.height - (MainStoryBoard.Constants.contentInset * 2) + 60
         let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset, 35, bottomInset, 35))
         self.mapView.setVisibleMapRect(visibleRect, animated: false)
+    }
+    
+    // MARK: - ServiceDetailWeatherCellDelegate
+    func didTouchReloadForWeatherCell(cell: ServiceDetailWeatherCell) {
+        let indexPath = tableView.indexPathForCell(cell)!
+        let row = dataSource[indexPath.section].rows[indexPath.row]
+        
+        switch row {
+        case let .Weather(location):
+            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
+                if (error != nil) {
+                    NSLog("Error loading weather: \(error)")
+                }
+                
+                location.weather = weather
+                location.weatherFetchError = error
+                
+                self.reloadWeatherForLocation(location)
+            }
+        default:
+            break
+        }
     }
 }

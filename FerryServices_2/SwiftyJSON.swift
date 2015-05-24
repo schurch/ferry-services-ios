@@ -161,7 +161,7 @@ enum JSONValue {
                 return
             }
             self = .JNumber(value)
-        case let value as NSString:
+        case let value as String:
             self = .JString(value)
         case let value as NSNull:
             self = .JNull
@@ -180,7 +180,7 @@ enum JSONValue {
                 if let key = possibleJsonKey as? NSString {
                     let jsonValue = JSONValue(possibleJsonValue)
                     if jsonValue {
-                        jsonObject[key] = jsonValue
+                        jsonObject[key as! String] = jsonValue
                     }
                 }
             }

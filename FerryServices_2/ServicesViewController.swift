@@ -182,8 +182,8 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         
         // Dequeue cell
         let serviceStatusCell = isFiltering
-            ? self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.serviceStatusCell) as ServiceStatusTableViewCell
-            : self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.serviceStatusCell, forIndexPath: indexPath) as ServiceStatusTableViewCell
+            ? self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.serviceStatusCell) as! ServiceStatusTableViewCell
+            : self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.serviceStatusCell, forIndexPath: indexPath) as! ServiceStatusTableViewCell
         
         // Modal object
         let serviceStatus = serviceStatusForTableView(tableView, indexPath: indexPath)
@@ -274,7 +274,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header = view as UITableViewHeaderFooterView
+        let header = view as! UITableViewHeaderFooterView
         header.textLabel.textColor = UIColor.tealTextColor()
     }
     
@@ -305,7 +305,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
     // MARK: - Storyboard
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        let serviceDetailViewController = segue.destinationViewController as ServiceDetailTableViewController;
+        let serviceDetailViewController = segue.destinationViewController as! ServiceDetailTableViewController;
         let selectedTableView = self.searchDisplayController!.active ? self.searchDisplayController!.searchResultsTableView : self.tableView
         let serviceStatus = self.serviceStatusForTableView(selectedTableView, indexPath: selectedTableView.indexPathForSelectedRow()!)
         
@@ -359,7 +359,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
                 
                 let json = JSONValue(serviceStatusData!)
                 
-                if let serviceStatuses = json["ServiceStatuses"].array?.map({ json in ServiceStatus(data: json) }) {
+                if let serviceStatuses = json.array?.map({ json in ServiceStatus(data: json) }) {
                     self.arrayServiceStatuses = serviceStatuses
                 }
             }            
@@ -393,7 +393,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     func incrementTapCountForServiceId(serviceId: Int) {
         func countTaps() -> Int {
             if let count: AnyObject = self.tapCountDictionary[String(serviceId)] {
-                return count as Int
+                return count as! Int
             } else {
                 return 0
             }
@@ -409,7 +409,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         var recentServiceIds = [Int]()
         
         for (serviceId, tapCount) in self.tapCountDictionary {
-            let count = tapCount as Int
+            let count = tapCount as! Int
             
             if count < Constants.TapCount.minimumCount {
                 continue
@@ -417,7 +417,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             
             // How to convert NSObject to Int?
             // This is not good :(
-            let id = (serviceId as String).toInt()
+            let id = (serviceId as! String).toInt()
             
             recentServiceIds.append(id!)
         }

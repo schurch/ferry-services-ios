@@ -6,24 +6,12 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-struct DisruptionDetails {
+class DisruptionDetails: ServiceStatus {
     
-    enum DisruptionDetailsStatus: Int {
-        case Normal = 0
-        case SailingsAffected = 1
-        case SailingsCancelled = 2
-        case Information = -1
-    }
-    
-    var addedBy: String?
-    var addedDate: NSDate?
     var additionalInfo: String?
     var details: String?
-    var disruptionEndDate: NSDate?
-    var lastUpdatedBy: String?
     var reason: String?
-    var updatedDate: NSDate?
-    var disruptionStatus: DisruptionDetailsStatus?
+    var disruptionUpdatedDate: NSDate?
     
     var hasAdditionalInfo: Bool {
         if self.additionalInfo != nil && !self.additionalInfo!.isEmpty {
@@ -34,7 +22,7 @@ struct DisruptionDetails {
     }
     
     var lastUpdated: String? {
-        if let updatedDate = self.updatedDate  {
+        if let updatedDate = self.disruptionUpdatedDate  {
             let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
             let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
             
@@ -59,44 +47,25 @@ struct DisruptionDetails {
         return nil
     }
     
-    private static let dateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "dd MMM yyyy HH:mm"
-        return formatter
-    }()
-    
-    init () {
-        self.disruptionStatus = .Normal
+    override init() {
+        super.init()
     }
     
-    init(data: [String: JSONValue]) {
-        self.addedBy = data["AddedByUserID"]?.string
+    override init(data: JSONValue) {
+        super.init(data: data)
         
-        if let addedDate = data["AddedTime"]?.string {
-            self.addedDate = DisruptionDetails.dateFormatter.dateFromString(addedDate)
-        }
-        
-        if let additionalInfo = data["accessDisruption"]?.string {
+        if let additionalInfo = data["additional_info"].string {
             self.additionalInfo = additionalInfo
         }
         
-        if let details = data["WebText"]?.string {
+        if let details = data["disruption_details"].string {
             self.details = details
         }
         
-        if let disruptionDate = data["DisruptionEndTime"]?.string {
-            self.disruptionEndDate = DisruptionDetails.dateFormatter.dateFromString(disruptionDate)
+        if let disruptionDate = data["disruption_date"].string {
+            self.disruptionUpdatedDate = DisruptionDetails.dateFormatter.dateFromString(disruptionDate)
         }
         
-        self.lastUpdatedBy = data["LastUpdatedBy"]?.string
-        self.reason = data["Reason"]?.string
-        
-        if let updatedDate = data["UpdatedTime"]?.string {
-            self.updatedDate = DisruptionDetails.dateFormatter.dateFromString(updatedDate)
-        }
-        
-        if let disruptionDetailsStatus = data["DisruptionStatus"]?.integer {
-            self.disruptionStatus = DisruptionDetailsStatus(rawValue: disruptionDetailsStatus)
-        }
+        self.reason = data["disruption_reason"].string
     }
 }

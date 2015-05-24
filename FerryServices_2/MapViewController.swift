@@ -37,7 +37,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             return nil
         }
         
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.portAnnotationReuseIdentifier) as MKPinAnnotationView!
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.portAnnotationReuseIdentifier) as! MKPinAnnotationView!
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.portAnnotationReuseIdentifier)

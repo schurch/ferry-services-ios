@@ -14,7 +14,7 @@ class ServiceDetailTextOnlyCell: UITableViewCell {
     
     struct SizingCell {
         static let instance = UINib(nibName: "TextOnlyCell", bundle: nil)
-            .instantiateWithOwner(nil, options: nil).first as ServiceDetailTextOnlyCell
+            .instantiateWithOwner(nil, options: nil).first as! ServiceDetailTextOnlyCell
     }
     
     class func heightWithText(text: String, tableView: UITableView) -> CGFloat {

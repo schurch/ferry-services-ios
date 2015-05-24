@@ -12,14 +12,12 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     
     @IBOutlet var imageViewDisruption :UIImageView!
     @IBOutlet var labelDisruptionDetails: UILabel!
-    @IBOutlet var labelEndTime: UILabel!
-    @IBOutlet var labelEndTimeTitle: UILabel!
     @IBOutlet var labelReason: UILabel!
     @IBOutlet var labelReasonTitle: UILabel!
     
     struct SizingCell {
         static let instance = UINib(nibName: "DisruptionsCell", bundle: nil)
-            .instantiateWithOwner(nil, options: nil).first as ServiceDetailDisruptionsTableViewCell
+            .instantiateWithOwner(nil, options: nil).first as! ServiceDetailDisruptionsTableViewCell
     }
     
     class func heightWithDisruptionDetails(disruptionDetails: DisruptionDetails, tableView: UITableView) -> CGFloat {
@@ -72,11 +70,5 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
         }
         
         self.labelReason.text = disruptionDetails.reason?.capitalizedString
-        
-        if let date = disruptionDetails.disruptionEndDate {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "dd MMM yyyy HH:mm"
-            self.labelEndTime.text = dateFormatter.stringFromDate(date)
-        }
     }
 }
