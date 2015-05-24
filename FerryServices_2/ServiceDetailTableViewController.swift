@@ -135,7 +135,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         PFPush.getSubscribedChannelsInBackgroundWithBlock { [unowned self] (channels, error) in
             if channels != nil {
-//                self.alertCell.configureLoadedWithSwitchOn(channels.containsObject(self.parseChannel))
+                self.alertCell.configureLoadedWithSwitchOn(channels.contains(self.parseChannel))
             }
             else {
                 self.alertCell.configureLoadedWithSwitchOn(false)
