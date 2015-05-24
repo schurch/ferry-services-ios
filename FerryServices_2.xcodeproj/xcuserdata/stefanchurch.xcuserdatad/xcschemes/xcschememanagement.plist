@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>FerryServicesCommon.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -23,6 +28,26 @@
 			<true/>
 		</dict>
 		<key>FD9CC13B1B105EF20056C6F8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDD8B4761B117325001C89D4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDD8B4801B117325001C89D4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDD8B49B1B117363001C89D4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDD8B4A51B117363001C89D4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

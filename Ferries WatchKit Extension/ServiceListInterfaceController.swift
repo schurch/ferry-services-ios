@@ -8,7 +8,7 @@
 
 import WatchKit
 import Foundation
-
+import FerryServicesCommon
 
 class ServiceListInterfaceController: WKInterfaceController {
     
@@ -18,7 +18,11 @@ class ServiceListInterfaceController: WKInterfaceController {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        self.configureTableWithData(["Arran", "Bute", "Somewhere else"])
+        WKInterfaceController.openParentApplication(["action": "fetch_service_details"]) { replyInfo, error in
+            println(replyInfo!["response"])
+        }
+        
+//        self.configureTableWithData(["Arran", "Bute", "Somewhere else"])
     }
 
     override func willActivate() {
@@ -37,15 +41,15 @@ class ServiceListInterfaceController: WKInterfaceController {
     }
     
     // MARK: - Table config
-    func configureTableWithData(data: [String]) {
-        self.table.setNumberOfRows(data.count, withRowType: "serviceRow")
-        for var index = 0; index < data.count; index++ {
-            let rowData = data[index]
-            
-            let row = self.table.rowControllerAtIndex(index) as! ServiceRow
-            row.serviceLabel.setText(rowData)
-            row.serviceStatusImage.setImageNamed("green")
-        }
+    func configureTableWithData(data: [ServiceStatus]) {
+//        self.table.setNumberOfRows(data.count, withRowType: "serviceRow")
+//        for var index = 0; index < data.count; index++ {
+//            let rowData = data[index]
+//            
+//            let row = self.table.rowControllerAtIndex(index) as! ServiceRow
+//            row.serviceLabel.setText(rowData)
+//            row.serviceStatusImage.setImageNamed("green")
+//        }
     }
 
 }

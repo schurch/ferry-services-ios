@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-class ServiceStatus: Equatable {
+public class ServiceStatus: Equatable {
     
     static let dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
@@ -16,25 +16,25 @@ class ServiceStatus: Equatable {
         return formatter
     }()
     
-    enum DisriptionStatus: Int {
+    public enum DisriptionStatus: Int {
         case Unknown = -99
         case Normal = 0
         case SailingsAffected = 1
         case SailingsCancelled = 2
     }
     
-    var serviceId: Int?
-    var sortOrder: Int?
-    var area: String?
-    var route: String?
-    var updated: NSDate?
-    var disruptionStatus: DisriptionStatus?
+    public var serviceId: Int?
+    public var sortOrder: Int?
+    public var area: String?
+    public var route: String?
+    public var updated: NSDate?
+    public var disruptionStatus: DisriptionStatus?
     
-    init() {
+    public init() {
         self.disruptionStatus = .Normal
     }
     
-    init(data: JSONValue) {
+    public init(data: JSONValue) {
         
         self.area = data["area"].string
         
@@ -52,6 +52,6 @@ class ServiceStatus: Equatable {
     }
 }
 
-func == (lhs: ServiceStatus, rhs: ServiceStatus) -> Bool {
+public func == (lhs: ServiceStatus, rhs: ServiceStatus) -> Bool {
     return lhs.serviceId == rhs.serviceId
 }

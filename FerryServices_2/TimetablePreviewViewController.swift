@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FerryServicesCommon
 
 class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
 

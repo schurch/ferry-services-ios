@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import FerryServicesCommon
 
 func == (lhs: LocationWeather, rhs: LocationWeather) -> Bool {
     return lhs.cityId == rhs.cityId

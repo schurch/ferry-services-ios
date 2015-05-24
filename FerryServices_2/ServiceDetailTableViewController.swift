@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import QuickLook
+import FerryServicesCommon
 
 class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, ServiceDetailWeatherCellDelegate {
     

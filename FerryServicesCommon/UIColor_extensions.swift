@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     class func tealBackgroundColor() -> UIColor {
         return UIColor(red: 248/255.0, green: 251/255.0, blue: 250/255.0, alpha: 255/255.0)
     }

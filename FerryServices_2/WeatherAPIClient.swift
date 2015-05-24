@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FerryServicesCommon
 
 class WeatherAPIClient {
 

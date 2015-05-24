@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-class DisruptionDetails: ServiceStatus {
+public class DisruptionDetails: ServiceStatus {
     
-    var additionalInfo: String?
-    var details: String?
-    var reason: String?
-    var disruptionUpdatedDate: NSDate?
+    public var additionalInfo: String?
+    public var details: String?
+    public var reason: String?
+    public var disruptionUpdatedDate: NSDate?
     
-    var hasAdditionalInfo: Bool {
+    public var hasAdditionalInfo: Bool {
         if self.additionalInfo != nil && !self.additionalInfo!.isEmpty {
             return true
         }
@@ -21,7 +21,7 @@ class DisruptionDetails: ServiceStatus {
         return false
     }
     
-    var lastUpdated: String? {
+    public var lastUpdated: String? {
         if let updatedDate = self.disruptionUpdatedDate  {
             let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
             let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
@@ -47,11 +47,11 @@ class DisruptionDetails: ServiceStatus {
         return nil
     }
     
-    override init() {
+    public override init() {
         super.init()
     }
     
-    override init(data: JSONValue) {
+    public override init(data: JSONValue) {
         super.init(data: data)
         
         if let additionalInfo = data["additional_info"].string {

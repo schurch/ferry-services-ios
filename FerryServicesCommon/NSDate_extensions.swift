@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension NSDate {
+public extension NSDate {
     class func stripTimeComponentsFromDate(date: NSDate) -> NSDate {
         if let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian) {
             calendar.timeZone = NSTimeZone(abbreviation: "UTC")!

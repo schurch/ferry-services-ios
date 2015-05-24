@@ -36,7 +36,6 @@
 		FD9432D719CD0EA4003BBD23 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9432D619CD0EA4003BBD23 /* libPods.a */; };
 		FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */; };
 		FD9C66171A16CADC0050D99F /* Timetables in Resources */ = {isa = PBXBuildFile; fileRef = FD9C66161A16CADC0050D99F /* Timetables */; };
-		FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate_extensions.swift */; };
 		FD9CC1371B105EF20056C6F8 /* ServiceListInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9CC1361B105EF20056C6F8 /* ServiceListInterfaceController.swift */; };
 		FD9CC1391B105EF20056C6F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD9CC1381B105EF20056C6F8 /* Images.xcassets */; };
 		FD9CC13D1B105EF20056C6F8 /* Ferries WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = FD9CC13C1B105EF20056C6F8 /* Ferries WatchKit App.app */; };
@@ -44,19 +43,25 @@
 		FD9CC1471B105EF20056C6F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD9CC1461B105EF20056C6F8 /* Images.xcassets */; };
 		FD9CC14A1B105EF20056C6F8 /* Ferries WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FD9CC1321B105EF20056C6F8 /* Ferries WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FD9CC1531B1063040056C6F8 /* ServiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9CC1521B1063040056C6F8 /* ServiceRow.swift */; };
-		FDA0ECE81A69E3FE00EDF5DA /* UIColor_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC7760C19844C2B00B3782F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760B19844C2B00B3782F /* Route.swift */; };
 		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
 		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
 		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
-		FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */; };
+		FDD8B4A11B117363001C89D4 /* FerryServicesCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = FDD8B4A01B117363001C89D4 /* FerryServicesCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FDD8B4A71B117363001C89D4 /* FerryServicesCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDD8B49C1B117363001C89D4 /* FerryServicesCommon.framework */; };
+		FDD8B4B01B117363001C89D4 /* FerryServicesCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B4AF1B117363001C89D4 /* FerryServicesCommonTests.swift */; };
+		FDD8B4B31B117363001C89D4 /* FerryServicesCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDD8B49C1B117363001C89D4 /* FerryServicesCommon.framework */; };
+		FDD8B4B41B117363001C89D4 /* FerryServicesCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FDD8B49C1B117363001C89D4 /* FerryServicesCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FDD8B4BD1B1173FE001C89D4 /* DisruptionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B4BB1B1173FE001C89D4 /* DisruptionDetails.swift */; };
+		FDD8B4BE1B1173FE001C89D4 /* ServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B4BC1B1173FE001C89D4 /* ServiceStatus.swift */; };
+		FDD8B4C21B117470001C89D4 /* NSDate_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B4BF1B117470001C89D4 /* NSDate_extensions.swift */; };
+		FDD8B4C31B117470001C89D4 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B4C01B117470001C89D4 /* SwiftyJSON.swift */; };
+		FDD8B4C41B117470001C89D4 /* UIColor_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B4C11B117470001C89D4 /* UIColor_extensions.swift */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
-		FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */; };
 		FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */; };
-		FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +86,27 @@
 			remoteGlobalIDString = FD9CC1311B105EF20056C6F8;
 			remoteInfo = "Ferries WatchKit Extension";
 		};
+		FDD8B4A81B117363001C89D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD753EC8197A256E00CC5DE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDD8B49B1B117363001C89D4;
+			remoteInfo = FerryServicesCommon;
+		};
+		FDD8B4AA1B117363001C89D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD753EC8197A256E00CC5DE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FD753ECF197A256E00CC5DE3;
+			remoteInfo = FerryServices_2;
+		};
+		FDD8B4B11B117363001C89D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD753EC8197A256E00CC5DE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDD8B49B1B117363001C89D4;
+			remoteInfo = FerryServicesCommon;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -93,6 +119,17 @@
 				FD9CC14A1B105EF20056C6F8 /* Ferries WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDD8B4951B117325001C89D4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FDD8B4B41B117363001C89D4 /* FerryServicesCommon.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -138,7 +175,6 @@
 		FD9432D619CD0EA4003BBD23 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
 		FD9C66161A16CADC0050D99F /* Timetables */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Timetables; sourceTree = SOURCE_ROOT; };
-		FD9C66181A16D2380050D99F /* NSDate_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate_extensions.swift; sourceTree = "<group>"; };
 		FD9CC1321B105EF20056C6F8 /* Ferries WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Ferries WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD9CC1351B105EF20056C6F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD9CC1361B105EF20056C6F8 /* ServiceListInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListInterfaceController.swift; sourceTree = "<group>"; };
@@ -148,19 +184,28 @@
 		FD9CC1441B105EF20056C6F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		FD9CC1461B105EF20056C6F8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD9CC1521B1063040056C6F8 /* ServiceRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceRow.swift; sourceTree = "<group>"; };
-		FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor_extensions.swift; sourceTree = "<group>"; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FDC7760B19844C2B00B3782F /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Route.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760D19844C3500B3782F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Location.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Trip.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC77612198450AC00B3782F /* timetables.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = timetables.sqlite; sourceTree = "<group>"; };
 		FDCB33441A4BD6D1000033BC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		FDD8B49C1B117363001C89D4 /* FerryServicesCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FerryServicesCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDD8B49F1B117363001C89D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDD8B4A01B117363001C89D4 /* FerryServicesCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FerryServicesCommon.h; sourceTree = "<group>"; };
+		FDD8B4A61B117363001C89D4 /* FerryServicesCommonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FerryServicesCommonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDD8B4AE1B117363001C89D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDD8B4AF1B117363001C89D4 /* FerryServicesCommonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServicesCommonTests.swift; sourceTree = "<group>"; };
+		FDD8B4BB1B1173FE001C89D4 /* DisruptionDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisruptionDetails.swift; sourceTree = "<group>"; };
+		FDD8B4BC1B1173FE001C89D4 /* ServiceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatus.swift; sourceTree = "<group>"; };
+		FDD8B4BF1B117470001C89D4 /* NSDate_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate_extensions.swift; sourceTree = "<group>"; };
+		FDD8B4C01B117470001C89D4 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		FDD8B4C11B117470001C89D4 /* UIColor_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor_extensions.swift; sourceTree = "<group>"; };
+		FDD8B4C71B1178E1001C89D4 /* FerryServices_2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = FerryServices_2.entitlements; sourceTree = "<group>"; };
+		FDD8B4C81B1178F1001C89D4 /* Ferries WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Ferries WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ServiceStatus.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTextOnlyCell.swift; sourceTree = "<group>"; };
-		FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DisruptionDetails.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +216,7 @@
 				FD9432D719CD0EA4003BBD23 /* libPods.a in Frameworks */,
 				FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */,
 				FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */,
+				FDD8B4B31B117363001C89D4 /* FerryServicesCommon.framework in Frameworks */,
 				FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -186,6 +232,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDD8B4981B117363001C89D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDD8B4A31B117363001C89D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDD8B4A71B117363001C89D4 /* FerryServicesCommon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,8 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				FD5E7DBA197A316F00F438F6 /* APIClient.swift */,
-				FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */,
-				FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */,
 			);
 			name = "Services Client";
 			sourceTree = "<group>";
@@ -291,6 +350,8 @@
 				FD753EE5197A256E00CC5DE3 /* FerryServices_2Tests */,
 				FD9CC1331B105EF20056C6F8 /* Ferries WatchKit Extension */,
 				FD9CC1401B105EF20056C6F8 /* Ferries WatchKit App */,
+				FDD8B49D1B117363001C89D4 /* FerryServicesCommon */,
+				FDD8B4AC1B117363001C89D4 /* FerryServicesCommonTests */,
 				FD753ED1197A256E00CC5DE3 /* Products */,
 				6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */,
 				DD94561C4C63A4CFEA5FD1DF /* Pods */,
@@ -304,6 +365,8 @@
 				FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */,
 				FD9CC1321B105EF20056C6F8 /* Ferries WatchKit Extension.appex */,
 				FD9CC13C1B105EF20056C6F8 /* Ferries WatchKit App.app */,
+				FDD8B49C1B117363001C89D4 /* FerryServicesCommon.framework */,
+				FDD8B4A61B117363001C89D4 /* FerryServicesCommonTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -311,6 +374,7 @@
 		FD753ED2197A256E00CC5DE3 /* FerryServices_2 */ = {
 			isa = PBXGroup;
 			children = (
+				FDD8B4C71B1178E1001C89D4 /* FerryServices_2.entitlements */,
 				FDC77612198450AC00B3782F /* timetables.sqlite */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
@@ -322,7 +386,6 @@
 				FD5BF4E21A539ED1009D799E /* Views */,
 				FD5E7DBC197A317800F438F6 /* API Client */,
 				FDC7761119844C4500B3782F /* Model */,
-				FDDEC68D198E3CFB0060B18F /* Library */,
 				FD753ED3197A256E00CC5DE3 /* Supporting Files */,
 				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
 				FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */,
@@ -369,6 +432,7 @@
 		FD9CC1331B105EF20056C6F8 /* Ferries WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				FDD8B4C81B1178F1001C89D4 /* Ferries WatchKit Extension.entitlements */,
 				FD9CC1361B105EF20056C6F8 /* ServiceListInterfaceController.swift */,
 				FD9CC1521B1063040056C6F8 /* ServiceRow.swift */,
 				FD9CC1381B105EF20056C6F8 /* Images.xcassets */,
@@ -421,14 +485,59 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
-		FDDEC68D198E3CFB0060B18F /* Library */ = {
+		FDD8B49D1B117363001C89D4 /* FerryServicesCommon */ = {
 			isa = PBXGroup;
 			children = (
-				FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */,
-				FD9C66181A16D2380050D99F /* NSDate_extensions.swift */,
-				FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */,
+				FDD8B4C51B117476001C89D4 /* Library */,
+				FDD8B4C61B11747F001C89D4 /* Services API */,
+				FDD8B4A01B117363001C89D4 /* FerryServicesCommon.h */,
+				FDD8B49E1B117363001C89D4 /* Supporting Files */,
+			);
+			path = FerryServicesCommon;
+			sourceTree = "<group>";
+		};
+		FDD8B49E1B117363001C89D4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FDD8B49F1B117363001C89D4 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FDD8B4AC1B117363001C89D4 /* FerryServicesCommonTests */ = {
+			isa = PBXGroup;
+			children = (
+				FDD8B4AF1B117363001C89D4 /* FerryServicesCommonTests.swift */,
+				FDD8B4AD1B117363001C89D4 /* Supporting Files */,
+			);
+			path = FerryServicesCommonTests;
+			sourceTree = "<group>";
+		};
+		FDD8B4AD1B117363001C89D4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FDD8B4AE1B117363001C89D4 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FDD8B4C51B117476001C89D4 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				FDD8B4BF1B117470001C89D4 /* NSDate_extensions.swift */,
+				FDD8B4C01B117470001C89D4 /* SwiftyJSON.swift */,
+				FDD8B4C11B117470001C89D4 /* UIColor_extensions.swift */,
 			);
 			name = Library;
+			sourceTree = "<group>";
+		};
+		FDD8B4C61B11747F001C89D4 /* Services API */ = {
+			isa = PBXGroup;
+			children = (
+				FDD8B4BB1B1173FE001C89D4 /* DisruptionDetails.swift */,
+				FDD8B4BC1B1173FE001C89D4 /* ServiceStatus.swift */,
+			);
+			name = "Services API";
 			sourceTree = "<group>";
 		};
 		FDEA4B20198C72160023A5A7 /* Services */ = {
@@ -455,6 +564,17 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		FDD8B4991B117363001C89D4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDD8B4A11B117363001C89D4 /* FerryServicesCommon.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		FD753ECF197A256E00CC5DE3 /* FerryServices_2 */ = {
 			isa = PBXNativeTarget;
@@ -467,11 +587,13 @@
 				BBF92DCA1122475BAD83A58B /* Copy Pods Resources */,
 				FD8DDDB019B0947B008479DC /* Crashlytics */,
 				FD9CC1511B105EF20056C6F8 /* Embed App Extensions */,
+				FDD8B4951B117325001C89D4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				FD9CC1491B105EF20056C6F8 /* PBXTargetDependency */,
+				FDD8B4B21B117363001C89D4 /* PBXTargetDependency */,
 			);
 			name = FerryServices_2;
 			productName = FerryServices_2;
@@ -529,6 +651,43 @@
 			productReference = FD9CC13C1B105EF20056C6F8 /* Ferries WatchKit App.app */;
 			productType = "com.apple.product-type.application.watchapp";
 		};
+		FDD8B49B1B117363001C89D4 /* FerryServicesCommon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDD8B4B51B117364001C89D4 /* Build configuration list for PBXNativeTarget "FerryServicesCommon" */;
+			buildPhases = (
+				FDD8B4971B117363001C89D4 /* Sources */,
+				FDD8B4981B117363001C89D4 /* Frameworks */,
+				FDD8B4991B117363001C89D4 /* Headers */,
+				FDD8B49A1B117363001C89D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FerryServicesCommon;
+			productName = FerryServicesCommon;
+			productReference = FDD8B49C1B117363001C89D4 /* FerryServicesCommon.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FDD8B4A51B117363001C89D4 /* FerryServicesCommonTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDD8B4B81B117364001C89D4 /* Build configuration list for PBXNativeTarget "FerryServicesCommonTests" */;
+			buildPhases = (
+				FDD8B4A21B117363001C89D4 /* Sources */,
+				FDD8B4A31B117363001C89D4 /* Frameworks */,
+				FDD8B4A41B117363001C89D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FDD8B4A91B117363001C89D4 /* PBXTargetDependency */,
+				FDD8B4AB1B117363001C89D4 /* PBXTargetDependency */,
+			);
+			name = FerryServicesCommonTests;
+			productName = FerryServicesCommonTests;
+			productReference = FDD8B4A61B117363001C89D4 /* FerryServicesCommonTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -542,6 +701,9 @@
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = L832SX5MC4;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.Maps.iOS = {
 								enabled = 1;
 							};
@@ -554,10 +716,23 @@
 					FD9CC1311B105EF20056C6F8 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = L832SX5MC4;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					FD9CC13B1B105EF20056C6F8 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = L832SX5MC4;
+					};
+					FDD8B49B1B117363001C89D4 = {
+						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = L832SX5MC4;
+					};
+					FDD8B4A51B117363001C89D4 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = FD753ECF197A256E00CC5DE3;
 					};
 				};
 			};
@@ -578,6 +753,8 @@
 				FD753EE1197A256E00CC5DE3 /* FerryServices_2Tests */,
 				FD9CC1311B105EF20056C6F8 /* Ferries WatchKit Extension */,
 				FD9CC13B1B105EF20056C6F8 /* Ferries WatchKit App */,
+				FDD8B49B1B117363001C89D4 /* FerryServicesCommon */,
+				FDD8B4A51B117363001C89D4 /* FerryServicesCommonTests */,
 			);
 		};
 /* End PBXProject section */
@@ -621,6 +798,20 @@
 			files = (
 				FD9CC1451B105EF20056C6F8 /* Interface.storyboard in Resources */,
 				FD9CC1471B105EF20056C6F8 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDD8B49A1B117363001C89D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDD8B4A41B117363001C89D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,12 +876,9 @@
 				FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */,
 				FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */,
 				FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */,
-				FDA0ECE81A69E3FE00EDF5DA /* UIColor_extensions.swift in Sources */,
-				FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */,
 				FDC7760E19844C3500B3782F /* Location.swift in Sources */,
 				FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */,
 				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
-				FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */,
 				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
@@ -705,8 +893,6 @@
 				FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */,
 				FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */,
 				FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */,
-				FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */,
-				FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,6 +913,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FDD8B4971B117363001C89D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDD8B4C21B117470001C89D4 /* NSDate_extensions.swift in Sources */,
+				FDD8B4BD1B1173FE001C89D4 /* DisruptionDetails.swift in Sources */,
+				FDD8B4C41B117470001C89D4 /* UIColor_extensions.swift in Sources */,
+				FDD8B4BE1B1173FE001C89D4 /* ServiceStatus.swift in Sources */,
+				FDD8B4C31B117470001C89D4 /* SwiftyJSON.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDD8B4A21B117363001C89D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDD8B4B01B117363001C89D4 /* FerryServicesCommonTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -744,6 +950,21 @@
 			isa = PBXTargetDependency;
 			target = FD9CC1311B105EF20056C6F8 /* Ferries WatchKit Extension */;
 			targetProxy = FD9CC1481B105EF20056C6F8 /* PBXContainerItemProxy */;
+		};
+		FDD8B4A91B117363001C89D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDD8B49B1B117363001C89D4 /* FerryServicesCommon */;
+			targetProxy = FDD8B4A81B117363001C89D4 /* PBXContainerItemProxy */;
+		};
+		FDD8B4AB1B117363001C89D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FD753ECF197A256E00CC5DE3 /* FerryServices_2 */;
+			targetProxy = FDD8B4AA1B117363001C89D4 /* PBXContainerItemProxy */;
+		};
+		FDD8B4B21B117363001C89D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDD8B49B1B117363001C89D4 /* FerryServicesCommon */;
+			targetProxy = FDD8B4B11B117363001C89D4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -851,6 +1072,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -880,6 +1102,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -938,6 +1161,7 @@
 		FD9CC14B1B105EF20056C6F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Ferries WatchKit Extension/Ferries WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -950,6 +1174,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -957,6 +1182,7 @@
 		FD9CC14C1B105EF20056C6F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Ferries WatchKit Extension/Ferries WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -966,6 +1192,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1009,6 +1236,100 @@
 			};
 			name = Release;
 		};
+		FDD8B4B61B117364001C89D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = FerryServicesCommon/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FDD8B4B71B117364001C89D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = FerryServicesCommon/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FDD8B4B91B117364001C89D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = FerryServicesCommonTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FerryServices_2.app/FerryServices_2";
+			};
+			name = Debug;
+		};
+		FDD8B4BA1B117364001C89D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = FerryServicesCommonTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FerryServices_2.app/FerryServices_2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1046,6 +1367,7 @@
 				FD9CC14E1B105EF20056C6F8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FD9CC1501B105EF20056C6F8 /* Build configuration list for PBXNativeTarget "Ferries WatchKit Extension" */ = {
 			isa = XCConfigurationList;
@@ -1054,6 +1376,25 @@
 				FD9CC14C1B105EF20056C6F8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDD8B4B51B117364001C89D4 /* Build configuration list for PBXNativeTarget "FerryServicesCommon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDD8B4B61B117364001C89D4 /* Debug */,
+				FDD8B4B71B117364001C89D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDD8B4B81B117364001C89D4 /* Build configuration list for PBXNativeTarget "FerryServicesCommonTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDD8B4B91B117364001C89D4 /* Debug */,
+				FDD8B4BA1B117364001C89D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
