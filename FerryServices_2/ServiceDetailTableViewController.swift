@@ -37,6 +37,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         case Loading
         case TextOnly(text: String)
         case Weather(location: Location)
+        case Alert
     }
     
     struct MainStoryBoard {
@@ -47,6 +48,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             static let loadingCell = "loadingCell"
             static let textOnlyCell = "textOnlyCell"
             static let weatherCell = "weatherCell"
+            static let alertCell = "alertCell"
         }
         struct Constants {
             static let headerMargin = CGFloat(16)
@@ -62,6 +64,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     @IBOutlet weak var labelRoute: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var alertCell: ServiceDetailReceiveAlertCellTableViewCell!
     
     var annotations: [MKPointAnnotation]?
     var dataSource: [Section] = []
@@ -72,13 +75,17 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var headerHeight: CGFloat!
     var viewBackground: UIView!
     
+    lazy var parseChannel: String = {
+        return "\(AppConstants.parseChannelPrefix)\(self.serviceStatus.serviceId!)"
+    }()
+    
     lazy var locations: [Location]? = {
         if let serviceId = self.serviceStatus.serviceId {
             return Location.fetchLocationsForSericeId(serviceId)
         }
         
         return nil
-        }()
+    }()
     
     // MARK: -
     deinit {
@@ -121,6 +128,20 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.tableView.registerNib(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
         self.tableView.registerNib(UINib(nibName: "NoDisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
         self.tableView.registerNib(UINib(nibName: "TextOnlyCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell)
+        
+        // alert cell
+        self.alertCell = UINib(nibName: "AlertCell", bundle: nil).instantiateWithOwner(nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
+        self.alertCell.switchAlert.addTarget(self, action: Selector("alertSwitchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+        self.alertCell.configureLoading()
+        
+        PFPush.getSubscribedChannelsInBackgroundWithBlock { [unowned self] (channels, error) in
+            if channels != nil {
+                self.alertCell.configureLoadedWithSwitchOn(channels.contains(self.parseChannel))
+            }
+            else {
+                self.alertCell.configureLoadedWithSwitchOn(false)
+            }
+        }
         
         // map button
         let mapButton = UIButton(frame: CGRectMake(0, -MainStoryBoard.Constants.contentInset, self.view.bounds.size.width, self.view.bounds.size.height))
@@ -211,6 +232,32 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.showMap()
     }
     
+    func alertSwitchChanged(switchState: UISwitch) {
+        let currentInstallation = PFInstallation.currentInstallation()
+        let isSwitchOn = switchState.on
+        
+        if isSwitchOn {
+            currentInstallation.addUniqueObject(self.parseChannel, forKey: "channels")
+        } else {
+            currentInstallation.removeObject(self.parseChannel, forKey: "channels")
+        }
+        
+        self.alertCell.configureLoading()
+        currentInstallation.saveInBackgroundWithBlock { [weak self] (succeeded, error)  in
+            if self == nil {
+                // self might be nil if we've popped the view controller when the completion block is called
+                return;
+            }
+            
+            if succeeded {
+                self!.alertCell.configureLoadedWithSwitchOn(isSwitchOn)
+            }
+            else {
+                self!.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
+            }
+        }
+    }
+    
     // MARK: - refresh
     func refresh() {
         self.fetchLatestWeatherData()
@@ -278,10 +325,14 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 disruptionRow = Row.NoDisruption(disruptionDetails: nil, action: {})
             }
         }
+        
         if let disruptionRow = disruptionRow {
-            let disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow])
-            sections.append(disruptionSection)            
+            let alertRow = Row.Alert
+            
+            let disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow, alertRow])
+            sections.append(disruptionSection)
         }
+        
         
         // timetable section
         var timetableRows = [Row]()
@@ -359,7 +410,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             self.refreshingDisruptionInfo = false
             self.generateDatasource()
             
-            self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
         }
         
         if let serviceId = self.serviceStatus.serviceId {
@@ -567,6 +618,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             cell.configureWithLocation(location)
             cell.delegate = self
             return cell
+        case let .Alert:
+            return self.alertCell
         }
     }
     
@@ -590,6 +643,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             return height
         case .Weather:
             return 84.0
+        case .Alert:
+            return 44.0
         }
     }
     
@@ -680,6 +735,5 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         default:
             break
         }
-        
     }
 }

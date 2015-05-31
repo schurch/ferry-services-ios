@@ -16,6 +16,8 @@
 		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
 		FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5BF4E01A539EC4009D799E /* PropellerView.swift */; };
 		FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* APIClient.swift */; };
+		FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */; };
+		FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD60D97E1AA173360054A131 /* AlertCell.xib */; };
 		FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */; };
 		FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD709DAB1A2082DB00DBD247 /* WebInformationViewController.swift */; };
 		FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD71167619B2F8E400A81ED5 /* TimetableDateTableViewCell.swift */; };
@@ -29,6 +31,20 @@
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
 		FD753EE9197A256E00CC5DE3 /* FerryServices_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */; };
 		FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */; };
+		FD8819E21A998BA2002A976A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E11A998BA2002A976A /* Parse.framework */; };
+		FD8819E41A998BAC002A976A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E31A998BAC002A976A /* Bolts.framework */; };
+		FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E51A998BDA002A976A /* AudioToolbox.framework */; };
+		FD8819E81A998BE4002A976A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E71A998BE4002A976A /* CFNetwork.framework */; };
+		FD8819EA1A998BEE002A976A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E91A998BEE002A976A /* CoreGraphics.framework */; };
+		FD8819EC1A998BFA002A976A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819EB1A998BFA002A976A /* CoreLocation.framework */; };
+		FD8819EE1A998C05002A976A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819ED1A998C05002A976A /* MobileCoreServices.framework */; };
+		FD8819EF1A998C10002A976A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */; };
+		FD8819F11A998C1C002A976A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819F01A998C1C002A976A /* Security.framework */; };
+		FD8819F51A998C34002A976A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819F41A998C34002A976A /* SystemConfiguration.framework */; };
+		FD8819F71A998C43002A976A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819F61A998C43002A976A /* libz.dylib */; };
+		FD8819F91A998C52002A976A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819F81A998C52002A976A /* libsqlite3.dylib */; };
+		FD8819FD1A998D76002A976A /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FC1A998D76002A976A /* Accounts.framework */; };
+		FD8819FF1A998DAA002A976A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FE1A998DAA002A976A /* Social.framework */; };
 		FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */; };
 		FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8DDDB119B094B0008479DC /* Crashlytics.framework */; };
 		FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */; };
@@ -52,7 +68,6 @@
 		FDD8B4A11B117363001C89D4 /* FerryServicesCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = FDD8B4A01B117363001C89D4 /* FerryServicesCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FDD8B4A71B117363001C89D4 /* FerryServicesCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDD8B49C1B117363001C89D4 /* FerryServicesCommon.framework */; };
 		FDD8B4B01B117363001C89D4 /* FerryServicesCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B4AF1B117363001C89D4 /* FerryServicesCommonTests.swift */; };
-		FDD8B4B31B117363001C89D4 /* FerryServicesCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDD8B49C1B117363001C89D4 /* FerryServicesCommon.framework */; };
 		FDD8B4B41B117363001C89D4 /* FerryServicesCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FDD8B49C1B117363001C89D4 /* FerryServicesCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FDD8B4BD1B1173FE001C89D4 /* DisruptionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B4BB1B1173FE001C89D4 /* DisruptionDetails.swift */; };
 		FDD8B4BE1B1173FE001C89D4 /* ServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD8B4BC1B1173FE001C89D4 /* ServiceStatus.swift */; };
@@ -148,6 +163,8 @@
 		FD5BF4E01A539EC4009D799E /* PropellerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropellerView.swift; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FD5E7DBA197A316F00F438F6 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = APIClient.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailReceiveAlertCellTableViewCell.swift; sourceTree = "<group>"; };
+		FD60D97E1AA173360054A131 /* AlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
 		FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableHeaderViewCell.swift; sourceTree = "<group>"; };
 		FD709DAB1A2082DB00DBD247 /* WebInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInformationViewController.swift; sourceTree = "<group>"; };
 		FD71167619B2F8E400A81ED5 /* TimetableDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableDateTableViewCell.swift; sourceTree = "<group>"; };
@@ -165,6 +182,20 @@
 		FD753EE7197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServices_2Tests.swift; sourceTree = "<group>"; };
 		FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
+		FD8819E11A998BA2002A976A /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		FD8819E31A998BAC002A976A /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		FD8819E51A998BDA002A976A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FD8819E71A998BE4002A976A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		FD8819E91A998BEE002A976A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FD8819EB1A998BFA002A976A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FD8819ED1A998C05002A976A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		FD8819F01A998C1C002A976A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		FD8819F41A998C34002A976A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		FD8819F61A998C43002A976A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		FD8819F81A998C52002A976A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		FD8819FA1A998CFC002A976A /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		FD8819FC1A998D76002A976A /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		FD8819FE1A998DAA002A976A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailWeatherCell.swift; sourceTree = "<group>"; };
 		FD8DDDB119B094B0008479DC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDisruptionsTableViewCell.swift; sourceTree = "<group>"; };
@@ -213,11 +244,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD8819FF1A998DAA002A976A /* Social.framework in Frameworks */,
+				FD8819FD1A998D76002A976A /* Accounts.framework in Frameworks */,
+				FD8819F91A998C52002A976A /* libsqlite3.dylib in Frameworks */,
+				FD8819F71A998C43002A976A /* libz.dylib in Frameworks */,
+				FD8819F51A998C34002A976A /* SystemConfiguration.framework in Frameworks */,
+				FD8819F11A998C1C002A976A /* Security.framework in Frameworks */,
+				FD8819EF1A998C10002A976A /* QuartzCore.framework in Frameworks */,
+				FD8819EE1A998C05002A976A /* MobileCoreServices.framework in Frameworks */,
+				FD8819EC1A998BFA002A976A /* CoreLocation.framework in Frameworks */,
+				FD8819EA1A998BEE002A976A /* CoreGraphics.framework in Frameworks */,
+				FD8819E81A998BE4002A976A /* CFNetwork.framework in Frameworks */,
+				FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */,
 				FD9432D719CD0EA4003BBD23 /* libPods.a in Frameworks */,
 				FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */,
 				FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */,
-				FDD8B4B31B117363001C89D4 /* FerryServicesCommon.framework in Frameworks */,
+				FD8819E41A998BAC002A976A /* Bolts.framework in Frameworks */,
 				FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */,
+				FD8819E21A998BA2002A976A /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +300,18 @@
 		6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FD8819FE1A998DAA002A976A /* Social.framework */,
+				FD8819FC1A998D76002A976A /* Accounts.framework */,
+				FD8819FA1A998CFC002A976A /* Twitter.framework */,
+				FD8819F81A998C52002A976A /* libsqlite3.dylib */,
+				FD8819F61A998C43002A976A /* libz.dylib */,
+				FD8819F41A998C34002A976A /* SystemConfiguration.framework */,
+				FD8819F01A998C1C002A976A /* Security.framework */,
+				FD8819ED1A998C05002A976A /* MobileCoreServices.framework */,
+				FD8819EB1A998BFA002A976A /* CoreLocation.framework */,
+				FD8819E91A998BEE002A976A /* CoreGraphics.framework */,
+				FD8819E71A998BE4002A976A /* CFNetwork.framework */,
+				FD8819E51A998BDA002A976A /* AudioToolbox.framework */,
 				FD9432D619CD0EA4003BBD23 /* libPods.a */,
 				FD9432D219CD0DAC003BBD23 /* libPods-AFNetworking.a */,
 				FD9432D319CD0DAC003BBD23 /* libPods-FMDB.a */,
@@ -264,6 +320,8 @@
 				FD8DDDB119B094B0008479DC /* Crashlytics.framework */,
 				FDE0814E1983B9F600760870 /* MapKit.framework */,
 				6B61FAD87F37434E965A5EF6 /* libPods.a */,
+				FD8819E31A998BAC002A976A /* Bolts.framework */,
+				FD8819E11A998BA2002A976A /* Parse.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -382,6 +440,7 @@
 				FD74D0A11A90124300013095 /* DisruptionsCell.xib */,
 				FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */,
 				FD74D0A51A9020E200013095 /* TextOnlyCell.xib */,
+				FD60D97E1AA173360054A131 /* AlertCell.xib */,
 				FD5E7DB9197A310600F438F6 /* View Controllers */,
 				FD5BF4E21A539ED1009D799E /* Views */,
 				FD5E7DBC197A317800F438F6 /* API Client */,
@@ -558,6 +617,7 @@
 				FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */,
 				FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */,
 				FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */,
+				FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */,
 			);
 			name = "Service Details";
 			sourceTree = "<group>";
@@ -768,6 +828,7 @@
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
 				FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */,
 				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
+				FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */,
 				FD74D0A61A9020E200013095 /* TextOnlyCell.xib in Resources */,
 				FDC77613198450AC00B3782F /* timetables.sqlite in Resources */,
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
@@ -870,6 +931,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */,
+				FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				FD71167919B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift in Sources */,
 				FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */,
@@ -1086,6 +1148,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"SWIFT_INCLUDE_PATHS[arch=*]" = "/Users/stefanchurch/Documents/Source/ferry-services-swift/Pods/**";
@@ -1103,8 +1166,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1117,7 +1180,7 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6c5348bc-e4d3-449b-84d6-d129a2b54279";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;

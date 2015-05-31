@@ -20,20 +20,6 @@
                ReferencedContainer = "container:FerryServices_2.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FDD8B4801B117325001C89D4"
-               BuildableName = "FerryServicesCommonTests.xctest"
-               BlueprintName = "FerryServicesCommonTests"
-               ReferencedContainer = "container:FerryServices_2.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -49,16 +35,6 @@
                BlueprintIdentifier = "FD753EE1197A256E00CC5DE3"
                BuildableName = "FerryServices_2Tests.xctest"
                BlueprintName = "FerryServices_2Tests"
-               ReferencedContainer = "container:FerryServices_2.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FDD8B4801B117325001C89D4"
-               BuildableName = "FerryServicesCommonTests.xctest"
-               BlueprintName = "FerryServicesCommonTests"
                ReferencedContainer = "container:FerryServices_2.xcodeproj">
             </BuildableReference>
          </TestableReference>
