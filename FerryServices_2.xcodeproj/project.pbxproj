@@ -749,6 +749,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"SWIFT_INCLUDE_PATHS[arch=*]" = "/Users/stefanchurch/Documents/Source/ferry-services-swift/Pods/**";
