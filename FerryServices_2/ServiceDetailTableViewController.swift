@@ -242,12 +242,17 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         
         self.alertCell.configureLoading()
-        currentInstallation.saveInBackgroundWithBlock { [unowned self] (succeeded, error)  in
+        currentInstallation.saveInBackgroundWithBlock { [weak self] (succeeded, error)  in
+            if self == nil {
+                // self might be nil if we've popped the view controller when the completion block is called
+                return;
+            }
+            
             if succeeded {
-                self.alertCell.configureLoadedWithSwitchOn(isSwitchOn)
+                self!.alertCell.configureLoadedWithSwitchOn(isSwitchOn)
             }
             else {
-                self.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
+                self!.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
             }
         }
     }
