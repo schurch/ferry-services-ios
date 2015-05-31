@@ -52,14 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        if let aps = userInfo["aps"] as? [String: String] {
-            let alertViewController = UIAlertController(title: "Alert", message: aps["alert"], preferredStyle: UIAlertControllerStyle.Alert)
-            
-            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-            alertViewController.addAction(okAction)
-            
-            self.window?.rootViewController?.presentViewController(alertViewController, animated: true, completion: nil)
-        }
+        PFPush.handlePush(userInfo)
     }
 }
 
