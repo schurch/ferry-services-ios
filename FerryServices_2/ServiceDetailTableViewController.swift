@@ -133,12 +133,17 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.alertCell.switchAlert.addTarget(self, action: Selector("alertSwitchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
         self.alertCell.configureLoading()
         
-        PFPush.getSubscribedChannelsInBackgroundWithBlock { [unowned self] (channels, error) in
+        PFPush.getSubscribedChannelsInBackgroundWithBlock { [weak self] (channels, error) in
+            if self == nil {
+                // self might be nil if we've popped the view controller when the completion block is called
+                return
+            }
+            
             if channels != nil {
-                self.alertCell.configureLoadedWithSwitchOn(channels.contains(self.parseChannel))
+                self!.alertCell.configureLoadedWithSwitchOn(channels.contains(self!.parseChannel))
             }
             else {
-                self.alertCell.configureLoadedWithSwitchOn(false)
+                self!.alertCell.configureLoadedWithSwitchOn(false)
             }
         }
         
@@ -245,7 +250,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         currentInstallation.saveInBackgroundWithBlock { [weak self] (succeeded, error)  in
             if self == nil {
                 // self might be nil if we've popped the view controller when the completion block is called
-                return;
+                return
             }
             
             if succeeded {
@@ -426,15 +431,19 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     private func fetchLatestWeatherData() {
         if let locations = self.locations {
             for location in locations {
-                WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
-                    if (error != nil) {
+                WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] weather, error in
+                    if self == nil {
+                        return
+                    }
+                    
+                    if error != nil {
                         NSLog("Error loading weather: \(error)")
                     }
                     
                     location.weather = weather
                     location.weatherFetchError = error
                     
-                    self.reloadWeatherForLocation(location)
+                    self!.reloadWeatherForLocation(location)
                 }
             }
         }
@@ -721,7 +730,11 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         switch row {
         case let .Weather(location):
-            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
+            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] weather, error in
+                if self == nil {
+                    return
+                }
+                
                 if (error != nil) {
                     NSLog("Error loading weather: \(error)")
                 }
@@ -729,7 +742,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 location.weather = weather
                 location.weatherFetchError = error
                 
-                self.reloadWeatherForLocation(location)
+                self!.reloadWeatherForLocation(location)
             }
         default:
             break
