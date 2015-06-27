@@ -13,6 +13,7 @@
 		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
 		FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
+		FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */; };
 		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
 		FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5BF4E01A539EC4009D799E /* PropellerView.swift */; };
 		FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* APIClient.swift */; };
@@ -88,6 +89,7 @@
 		FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
 		FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
 		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
+		FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
 		FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		FD5BF4E01A539EC4009D799E /* PropellerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropellerView.swift; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -324,6 +326,7 @@
 				FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */,
 				FD74D0A51A9020E200013095 /* TextOnlyCell.xib */,
 				FD60D97E1AA173360054A131 /* AlertCell.xib */,
+				FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */,
 				FD5E7DB9197A310600F438F6 /* View Controllers */,
 				FD5BF4E21A539ED1009D799E /* Views */,
 				FD5E7DBC197A317800F438F6 /* API Client */,
@@ -518,6 +521,7 @@
 			files = (
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
+				FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */,
 				FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */,
 				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
 				FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */,

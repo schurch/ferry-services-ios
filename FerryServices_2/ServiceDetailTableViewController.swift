@@ -127,6 +127,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.tableView.registerNib(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
         self.tableView.registerNib(UINib(nibName: "NoDisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
         self.tableView.registerNib(UINib(nibName: "TextOnlyCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell)
+        self.tableView.registerNib(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.weatherCell)
         
         // alert cell
         self.alertCell = UINib(nibName: "AlertCell", bundle: nil).instantiateWithOwner(nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
@@ -649,8 +650,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         case let .TextOnly(text):
             let height = ServiceDetailTextOnlyCell.heightWithText(text, tableView: tableView)
             return height
-        case .Weather:
-            return 84.0
+        case let .Weather(location):
+            let height = ServiceDetailWeatherCell.heightWithLocation(location, tableView: tableView)
+            return height
         case .Alert:
             return 44.0
         }
