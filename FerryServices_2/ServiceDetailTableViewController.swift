@@ -98,8 +98,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         self.title = self.serviceStatus.area
         
-        self.windAnimationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("animateWindVanes"), userInfo: nil, repeats: true)
-        
         // configure header
         self.labelArea.text = self.serviceStatus.area
         self.labelRoute.text = self.serviceStatus.route
@@ -188,6 +186,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         if let selectedIndexPath = self.tableView.indexPathForSelectedRow() {
             self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
         }
+        
+        self.windAnimationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("animateWindVanes"), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -201,10 +201,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.windAnimationTimer.invalidate()
-        
         // clip bounds so map doesn't expand over the edges when we animated to/from view
         self.view.clipsToBounds = true
+        
+        self.windAnimationTimer.invalidate()
     }
     
     func applicationDidBecomeActive(notification: NSNotification) {
