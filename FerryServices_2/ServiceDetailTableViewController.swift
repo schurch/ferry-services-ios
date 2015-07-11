@@ -73,6 +73,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var disruptionDetails: DisruptionDetails?
     var headerHeight: CGFloat!
     var viewBackground: UIView!
+    var windAnimationTimer: NSTimer!
     
     lazy var parseChannel: String = {
         return "\(AppConstants.parseChannelPrefix)\(self.serviceStatus.serviceId!)"
@@ -96,6 +97,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         super.viewDidLoad()
         
         self.title = self.serviceStatus.area
+        
+        self.windAnimationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("animateWindVanes"), userInfo: nil, repeats: true)
         
         // configure header
         self.labelArea.text = self.serviceStatus.area
@@ -197,6 +200,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        self.windAnimationTimer.invalidate()
         
         // clip bounds so map doesn't expand over the edges when we animated to/from view
         self.view.clipsToBounds = true
@@ -401,6 +406,17 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     // MARK: - Utility methods
+    func animateWindVanes() {
+        for cell in self.tableView.visibleCells() {
+            if let weatherCell = cell as? ServiceDetailWeatherCell {
+                let randomDelay = Double(arc4random_uniform(5))
+                delay(randomDelay) {
+                    weatherCell.tryAnimateWindArrow()
+                }
+            }
+        }
+    }
+    
     private func initializeTable() {
         self.generateDatasource()
         self.tableView.reloadData()
@@ -452,7 +468,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     private func reloadWeatherForLocation(location: Location) {
         if let indexPath = self.indexPathForLocation(location) {
-            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
         }
     }
 
@@ -624,7 +640,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailWeatherCell
             cell.selectionStyle = .None
-            cell.configureWithLocation(location)
+            cell.configureWithLocation(location, animate: true)
             cell.delegate = self
             return cell
         case let .Alert:
