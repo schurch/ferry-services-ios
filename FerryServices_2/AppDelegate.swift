@@ -26,8 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Crashlytics.startWithAPIKey(APIKeys.CrashlyticsAPIKey)
         
         Parse.setApplicationId(APIKeys.ParseApplicationId, clientKey: APIKeys.ParseClientKey)
-
-        AFNetworkActivityIndicatorManager.sharedManager().enabled = true
         
         // Global colors
         self.window?.tintColor = UIColor.tealTintColor()

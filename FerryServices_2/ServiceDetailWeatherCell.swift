@@ -146,7 +146,9 @@ class ServiceDetailWeatherCell: UITableViewCell {
             }
         }
         
-        self.configuring = false
+        if !animate {
+            self.configuring = false
+        }
     }
     
     func tryAnimateWindArrow() {

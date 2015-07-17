@@ -114,7 +114,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         self.propellerView.percentComplete = 1.0
         self.propellerView.startRotating()
         
-        APIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
+        ServicesAPIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
             if let statuses = serviceStatuses {
                 self.arrayServiceStatuses = statuses
             }

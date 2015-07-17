@@ -435,7 +435,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         
         if let serviceId = self.serviceStatus.serviceId {
-            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _ in
+            ServicesAPIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _ in
                 self.disruptionDetails = disruptionDetails
                 reloadServiceInfo()
             }

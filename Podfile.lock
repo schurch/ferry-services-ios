@@ -1,25 +1,4 @@
 PODS:
-  - AFNetworking (2.3.1):
-    - AFNetworking/NSURLConnection (= 2.3.1)
-    - AFNetworking/NSURLSession (= 2.3.1)
-    - AFNetworking/Reachability (= 2.3.1)
-    - AFNetworking/Security (= 2.3.1)
-    - AFNetworking/Serialization (= 2.3.1)
-    - AFNetworking/UIKit (= 2.3.1)
-  - AFNetworking/NSURLConnection (2.3.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.3.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.3.1)
-  - AFNetworking/Security (2.3.1)
-  - AFNetworking/Serialization (2.3.1)
-  - AFNetworking/UIKit (2.3.1):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
   - FlurrySDK (5.3.0):
     - FlurrySDK/FlurrySDK (= 5.3.0)
   - FlurrySDK/FlurrySDK (5.3.0)
@@ -30,12 +9,10 @@ PODS:
     - FMDB/common
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.0)
   - FlurrySDK (~> 5.3)
   - FMDB
 
 SPEC CHECKSUMS:
-  AFNetworking: 05b9f6e3aa5ac45bc383b4bb108ef338080a26c7
   FlurrySDK: a3b6d2b35787c721fa5019075f2416d59cbbc104
   FMDB: 773d79bb74226959b7e2286b1d6e0bd857c88915
 
