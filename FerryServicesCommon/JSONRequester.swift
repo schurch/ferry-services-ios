@@ -8,11 +8,14 @@
 
 import UIKit
 
-class JSONRequester {
+public class JSONRequester {
+    public static let requestStartedNotification = "com.stefanchurch.ferryservices.requestStartedNotification"
+    public static let requestFinishedNotification = "com.stefanchurch.ferryservices.requestFinishedNotification"
+    
     static let errorDomain = "JSONRequesterErrorDomain"
     
     func requestWithURL(url: NSURL, completion:(json: JSONValue?, error: NSError?) -> ()) {
-//        PFNetworkActivityIndicatorManager.sharedManager().incrementActivityCount()
+        NSNotificationCenter.defaultCenter().postNotificationName(JSONRequester.requestStartedNotification, object: self)
         
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithURL(url) { data, response, error in
@@ -37,7 +40,7 @@ class JSONRequester {
             
             completion(json: json, error: nil)
             
-//            PFNetworkActivityIndicatorManager.sharedManager().decrementActivityCount()
+            NSNotificationCenter.defaultCenter().postNotificationName(JSONRequester.requestFinishedNotification, object: self)
         }
         
         dataTask.resume()

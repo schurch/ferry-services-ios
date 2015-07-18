@@ -31,6 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Global colors
         self.window?.tintColor = UIColor.tealTintColor()
         
+        // Listen for network requests
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "networkRequestStarted:", name: JSONRequester.requestStartedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "networkRequestFinished:", name: JSONRequester.requestFinishedNotification, object: nil)
+        
         // Configure push notifications
         let userNotificationTypes = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound
         let notificationSettings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
@@ -39,6 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         return true
+    }
+    
+    func networkRequestStarted(notification: NSNotification) {
+        PFNetworkActivityIndicatorManager.sharedManager().incrementActivityCount()
+    }
+    
+    func networkRequestFinished(notification: NSNotification) {
+        PFNetworkActivityIndicatorManager.sharedManager().decrementActivityCount()
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
