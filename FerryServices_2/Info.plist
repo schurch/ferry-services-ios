@@ -34,5 +34,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>com.stefanchurch.ferryservices.viewservice</string>
+	</array>
 </dict>
 </plist>

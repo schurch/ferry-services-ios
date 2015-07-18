@@ -30,6 +30,7 @@
       "size" : "40x40",
       "idiom" : "watch",
       "scale" : "2x",
+      "filename" : "Icon-Small-40@2x.png",
       "role" : "appLauncher",
       "subtype" : "38mm"
     },

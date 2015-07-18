@@ -63,6 +63,7 @@
 		FDA75F541B59F66B00A9196B /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F521B59F66B00A9196B /* WeatherAPIClient.swift */; };
 		FDA75F571B59F67400A9196B /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F551B59F67400A9196B /* APIKeys.swift */; };
 		FDA75F581B59F67400A9196B /* JSONRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F561B59F67400A9196B /* JSONRequester.swift */; };
+		FDA75F5B1B5A03F100A9196B /* ServiceDetailInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F5A1B5A03F100A9196B /* ServiceDetailInterfaceController.swift */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC7760C19844C2B00B3782F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760B19844C2B00B3782F /* Route.swift */; };
 		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
@@ -223,6 +224,7 @@
 		FDA75F521B59F66B00A9196B /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
 		FDA75F551B59F67400A9196B /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		FDA75F561B59F67400A9196B /* JSONRequester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRequester.swift; sourceTree = "<group>"; };
+		FDA75F5A1B5A03F100A9196B /* ServiceDetailInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailInterfaceController.swift; sourceTree = "<group>"; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FDC7760B19844C2B00B3782F /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Route.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760D19844C3500B3782F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Location.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -470,6 +472,7 @@
 			children = (
 				FDD8B4C81B1178F1001C89D4 /* Ferries WatchKit Extension.entitlements */,
 				FD9CC1361B105EF20056C6F8 /* ServiceListInterfaceController.swift */,
+				FDA75F5A1B5A03F100A9196B /* ServiceDetailInterfaceController.swift */,
 				FD9CC1521B1063040056C6F8 /* ServiceRow.swift */,
 				FD9CC1381B105EF20056C6F8 /* Images.xcassets */,
 				FD9CC1341B105EF20056C6F8 /* Supporting Files */,
@@ -973,6 +976,7 @@
 			files = (
 				FD9CC1531B1063040056C6F8 /* ServiceRow.swift in Sources */,
 				FD9CC1371B105EF20056C6F8 /* ServiceListInterfaceController.swift in Sources */,
+				FDA75F5B1B5A03F100A9196B /* ServiceDetailInterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

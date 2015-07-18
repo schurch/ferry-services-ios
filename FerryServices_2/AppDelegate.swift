@@ -66,22 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFPush.handlePush(userInfo)
     }
     
-    func application(application: UIApplication, handleWatchKitExtensionRequest userInfo: [NSObject : AnyObject]?, reply: (([NSObject : AnyObject]!) -> Void)!) {
-        let action: String = userInfo!["action"] as! String
-        
-//        if action == "fetch_service_details" {
-//            APIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
-//                if error != nil {
-//                    reply(["response": "error", "error_details": "There was a problem fetching the service statuses."])
-//                }
-//                
-//                let containerURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.stefanchurch.ferryservices")
-//                println(containerURL)
-//                reply(["response": containerURL!.absoluteString!])
-//            }
-//        }
-        
-//        reply(["response": "no_action_performed"])
+    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]!) -> Void) -> Bool {
+        return true
     }
 }
 

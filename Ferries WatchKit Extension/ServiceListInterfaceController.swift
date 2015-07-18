@@ -12,44 +12,117 @@ import FerryServicesCommon
 
 class ServiceListInterfaceController: WKInterfaceController {
     
+    @IBOutlet weak var labelLastUpdated: WKInterfaceLabel!
     @IBOutlet weak var table: WKInterfaceTable!
-
+    
+    var lastUpdated: NSDate!
+    
+    var services: [ServiceStatus]?
+    
     // MARK: - Lifecycle
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        WKInterfaceController.openParentApplication(["action": "fetch_service_details"]) { replyInfo, error in
-//            println(replyInfo!["response"])
-        }
+        self.lastUpdated = NSDate()
         
-        self.configureTableWithData(["Arran", "Bute", "Somewhere else"])
-    }
-
-    override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
-    }
-
-    override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
-        super.didDeactivate()
+        self.refresh()
     }
     
-    // MARK: - 
+    override func willActivate() {
+        super.willActivate()
+        
+        if self.services != nil {
+            self.configureLastUpdated()
+        }
+    }
+    
+    // MARK: -
+    func refresh() {
+        self.labelLastUpdated.setText("Updating...")
+        
+        self.services = nil
+        self.configureTable()
+        
+        ServicesAPIClient.sharedInstance.fetchFerryServicesWithCompletion { services, error in
+            if error != nil || services == nil {
+                self.labelLastUpdated.setText("Unable to fetch services")
+                return
+            }
+            
+            self.configureLastUpdated()
+            
+            self.services = services
+            self.configureTable()
+        }
+    }
+    
+    func configureLastUpdated() {
+        if let updatedDate = self.lastUpdated {
+            
+            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
+            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
+            
+            var updated: String
+            
+            if components.day > 0 {
+                updated = "\(components.day)d ago"
+            }
+            else if components.hour > 0 {
+                updated = "\(components.hour)h ago"
+            }
+            else {
+                if components.minute == 0 {
+                    updated = "just now"
+                }
+                else {
+                    updated = "\(components.minute)m ago"
+                }
+            }
+            
+            self.labelLastUpdated.setText("Updated \(updated)")
+        }
+    }
+    
+    // MARK: -
     override func contextForSegueWithIdentifier(segueIdentifier: String, inTable table: WKInterfaceTable, rowIndex: Int) -> AnyObject? {
-        return "Test"
+        if let services = self.services {
+            return services[rowIndex]
+        }
+        
+        return nil
     }
     
     // MARK: - Table config
-    func configureTableWithData(data: [String]) {
-        self.table.setNumberOfRows(data.count, withRowType: "serviceRow")
-        for var index = 0; index < data.count; index++ {
-            let rowData = data[index]
+    func configureTable() {
+        if let services = self.services {
+            self.table.setNumberOfRows(services.count, withRowType: "serviceRow")
             
-            let row = self.table.rowControllerAtIndex(index) as! ServiceRow
-            row.serviceLabel.setText(rowData)
-            row.serviceStatusImage.setImageNamed("green")
+            for var index = 0; index < services.count; index++ {
+                let serviceStatus = services[index]
+                
+                let row = self.table.rowControllerAtIndex(index) as! ServiceRow
+                
+                if let route = serviceStatus.route {
+                    row.serviceLabel.setText(route)
+                }
+                
+                if let disruptionStatus = serviceStatus.disruptionStatus {
+                    switch disruptionStatus {
+                    case .Normal:
+                        row.serviceStatusImage.setImageNamed("green")
+                    case .SailingsAffected:
+                        row.serviceStatusImage.setImageNamed("amber")
+                    case .SailingsCancelled:
+                        row.serviceStatusImage.setImageNamed("red")
+                    case .Unknown:
+                        row.serviceStatusImage.setImage(nil)
+                    }
+                }
+            }
+        }
+        else {
+            self.table.setNumberOfRows(0, withRowType: "serviceRow")
         }
     }
-
+    
 }

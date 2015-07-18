@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="7701"/>
     </dependencies>
     <scenes>
-        <!--Service List Interface Controller-->
+        <!--Services-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="ServiceListInterfaceController" customModule="Ferries_WatchKit_Extension">
+                <controller title="Services" id="AgC-eL-Hgc" customClass="ServiceListInterfaceController" customModule="Ferries_WatchKit_Extension">
                     <items>
+                        <label alignment="left" text="Updated 1h ago" id="b9Y-Aq-awn">
+                            <color key="textColor" red="0.7843137255" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                        </label>
                         <table alignment="left" id="IDD-oR-G3f">
                             <items>
                                 <tableRow identifier="serviceRow" id="cce-6f-j5S" customClass="ServiceRow" customModule="Ferries_WatchKit_Extension">
-                                    <group key="rootItem" width="1" height="30" alignment="left" id="vRM-yS-5TB">
+                                    <group key="rootItem" width="1" height="40" alignment="left" spacing="2" id="vRM-yS-5TB">
                                         <items>
                                             <imageView width="15" height="15" alignment="left" verticalAlignment="center" image="green" id="eGl-nV-XSB"/>
-                                            <label alignment="left" verticalAlignment="center" text="Arran" id="Gvh-ZA-YjB"/>
+                                            <label alignment="left" verticalAlignment="center" text="Ardrossan - Brodick" numberOfLines="2" id="Gvh-ZA-YjB"/>
                                         </items>
                                         <connections>
-                                            <segue destination="qCk-NX-pvi" kind="push" id="0jG-bZ-hW4"/>
+                                            <segue destination="qCk-NX-pvi" kind="push" identifier="serviceDetail" id="0jG-bZ-hW4"/>
                                         </connections>
                                     </group>
                                     <connections>
@@ -31,23 +35,40 @@
                         </table>
                     </items>
                     <connections>
+                        <outlet property="labelLastUpdated" destination="b9Y-Aq-awn" id="Ge6-fZ-JzB"/>
                         <outlet property="table" destination="IDD-oR-G3f" id="C9u-T4-7kc"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="245" y="224"/>
+            <point key="canvasLocation" x="106" y="224"/>
         </scene>
-        <!--Interface Controller-->
+        <!--Detail-->
         <scene sceneID="C2c-d4-DqD">
             <objects>
-                <controller id="qCk-NX-pvi">
+                <controller title="Detail" id="qCk-NX-pvi" customClass="ServiceDetailInterfaceController" customModule="Ferries_WatchKit_Extension">
                     <items>
-                        <label alignment="center" text="Arran" id="1dz-Zb-9SN"/>
-                        <label alignment="left" text="Bob loblaw" id="q2Q-Lv-ISO"/>
+                        <label alignment="left" text="Ardrossan - Brodick" numberOfLines="0" id="q8q-2J-vYf">
+                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                        </label>
+                        <separator alignment="left" id="fU2-PU-ITO">
+                            <color key="color" white="0.78520764799999998" alpha="1" colorSpace="calibratedWhite"/>
+                        </separator>
+                        <label alignment="left" text="There is currently a disruption with this service" numberOfLines="0" id="IcB-xl-sun"/>
+                        <separator alignment="left" id="Imm-Oo-D2Y">
+                            <color key="color" red="0.7843137255" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                        </separator>
+                        <label height="34.5" alignment="left" text="Handoff to your iPhone to view details" textAlignment="center" numberOfLines="0" id="q2Q-Lv-ISO">
+                            <color key="textColor" red="0.87450980389999999" green="0.87058823529999996" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                        </label>
                     </items>
+                    <connections>
+                        <outlet property="labelBody" destination="IcB-xl-sun" id="hLg-Hs-WPl"/>
+                        <outlet property="labelHeader" destination="q8q-2J-vYf" id="L8w-PI-bpO"/>
+                    </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="471" y="224"/>
+            <point key="canvasLocation" x="374" y="225"/>
         </scene>
     </scenes>
 </document>
