@@ -10,21 +10,21 @@ import UIKit
 import Foundation
 import FerryServicesCommon
 
-func == (lhs: LocationWeather, rhs: LocationWeather) -> Bool {
+public func == (lhs: LocationWeather, rhs: LocationWeather) -> Bool {
     return lhs.cityId == rhs.cityId
 }
 
-struct Weather {
+public struct Weather {
     // See http://openweathermap.org/weather-conditions for list of codes/icons/descriptions
     
-    var weatherId: Int?
-    var weatherGroup: String? // the group of weather (Rain, Snow, Extreme etc.)
-    var weatherDescription: String? // description for weather within group
+    public var weatherId: Int?
+    public var weatherGroup: String? // the group of weather (Rain, Snow, Extreme etc.)
+    public var weatherDescription: String? // description for weather within group
     
     // Returns a value such as 03n
     // Can be used using the URL: http://openweathermap.org/img/w/ e.g.
     // http://openweathermap.org/img/w/03n.png
-    var icon: String?
+    public var icon: String?
     
     init(data: JSONValue) {
         self.weatherId = data["id"].integer
@@ -34,50 +34,50 @@ struct Weather {
     }
 }
 
-struct LocationWeather: Equatable {
+public struct LocationWeather: Equatable {
     
     static let windDirections = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
     
-    var cityId: Int?
-    var cityName: String?
+    public var cityId: Int?
+    public var cityName: String?
     
-    var dateReceieved: NSDate?
+    public var dateReceieved: NSDate?
     
-    var latitude: Double?
-    var longitude: Double?
+    public var latitude: Double?
+    public var longitude: Double?
     
-    var sunrise: NSDate?
-    var sunset: NSDate?
+    public var sunrise: NSDate?
+    public var sunset: NSDate?
     
     // wind
-    var windSpeed: Double? // meters per second
-    var windSpeedMph: Double? // meters mph
-    var gustSpeed: Double? // meters per second
-    var gustSpeedMph: Double? // meters mph
-    var windDirection: Double? // degrees (meteorological)
-    var windDirectionCardinal: String? // wind direction in N-S-E-W etc
+    public var windSpeed: Double? // meters per second
+    public var windSpeedMph: Double? // meters mph
+    public var gustSpeed: Double? // meters per second
+    public var gustSpeedMph: Double? // meters mph
+    public var windDirection: Double? // degrees (meteorological)
+    public var windDirectionCardinal: String? // wind direction in N-S-E-W etc
     
     // temp
-    var temp: Double? // kelvin
-    var tempCelsius: Double? // Celsius
-    var tempMin: Double? // kelvin
-    var tempMax: Double? // kelvin
+    public var temp: Double? // kelvin
+    public var tempCelsius: Double? // Celsius
+    public var tempMin: Double? // kelvin
+    public var tempMax: Double? // kelvin
     
-    var humidity: Double? // %
+    public var humidity: Double? // %
     
     //pressure
-    var pressure: Double? // hpa
-    var pressureGroundLevel: Double? // hpa
-    var pressureSeaLevel: Double? // hpa
+    public var pressure: Double? // hpa
+    public var pressureGroundLevel: Double? // hpa
+    public var pressureSeaLevel: Double? // hpa
     
-    var clouds: Double? // cloudiness, %
+    public var clouds: Double? // cloudiness, %
     
-    var rain: [String: Double]? // precipitation volume for specified hours, mm
-    var snow: [String: Double]? // snow volume for specified hours, mm
+    public var rain: [String: Double]? // precipitation volume for specified hours, mm
+    public var snow: [String: Double]? // snow volume for specified hours, mm
     
     // weather descriptions
-    var weather: [Weather]?
-    var combinedWeatherDescription: String?
+    public var weather: [Weather]?
+    public var combinedWeatherDescription: String?
     
     init (data: JSONValue) {
         self.cityId = data["id"].integer

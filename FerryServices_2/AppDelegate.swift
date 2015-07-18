@@ -27,8 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Crashlytics.startWithAPIKey(APIKeys.CrashlyticsAPIKey)
         
         Parse.setApplicationId(APIKeys.ParseApplicationId, clientKey: APIKeys.ParseClientKey)
-
-        AFNetworkActivityIndicatorManager.sharedManager().enabled = true
         
         // Global colors
         self.window?.tintColor = UIColor.tealTintColor()
@@ -60,15 +58,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let action: String = userInfo!["action"] as! String
         
 //        if action == "fetch_service_details" {
-            APIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
-                if error != nil {
-                    reply(["response": "error", "error_details": "There was a problem fetching the service statuses."])
-                }
-                
-                let containerURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.stefanchurch.ferryservices")
+//            APIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
+//                if error != nil {
+//                    reply(["response": "error", "error_details": "There was a problem fetching the service statuses."])
+//                }
+//                
+//                let containerURL = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier("group.stefanchurch.ferryservices")
 //                println(containerURL)
-                reply(["response": containerURL!.absoluteString!])
-            }
+//                reply(["response": containerURL!.absoluteString!])
+//            }
 //        }
         
 //        reply(["response": "no_action_performed"])

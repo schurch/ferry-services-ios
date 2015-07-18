@@ -74,6 +74,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var disruptionDetails: DisruptionDetails?
     var headerHeight: CGFloat!
     var viewBackground: UIView!
+    var windAnimationTimer: NSTimer!
     
     lazy var parseChannel: String = {
         return "\(AppConstants.parseChannelPrefix)\(self.serviceStatus.serviceId!)"
@@ -128,18 +129,24 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.tableView.registerNib(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
         self.tableView.registerNib(UINib(nibName: "NoDisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
         self.tableView.registerNib(UINib(nibName: "TextOnlyCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell)
+        self.tableView.registerNib(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.weatherCell)
         
         // alert cell
         self.alertCell = UINib(nibName: "AlertCell", bundle: nil).instantiateWithOwner(nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
         self.alertCell.switchAlert.addTarget(self, action: Selector("alertSwitchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
         self.alertCell.configureLoading()
         
-        PFPush.getSubscribedChannelsInBackgroundWithBlock { [unowned self] (channels, error) in
+        PFPush.getSubscribedChannelsInBackgroundWithBlock { [weak self] (channels, error) in
+            if self == nil {
+                // self might be nil if we've popped the view controller when the completion block is called
+                return
+            }
+            
             if channels != nil {
-                self.alertCell.configureLoadedWithSwitchOn(channels.contains(self.parseChannel))
+                self!.alertCell.configureLoadedWithSwitchOn(channels.contains(self!.parseChannel))
             }
             else {
-                self.alertCell.configureLoadedWithSwitchOn(false)
+                self!.alertCell.configureLoadedWithSwitchOn(false)
             }
         }
         
@@ -180,6 +187,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         if let selectedIndexPath = self.tableView.indexPathForSelectedRow() {
             self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
         }
+        
+        self.windAnimationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("animateWindVanes"), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -195,6 +204,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         // clip bounds so map doesn't expand over the edges when we animated to/from view
         self.view.clipsToBounds = true
+        
+        self.windAnimationTimer.invalidate()
     }
     
     func applicationDidBecomeActive(notification: NSNotification) {
@@ -246,7 +257,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         currentInstallation.saveInBackgroundWithBlock { [weak self] (succeeded, error)  in
             if self == nil {
                 // self might be nil if we've popped the view controller when the completion block is called
-                return;
+                return
             }
             
             if succeeded {
@@ -396,6 +407,17 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     // MARK: - Utility methods
+    func animateWindVanes() {
+        for cell in self.tableView.visibleCells() {
+            if let weatherCell = cell as? ServiceDetailWeatherCell {
+                let randomDelay = Double(arc4random_uniform(5))
+                delay(randomDelay) {
+                    weatherCell.tryAnimateWindArrow()
+                }
+            }
+        }
+    }
+    
     private func initializeTable() {
         self.generateDatasource()
         self.tableView.reloadData()
@@ -414,7 +436,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         
         if let serviceId = self.serviceStatus.serviceId {
-            APIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _ in
+            ServicesAPIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _ in
                 self.disruptionDetails = disruptionDetails
                 reloadServiceInfo()
             }
@@ -427,15 +449,23 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     private func fetchLatestWeatherData() {
         if let locations = self.locations {
             for location in locations {
-                WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
-                    if (error != nil) {
+                if location.latitude == nil || location.longitude == nil {
+                    continue
+                }
+                
+                WeatherAPIClient.sharedInstance.fetchWeatherForLatitude(location.latitude!, longitude: location.longitude!) { [weak self] weather, error in
+                    if self == nil {
+                        return
+                    }
+                    
+                    if error != nil {
                         NSLog("Error loading weather: \(error)")
                     }
                     
                     location.weather = weather
                     location.weatherFetchError = error
                     
-                    self.reloadWeatherForLocation(location)
+                    self!.reloadWeatherForLocation(location)
                 }
             }
         }
@@ -443,7 +473,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     private func reloadWeatherForLocation(location: Location) {
         if let indexPath = self.indexPathForLocation(location) {
-            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
         }
     }
 
@@ -615,7 +645,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailWeatherCell
             cell.selectionStyle = .None
-            cell.configureWithLocation(location)
+            cell.configureWithLocation(location, animate: true)
             cell.delegate = self
             return cell
         case let .Alert:
@@ -641,8 +671,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         case let .TextOnly(text):
             let height = ServiceDetailTextOnlyCell.heightWithText(text, tableView: tableView)
             return height
-        case .Weather:
-            return 84.0
+        case let .Weather(location):
+            let height = ServiceDetailWeatherCell.heightWithLocation(location, tableView: tableView)
+            return height
         case .Alert:
             return 44.0
         }
@@ -722,7 +753,16 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         switch row {
         case let .Weather(location):
-            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { weather, error in
+            if location.latitude == nil || location.longitude == nil {
+                NSLog("Location is missing latitude of longitude.")
+                return
+            }
+            
+            WeatherAPIClient.sharedInstance.fetchWeatherForLatitude(location.latitude!, longitude: location.longitude!) { [weak self] weather, error in
+                if self == nil {
+                    return
+                }
+                
                 if (error != nil) {
                     NSLog("Error loading weather: \(error)")
                 }
@@ -730,7 +770,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 location.weather = weather
                 location.weatherFetchError = error
                 
-                self.reloadWeatherForLocation(location)
+                self!.reloadWeatherForLocation(location)
             }
         default:
             break

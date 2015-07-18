@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
+import FerryServicesCommon
+
 class Location : Hashable {
     
     class func fetchLocationsForSericeId(serviceId: Int) -> [Location]? {

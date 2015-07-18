@@ -8,14 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
-		FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */; };
-		FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */; };
 		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
-		FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
 		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
 		FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5BF4E01A539EC4009D799E /* PropellerView.swift */; };
-		FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* APIClient.swift */; };
 		FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */; };
 		FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD60D97E1AA173360054A131 /* AlertCell.xib */; };
 		FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */; };
@@ -59,6 +55,14 @@
 		FD9CC1471B105EF20056C6F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD9CC1461B105EF20056C6F8 /* Images.xcassets */; };
 		FD9CC14A1B105EF20056C6F8 /* Ferries WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FD9CC1321B105EF20056C6F8 /* Ferries WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FD9CC1531B1063040056C6F8 /* ServiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9CC1521B1063040056C6F8 /* ServiceRow.swift */; };
+		FDA75F491B59F5CA00A9196B /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA75F481B59F5CA00A9196B /* WeatherCell.xib */; };
+		FDA75F4C1B59F63300A9196B /* Double_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F4A1B59F63300A9196B /* Double_extensions.swift */; };
+		FDA75F4D1B59F63300A9196B /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F4B1B59F63300A9196B /* Utility.swift */; };
+		FDA75F4F1B59F65100A9196B /* ServicesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F4E1B59F65100A9196B /* ServicesAPIClient.swift */; };
+		FDA75F531B59F66B00A9196B /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F511B59F66B00A9196B /* LocationWeather.swift */; };
+		FDA75F541B59F66B00A9196B /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F521B59F66B00A9196B /* WeatherAPIClient.swift */; };
+		FDA75F571B59F67400A9196B /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F551B59F67400A9196B /* APIKeys.swift */; };
+		FDA75F581B59F67400A9196B /* JSONRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA75F561B59F67400A9196B /* JSONRequester.swift */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC7760C19844C2B00B3782F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760B19844C2B00B3782F /* Route.swift */; };
 		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
@@ -154,15 +158,11 @@
 		6B61FAD87F37434E965A5EF6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD7597146748CC36832D1D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
-		FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
-		FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
 		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
 		FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		FD5BF4E01A539EC4009D799E /* PropellerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropellerView.swift; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		FD5E7DBA197A316F00F438F6 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = APIClient.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailReceiveAlertCellTableViewCell.swift; sourceTree = "<group>"; };
 		FD60D97E1AA173360054A131 /* AlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
 		FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableHeaderViewCell.swift; sourceTree = "<group>"; };
@@ -215,6 +215,14 @@
 		FD9CC1441B105EF20056C6F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		FD9CC1461B105EF20056C6F8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD9CC1521B1063040056C6F8 /* ServiceRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceRow.swift; sourceTree = "<group>"; };
+		FDA75F481B59F5CA00A9196B /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
+		FDA75F4A1B59F63300A9196B /* Double_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double_extensions.swift; sourceTree = "<group>"; };
+		FDA75F4B1B59F63300A9196B /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		FDA75F4E1B59F65100A9196B /* ServicesAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesAPIClient.swift; sourceTree = "<group>"; };
+		FDA75F511B59F66B00A9196B /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
+		FDA75F521B59F66B00A9196B /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
+		FDA75F551B59F67400A9196B /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		FDA75F561B59F67400A9196B /* JSONRequester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRequester.swift; sourceTree = "<group>"; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FDC7760B19844C2B00B3782F /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Route.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760D19844C3500B3782F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Location.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -346,23 +354,6 @@
 			name = Timetable;
 			sourceTree = "<group>";
 		};
-		FD5177F61A565E9D00F4B6B0 /* Services Client */ = {
-			isa = PBXGroup;
-			children = (
-				FD5E7DBA197A316F00F438F6 /* APIClient.swift */,
-			);
-			name = "Services Client";
-			sourceTree = "<group>";
-		};
-		FD5177F91A565EDA00F4B6B0 /* Weather Client */ = {
-			isa = PBXGroup;
-			children = (
-				FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */,
-				FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */,
-			);
-			name = "Weather Client";
-			sourceTree = "<group>";
-		};
 		FD5BF4E21A539ED1009D799E /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,15 +373,6 @@
 				FDCB33461A4BD6D6000033BC /* Map */,
 			);
 			name = "View Controllers";
-			sourceTree = "<group>";
-		};
-		FD5E7DBC197A317800F438F6 /* API Client */ = {
-			isa = PBXGroup;
-			children = (
-				FD5177F61A565E9D00F4B6B0 /* Services Client */,
-				FD5177F91A565EDA00F4B6B0 /* Weather Client */,
-			);
-			name = "API Client";
 			sourceTree = "<group>";
 		};
 		FD6C45651A2ACEF6005E1FB8 /* Web Information */ = {
@@ -435,15 +417,10 @@
 				FDD8B4C71B1178E1001C89D4 /* FerryServices_2.entitlements */,
 				FDC77612198450AC00B3782F /* timetables.sqlite */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
-				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
-				FD74D0A11A90124300013095 /* DisruptionsCell.xib */,
-				FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */,
-				FD74D0A51A9020E200013095 /* TextOnlyCell.xib */,
-				FD60D97E1AA173360054A131 /* AlertCell.xib */,
 				FD5E7DB9197A310600F438F6 /* View Controllers */,
 				FD5BF4E21A539ED1009D799E /* Views */,
-				FD5E7DBC197A317800F438F6 /* API Client */,
+				FDA75F591B59F9FA00A9196B /* Cells */,
 				FDC7761119844C4500B3782F /* Model */,
 				FD753ED3197A256E00CC5DE3 /* Supporting Files */,
 				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
@@ -526,6 +503,27 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		FDA75F501B59F65D00A9196B /* Weather API */ = {
+			isa = PBXGroup;
+			children = (
+				FDA75F521B59F66B00A9196B /* WeatherAPIClient.swift */,
+				FDA75F511B59F66B00A9196B /* LocationWeather.swift */,
+			);
+			name = "Weather API";
+			sourceTree = "<group>";
+		};
+		FDA75F591B59F9FA00A9196B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FD74D0A11A90124300013095 /* DisruptionsCell.xib */,
+				FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */,
+				FD74D0A51A9020E200013095 /* TextOnlyCell.xib */,
+				FD60D97E1AA173360054A131 /* AlertCell.xib */,
+				FDA75F481B59F5CA00A9196B /* WeatherCell.xib */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
 		FDC7761119844C4500B3782F /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -547,6 +545,9 @@
 		FDD8B49D1B117363001C89D4 /* FerryServicesCommon */ = {
 			isa = PBXGroup;
 			children = (
+				FDA75F551B59F67400A9196B /* APIKeys.swift */,
+				FDA75F561B59F67400A9196B /* JSONRequester.swift */,
+				FDA75F501B59F65D00A9196B /* Weather API */,
 				FDD8B4C51B117476001C89D4 /* Library */,
 				FDD8B4C61B11747F001C89D4 /* Services API */,
 				FDD8B4A01B117363001C89D4 /* FerryServicesCommon.h */,
@@ -583,6 +584,8 @@
 		FDD8B4C51B117476001C89D4 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				FDA75F4A1B59F63300A9196B /* Double_extensions.swift */,
+				FDA75F4B1B59F63300A9196B /* Utility.swift */,
 				FDD8B4BF1B117470001C89D4 /* NSDate_extensions.swift */,
 				FDD8B4C01B117470001C89D4 /* SwiftyJSON.swift */,
 				FDD8B4C11B117470001C89D4 /* UIColor_extensions.swift */,
@@ -593,8 +596,9 @@
 		FDD8B4C61B11747F001C89D4 /* Services API */ = {
 			isa = PBXGroup;
 			children = (
-				FDD8B4BB1B1173FE001C89D4 /* DisruptionDetails.swift */,
+				FDA75F4E1B59F65100A9196B /* ServicesAPIClient.swift */,
 				FDD8B4BC1B1173FE001C89D4 /* ServiceStatus.swift */,
+				FDD8B4BB1B1173FE001C89D4 /* DisruptionDetails.swift */,
 			);
 			name = "Services API";
 			sourceTree = "<group>";
@@ -826,6 +830,7 @@
 			files = (
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
+				FDA75F491B59F5CA00A9196B /* WeatherCell.xib in Resources */,
 				FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */,
 				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
 				FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */,
@@ -934,7 +939,6 @@
 				FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				FD71167919B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift in Sources */,
-				FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */,
 				FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */,
 				FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */,
 				FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */,
@@ -943,16 +947,13 @@
 				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
 				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
-				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
 				FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */,
 				FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */,
 				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
 				FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */,
-				FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */,
 				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
 				FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,
-				FD5E7DBB197A316F00F438F6 /* APIClient.swift in Sources */,
 				FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */,
 				FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */,
 			);
@@ -979,11 +980,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDA75F571B59F67400A9196B /* APIKeys.swift in Sources */,
+				FDA75F4D1B59F63300A9196B /* Utility.swift in Sources */,
+				FDA75F4C1B59F63300A9196B /* Double_extensions.swift in Sources */,
 				FDD8B4C21B117470001C89D4 /* NSDate_extensions.swift in Sources */,
 				FDD8B4BD1B1173FE001C89D4 /* DisruptionDetails.swift in Sources */,
+				FDA75F541B59F66B00A9196B /* WeatherAPIClient.swift in Sources */,
 				FDD8B4C41B117470001C89D4 /* UIColor_extensions.swift in Sources */,
 				FDD8B4BE1B1173FE001C89D4 /* ServiceStatus.swift in Sources */,
+				FDA75F581B59F67400A9196B /* JSONRequester.swift in Sources */,
+				FDA75F531B59F66B00A9196B /* LocationWeather.swift in Sources */,
 				FDD8B4C31B117470001C89D4 /* SwiftyJSON.swift in Sources */,
+				FDA75F4F1B59F65100A9196B /* ServicesAPIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
