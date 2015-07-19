@@ -15,7 +15,9 @@ public class JSONRequester {
     static let errorDomain = "JSONRequesterErrorDomain"
     
     func requestWithURL(url: NSURL, completion:(json: JSONValue?, error: NSError?) -> ()) {
-        NSNotificationCenter.defaultCenter().postNotificationName(JSONRequester.requestStartedNotification, object: self)
+        dispatch_async(dispatch_get_main_queue(), {
+            NSNotificationCenter.defaultCenter().postNotificationName(JSONRequester.requestStartedNotification, object: self)
+        })
         
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithURL(url) { data, response, error in
@@ -40,7 +42,9 @@ public class JSONRequester {
             
             completion(json: json, error: nil)
             
-            NSNotificationCenter.defaultCenter().postNotificationName(JSONRequester.requestFinishedNotification, object: self)
+            dispatch_async(dispatch_get_main_queue(), {
+                NSNotificationCenter.defaultCenter().postNotificationName(JSONRequester.requestFinishedNotification, object: self)
+            });
         }
         
         dataTask.resume()

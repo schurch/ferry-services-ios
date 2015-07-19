@@ -15,9 +15,9 @@ struct AppConstants {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-                            
+    
     var window: UIWindow?
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         
         // Setup 3rd party frameworks
@@ -66,8 +66,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFPush.handlePush(userInfo)
     }
     
+    func application(application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
+        if userActivityType == UserActivityTypes.viewService {
+            return true
+        }
+        
+        return false
+    }
+    
     func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]!) -> Void) -> Bool {
-        return true
+        if userActivity.activityType == UserActivityTypes.viewService {
+            if let navigationController = self.window?.rootViewController as? UINavigationController {
+                if let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {
+                    restorationHandler([servicesViewController])
+                    return true
+                }
+            }
+        }
+        
+        return false
     }
 }
 

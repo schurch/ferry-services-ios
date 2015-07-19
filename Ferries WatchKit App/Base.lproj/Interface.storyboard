@@ -22,6 +22,7 @@
                                             <imageView width="15" height="15" alignment="left" verticalAlignment="center" image="green" id="eGl-nV-XSB"/>
                                             <label alignment="left" verticalAlignment="center" text="Ardrossan - Brodick" numberOfLines="2" id="Gvh-ZA-YjB"/>
                                         </items>
+                                        <edgeInsets key="margins" left="3" right="3" top="0.0" bottom="0.0"/>
                                         <connections>
                                             <segue destination="qCk-NX-pvi" kind="push" identifier="serviceDetail" id="0jG-bZ-hW4"/>
                                         </connections>
@@ -50,9 +51,15 @@
                         <label alignment="left" text="Ardrossan - Brodick" numberOfLines="0" id="q8q-2J-vYf">
                             <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
                         </label>
-                        <separator alignment="left" id="fU2-PU-ITO">
-                            <color key="color" white="0.78520764799999998" alpha="1" colorSpace="calibratedWhite"/>
-                        </separator>
+                        <group width="1" alignment="left" id="p7F-mf-LHG">
+                            <items>
+                                <imageView width="15" height="15" alignment="left" verticalAlignment="center" image="green" id="tBp-Sg-51d"/>
+                                <label alignment="left" text="Cancelled" id="vcA-Vi-46y">
+                                    <color key="textColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                </label>
+                            </items>
+                        </group>
                         <label alignment="left" text="There is currently a disruption with this service" numberOfLines="0" id="IcB-xl-sun"/>
                         <separator alignment="left" id="Imm-Oo-D2Y">
                             <color key="color" red="0.7843137255" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,12 +70,15 @@
                         </label>
                     </items>
                     <connections>
+                        <outlet property="imageViewStatus" destination="tBp-Sg-51d" id="wR2-iz-I6b"/>
                         <outlet property="labelBody" destination="IcB-xl-sun" id="hLg-Hs-WPl"/>
                         <outlet property="labelHeader" destination="q8q-2J-vYf" id="L8w-PI-bpO"/>
+                        <outlet property="labelStatus" destination="vcA-Vi-46y" id="0Nu-TX-QOc"/>
                     </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="374" y="225"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.12941176470588234" green="0.74901960784313726" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>
 </document>
