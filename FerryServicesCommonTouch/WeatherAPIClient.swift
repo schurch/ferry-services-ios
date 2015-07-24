@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FerryServicesCommon
 
 public class WeatherAPIClient {
     public static let sharedInstance: WeatherAPIClient = WeatherAPIClient()

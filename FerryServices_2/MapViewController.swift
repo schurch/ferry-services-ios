@@ -28,11 +28,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     // MARK: - MKMapViewDelegate
-    func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
+    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
         mapView.showAnnotations(self.annotations, animated: false)
     }
     
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation.isKindOfClass(MKUserLocation.self) {
             return nil
         }
@@ -60,15 +60,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return pinView
     }
     
-    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         Flurry.logEvent("Show driving directions to port")
         
         let annotation = view.annotation
         
-        let placemark = MKPlacemark(coordinate: annotation.coordinate, addressDictionary: nil)
+        let placemark = MKPlacemark(coordinate: annotation!.coordinate, addressDictionary: nil)
         
         let destination = MKMapItem(placemark: placemark)
-        destination.name = annotation.title
+        destination.name = annotation!.title!
         
         let items = [destination]
         let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]

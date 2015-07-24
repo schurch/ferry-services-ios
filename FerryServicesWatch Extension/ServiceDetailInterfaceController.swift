@@ -8,7 +8,7 @@
 
 import WatchKit
 import Foundation
-import FerryServicesCommon
+import FerryServicesCommonWatch
 
 class ServiceDetailInterfaceController: WKInterfaceController {
     
@@ -49,4 +49,5 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             }
         }   
     }
+    
 }

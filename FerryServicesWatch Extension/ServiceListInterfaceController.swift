@@ -8,7 +8,7 @@
 
 import WatchKit
 import Foundation
-import FerryServicesCommon
+import FerryServicesCommonWatch
 
 class ServiceListInterfaceController: WKInterfaceController {
     
@@ -23,36 +23,30 @@ class ServiceListInterfaceController: WKInterfaceController {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        self.lastUpdated = NSDate()
-        
-        self.refresh()
+        configureLastUpdated()
+        configureTable()
     }
     
     override func willActivate() {
         super.willActivate()
         
-        if self.services != nil {
-            self.configureLastUpdated()
-        }
+        configureLastUpdated()
+        configureTable()
     }
     
     // MARK: -
-    func refresh() {
-        self.labelLastUpdated.setText("Updating...")
-        
+    func refreshWithCompletion(completion: () -> ()) {
         self.services = nil
-        self.configureTable()
         
         ServicesAPIClient.sharedInstance.fetchFerryServicesWithCompletion { services, error in
             if error != nil || services == nil {
-                self.labelLastUpdated.setText("Unable to fetch services")
                 return
             }
             
-            self.configureLastUpdated()
-            
             self.services = services
-            self.configureTable()
+            self.lastUpdated = NSDate()
+            
+            completion()
         }
     }
     
@@ -60,7 +54,7 @@ class ServiceListInterfaceController: WKInterfaceController {
         if let updatedDate = self.lastUpdated {
             
             let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
-            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
+            let components = calendar.components([NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: updatedDate, toDate: NSDate(), options: [])
             
             var updated: String
             

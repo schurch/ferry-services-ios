@@ -18,7 +18,7 @@ public class ServicesAPIClient {
             if error == nil {
                 if let json = json {
                     var results = json.array?.map { json in ServiceStatus(data: json) }
-                    results?.sort{ $0.sortOrder < $1.sortOrder }
+                    results?.sortInPlace { $0.sortOrder < $1.sortOrder }
                     
                     dispatch_async(dispatch_get_main_queue(), {
                         completion(serviceStatuses: results, error: nil)

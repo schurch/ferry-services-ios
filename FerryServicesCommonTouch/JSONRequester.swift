@@ -27,7 +27,15 @@ public class JSONRequester {
             }
             
             var jsonSerializationError: NSError?
-            let jsonDictionary: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonSerializationError)
+            let jsonDictionary: AnyObject?
+            do {
+                jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
+            } catch let error as NSError {
+                jsonSerializationError = error
+                jsonDictionary = nil
+            } catch {
+                fatalError()
+            }
             
             if jsonSerializationError != nil {
                 completion(json: nil, error: jsonSerializationError)

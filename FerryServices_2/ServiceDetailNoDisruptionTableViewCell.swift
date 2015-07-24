@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FerryServicesCommon
+import FerryServicesCommonTouch
 
 class ServiceDetailNoDisruptionTableViewCell: UITableViewCell {
     

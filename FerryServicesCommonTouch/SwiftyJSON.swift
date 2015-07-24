@@ -142,9 +142,11 @@ public enum JSONValue {
     public init (_ data: NSData!){
         if let value = data{
             var error:NSError? = nil
-            if let jsonObject : AnyObject = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &error) {
+            do {
+                let jsonObject : AnyObject = try NSJSONSerialization.JSONObjectWithData(data, options: [])
                 self = JSONValue(jsonObject)
-            }else{
+            } catch let error1 as NSError {
+                error = error1
                 self = JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1001, userInfo: [NSLocalizedDescriptionKey:"JSON Parser Error: Invalid Raw JSON Data"]))
             }
         }else{
@@ -176,11 +178,11 @@ public enum JSONValue {
             self = .JArray(jsonValues)
         case let value as NSDictionary:
             var jsonObject = Dictionary<String, JSONValue>()
-            for (possibleJsonKey : AnyObject, possibleJsonValue : AnyObject) in value {
+            for (possibleJsonKey, possibleJsonValue): (AnyObject, AnyObject) in value {
                 if let key = possibleJsonKey as? NSString {
                     let jsonValue = JSONValue(possibleJsonValue)
                     if jsonValue {
-                        jsonObject[key as! String] = jsonValue
+                        jsonObject[key as String] = jsonValue
                     }
                 }
             }
@@ -196,13 +198,12 @@ public enum JSONValue {
             case .JArray(let jsonArray) where jsonArray.count > index:
                 return jsonArray[index]
             case .JInvalid(let error):
-                if let userInfo = error.userInfo{
-                    if let breadcrumb = userInfo["JSONErrorBreadCrumbKey"] as? NSString{
-                        let newBreadCrumb = (breadcrumb as String) + "/\(index)"
-                        let newUserInfo = [NSLocalizedDescriptionKey: "JSON Keypath Error: Incorrect Keypath \"\(newBreadCrumb)\"",
-                                           "JSONErrorBreadCrumbKey": newBreadCrumb]
-                        return JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1002, userInfo: newUserInfo))
-                    }
+                let userInfo = error.userInfo
+                if let breadcrumb = userInfo["JSONErrorBreadCrumbKey"] as? NSString{
+                    let newBreadCrumb = (breadcrumb as String) + "/\(index)"
+                    let newUserInfo = [NSLocalizedDescriptionKey: "JSON Keypath Error: Incorrect Keypath \"\(newBreadCrumb)\"",
+                        "JSONErrorBreadCrumbKey": newBreadCrumb]
+                    return JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1002, userInfo: newUserInfo))
                 }
                 return self
             default:
@@ -227,13 +228,12 @@ public enum JSONValue {
                     return JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1002, userInfo: newUserInfo))
                 }
             case .JInvalid(let error):
-                if let userInfo = error.userInfo{
-                    if let breadcrumb = userInfo["JSONErrorBreadCrumbKey"] as? NSString{
-                        let newBreadCrumb = (breadcrumb as String) + "/\(key)"
-                        let newUserInfo = [NSLocalizedDescriptionKey: "JSON Keypath Error: Incorrect Keypath \"\(newBreadCrumb)\"",
-                            "JSONErrorBreadCrumbKey": newBreadCrumb]
-                        return JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1002, userInfo: newUserInfo))
-                    }
+                let userInfo = error.userInfo
+                if let breadcrumb = userInfo["JSONErrorBreadCrumbKey"] as? NSString{
+                    let newBreadCrumb = (breadcrumb as String) + "/\(key)"
+                    let newUserInfo = [NSLocalizedDescriptionKey: "JSON Keypath Error: Incorrect Keypath \"\(newBreadCrumb)\"",
+                        "JSONErrorBreadCrumbKey": newBreadCrumb]
+                    return JSONValue.JInvalid(NSError(domain: "JSONErrorDomain", code: 1002, userInfo: newUserInfo))
                 }
                 return self
             default:
@@ -246,7 +246,7 @@ public enum JSONValue {
     }
 }
 
-extension JSONValue: Printable {
+extension JSONValue: CustomStringConvertible {
     public var description: String {
         switch self {
         case .JInvalid(let error):
@@ -269,7 +269,7 @@ extension JSONValue: Printable {
             return "null"
         case .JArray(let array):
             var arrayString = ""
-            for (index, value) in enumerate(array) {
+            for (index, value) in array.enumerate() {
                 if index != array.count - 1 {
                     arrayString += "\(value.rawJSONString),"
                 }else{
@@ -312,7 +312,7 @@ extension JSONValue: Printable {
             return objectString
         case .JArray(let array):
             var arrayString = "[\n"
-            for (index, value) in enumerate(array) {
+            for (index, value) in array.enumerate() {
                 let valueString = value._printableString(indent + "  ")
                 if index != array.count - 1 {
                     arrayString += "\(indent)  \(valueString),\n"

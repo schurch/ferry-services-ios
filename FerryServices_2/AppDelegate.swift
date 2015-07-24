@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FerryServicesCommon
+import FerryServicesCommonTouch
 
 struct AppConstants {
     static let parseChannelPrefix = "S"
@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "networkRequestFinished:", name: JSONRequester.requestFinishedNotification, object: nil)
         
         // Configure push notifications
-        let userNotificationTypes = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound
+        let userNotificationTypes: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
         let notificationSettings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         
         application.registerUserNotificationSettings(notificationSettings)
@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
     
-    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]!) -> Void) -> Bool {
+    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
         if userActivity.activityType == UserActivityTypes.viewService {
             if let navigationController = self.window?.rootViewController as? UINavigationController {
                 if let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {

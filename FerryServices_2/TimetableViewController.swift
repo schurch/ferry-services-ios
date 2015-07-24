@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FerryServicesCommon
+import FerryServicesCommonTouch
 
 class TimetableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TimetableTimeTableViewCellDelegate {
     
@@ -52,7 +52,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.estimatedRowHeight = 44
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        let pickerCell = self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) as! UITableViewCell
+        let pickerCell = self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell)!
         self.pickerCellRowHeight = Int(pickerCell.frame.size.height)
         
         self.date = NSDate.stripTimeComponentsFromDate(NSDate())
@@ -212,7 +212,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
             }
             else {
                 // date picker
-                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) as! UITableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell)!
                 return cell
             }
         }
@@ -251,7 +251,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
                     cell.labelTimeCounterpart.text = "arriving at \(trip.arrivalTime)"
                     
                     if let notes = trip.notes?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
-                        if count(notes) > 0 {
+                        if notes.characters.count > 0 {
                             cell.buttonInfo.hidden = false
                         }
                         else {

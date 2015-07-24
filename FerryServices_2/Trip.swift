@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import FerryServicesCommon
+import FerryServicesCommonTouch
 
 class Trip {
     
@@ -39,7 +39,7 @@ class Trip {
         
         let strippedDate = NSDate.stripTimeComponentsFromDate(onOrAfterDate)
         
-        var weekday = self.formatters.weekdayFormatter.stringFromDate(strippedDate)
+        let weekday = self.formatters.weekdayFormatter.stringFromDate(strippedDate)
         
         var query = "SELECT COUNT(*)\n"
         query += "FROM CalendarTrip ct,\n"
@@ -82,7 +82,7 @@ class Trip {
             return nil
         }
         
-        var weekday = self.formatters.weekdayFormatter.stringFromDate(date)
+        let weekday = self.formatters.weekdayFormatter.stringFromDate(date)
         
         var query = "SELECT t.Notes as Notes, t.DepartureHour as DepartureHour, t.DepartureMinute as DepartureMinute,"
         query += "t.ArrivalHour as ArrivalHour, t.ArrivalMinute as ArrivalMinute\n"

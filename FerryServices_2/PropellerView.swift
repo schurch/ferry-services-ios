@@ -92,7 +92,7 @@ class PropellerView: UIView {
     
     // MARK: utility methods
     func redrawPropeller() {
-        var propellerBezier = UIBezierPath()
+        let propellerBezier = UIBezierPath()
         propellerBezier.moveToPoint(CGPointMake(frame.minX + 0.47820 * frame.width, frame.minY + 0.44116 * frame.height))
         propellerBezier.addCurveToPoint(CGPointMake(frame.minX + 0.52157 * frame.width, frame.minY + 0.44078 * frame.height), controlPoint1: CGPointMake(frame.minX + 0.49228 * frame.width, frame.minY + 0.43628 * frame.height), controlPoint2: CGPointMake(frame.minX + 0.50756 * frame.width, frame.minY + 0.43621 * frame.height))
         propellerBezier.addLineToPoint(CGPointMake(frame.minX + 0.52157 * frame.width, frame.minY + 0.44078 * frame.height))

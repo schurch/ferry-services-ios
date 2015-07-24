@@ -24,7 +24,7 @@ public class DisruptionDetails: ServiceStatus {
     public var lastUpdated: String? {
         if let updatedDate = self.disruptionUpdatedDate  {
             let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
-            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
+            let components = calendar.components([NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: updatedDate, toDate: NSDate(), options: [])
             
             var updated: String
             

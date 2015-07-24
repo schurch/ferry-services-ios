@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8164.2" systemVersion="14E46" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8083.2"/>
+    </dependencies>
+    <scenes>
+        <!--Services-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller title="Services" id="AgC-eL-Hgc" customClass="ServiceListInterfaceController" customModule="FerryServicesWatch_Extension">
+                    <items>
+                        <label alignment="left" text="Last updated" id="FjV-CF-Ebm">
+                            <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                        </label>
+                        <table alignment="left" id="aKg-Va-cXk">
+                            <items>
+                                <tableRow identifier="serviceRow" id="aYg-xV-s0G" customClass="ServiceRow" customModule="FerryServicesWatch_Extension">
+                                    <group key="rootItem" width="1" alignment="left" id="S8J-iI-EFe">
+                                        <items>
+                                            <imageView width="15" height="15" alignment="left" verticalAlignment="center" image="green" id="6Pz-T8-AcV"/>
+                                            <label alignment="left" verticalAlignment="center" text="Ardrossan - Arran" numberOfLines="2" id="5zn-9p-R4n"/>
+                                        </items>
+                                        <connections>
+                                            <segue destination="GN4-4u-g6f" kind="push" id="ZVZ-p8-bcf"/>
+                                        </connections>
+                                    </group>
+                                    <connections>
+                                        <outlet property="serviceLabel" destination="5zn-9p-R4n" id="Ti0-FF-GXi"/>
+                                        <outlet property="serviceStatusImage" destination="6Pz-T8-AcV" id="Q4m-t2-67S"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="labelLastUpdated" destination="FjV-CF-Ebm" id="RJH-wd-Gso"/>
+                        <outlet property="table" destination="aKg-Va-cXk" id="GZD-r7-BSj"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="220" y="345"/>
+        </scene>
+        <!--Service Detail-->
+        <scene sceneID="uZ1-yU-kKn">
+            <objects>
+                <controller title="Service Detail" hidesWhenLoading="NO" id="GN4-4u-g6f" customClass="ServiceDetailInterfaceController" customModule="FerryServicesWatch_Extension">
+                    <items>
+                        <label alignment="left" text="Ardrossan - Brodick" numberOfLines="0" id="tiP-k3-sdC">
+                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                        </label>
+                        <group width="1" alignment="left" id="UV3-5X-vxD">
+                            <items>
+                                <imageView width="15" height="15" alignment="left" verticalAlignment="center" image="green" id="tLx-d0-yLe"/>
+                                <label alignment="left" verticalAlignment="center" text="Normal" id="OAj-RS-qMl"/>
+                            </items>
+                        </group>
+                        <label alignment="left" text="There are currently no disruptions with this service" numberOfLines="0" id="MUC-0O-fa7">
+                            <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
+                        </label>
+                        <separator alignment="left" id="K0M-5r-TNj">
+                            <color key="color" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </separator>
+                        <label alignment="center" text="View details on your iPhone" textAlignment="center" numberOfLines="0" id="HTc-zC-WXb">
+                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                        </label>
+                    </items>
+                    <connections>
+                        <outlet property="imageViewStatus" destination="tLx-d0-yLe" id="jI4-Lu-6Cy"/>
+                        <outlet property="labelBody" destination="MUC-0O-fa7" id="5Bs-qj-WiZ"/>
+                        <outlet property="labelHeader" destination="tiP-k3-sdC" id="bEK-Q7-nep"/>
+                        <outlet property="labelStatus" destination="OAj-RS-qMl" id="RGm-M0-YAI"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="514" y="345"/>
+        </scene>
+    </scenes>
+    <color key="tintColor" red="0.12941176469999999" green="0.74901960779999999" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+</document>

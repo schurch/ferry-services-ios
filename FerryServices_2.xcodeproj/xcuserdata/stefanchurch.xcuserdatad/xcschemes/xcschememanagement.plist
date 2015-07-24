@@ -4,15 +4,20 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Ferries WatchKit App.xcscheme</key>
+		<key>FerryServicesCommonTouch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>FerryServicesCommonWatch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>FerryServicesWatch.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>5</integer>
-		</dict>
-		<key>FerryServicesCommon.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -28,6 +33,26 @@
 			<true/>
 		</dict>
 		<key>FD9CC13B1B105EF20056C6F8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDBDA2A01B61CACC0099221A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDBDA2B11B61CB060099221A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDBDA2BB1B61CC0F0099221A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDBDA2DF1B61CC6D0099221A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
