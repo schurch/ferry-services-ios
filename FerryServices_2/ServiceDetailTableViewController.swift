@@ -113,7 +113,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.tableView.tableHeaderView!.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.headerHeight)
         
         // if the visualeffect view goes past the top of the screen we want to keep showing mapview blur
-        self.constraintMapViewTop.constant = -self.headerHeight
+//        self.constraintMapViewTop.constant = self.headerHeight
         
         // configure tableview
         self.tableView.backgroundColor = UIColor.clearColor()
@@ -735,9 +735,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
         let rect = self.calculateMapRectForAnnotations(self.annotations!)
-        let topInset = MainStoryBoard.Constants.contentInset + 20
-        let bottomInset = self.mapView.frame.size.height - (MainStoryBoard.Constants.contentInset * 2) + 60
-        let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset, 35, bottomInset, 35))
+        let topInset = CGFloat(5)
+        let bottomInset = self.mapView.frame.size.height - MainStoryBoard.Constants.contentInset + 5
+        let insets = UIEdgeInsetsMake(topInset, MainStoryBoard.Constants.motionEffectAmount, bottomInset, MainStoryBoard.Constants.motionEffectAmount)
+        let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: insets)
         self.mapView.setVisibleMapRect(visibleRect, animated: false)
     }
     
