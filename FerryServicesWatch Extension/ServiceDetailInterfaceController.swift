@@ -19,8 +19,10 @@ class ServiceDetailInterfaceController: WKInterfaceController {
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-        
+
         if let status = context as? ServiceStatus {
+            self.setTitle(status.area)
+            
             self.labelHeader.setText(status.route)
             
             if let disruptionStatus = status.disruptionStatus {

@@ -8,13 +8,14 @@
 
 import UIKit
 import FerryServicesCommonTouch
+import WatchConnectivity
 
 struct AppConstants {
     static let parseChannelPrefix = "S"
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     
     var window: UIWindow?
     
@@ -42,9 +43,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(notificationSettings)
         application.registerForRemoteNotifications()
         
+        if WCSession.isSupported() {
+            let session = WCSession.defaultSession()
+            session.delegate = self;
+            session.activateSession()
+            
+            self.sendWatchAppContext()
+        }
+        
         return true
     }
     
+    // MARK: - Watch context updates
+    func sendWatchAppContext() {
+        guard WCSession.isSupported() else {
+            print("Watch sessions not supported")
+            return
+        }
+        
+        let session = WCSession.defaultSession()
+        
+        if session.paired && session.watchAppInstalled {
+            if let tapCounts = NSUserDefaults.standardUserDefaults().dictionaryForKey(ServicesViewController.Constants.TapCount.userDefaultsKey) as? [String: Int] {
+                
+                let serviceIds = tapCounts.filter { $1 >= ServicesViewController.Constants.TapCount.minimumCount }.map { Int($0.0)! }
+                
+                do {
+                    try session.updateApplicationContext(["recentServiceIds": serviceIds])
+                }
+                catch let error as NSError {
+                    print("Error sending context to watch: \(error)")
+                }
+            }
+        }
+            
+    }
+    
+    // MARK: - Network acitvity indicator handling
     func networkRequestStarted(notification: NSNotification) {
         PFNetworkActivityIndicatorManager.sharedManager().incrementActivityCount()
     }
@@ -53,6 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFNetworkActivityIndicatorManager.sharedManager().decrementActivityCount()
     }
     
+    // MARK: - Notification handling
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         // Store the deviceToken in the current installation and save it to Parse.
         let currentInstallation = PFInstallation.currentInstallation()
@@ -66,6 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFPush.handlePush(userInfo)
     }
     
+    // MARK: - Handoff
     func application(application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
         if userActivityType == UserActivityTypes.viewService {
             return true

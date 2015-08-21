@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
+		FD4E3F151B6C9269008A8BFF /* LoadingInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4E3F141B6C9269008A8BFF /* LoadingInterfaceController.swift */; };
 		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
 		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
@@ -121,7 +122,7 @@
 			remoteGlobalIDString = FDBDA2EB1B61CC6D0099221A;
 			remoteInfo = "FerryServicesWatch Extension";
 		};
-		FDBDA2FC1B61CC6D0099221A /* PBXContainerItemProxy */ = {
+		FDF9D8421B6CAA310018A12F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FD753EC8197A256E00CC5DE3 /* Project object */;
 			proxyType = 1;
@@ -171,6 +172,7 @@
 		6B61FAD87F37434E965A5EF6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD7597146748CC36832D1D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		FD4E3F141B6C9269008A8BFF /* LoadingInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingInterfaceController.swift; sourceTree = "<group>"; };
 		FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
 		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
 		FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
@@ -499,7 +501,6 @@
 				FDBDA3061B61CD3F0099221A /* APIKeys.swift */,
 				FDBDA3071B61CD3F0099221A /* Constants.swift */,
 				FDBDA33B1B61D1340099221A /* Services API */,
-				FDBDA33C1B61D1420099221A /* Weather API */,
 				FDBDA33A1B61D11F0099221A /* Extensions */,
 				FDBDA30A1B61CD3F0099221A /* JSONRequester.swift */,
 				FDBDA30F1B61CD3F0099221A /* SwiftyJSON.swift */,
@@ -533,6 +534,7 @@
 			isa = PBXGroup;
 			children = (
 				FDBDA2F51B61CC6D0099221A /* ExtensionDelegate.swift */,
+				FD4E3F141B6C9269008A8BFF /* LoadingInterfaceController.swift */,
 				FDBDA33E1B61D3480099221A /* ServiceListInterfaceController.swift */,
 				FDBDA33F1B61D3480099221A /* ServiceRow.swift */,
 				FDBDA33D1B61D3480099221A /* ServiceDetailInterfaceController.swift */,
@@ -567,6 +569,7 @@
 				FDBDA30D1B61CD3F0099221A /* ServicesAPIClient.swift */,
 				FDBDA3081B61CD3F0099221A /* DisruptionDetails.swift */,
 				FDBDA30E1B61CD3F0099221A /* ServiceStatus.swift */,
+				FDBDA33C1B61D1420099221A /* Weather API */,
 			);
 			name = "Services API";
 			sourceTree = "<group>";
@@ -659,8 +662,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				FDF9D8431B6CAA310018A12F /* PBXTargetDependency */,
 				FDBDA2A71B61CACC0099221A /* PBXTargetDependency */,
-				FDBDA2FD1B61CC6D0099221A /* PBXTargetDependency */,
 			);
 			name = FerryServices_2;
 			productName = FerryServices_2;
@@ -772,6 +775,9 @@
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
+							};
+							com.apple.BackgroundModes = {
+								enabled = 1;
 							};
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -1012,6 +1018,7 @@
 				FDBDA3401B61D3480099221A /* ServiceDetailInterfaceController.swift in Sources */,
 				FDBDA3411B61D3480099221A /* ServiceListInterfaceController.swift in Sources */,
 				FDBDA2F61B61CC6D0099221A /* ExtensionDelegate.swift in Sources */,
+				FD4E3F151B6C9269008A8BFF /* LoadingInterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1033,10 +1040,10 @@
 			target = FDBDA2EB1B61CC6D0099221A /* FerryServicesWatch Extension */;
 			targetProxy = FDBDA2EE1B61CC6D0099221A /* PBXContainerItemProxy */;
 		};
-		FDBDA2FD1B61CC6D0099221A /* PBXTargetDependency */ = {
+		FDF9D8431B6CAA310018A12F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FDBDA2DF1B61CC6D0099221A /* FerryServicesWatch */;
-			targetProxy = FDBDA2FC1B61CC6D0099221A /* PBXContainerItemProxy */;
+			targetProxy = FDF9D8421B6CAA310018A12F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

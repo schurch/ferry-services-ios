@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8164.2" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Bold</string>
+            <string>HelveticaNeue</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Ferries-->
         <scene sceneID="CfR-48-wwL">
@@ -280,20 +286,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="pKD-PB-YuA" firstAttribute="leading" secondItem="hen-jj-MOU" secondAttribute="leading" id="6Ya-s1-fti"/>
-                            <constraint firstItem="jnL-zy-irC" firstAttribute="leading" secondItem="hen-jj-MOU" secondAttribute="leading" id="R1C-3X-b87"/>
-                            <constraint firstItem="pKD-PB-YuA" firstAttribute="top" secondItem="hen-jj-MOU" secondAttribute="top" id="cLb-TE-ZwU"/>
-                            <constraint firstItem="jnL-zy-irC" firstAttribute="top" secondItem="dSu-df-ofQ" secondAttribute="bottom" id="drT-mK-Evi"/>
-                            <constraint firstAttribute="trailing" secondItem="jnL-zy-irC" secondAttribute="trailing" id="hD4-ar-4F3"/>
-                            <constraint firstAttribute="trailing" secondItem="pKD-PB-YuA" secondAttribute="trailing" id="kBP-9b-8hX"/>
-                            <constraint firstItem="Ify-K7-wFo" firstAttribute="top" secondItem="pKD-PB-YuA" secondAttribute="bottom" id="pMH-04-KYb"/>
-                            <constraint firstItem="Ify-K7-wFo" firstAttribute="top" secondItem="jnL-zy-irC" secondAttribute="bottom" id="yQT-Hg-cNl"/>
+                            <constraint firstItem="jnL-zy-irC" firstAttribute="leading" secondItem="hen-jj-MOU" secondAttribute="leading" id="1mM-Lm-acW"/>
+                            <constraint firstItem="pKD-PB-YuA" firstAttribute="top" secondItem="dSu-df-ofQ" secondAttribute="bottom" id="BVa-I3-4s2"/>
+                            <constraint firstAttribute="trailing" secondItem="pKD-PB-YuA" secondAttribute="trailing" id="DRB-A9-we4"/>
+                            <constraint firstItem="jnL-zy-irC" firstAttribute="top" secondItem="dSu-df-ofQ" secondAttribute="bottom" id="FHV-Da-J3q"/>
+                            <constraint firstAttribute="trailing" secondItem="jnL-zy-irC" secondAttribute="trailing" id="FMt-4K-eDv"/>
+                            <constraint firstItem="pKD-PB-YuA" firstAttribute="leading" secondItem="hen-jj-MOU" secondAttribute="leading" id="LI5-cy-sGr"/>
+                            <constraint firstItem="Ify-K7-wFo" firstAttribute="top" secondItem="jnL-zy-irC" secondAttribute="bottom" id="jVo-qa-mtt"/>
+                            <constraint firstItem="Ify-K7-wFo" firstAttribute="top" secondItem="pKD-PB-YuA" secondAttribute="bottom" id="zXC-zB-hlv"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="constraintMapViewLeading" destination="R1C-3X-b87" id="1IX-Jy-47M"/>
-                        <outlet property="constraintMapViewTop" destination="drT-mK-Evi" id="Bwp-6P-pIc"/>
-                        <outlet property="constraintMapViewTrailing" destination="hD4-ar-4F3" id="AXy-XU-VqX"/>
+                        <outlet property="constraintMapViewLeading" destination="1mM-Lm-acW" id="VJG-pj-Kyj"/>
+                        <outlet property="constraintMapViewTop" destination="FHV-Da-J3q" id="pAm-Al-JCN"/>
+                        <outlet property="constraintMapViewTrailing" destination="FMt-4K-eDv" id="JdC-3C-xhT"/>
                         <outlet property="labelArea" destination="goM-eX-csF" id="4m7-yA-5HV"/>
                         <outlet property="labelRoute" destination="Mkm-Ib-seo" id="Rgi-gf-dzI"/>
                         <outlet property="mapView" destination="jnL-zy-irC" id="Cle-RG-q96"/>
@@ -360,7 +366,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunday 02 Mar 14" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TSv-dP-wmO">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sunday 02 Mar 14" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TSv-dP-wmO">
                                                     <rect key="frame" x="452" y="11" width="126" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="RMR-Y3-kbK"/>
@@ -369,7 +375,7 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Departures" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yb-8y-oJD">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Departures" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yb-8y-oJD">
                                                     <rect key="frame" x="15" y="11" width="76" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" priority="999" constant="21" id="BWe-B3-Ht4"/>
@@ -495,7 +501,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="215.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <datePicker tag="99" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="HVR-Iw-3kt">
+                                                <datePicker tag="99" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="HVR-Iw-3kt">
                                                     <rect key="frame" x="8" y="17" width="584" height="180"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" priority="999" constant="180" id="gU5-Wy-DoI"/>

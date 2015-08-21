@@ -19,7 +19,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         }
     }
     
-    private struct Constants {
+    public struct Constants {
         struct TableViewSections {
             static let recent = 0
             static let services = 1
@@ -267,6 +267,9 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             
             navigationItem.rightBarButtonItem = arrayRecentServiceStatues.count > 0 ? editButtonItem() : nil
             
+            if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+                appDelegate.sendWatchAppContext()
+            }
         }
     }
     
@@ -280,6 +283,9 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         let serviceStatus = self.arrayServiceStatuses[indexPath.row]
         if let serviceId = serviceStatus.serviceId {
             self.incrementTapCountForServiceId(serviceId)
+            if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+                appDelegate.sendWatchAppContext()
+            }
         }
     }
     

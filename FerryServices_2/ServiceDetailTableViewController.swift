@@ -524,11 +524,12 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func winterPath() -> String {
-        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2015/Winter/\(serviceStatus.serviceId!).pdf")
+        NSBundle.mainBundle().bundlePath
+        return NSBundle.mainBundle().bundlePath.stringByAppendingString("Timetables/2015/Winter/\(serviceStatus.serviceId!).pdf")
     }
     
     private func summerPath() -> String {
-        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2015/Summer/\(serviceStatus.serviceId!).pdf")
+        return NSBundle.mainBundle().bundlePath.stringByAppendingString("Timetables/2015/Summer/\(serviceStatus.serviceId!).pdf")
     }
     
     private func showPDFTimetableAtPath(path: String, title: String) {

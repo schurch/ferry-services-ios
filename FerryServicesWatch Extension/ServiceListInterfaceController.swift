@@ -23,15 +23,15 @@ class ServiceListInterfaceController: WKInterfaceController {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        configureLastUpdated()
-        configureTable()
+//        configureLastUpdated()
+//        configureTable()
     }
     
     override func willActivate() {
         super.willActivate()
         
-        configureLastUpdated()
-        configureTable()
+//        configureLastUpdated()
+//        configureTable()
     }
     
     // MARK: -
