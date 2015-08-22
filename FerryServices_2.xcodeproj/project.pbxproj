@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
-		FD4E3F151B6C9269008A8BFF /* LoadingInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4E3F141B6C9269008A8BFF /* LoadingInterfaceController.swift */; };
+		FD4E3F151B6C9269008A8BFF /* LoaderInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4E3F141B6C9269008A8BFF /* LoaderInterfaceController.swift */; };
 		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
 		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
@@ -44,6 +44,8 @@
 		FD8819FF1A998DAA002A976A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FE1A998DAA002A976A /* Social.framework */; };
 		FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */; };
 		FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8DDDB119B094B0008479DC /* Crashlytics.framework */; };
+		FD9045801B88260600EE48BC /* locations.csv in Resources */ = {isa = PBXBuildFile; fileRef = FD90457F1B88260600EE48BC /* locations.csv */; };
+		FD9045821B88293E00EE48BC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9045811B88293E00EE48BC /* Location.swift */; };
 		FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */; };
 		FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */; };
 		FD9432D719CD0EA4003BBD23 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9432D619CD0EA4003BBD23 /* libPods.a */; };
@@ -172,7 +174,7 @@
 		6B61FAD87F37434E965A5EF6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD7597146748CC36832D1D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		FD4E3F141B6C9269008A8BFF /* LoadingInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingInterfaceController.swift; sourceTree = "<group>"; };
+		FD4E3F141B6C9269008A8BFF /* LoaderInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderInterfaceController.swift; sourceTree = "<group>"; };
 		FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
 		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
 		FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
@@ -213,6 +215,8 @@
 		FD8819FE1A998DAA002A976A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailWeatherCell.swift; sourceTree = "<group>"; };
 		FD8DDDB119B094B0008479DC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		FD90457F1B88260600EE48BC /* locations.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = locations.csv; sourceTree = "<group>"; };
+		FD9045811B88293E00EE48BC /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDisruptionsTableViewCell.swift; sourceTree = "<group>"; };
 		FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
@@ -498,9 +502,10 @@
 		FDBDA2A21B61CACC0099221A /* FerryServicesCommonTouch */ = {
 			isa = PBXGroup;
 			children = (
-				FDBDA3061B61CD3F0099221A /* APIKeys.swift */,
 				FDBDA3071B61CD3F0099221A /* Constants.swift */,
+				FDBDA3061B61CD3F0099221A /* APIKeys.swift */,
 				FDBDA33B1B61D1340099221A /* Services API */,
+				FDBDA33C1B61D1420099221A /* Weather API */,
 				FDBDA33A1B61D11F0099221A /* Extensions */,
 				FDBDA30A1B61CD3F0099221A /* JSONRequester.swift */,
 				FDBDA30F1B61CD3F0099221A /* SwiftyJSON.swift */,
@@ -534,10 +539,12 @@
 			isa = PBXGroup;
 			children = (
 				FDBDA2F51B61CC6D0099221A /* ExtensionDelegate.swift */,
-				FD4E3F141B6C9269008A8BFF /* LoadingInterfaceController.swift */,
+				FD4E3F141B6C9269008A8BFF /* LoaderInterfaceController.swift */,
 				FDBDA33E1B61D3480099221A /* ServiceListInterfaceController.swift */,
 				FDBDA33F1B61D3480099221A /* ServiceRow.swift */,
 				FDBDA33D1B61D3480099221A /* ServiceDetailInterfaceController.swift */,
+				FD9045811B88293E00EE48BC /* Location.swift */,
+				FD90457F1B88260600EE48BC /* locations.csv */,
 				FDBDA2F91B61CC6D0099221A /* Assets.xcassets */,
 				FDBDA2FB1B61CC6D0099221A /* Info.plist */,
 				FDBDA2F11B61CC6D0099221A /* Supporting Files */,
@@ -569,7 +576,6 @@
 				FDBDA30D1B61CD3F0099221A /* ServicesAPIClient.swift */,
 				FDBDA3081B61CD3F0099221A /* DisruptionDetails.swift */,
 				FDBDA30E1B61CD3F0099221A /* ServiceStatus.swift */,
-				FDBDA33C1B61D1420099221A /* Weather API */,
 			);
 			name = "Services API";
 			sourceTree = "<group>";
@@ -880,6 +886,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD9045801B88260600EE48BC /* locations.csv in Resources */,
 				FDBDA2FA1B61CC6D0099221A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1018,7 +1025,8 @@
 				FDBDA3401B61D3480099221A /* ServiceDetailInterfaceController.swift in Sources */,
 				FDBDA3411B61D3480099221A /* ServiceListInterfaceController.swift in Sources */,
 				FDBDA2F61B61CC6D0099221A /* ExtensionDelegate.swift in Sources */,
-				FD4E3F151B6C9269008A8BFF /* LoadingInterfaceController.swift in Sources */,
+				FD9045821B88293E00EE48BC /* Location.swift in Sources */,
+				FD4E3F151B6C9269008A8BFF /* LoaderInterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

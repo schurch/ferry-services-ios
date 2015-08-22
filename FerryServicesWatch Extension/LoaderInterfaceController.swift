@@ -11,7 +11,13 @@ import Foundation
 import FerryServicesCommonWatch
 import CoreLocation
 
-class LoadingInterfaceController: WKInterfaceController {
+enum LocationLoaderError: ErrorType {
+    case UnableToCreateFilePath
+    case FileMissing
+    case ProblemReadingFile
+}
+
+class LoaderInterfaceController: WKInterfaceController {
     
     @IBOutlet var labelLoading: WKInterfaceLabel!
     
@@ -22,7 +28,18 @@ class LoadingInterfaceController: WKInterfaceController {
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
+        do {
+            let locations = try self.getLocations()
+            locations.forEach { location in
+                print("Name: \(location.name)\n")
+            }
+        }
+        catch {
+            print("Error getting locations")
+        }
+        
         self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
         
         if let recentServiceIds = NSUserDefaults.standardUserDefaults().arrayForKey("recentServiceIds") as? [Int] {
             if recentServiceIds.count > 0 {
@@ -67,16 +84,58 @@ class LoadingInterfaceController: WKInterfaceController {
             return
         }
         
-        self.labelLoading.setText("Searching for\nnearest port...")
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        
+        switch authorizationStatus {
+        case .NotDetermined:
+            isRequestingLocation = true
+            self.labelLoading.setText("Looking for nearest port...")
+            self.locationManager.requestWhenInUseAuthorization()
+            
+        case .AuthorizedWhenInUse:
+            isRequestingLocation = true
+            self.labelLoading.setText("Looking for nearest port...")
+            self.locationManager.requestLocation()
+            
+        case .Denied:
+            self.labelLoading.setText("Unable to determine location. Please enable location services on your phone.")
+            
+        default:
+            self.labelLoading.setText("Unexpected authorization status.")
+        }
         
         self.isRequestingLocation = true
         
         self.locationManager.requestLocation()
     }
     
+    func getLocations() throws -> [Location] {
+        guard let locationsFilePath = NSBundle.mainBundle().pathForResource("locations", ofType: "csv") else  {
+            throw LocationLoaderError.UnableToCreateFilePath
+        }
+        
+        guard NSFileManager.defaultManager().fileExistsAtPath(locationsFilePath) else {
+            throw LocationLoaderError.FileMissing
+        }
+        
+        guard let csvContents = NSString.stringWithContentsOfFile(locationsFilePath) else {
+            throw LocationLoaderError.ProblemReadingFile
+        }
+        
+        let lines = csvContents.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        return lines.map { (line: String) -> (Location) in
+            let components = line.componentsSeparatedByString(",")
+            
+            let latitude = Double(components[2])!
+            let longitude = Double(components[3])!
+            let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            
+            return Location(locationId: Int(components[0])!, name: components[1], coordinates: coordinates)
+        }
+    }
 }
 
-extension LoadingInterfaceController: CLLocationManagerDelegate {
+extension LoaderInterfaceController: CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard !locations.isEmpty else { return }
         
@@ -92,6 +151,7 @@ extension LoadingInterfaceController: CLLocationManagerDelegate {
         dispatch_async(dispatch_get_main_queue()) {
             print("Error fetching location: \(error)")
             
+            self.labelLoading.setText("Error trying to find nearest port.")
             self.isRequestingLocation = false
         }
     }

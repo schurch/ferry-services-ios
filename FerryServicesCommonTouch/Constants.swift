@@ -15,3 +15,7 @@ public struct UserActivityTypes {
 public struct UserActivityUserInfoKeys {
     public static let serviceId = "serviceId"
 }
+
+public struct WatchConnectivityKeys {
+    public static let recentServiceIds = "recentServiceIds"
+}

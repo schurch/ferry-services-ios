@@ -8,6 +8,7 @@
 
 import WatchKit
 import WatchConnectivity
+import FerryServicesCommonWatch
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
 
@@ -31,7 +32,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
 extension ExtensionDelegate: WCSessionDelegate {
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        if let recentServiceIds = applicationContext["recentServiceIds"] as? [Int] {
+        if let recentServiceIds = applicationContext[WatchConnectivityKeys.recentServiceIds] as? [Int] {
             NSUserDefaults.standardUserDefaults().setObject(recentServiceIds, forKey: "recentServiceIds")
             NSUserDefaults.standardUserDefaults().synchronize()
         }

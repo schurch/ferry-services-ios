@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                 let serviceIds = tapCounts.filter { $1 >= ServicesViewController.Constants.TapCount.minimumCount }.map { Int($0.0)! }
                 
                 do {
-                    try session.updateApplicationContext(["recentServiceIds": serviceIds])
+                    try session.updateApplicationContext([WatchConnectivityKeys.recentServiceIds: serviceIds])
                 }
                 catch let error as NSError {
                     print("Error sending context to watch: \(error)")
