@@ -9,20 +9,13 @@
 import WatchKit
 import Foundation
 import FerryServicesCommonWatch
-import CoreLocation
 
 class LoadingInterfaceController: WKInterfaceController {
     
     @IBOutlet var labelLoading: WKInterfaceLabel!
     
-    let locationManager = CLLocationManager()
-    
-    var isRequestingLocation = false
-    
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-        
-        self.locationManager.delegate = self
         
         if let recentServiceIds = NSUserDefaults.standardUserDefaults().arrayForKey("recentServiceIds") as? [Int] {
             if recentServiceIds.count > 0 {
@@ -43,12 +36,6 @@ class LoadingInterfaceController: WKInterfaceController {
                     WKInterfaceController.reloadRootControllersWithNames(controllers, contexts: recentServices)
                 }
             }
-            else {
-                self.requestLocation()
-            }
-        }
-        else {
-            self.requestLocation()
         }
     }
     
@@ -62,37 +49,4 @@ class LoadingInterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
     
-    func requestLocation() {
-        guard !self.isRequestingLocation else {
-            return
-        }
-        
-        self.labelLoading.setText("Searching for\nnearest port...")
-        
-        self.isRequestingLocation = true
-        
-        self.locationManager.requestLocation()
-    }
-    
-}
-
-extension LoadingInterfaceController: CLLocationManagerDelegate {
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard !locations.isEmpty else { return }
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            let lastLocationCoordinate = locations.last!.coordinate
-            print("Location: \(lastLocationCoordinate)")
-            
-            self.isRequestingLocation = false
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        dispatch_async(dispatch_get_main_queue()) {
-            print("Error fetching location: \(error)")
-            
-            self.isRequestingLocation = false
-        }
-    }
 }

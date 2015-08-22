@@ -33,9 +33,6 @@
                                 <label alignment="left" verticalAlignment="center" text="Normal" id="OAj-RS-qMl"/>
                             </items>
                         </group>
-                        <label alignment="left" text="There are currently no disruptions with this service" numberOfLines="0" id="MUC-0O-fa7">
-                            <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
-                        </label>
                         <separator alignment="left" id="K0M-5r-TNj">
                             <color key="color" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                         </separator>
@@ -45,7 +42,6 @@
                     </items>
                     <connections>
                         <outlet property="imageViewStatus" destination="tLx-d0-yLe" id="jI4-Lu-6Cy"/>
-                        <outlet property="labelBody" destination="MUC-0O-fa7" id="5Bs-qj-WiZ"/>
                         <outlet property="labelHeader" destination="tiP-k3-sdC" id="bEK-Q7-nep"/>
                         <outlet property="labelStatus" destination="OAj-RS-qMl" id="RGm-M0-YAI"/>
                     </connections>

@@ -87,8 +87,6 @@
 		FDBDA3381B61D0FB0099221A /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDA3111B61CD3F0099221A /* Utility.swift */; };
 		FDBDA3391B61D0FB0099221A /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDA3121B61CD3F0099221A /* WeatherAPIClient.swift */; };
 		FDBDA3401B61D3480099221A /* ServiceDetailInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDA33D1B61D3480099221A /* ServiceDetailInterfaceController.swift */; };
-		FDBDA3411B61D3480099221A /* ServiceListInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDA33E1B61D3480099221A /* ServiceListInterfaceController.swift */; };
-		FDBDA3421B61D3480099221A /* ServiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBDA33F1B61D3480099221A /* ServiceRow.swift */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC7760C19844C2B00B3782F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760B19844C2B00B3782F /* Route.swift */; };
 		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
@@ -251,8 +249,6 @@
 		FDBDA3111B61CD3F0099221A /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		FDBDA3121B61CD3F0099221A /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
 		FDBDA33D1B61D3480099221A /* ServiceDetailInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailInterfaceController.swift; sourceTree = "<group>"; };
-		FDBDA33E1B61D3480099221A /* ServiceListInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceListInterfaceController.swift; sourceTree = "<group>"; };
-		FDBDA33F1B61D3480099221A /* ServiceRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceRow.swift; sourceTree = "<group>"; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FDC7760B19844C2B00B3782F /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Route.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC7760D19844C3500B3782F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Location.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -535,8 +531,6 @@
 			children = (
 				FDBDA2F51B61CC6D0099221A /* ExtensionDelegate.swift */,
 				FD4E3F141B6C9269008A8BFF /* LoadingInterfaceController.swift */,
-				FDBDA33E1B61D3480099221A /* ServiceListInterfaceController.swift */,
-				FDBDA33F1B61D3480099221A /* ServiceRow.swift */,
 				FDBDA33D1B61D3480099221A /* ServiceDetailInterfaceController.swift */,
 				FDBDA2F91B61CC6D0099221A /* Assets.xcassets */,
 				FDBDA2FB1B61CC6D0099221A /* Info.plist */,
@@ -1014,9 +1008,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDBDA3421B61D3480099221A /* ServiceRow.swift in Sources */,
 				FDBDA3401B61D3480099221A /* ServiceDetailInterfaceController.swift in Sources */,
-				FDBDA3411B61D3480099221A /* ServiceListInterfaceController.swift in Sources */,
 				FDBDA2F61B61CC6D0099221A /* ExtensionDelegate.swift in Sources */,
 				FD4E3F151B6C9269008A8BFF /* LoadingInterfaceController.swift in Sources */,
 			);
