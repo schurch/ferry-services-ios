@@ -5,33 +5,33 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8089"/>
     </dependencies>
     <scenes>
-        <!--Service Detail-->
+        <!--serviceDetail-->
         <scene sceneID="uZ1-yU-kKn">
             <objects>
-                <controller identifier="serviceDetail" title="Service Detail" hidesWhenLoading="NO" id="GN4-4u-g6f" customClass="ServiceDetailInterfaceController" customModule="FerryServicesWatch_Extension">
+                <controller identifier="serviceDetail" hidesWhenLoading="NO" id="GN4-4u-g6f" customClass="ServiceDetailInterfaceController" customModule="FerryServicesWatch_Extension">
                     <items>
-                        <label alignment="left" text="Ardrossan - Brodick" numberOfLines="0" id="tiP-k3-sdC">
+                        <label alignment="left" numberOfLines="0" id="tiP-k3-sdC">
                             <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
                         </label>
-                        <label alignment="left" text="Updated 5 mins ago" id="9FZ-8u-uUJ">
+                        <label alignment="left" id="9FZ-8u-uUJ">
                             <color key="textColor" red="0.7843137255" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
                         </label>
-                        <separator alignment="left" id="Cnb-3Q-FXu">
+                        <separator alignment="left" hidden="YES" id="Cnb-3Q-FXu">
                             <color key="color" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         </separator>
                         <group width="1" alignment="left" id="UV3-5X-vxD">
                             <items>
-                                <imageView width="15" height="15" alignment="left" verticalAlignment="center" image="green" id="tLx-d0-yLe"/>
-                                <label alignment="left" verticalAlignment="center" text="Normal" id="OAj-RS-qMl">
+                                <imageView width="15" height="15" alignment="left" verticalAlignment="center" id="tLx-d0-yLe"/>
+                                <label alignment="left" verticalAlignment="center" id="OAj-RS-qMl">
                                     <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
                                 </label>
                             </items>
                         </group>
-                        <separator alignment="left" id="K0M-5r-TNj">
+                        <separator alignment="left" hidden="YES" id="K0M-5r-TNj">
                             <color key="color" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         </separator>
-                        <label alignment="center" text="View details on your iPhone" textAlignment="center" numberOfLines="0" id="HTc-zC-WXb">
+                        <label alignment="center" textAlignment="center" numberOfLines="0" id="HTc-zC-WXb">
                             <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
                         </label>
                     </items>
@@ -40,6 +40,9 @@
                         <outlet property="labelHeader" destination="tiP-k3-sdC" id="bEK-Q7-nep"/>
                         <outlet property="labelStatus" destination="OAj-RS-qMl" id="RGm-M0-YAI"/>
                         <outlet property="labelUpdated" destination="9FZ-8u-uUJ" id="KzF-RH-AMi"/>
+                        <outlet property="labelViewOnPhone" destination="HTc-zC-WXb" id="f4Y-nX-eq1"/>
+                        <outlet property="separatorOne" destination="Cnb-3Q-FXu" id="lLY-ic-9jL"/>
+                        <outlet property="separatorTwo" destination="K0M-5r-TNj" id="Qg9-Tr-SZO"/>
                     </connections>
                 </controller>
             </objects>

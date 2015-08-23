@@ -16,36 +16,52 @@ class ServiceDetailInterfaceController: WKInterfaceController {
     @IBOutlet weak var labelHeader: WKInterfaceLabel!
     @IBOutlet weak var labelStatus: WKInterfaceLabel!
     @IBOutlet weak var labelUpdated: WKInterfaceLabel!
+    @IBOutlet weak var labelViewOnPhone: WKInterfaceLabel!
+    @IBOutlet weak var separatorOne: WKInterfaceSeparator!
+    @IBOutlet weak var separatorTwo: WKInterfaceSeparator!
     
-    var serviceId: Int!
+    var serviceId: Int?
+    var disruptionDetails: DisruptionDetails?
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        self.serviceId = context as! Int
+        self.serviceId = context as? Int
     }
     
     override func willActivate() {
-        self.updateUserActivity(UserActivityTypes.viewService, userInfo: [UserActivityUserInfoKeys.serviceId: self.serviceId], webpageURL: nil)
+        self.fetchDisruptionDetails()
+        
+        if let serviceId = self.serviceId {
+            self.updateUserActivity(UserActivityTypes.viewService, userInfo: [UserActivityUserInfoKeys.serviceId: serviceId], webpageURL: nil)
+        }
     }
     
     // MARK: - Fetch details
-    func fetchServiceStatus() {
-        self.configureLoadingState()
-        ServicesAPIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(self.serviceId) { disruptionsDetails, error in
-            self.configureWithDetails(disruptionsDetails!)
+    func fetchDisruptionDetails() {
+        if let serviceId = self.serviceId {
+            self.configureLoadingState()
+            
+            ServicesAPIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, error in
+                self.disruptionDetails = disruptionDetails
+                self.configureView()
+            }
         }
     }
     
     // MARK: - View configuration
-    func configureWithDetails(status: DisruptionDetails) {
-        self.setTitle(status.area)
+    func configureView() {
+        guard let disruptionDetails = self.disruptionDetails else {
+            return
+        }
         
-        self.labelHeader.setText(status.route)
+        self.setTitle(disruptionDetails.area)
+        
+        self.labelHeader.setText(disruptionDetails.route)
         
         self.labelUpdated.setText("Updated just now")
         
-        if let disruptionStatus = status.disruptionStatus {
+        if let disruptionStatus = disruptionDetails.disruptionStatus {
             switch disruptionStatus {
             case .Normal:
                 self.labelStatus.setText("Normal")
@@ -61,12 +77,26 @@ class ServiceDetailInterfaceController: WKInterfaceController {
                 self.imageViewStatus.setImageNamed(nil)
             }
         }
+        
+        self.labelViewOnPhone.setText("View details on your iPhone")
+        
+        self.labelViewOnPhone.setHidden(false)
+        self.separatorOne.setHidden(false)
+        self.separatorTwo.setHidden(false)
     }
     
     func configureLoadingState() {
+        if self.disruptionDetails != nil {
+            self.labelUpdated.setText("Updating...")
+            return
+        }
+        
         self.labelUpdated.setText("Updating...")
         self.labelHeader.setText("")
         self.labelStatus.setText("")
         self.imageViewStatus.setImageNamed(nil)
+        self.labelViewOnPhone.setHidden(true)
+        self.separatorOne.setHidden(true)
+        self.separatorTwo.setHidden(true)
     }
 }

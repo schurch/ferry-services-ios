@@ -20,12 +20,14 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             session.delegate = self
             session.activateSession()
         }
-        
+    }
+    
+    func applicationDidBecomeActive() {
         switch self.recentServices {
-        case let recentServiceIds?:
+        case let recentServiceIds? where recentServiceIds.count > 0:
             let controllers = Array(count: recentServiceIds.count, repeatedValue: "serviceDetail")
             WKInterfaceController.reloadRootControllersWithNames(controllers, contexts: recentServiceIds)
-        case nil:
+        default:
             WKInterfaceController.reloadRootControllersWithNames(["noServices"], contexts: nil)
         }
     }
