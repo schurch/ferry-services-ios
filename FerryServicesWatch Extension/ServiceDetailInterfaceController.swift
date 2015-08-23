@@ -12,44 +12,61 @@ import FerryServicesCommonWatch
 
 class ServiceDetailInterfaceController: WKInterfaceController {
     
-    @IBOutlet weak var labelBody: WKInterfaceLabel!
+    @IBOutlet weak var imageViewStatus: WKInterfaceImage!
     @IBOutlet weak var labelHeader: WKInterfaceLabel!
     @IBOutlet weak var labelStatus: WKInterfaceLabel!
-    @IBOutlet weak var imageViewStatus: WKInterfaceImage!
+    @IBOutlet weak var labelUpdated: WKInterfaceLabel!
+    
+    var serviceId: Int!
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-
-        if let status = context as? ServiceStatus {
-            self.setTitle(status.area)
-            
-            self.labelHeader.setText(status.route)
-            
-            if let disruptionStatus = status.disruptionStatus {
-                switch disruptionStatus {
-                case .Normal:
-                    self.labelBody.setText("There are currently no disruptions with this service")
-                    self.labelStatus.setText("Normal")
-                    self.imageViewStatus.setImageNamed("green")
-                case .SailingsAffected:
-                    self.labelBody.setText("There are disruptions with this service")
-                    self.labelStatus.setText("Disrupted")
-                    self.imageViewStatus.setImageNamed("amber")
-                case .SailingsCancelled:
-                    self.labelBody.setText("Sailings have been cancelled for this service")
-                    self.labelStatus.setText("Cancelled")
-                    self.imageViewStatus.setImageNamed("red")
-                case .Unknown:
-                    self.labelBody.setText("There was an error fetching the disruption information for this service")
-                    self.labelStatus.setText("Unknown")
-                    self.imageViewStatus.setImageNamed(nil)
-                }
-            }
-            
-            if let serviceId = status.serviceId {
-                self.updateUserActivity(UserActivityTypes.viewService, userInfo: [UserActivityUserInfoKeys.serviceId: serviceId], webpageURL: nil)
-            }
-        }   
+        
+        self.serviceId = context as! Int
     }
     
+    override func willActivate() {
+        self.updateUserActivity(UserActivityTypes.viewService, userInfo: [UserActivityUserInfoKeys.serviceId: self.serviceId], webpageURL: nil)
+    }
+    
+    // MARK: - Fetch details
+    func fetchServiceStatus() {
+        self.configureLoadingState()
+        ServicesAPIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(self.serviceId) { disruptionsDetails, error in
+            self.configureWithDetails(disruptionsDetails!)
+        }
+    }
+    
+    // MARK: - View configuration
+    func configureWithDetails(status: DisruptionDetails) {
+        self.setTitle(status.area)
+        
+        self.labelHeader.setText(status.route)
+        
+        self.labelUpdated.setText("Updated just now")
+        
+        if let disruptionStatus = status.disruptionStatus {
+            switch disruptionStatus {
+            case .Normal:
+                self.labelStatus.setText("Normal")
+                self.imageViewStatus.setImageNamed("green")
+            case .SailingsAffected:
+                self.labelStatus.setText("Disrupted")
+                self.imageViewStatus.setImageNamed("amber")
+            case .SailingsCancelled:
+                self.labelStatus.setText("Cancelled")
+                self.imageViewStatus.setImageNamed("red")
+            case .Unknown:
+                self.labelStatus.setText("Unknown")
+                self.imageViewStatus.setImageNamed(nil)
+            }
+        }
+    }
+    
+    func configureLoadingState() {
+        self.labelUpdated.setText("Updating...")
+        self.labelHeader.setText("")
+        self.labelStatus.setText("")
+        self.imageViewStatus.setImageNamed(nil)
+    }
 }

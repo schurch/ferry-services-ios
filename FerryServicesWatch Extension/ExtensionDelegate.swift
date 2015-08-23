@@ -8,23 +8,26 @@
 
 import WatchKit
 import WatchConnectivity
+import FerryServicesCommonWatch
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
-
+    
+    var recentServices = NSUserDefaults.standardUserDefaults().arrayForKey("recentServiceIds") as? [Int]
+    
     func applicationDidFinishLaunching() {
         if WCSession.isSupported() {
             let session = WCSession.defaultSession()
             session.delegate = self
             session.activateSession()
         }
-    }
-
-    func applicationDidBecomeActive() {
         
-    }
-
-    func applicationWillResignActive() {
-        
+        switch self.recentServices {
+        case let recentServiceIds?:
+            let controllers = Array(count: recentServiceIds.count, repeatedValue: "serviceDetail")
+            WKInterfaceController.reloadRootControllersWithNames(controllers, contexts: recentServiceIds)
+        case nil:
+            WKInterfaceController.reloadRootControllersWithNames(["noServices"], contexts: nil)
+        }
     }
 }
 
