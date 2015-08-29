@@ -41,7 +41,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.portAnnotationReuseIdentifier)
-            pinView.pinColor = MKPinAnnotationColor.Red
+            pinView.pinTintColor = MKPinAnnotationView.redPinColor()
             pinView.animatesDrop = false
             pinView.canShowCallout = true
             

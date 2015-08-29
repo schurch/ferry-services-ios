@@ -19,7 +19,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         }
     }
     
-    public struct Constants {
+    struct Constants {
         struct TableViewSections {
             static let recent = 0
             static let services = 1

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8173.3" systemVersion="14F27" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="GN4-4u-g6f">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8187.4" systemVersion="14F27" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="GN4-4u-g6f">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8151.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8092"/>
     </dependencies>
     <scenes>
         <!--serviceDetail-->
@@ -48,15 +48,23 @@
             </objects>
             <point key="canvasLocation" x="514" y="345"/>
         </scene>
-        <!--No Services-->
+        <!--Services-->
         <scene sceneID="7ht-qB-Eiz">
             <objects>
-                <controller identifier="noServices" title="No Services" hidesWhenLoading="NO" id="C0c-Tz-NsR">
+                <controller identifier="noServices" title="Services" hidesWhenLoading="NO" id="C0c-Tz-NsR">
                     <items>
-                        <label height="0.59999999999999998" alignment="center" text="Your recent services will show here" textAlignment="center" numberOfLines="0" id="jRn-Qy-Ir2">
-                            <color key="textColor" white="0.860079025" alpha="1" colorSpace="calibratedWhite"/>
-                            <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
-                        </label>
+                        <group width="1" alignment="left" layout="vertical" id="yXN-pF-g6N">
+                            <items>
+                                <label alignment="center" text="No services" id="VLX-vD-gsn">
+                                    <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
+                                </label>
+                                <label alignment="center" text="Recently viewed services will appear here once you start viewing them on your iPhone." textAlignment="center" numberOfLines="0" id="Yc8-47-6gU">
+                                    <color key="textColor" red="0.7843137255" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                </label>
+                            </items>
+                            <edgeInsets key="margins" left="5" right="5" top="18" bottom="0.0"/>
+                        </group>
                     </items>
                 </controller>
             </objects>

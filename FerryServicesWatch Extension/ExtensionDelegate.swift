@@ -15,21 +15,60 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     var recentServices = NSUserDefaults.standardUserDefaults().arrayForKey("recentServiceIds") as? [Int]
     
     func applicationDidFinishLaunching() {
-        if WCSession.isSupported() {
-            let session = WCSession.defaultSession()
-            session.delegate = self
-            session.activateSession()
+        guard WCSession.isSupported() else {
+            print("Sessions not supported")
+            return
         }
+        
+        let session = WCSession.defaultSession()
+        session.delegate = self
+        session.activateSession()
     }
     
     func applicationDidBecomeActive() {
         switch self.recentServices {
         case let recentServiceIds? where recentServiceIds.count > 0:
-            let controllers = Array(count: recentServiceIds.count, repeatedValue: "serviceDetail")
-            WKInterfaceController.reloadRootControllersWithNames(controllers, contexts: recentServiceIds)
+            self.loadRecentServicesForIds(recentServiceIds)
         default:
-            WKInterfaceController.reloadRootControllersWithNames(["noServices"], contexts: nil)
+            self.fetchRecentServicesFromPhoneWithCompletion { recentServiceIds in
+                if let recentServiceIds = recentServiceIds {
+                    NSUserDefaults.standardUserDefaults().setObject(recentServiceIds, forKey: "recentServiceIds")
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                    
+                    self.loadRecentServicesForIds(recentServiceIds)
+                }
+                else {
+                    self.loadNoServices()
+                }
+            }
         }
+    }
+    
+    private func fetchRecentServicesFromPhoneWithCompletion(completion: (recentServiceIds: [Int]?) -> ()) {
+        guard WCSession.isSupported() else {
+            print("Watch sessions not supported")
+            return
+        }
+        
+        WCSession.defaultSession().sendMessage(["action": "sendRecentServiceIds"], replyHandler: { response in
+            if let recentServiceIds = response["recentServiceIds"] as? [Int] {
+                completion(recentServiceIds: recentServiceIds)
+            }
+            else {
+                completion(recentServiceIds: nil)
+            }
+        }, errorHandler: { error in
+                completion(recentServiceIds: nil)
+        })
+    }
+    
+    private func loadRecentServicesForIds(recentServiceIds: [Int]) {
+        let controllers = Array(count: recentServiceIds.count, repeatedValue: "serviceDetail")
+        WKInterfaceController.reloadRootControllersWithNames(controllers, contexts: recentServiceIds)
+    }
+    
+    private func loadNoServices() {
+        WKInterfaceController.reloadRootControllersWithNames(["noServices"], contexts: nil)
     }
 }
 

@@ -42,9 +42,16 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         if let serviceId = self.serviceId {
             self.configureLoadingState()
             
-            ServicesAPIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, error in
-                self.disruptionDetails = disruptionDetails
-                self.configureView()
+            NSProcessInfo().performExpiringActivityWithReason("Download ferry service details") { expired in
+                guard !expired else {
+                    print("Process about to be suspened")
+                    return
+                }
+                
+                ServicesAPIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, error in
+                    self.disruptionDetails = disruptionDetails
+                    self.configureView()
+                }
             }
         }
     }
@@ -90,6 +97,8 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             self.labelUpdated.setText("Updating...")
             return
         }
+        
+        self.setTitle("Service")
         
         self.labelUpdated.setText("Updating...")
         self.labelHeader.setText("")

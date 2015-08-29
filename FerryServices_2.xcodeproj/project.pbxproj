@@ -94,6 +94,8 @@
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
+		FDE5E3BB1B918B2E00E8792F /* FerryServicesCommonWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBDA2B21B61CB060099221A /* FerryServicesCommonWatch.framework */; };
+		FDE5E3BC1B918B2E00E8792F /* FerryServicesCommonWatch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FDBDA2B21B61CB060099221A /* FerryServicesCommonWatch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -118,6 +120,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = FDBDA2EB1B61CC6D0099221A;
 			remoteInfo = "FerryServicesWatch Extension";
+		};
+		FDE5E3BD1B918B2E00E8792F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD753EC8197A256E00CC5DE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDBDA2B11B61CB060099221A;
+			remoteInfo = FerryServicesCommonWatch;
 		};
 		FDF9D8421B6CAA310018A12F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -158,6 +167,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FDBDA2A91B61CACC0099221A /* FerryServicesCommonTouch.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDE5E3BF1B918B2F00E8792F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FDE5E3BC1B918B2E00E8792F /* FerryServicesCommonWatch.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,6 +331,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDE5E3BB1B918B2E00E8792F /* FerryServicesCommonWatch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -739,10 +760,12 @@
 				FDBDA2E81B61CC6D0099221A /* Sources */,
 				FDBDA2E91B61CC6D0099221A /* Frameworks */,
 				FDBDA2EA1B61CC6D0099221A /* Resources */,
+				FDE5E3BF1B918B2F00E8792F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FDE5E3BE1B918B2E00E8792F /* PBXTargetDependency */,
 			);
 			name = "FerryServicesWatch Extension";
 			productName = "FerryServicesWatch Extension";
@@ -792,6 +815,7 @@
 					};
 					FDBDA2EB1B61CC6D0099221A = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = L832SX5MC4;
 					};
 				};
 			};
@@ -1028,6 +1052,11 @@
 			target = FDBDA2EB1B61CC6D0099221A /* FerryServicesWatch Extension */;
 			targetProxy = FDBDA2EE1B61CC6D0099221A /* PBXContainerItemProxy */;
 		};
+		FDE5E3BE1B918B2E00E8792F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDBDA2B11B61CB060099221A /* FerryServicesCommonWatch */;
+			targetProxy = FDE5E3BD1B918B2E00E8792F /* PBXContainerItemProxy */;
+		};
 		FDF9D8431B6CAA310018A12F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FDBDA2DF1B61CC6D0099221A /* FerryServicesWatch */;
@@ -1074,6 +1103,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1100,6 +1130,7 @@
 		};
 		FD753EEB197A256E00CC5DE3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7CD7597146748CC36832D1D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1117,6 +1148,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1143,6 +1175,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1167,7 +1200,6 @@
 		};
 		FD753EEE197A256E00CC5DE3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7CD7597146748CC36832D1D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1175,6 +1207,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1294,6 +1327,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = FerryServicesCommonWatch/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1319,6 +1353,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = FerryServicesCommonWatch/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1337,7 +1372,10 @@
 		FDBDA3001B61CC6D0099221A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "FerryServicesWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1353,8 +1391,11 @@
 		FDBDA3011B61CC6D0099221A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "FerryServicesWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";

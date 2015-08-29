@@ -150,7 +150,7 @@ public struct LocationWeather: Equatable {
         if let weather = self.weather {
             let descriptions = weather.filter { $0.weatherDescription != nil }.map { $0.weatherDescription!.lowercaseString }
             
-            var combined =  ", ".join(descriptions)
+            var combined =  descriptions.joinWithSeparator(", ")
             combined.replaceRange(combined.startIndex...combined.startIndex, with: String(combined[combined.startIndex]).capitalizedString)
             
             self.combinedWeatherDescription = combined

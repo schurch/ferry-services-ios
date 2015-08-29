@@ -15,9 +15,19 @@ struct AppConstants {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    
+    var tapCounts = NSUserDefaults.standardUserDefaults().dictionaryForKey(ServicesViewController.Constants.TapCount.userDefaultsKey) as? [String: Int]
+    
+    lazy var recentServiceIds: [Int]? = {
+        if let tapCounts = self.tapCounts {
+            return tapCounts.filter { $1 >= ServicesViewController.Constants.TapCount.minimumCount }.map { Int($0.0)! }
+        }
+        
+        return nil
+    }()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         
@@ -64,10 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         let session = WCSession.defaultSession()
         
         if session.paired && session.watchAppInstalled {
-            if let tapCounts = NSUserDefaults.standardUserDefaults().dictionaryForKey(ServicesViewController.Constants.TapCount.userDefaultsKey) as? [String: Int] {
-                
-                let serviceIds = tapCounts.filter { $1 >= ServicesViewController.Constants.TapCount.minimumCount }.map { Int($0.0)! }
-                
+            if let serviceIds = self.recentServiceIds {
                 do {
                     try session.updateApplicationContext(["recentServiceIds": serviceIds])
                 }
@@ -76,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                 }
             }
         }
-            
+        
     }
     
     // MARK: - Network acitvity indicator handling
@@ -125,3 +132,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
 }
 
+extension AppDelegate: WCSessionDelegate {
+    
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+        if let action = message["action"] as? String {
+            switch action {
+            case "sendRecentServiceIds":
+                if let servicesIds = self.recentServiceIds {
+                    replyHandler(["recentServiceIds": servicesIds])
+                }
+            default:
+                print("Unrecognized action sent from watch")
+            }
+        }
+    }
+    
+}
