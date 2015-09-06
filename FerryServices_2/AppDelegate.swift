@@ -19,16 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    var tapCounts = NSUserDefaults.standardUserDefaults().dictionaryForKey(ServicesViewController.Constants.TapCount.userDefaultsKey) as? [String: Int]
-    
-    lazy var recentServiceIds: [Int]? = {
-        if let tapCounts = self.tapCounts {
-            return tapCounts.filter { $1 >= ServicesViewController.Constants.TapCount.minimumCount }.map { Int($0.0)! }
-        }
-        
-        return nil
-    }()
-    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         
         // Setup 3rd party frameworks
@@ -64,6 +54,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func applicationDidBecomeActive(application: UIApplication) {
+        self.sendWatchAppContext()
+    }
+    
     // MARK: - Watch context updates
     func sendWatchAppContext() {
         guard WCSession.isSupported() else {
@@ -74,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let session = WCSession.defaultSession()
         
         if session.paired && session.watchAppInstalled {
-            if let serviceIds = self.recentServiceIds {
+            if let serviceIds = self.recentServiceIds() {
                 do {
                     try session.updateApplicationContext(["recentServiceIds": serviceIds])
                 }
@@ -83,7 +77,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
+    }
+    
+    func recentServiceIds() -> [Int]? {
+        if let tapCounts = NSUserDefaults.standardUserDefaults().dictionaryForKey(ServicesViewController.Constants.TapCount.userDefaultsKey) as? [String: Int] {
+            let recents = tapCounts.filter { (serviceId, tapCount) in
+                tapCount >= ServicesViewController.Constants.TapCount.minimumCount
+            }
+            
+            let recentServiceIds = recents.map { (serviceId, tapCount) in
+                return Int(serviceId)!
+            }
+            
+            return recentServiceIds
+        }
         
+        return nil
     }
     
     // MARK: - Network acitvity indicator handling
@@ -138,7 +147,7 @@ extension AppDelegate: WCSessionDelegate {
         if let action = message["action"] as? String {
             switch action {
             case "sendRecentServiceIds":
-                if let servicesIds = self.recentServiceIds {
+                if let servicesIds = self.recentServiceIds() {
                     replyHandler(["recentServiceIds": servicesIds])
                 }
             default:

@@ -12,9 +12,9 @@ public class ServicesAPIClient {
     static let baseURL = NSURL(string: "http://stefanchurch.com:4567/")
     
     // MARK: - methods
-    public func fetchFerryServicesWithCompletion(completion: (serviceStatuses: [ServiceStatus]?, error: NSError?) -> ()) {
+    public func fetchFerryServicesWithCompletion(completion: (serviceStatuses: [ServiceStatus]?, error: NSError?) -> ()) -> NSURLSessionDataTask? {
         let url = NSURL(string: "services/", relativeToURL: ServicesAPIClient.baseURL)
-        JSONRequester().requestWithURL(url!) { json, error in
+        let dataTask = JSONRequester().requestWithURL(url!) { json, error in
             if error == nil {
                 if let json = json {
                     var results = json.array?.map { json in ServiceStatus(data: json) }
@@ -31,11 +31,13 @@ public class ServicesAPIClient {
                 })
             }
         }
+        
+        return dataTask
     }
     
-    public func fetchDisruptionDetailsForFerryServiceId(ferryServiceId: Int, completion: (disruptionsDetails: DisruptionDetails?, error: NSError?) -> ()) {
+    public func fetchDisruptionDetailsForFerryServiceId(ferryServiceId: Int, completion: (disruptionsDetails: DisruptionDetails?, error: NSError?) -> ()) -> NSURLSessionDataTask? {
         let url = NSURL(string: "/services/\(ferryServiceId)", relativeToURL: ServicesAPIClient.baseURL)
-        JSONRequester().requestWithURL(url!) { json, error in
+        let dataTask = JSONRequester().requestWithURL(url!) { json, error in
             if error == nil {
                 if let json = json {
                      let disruptionDetails = DisruptionDetails(data: json)
@@ -51,5 +53,7 @@ public class ServicesAPIClient {
                 })
             }
         }
+        
+        return dataTask
     }
 }

@@ -12,6 +12,8 @@ import FerryServicesCommonWatch
 
 class ServiceDetailInterfaceController: WKInterfaceController {
     
+    static let cacheTimeoutSeconds = 600.0 // 10 minutes
+    
     @IBOutlet weak var imageViewStatus: WKInterfaceImage!
     @IBOutlet weak var labelHeader: WKInterfaceLabel!
     @IBOutlet weak var labelStatus: WKInterfaceLabel!
@@ -20,8 +22,10 @@ class ServiceDetailInterfaceController: WKInterfaceController {
     @IBOutlet weak var separatorOne: WKInterfaceSeparator!
     @IBOutlet weak var separatorTwo: WKInterfaceSeparator!
     
-    var serviceId: Int?
+    var dataTask: NSURLSessionDataTask?
     var disruptionDetails: DisruptionDetails?
+    var lastFetchTime: NSDate?
+    var serviceId: Int?
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
@@ -39,20 +43,43 @@ class ServiceDetailInterfaceController: WKInterfaceController {
     
     // MARK: - Fetch details
     func fetchDisruptionDetails() {
-        if let serviceId = self.serviceId {
-            self.configureLoadingState()
-            
-            NSProcessInfo().performExpiringActivityWithReason("Download ferry service details") { expired in
-                guard !expired else {
-                    print("Process about to be suspened")
-                    return
-                }
-                
-                ServicesAPIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, error in
-                    self.disruptionDetails = disruptionDetails
-                    self.configureView()
-                }
+        guard let serviceId = self.serviceId else {
+            return
+        }
+        
+        guard self.dataTask?.state != .Running else {
+            return
+        }
+        
+        if let lastFetchTime = self.lastFetchTime {
+            let secondsSinceLastFetch = NSDate().timeIntervalSinceDate(lastFetchTime)
+            guard secondsSinceLastFetch > ServiceDetailInterfaceController.cacheTimeoutSeconds else {
+                return
             }
+        }
+        
+        self.configureLoadingState()
+        
+        let semaphore = dispatch_semaphore_create(0)
+        
+        NSProcessInfo().performExpiringActivityWithReason("Download ferry service details") { expired in
+            guard !expired else {
+                print("No background task assertion")
+                dispatch_semaphore_signal(semaphore)
+                return
+            }
+            
+            let timeout = dispatch_time(DISPATCH_TIME_NOW, Int64(30 * Double(NSEC_PER_SEC)))
+            dispatch_semaphore_wait(semaphore, timeout)
+        }
+        
+        self.dataTask = ServicesAPIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, error in
+            self.disruptionDetails = disruptionDetails
+            self.configureView()
+            
+            self.lastFetchTime = NSDate()
+            
+            dispatch_semaphore_signal(semaphore)
         }
     }
     

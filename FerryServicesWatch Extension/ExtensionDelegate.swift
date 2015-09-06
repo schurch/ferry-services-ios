@@ -12,7 +12,8 @@ import FerryServicesCommonWatch
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
     
-    var recentServices = NSUserDefaults.standardUserDefaults().arrayForKey("recentServiceIds") as? [Int]
+    var persistedRecentServiceIds = NSUserDefaults.standardUserDefaults().arrayForKey("recentServiceIds") as? [Int]
+    var recentServiceIds: [Int]?
     
     func applicationDidFinishLaunching() {
         guard WCSession.isSupported() else {
@@ -26,12 +27,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     }
     
     func applicationDidBecomeActive() {
-        switch self.recentServices {
+        switch self.persistedRecentServiceIds {
         case let recentServiceIds? where recentServiceIds.count > 0:
             self.loadRecentServicesForIds(recentServiceIds)
         default:
             self.fetchRecentServicesFromPhoneWithCompletion { recentServiceIds in
-                if let recentServiceIds = recentServiceIds {
+                if let recentServiceIds = recentServiceIds where recentServiceIds.count > 0 {
                     NSUserDefaults.standardUserDefaults().setObject(recentServiceIds, forKey: "recentServiceIds")
                     NSUserDefaults.standardUserDefaults().synchronize()
                     

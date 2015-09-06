@@ -14,7 +14,7 @@ public class JSONRequester {
     
     static let errorDomain = "JSONRequesterErrorDomain"
     
-    func requestWithURL(url: NSURL, completion:(json: JSONValue?, error: NSError?) -> ()) {
+    func requestWithURL(url: NSURL, completion:(json: JSONValue?, error: NSError?) -> ()) -> NSURLSessionDataTask?  {
         dispatch_async(dispatch_get_main_queue(), {
             NSNotificationCenter.defaultCenter().postNotificationName(JSONRequester.requestStartedNotification, object: self)
         })
@@ -56,5 +56,7 @@ public class JSONRequester {
         }
         
         dataTask.resume()
+        
+        return dataTask
     }
 }
