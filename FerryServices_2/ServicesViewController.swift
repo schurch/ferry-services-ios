@@ -41,10 +41,11 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     private var arrayServiceStatuses = [ServiceStatus]()
     private var arrayFilteredServiceStatuses = [ServiceStatus]()
     private var arrayRecentServiceStatues = [ServiceStatus]()
-    
     private var propellerView: PropellerView!
-    
     private var refreshing = false
+    
+    // Set if we should show a service when finished loading
+    private var serviceIdToShow: Int?;
     
     private var tapCountDictionary = NSUserDefaults.standardUserDefaults().dictionaryForKey("com.ferryservices.userdefaultkeys.tapcount")
         ?? [NSObject: AnyObject]()
@@ -82,6 +83,12 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         self.tableView.addSubview(propellerView)
         
         self.tableView.rowHeight = 44;
+        
+        if let serviceIdToShow = self.serviceIdToShow {
+            // If this is set, then there was a request to show a service before the view had loaded
+            self.showDetailsForServiceId(serviceIdToShow)
+            self.serviceIdToShow = nil
+        }
         
         refresh()
     }
@@ -337,6 +344,33 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     // MARK: - Helpers
+    func showDetailsForServiceId(serviceId: Int) {
+        if self.arrayServiceStatuses.count == 0 {
+            // We haven't loaded yet so set the service ID to show when we do
+            self.serviceIdToShow = serviceId
+        }
+        else {
+            self.navigationController?.popToRootViewControllerAnimated(false)
+            self.searchDisplayController?.setActive(false, animated: false)
+            
+            if let index = self.indexOfServiceWithServiceId(serviceId, services: self.arrayServiceStatuses) {
+                let section = !self.arrayRecentServiceStatues.isEmpty ? 1 : 0;
+                let indexPath = NSIndexPath(forRow: index, inSection: section)
+                self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
+                self.performSegueWithIdentifier("showServiceDetail", sender: self)
+            }
+        }
+    }
+    
+    private func indexOfServiceWithServiceId(serviceId :Int, services :[ServiceStatus]) -> Int? {
+        let filteredServices = services.filter { $0.serviceId == serviceId }
+        if let service = filteredServices.first {
+            return services.indexOf(service)
+        }
+        
+        return nil
+    }
+
     func loadDefaultFerryServices() {
         if let defaultServicesFilePath = NSBundle.mainBundle().pathForResource("services", ofType: "json") {
             var fileReadError: NSError?

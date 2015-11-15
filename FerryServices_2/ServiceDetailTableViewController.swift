@@ -68,11 +68,11 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     var annotations: [MKPointAnnotation]?
     var dataSource: [Section] = []
+    var disruptionDetails: DisruptionDetails?
+    var headerHeight: CGFloat!
     var mapMotionEffect: UIMotionEffectGroup!
     var refreshingDisruptionInfo: Bool = true // show table as refreshing initially
     var serviceStatus: ServiceStatus!
-    var disruptionDetails: DisruptionDetails?
-    var headerHeight: CGFloat!
     var viewBackground: UIView!
     var windAnimationTimer: NSTimer!
     
@@ -197,6 +197,40 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         // don't clip bounds as map extends past top allowing blur view to be pushed up and not 
         // have nasty effect as it gets near top
         self.view.clipsToBounds = false
+        
+        // Update dynamic shortcuts
+        if #available(iOS 9.0, *) {
+            if let area = self.serviceStatus.area, route = self.serviceStatus.route, serviceId = self.serviceStatus.serviceId {
+                var shortcutItems = UIApplication.sharedApplication().shortcutItems ?? []
+                
+                let exitingShortcutItem = shortcutItems.filter { shortcut in
+                    if let shortcutServiceId = shortcut.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
+                        return shortcutServiceId == serviceId
+                    }
+                    
+                    return false
+                }.first
+                
+                if let shortcut = exitingShortcutItem {
+                    shortcutItems.removeAtIndex(shortcutItems.indexOf(shortcut)!)
+                    shortcutItems.insert(shortcut, atIndex: 0)
+                }
+                else {
+                    let shortcut = UIMutableApplicationShortcutItem(type: AppDelegate.applicationShortcutTypeRecentService, localizedTitle: area, localizedSubtitle: route, icon: nil, userInfo: [
+                            AppDelegate.applicationShortcutUserInfoKeyServiceId : serviceId
+                        ]
+                    )
+                    
+                    shortcutItems.insert(shortcut, atIndex: 0)
+                    
+                    if shortcutItems.count > 4 {
+                        shortcutItems.removeRange(4...(shortcutItems.count - 1))
+                    }
+                }
+                
+                UIApplication.sharedApplication().shortcutItems = shortcutItems
+            }
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
