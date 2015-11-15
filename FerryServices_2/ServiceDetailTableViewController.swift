@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import QuickLook
+import Flurry_iOS_SDK
 
 class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, ServiceDetailWeatherCellDelegate {
     
@@ -183,7 +184,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         // clip bounds so map doesn't expand over the edges when we animated to/from view
         self.view.clipsToBounds = true
         
-        if let selectedIndexPath = self.tableView.indexPathForSelectedRow() {
+        if let selectedIndexPath = self.tableView.indexPathForSelectedRow {
             self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
         }
         
@@ -376,11 +377,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             timetableRows.append(summerTimetableRow)
         }
         
-        var route = "Timetable"
-        if let actualRoute = serviceStatus.route {
-            route = actualRoute
-        }
-        
         if timetableRows.count > 0 {
             let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
             sections.append(timetableSection)
@@ -392,7 +388,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 var weatherRows = [Row]()
                 
                 switch (location.latitude, location.longitude) {
-                case let (.Some(lat), .Some(lng)):
+                case (.Some(_), .Some(_)):
                     let weatherRow = Row.Weather(location: location)
                     weatherRows.append(weatherRow)
                     sections.append(Section(title: location.name, footer: nil, rows: weatherRows))
@@ -407,7 +403,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     // MARK: - Utility methods
     func animateWindVanes() {
-        for cell in self.tableView.visibleCells() {
+        for cell in self.tableView.visibleCells {
             if let weatherCell = cell as? ServiceDetailWeatherCell {
                 let randomDelay = Double(arc4random_uniform(5))
                 delay(randomDelay) {
@@ -524,11 +520,11 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func winterPath() -> String {
-        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2015/Winter/\(serviceStatus.serviceId!).pdf")
+        return (NSBundle.mainBundle().bundlePath as NSString).stringByAppendingPathComponent("Timetables/2015/Winter/\(serviceStatus.serviceId!).pdf")
     }
     
     private func summerPath() -> String {
-        return NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("Timetables/2015/Summer/\(serviceStatus.serviceId!).pdf")
+        return (NSBundle.mainBundle().bundlePath as NSString).stringByAppendingPathComponent("Timetables/2015/Summer/\(serviceStatus.serviceId!).pdf")
     }
     
     private func showPDFTimetableAtPath(path: String, title: String) {
@@ -603,7 +599,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         switch row {
         case let .Basic(title, subtitle, action):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.basicCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) 
             cell.textLabel!.text = title
             
             if let subtitle = subtitle {
@@ -626,7 +622,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailNoDisruptionTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
             return cell
-        case let .Loading:
+        case .Loading:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.loadingCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailLoadingTableViewCell
             cell.activityIndicatorView.startAnimating()
@@ -643,7 +639,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             cell.configureWithLocation(location, animate: true)
             cell.delegate = self
             return cell
-        case let .Alert:
+        case .Alert:
             return self.alertCell
         }
     }
@@ -696,7 +692,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         let row = dataSource[indexPath.section].rows[indexPath.row]
         
         switch row {
-        case let .Weather(_):
+        case .Weather(_):
             if let weatherCell = cell as? ServiceDetailWeatherCell {
                 weatherCell.viewSeparator.backgroundColor = tableView.separatorColor
             }
@@ -707,7 +703,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel.textColor = UIColor.tealTextColor()
+        header.textLabel!.textColor = UIColor.tealTextColor()
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -729,11 +725,11 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     // MARK: - MKMapViewDelegate
-    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         mapView.deselectAnnotation(view.annotation, animated: false)
     }
     
-    func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
+    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
         let rect = self.calculateMapRectForAnnotations(self.annotations!)
         let topInset = MainStoryBoard.Constants.contentInset + 20
         let bottomInset = self.mapView.frame.size.height - (MainStoryBoard.Constants.contentInset * 2) + 60

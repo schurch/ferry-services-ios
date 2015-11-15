@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Flurry_iOS_SDK
 
 struct AppConstants {
     static let parseChannelPrefix = "S"
@@ -31,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.tintColor = UIColor.tealTintColor()
         
         // Configure push notifications
-        let userNotificationTypes = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound
+        let userNotificationTypes: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
         let notificationSettings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         
         application.registerUserNotificationSettings(notificationSettings)

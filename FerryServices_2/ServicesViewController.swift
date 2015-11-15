@@ -8,6 +8,8 @@
 
 import UIKit
 import Foundation
+import SwiftyJSON
+import Flurry_iOS_SDK
 
 class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
@@ -60,10 +62,8 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         self.tableView.backgroundColor = UIColor.tealBackgroundColor()
         
         for subview in self.tableView.subviews {
-            if let view = subview as? UIView {
-                if view.frame.origin.y < 0 {
-                    view.alpha = 0.0
-                }
+            if subview.frame.origin.y < 0 {
+                subview.alpha = 0.0
             }
         }
         
@@ -89,7 +89,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let indexPath = tableView.indexPathForSelectedRow() {
+        if let indexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }
@@ -202,9 +202,6 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
                 serviceStatusCell.imageViewStatus.image = UIImage(named: "red")
             case .Unknown:
                 serviceStatusCell.imageViewStatus.image = nil
-            default:
-                serviceStatusCell.imageViewStatus.image = nil
-                NSLog("Unrecognised disruption status!")
             }
         }
         else {
@@ -222,7 +219,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if tableView.numberOfSections() == 1 {
+        if tableView.numberOfSections == 1 {
             return false
         }
         else {
@@ -258,7 +255,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
     // MARK: - UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if tableView.numberOfSections() > 1 && indexPath.section == Constants.TableViewSections.recent {
+        if tableView.numberOfSections > 1 && indexPath.section == Constants.TableViewSections.recent {
             // don't increment for recent section
             return
         }
@@ -275,7 +272,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel.textColor = UIColor.tealTextColor()
+        header.textLabel!.textColor = UIColor.tealTextColor()
     }
     
     // MARK: - UIScrollViewDelegate
@@ -284,7 +281,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             return
         }
         
-        var pullToRefreshPercent = min(abs(scrollView.contentOffset.y) / Constants.PullToRefresh.refreshOffset, 1.0)
+        let pullToRefreshPercent = min(abs(scrollView.contentOffset.y) / Constants.PullToRefresh.refreshOffset, 1.0)
         propellerView.percentComplete = Float(pullToRefreshPercent)
     }
     
@@ -307,10 +304,10 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         let serviceDetailViewController = segue.destinationViewController as! ServiceDetailTableViewController;
         let selectedTableView = self.searchDisplayController!.active ? self.searchDisplayController!.searchResultsTableView : self.tableView
-        let serviceStatus = self.serviceStatusForTableView(selectedTableView, indexPath: selectedTableView.indexPathForSelectedRow()!)
+        let serviceStatus = self.serviceStatusForTableView(selectedTableView, indexPath: selectedTableView.indexPathForSelectedRow!)
         
         if let route = serviceStatus.route {
-            Flurry.logEvent("Viewed service detail", withParameters: ["Route": serviceStatus.route!])
+            Flurry.logEvent("Viewed service detail", withParameters: ["Route": route])
         }
         else {
             Flurry.logEvent("Viewed service detail")
@@ -320,17 +317,17 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     }
     
     // MARK: - UISearchDisplayController
-    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
+    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
         self.arrayFilteredServiceStatuses = self.arrayServiceStatuses.filter { item in
             
             var containsArea = false
             if let area = item.area {
-                containsArea = (area.lowercaseString as NSString).containsString(searchString.lowercaseString)
+                containsArea = (area.lowercaseString as NSString).containsString(searchString!.lowercaseString)
             }
             
             var containsRoute = false
             if let route = item.route {
-                containsRoute = (route.lowercaseString as NSString).containsString(searchString.lowercaseString)
+                containsRoute = (route.lowercaseString as NSString).containsString(searchString!.lowercaseString)
             }
             
             return containsArea || containsRoute
@@ -343,7 +340,8 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
     func loadDefaultFerryServices() {
         if let defaultServicesFilePath = NSBundle.mainBundle().pathForResource("services", ofType: "json") {
             var fileReadError: NSError?
-            if let serviceData = NSData(contentsOfFile: defaultServicesFilePath, options: .DataReadingMappedIfSafe, error: &fileReadError) {
+            do {
+                let serviceData = try NSData(contentsOfFile: defaultServicesFilePath, options: .DataReadingMappedIfSafe)
                 if fileReadError != nil {
                     NSLog("Error loading default services data: %@", fileReadError!)
                     return
@@ -351,17 +349,25 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
                 
                 var jsonParseError: NSError?
                 
-                let serviceStatusData: AnyObject? = NSJSONSerialization.JSONObjectWithData(serviceData, options: nil, error: &jsonParseError)
+                let serviceStatusData: AnyObject?
+                do {
+                    serviceStatusData = try NSJSONSerialization.JSONObjectWithData(serviceData, options: [])
+                } catch let error as NSError {
+                    jsonParseError = error
+                    serviceStatusData = nil
+                }
                 if jsonParseError != nil {
                     NSLog("Error parsing service data json: %@", jsonParseError!)
                     return
                 }
                 
-                let json = JSONValue(serviceStatusData!)
+                let json = JSON(serviceStatusData!)
                 
                 if let serviceStatuses = json.array?.map({ json in ServiceStatus(data: json) }) {
                     self.arrayServiceStatuses = serviceStatuses
                 }
+            } catch let error as NSError {
+                fileReadError = error
             }            
         }
     }
@@ -417,7 +423,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
             
             // How to convert NSObject to Int?
             // This is not good :(
-            let id = (serviceId as! String).toInt()
+            let id = Int((serviceId as! String))
             
             recentServiceIds.append(id!)
         }
@@ -430,7 +436,7 @@ class ServicesViewController: UITableViewController, UISearchDisplayDelegate {
         
         self.arrayRecentServiceStatues = self.arrayServiceStatuses.filter { item in
             if let id = item.serviceId {
-                return contains(ids, id)
+                return ids.contains(id)
             }
             
             return false

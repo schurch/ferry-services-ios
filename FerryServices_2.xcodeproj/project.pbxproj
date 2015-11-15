@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53A7B4521D177BBCE7B9B5E6 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D9493F193C4A87EAD799AC /* Pods.framework */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */; };
 		FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */; };
@@ -50,7 +51,6 @@
 		FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8DDDB119B094B0008479DC /* Crashlytics.framework */; };
 		FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */; };
 		FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */; };
-		FD9432D719CD0EA4003BBD23 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9432D619CD0EA4003BBD23 /* libPods.a */; };
 		FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */; };
 		FD9C66171A16CADC0050D99F /* Timetables in Resources */ = {isa = PBXBuildFile; fileRef = FD9C66161A16CADC0050D99F /* Timetables */; };
 		FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate_extensions.swift */; };
@@ -63,7 +63,6 @@
 		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
 		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
-		FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
 		FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */; };
@@ -83,8 +82,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02D9493F193C4A87EAD799AC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		308E6839E9B5E67AF1DA630D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		6B61FAD87F37434E965A5EF6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2A7F2853FF7E1F502C8C853 /* Pods_FerryServices_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FerryServices_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD7597146748CC36832D1D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
@@ -150,7 +150,6 @@
 		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Trip.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC77612198450AC00B3782F /* timetables.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = timetables.sqlite; sourceTree = "<group>"; };
 		FDCB33441A4BD6D1000033BC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ServiceStatus.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -176,12 +175,12 @@
 				FD8819EA1A998BEE002A976A /* CoreGraphics.framework in Frameworks */,
 				FD8819E81A998BE4002A976A /* CFNetwork.framework in Frameworks */,
 				FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */,
-				FD9432D719CD0EA4003BBD23 /* libPods.a in Frameworks */,
 				FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */,
 				FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */,
 				FD8819E41A998BAC002A976A /* Bolts.framework in Frameworks */,
 				FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */,
 				FD8819E21A998BA2002A976A /* Parse.framework in Frameworks */,
+				53A7B4521D177BBCE7B9B5E6 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,9 +216,10 @@
 				FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */,
 				FD8DDDB119B094B0008479DC /* Crashlytics.framework */,
 				FDE0814E1983B9F600760870 /* MapKit.framework */,
-				6B61FAD87F37434E965A5EF6 /* libPods.a */,
 				FD8819E31A998BAC002A976A /* Bolts.framework */,
 				FD8819E11A998BA2002A976A /* Parse.framework */,
+				02D9493F193C4A87EAD799AC /* Pods.framework */,
+				A2A7F2853FF7E1F502C8C853 /* Pods_FerryServices_2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -403,7 +403,6 @@
 		FDDEC68D198E3CFB0060B18F /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				FDDEC68B198E3CF50060B18F /* SwiftyJSON.swift */,
 				FD9C66181A16D2380050D99F /* NSDate_extensions.swift */,
 				FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */,
 				FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */,
@@ -448,6 +447,7 @@
 				FD753ECE197A256E00CC5DE3 /* Resources */,
 				BBF92DCA1122475BAD83A58B /* Copy Pods Resources */,
 				FD8DDDB019B0947B008479DC /* Crashlytics */,
+				0018A1ABB9C78D0FA8D39F7D /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -482,8 +482,9 @@
 		FD753EC8197A256E00CC5DE3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Stefan Church";
 				TargetAttributes = {
 					FD753ECF197A256E00CC5DE3 = {
@@ -552,6 +553,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0018A1ABB9C78D0FA8D39F7D /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		44BEF411A32145BAAD7DDE2A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -616,7 +632,6 @@
 				FDC7760E19844C3500B3782F /* Location.swift in Sources */,
 				FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */,
 				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
-				FDDEC68C198E3CF50060B18F /* SwiftyJSON.swift in Sources */,
 				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
@@ -673,6 +688,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -689,6 +705,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -715,6 +732,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -752,6 +770,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -762,14 +781,9 @@
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
-				);
-				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				"SWIFT_INCLUDE_PATHS[arch=*]" = "/Users/stefanchurch/Documents/Source/ferry-services-swift/Pods/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -782,6 +796,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -792,10 +807,7 @@
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
-				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6c5348bc-e4d3-449b-84d6-d129a2b54279";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
@@ -818,6 +830,7 @@
 				);
 				INFOPLIST_FILE = FerryServices_2Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "stefanchurch.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
@@ -833,6 +846,7 @@
 				);
 				INFOPLIST_FILE = FerryServices_2Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "stefanchurch.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};

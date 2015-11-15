@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import SwiftyJSON
 
 func == (lhs: LocationWeather, rhs: LocationWeather) -> Bool {
     return lhs.cityId == rhs.cityId
@@ -25,8 +26,8 @@ struct Weather {
     // http://openweathermap.org/img/w/03n.png
     var icon: String?
     
-    init(data: JSONValue) {
-        self.weatherId = data["id"].integer
+    init(data: JSON) {
+        self.weatherId = data["id"].int
         self.weatherGroup = data["main"].string
         self.weatherDescription = data["description"].string
         self.icon = data["icon"].string
@@ -78,8 +79,8 @@ struct LocationWeather: Equatable {
     var weather: [Weather]?
     var combinedWeatherDescription: String?
     
-    init (data: JSONValue) {
-        self.cityId = data["id"].integer
+    init (data: JSON) {
+        self.cityId = data["id"].int
         self.cityName = data["name"].string
         
         if let dateReceivedData = data["dt"].double {
@@ -129,28 +130,28 @@ struct LocationWeather: Equatable {
         
         self.clouds = data["clouds"]["all"].double
         
-        if let rainData = data["rain"].object {
-            var rain = [String: Double]()
-            for (time, volume) in rainData {
-                rain[time] = volume.double
-            }
-            self.rain = rain
-        }
+//        if let rainData = data["rain"].object {
+//            var rain = [String: Double]()
+//            for (time, volume) in rainData {
+//                rain[time] = volume.double
+//            }
+//            self.rain = rain
+//        }
         
-        if let snowData = data["snow"].object {
-            var snow = [String: Double]()
-            for (time, volume) in snowData {
-                snow[time] = volume.double
-            }
-            self.snow = snow
-        }
+//        if let snowData = data["snow"].object {
+//            var snow = [String: Double]()
+//            for (time, volume) in snowData {
+//                snow[time] = volume.double
+//            }
+//            self.snow = snow
+//        }
         
         self.weather = data["weather"].array?.map { json in Weather(data: json) }
         
         if let weather = self.weather {
             let descriptions = weather.filter { $0.weatherDescription != nil }.map { $0.weatherDescription!.lowercaseString }
             
-            var combined =  ", ".join(descriptions)
+            var combined =  descriptions.joinWithSeparator(", ")
             combined.replaceRange(combined.startIndex...combined.startIndex, with: String(combined[combined.startIndex]).capitalizedString)
             
             self.combinedWeatherDescription = combined

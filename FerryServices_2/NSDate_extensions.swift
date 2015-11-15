@@ -13,7 +13,7 @@ extension NSDate {
         if let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian) {
             calendar.timeZone = NSTimeZone(abbreviation: "UTC")!
             
-            let components = calendar.components(NSCalendarUnit.CalendarUnitYear|NSCalendarUnit.CalendarUnitMonth|NSCalendarUnit.CalendarUnitDay|NSCalendarUnit.CalendarUnitHour|NSCalendarUnit.CalendarUnitMinute|NSCalendarUnit.CalendarUnitSecond, fromDate: date)
+            let components = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: date)
             
             components.hour = 0
             components.minute = 0

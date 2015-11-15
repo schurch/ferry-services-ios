@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
+import FMDB
+
 class Location : Hashable {
     
     class func fetchLocationsForSericeId(serviceId: Int) -> [Location]? {
@@ -51,7 +53,7 @@ class Location : Hashable {
             return nil
         }
         
-        var query = "SELECT l.Name, l.Latitude, l.Longitude FROM Location l WHERE l.LocationId = (?)"
+        let query = "SELECT l.Name, l.Latitude, l.Longitude FROM Location l WHERE l.LocationId = (?)"
         
         let resultSet = database.executeQuery(query, withArgumentsInArray: [locationId])
         var location: Location? = nil

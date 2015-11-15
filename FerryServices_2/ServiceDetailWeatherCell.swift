@@ -92,7 +92,7 @@ class ServiceDetailWeatherCell: UITableViewCell {
         
         self.imageViewWindDirection.layer.removeAllAnimations()
         
-        if let error = location.weatherFetchError {
+        if location.weatherFetchError != nil {
             buttonReload.hidden = false
             viewSeparator.hidden = true
             viewRightContainer.hidden = true

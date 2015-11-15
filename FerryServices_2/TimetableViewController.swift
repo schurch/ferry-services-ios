@@ -51,8 +51,9 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.estimatedRowHeight = 44
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        let pickerCell = self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) as! UITableViewCell
-        self.pickerCellRowHeight = Int(pickerCell.frame.size.height)
+        if let pickerCell = self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) {
+            self.pickerCellRowHeight = Int(pickerCell.frame.size.height)
+        }
         
         self.date = NSDate.stripTimeComponentsFromDate(NSDate())
         self.updateTrips()
@@ -211,8 +212,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
             }
             else {
                 // date picker
-                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) as! UITableViewCell
-                return cell
+                return tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell)!
             }
         }
         else {
@@ -250,7 +250,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
                     cell.labelTimeCounterpart.text = "arriving at \(trip.arrivalTime)"
                     
                     if let notes = trip.notes?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
-                        if count(notes) > 0 {
+                        if notes.characters.count > 0 {
                             cell.buttonInfo.hidden = false
                         }
                         else {

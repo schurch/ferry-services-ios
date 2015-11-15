@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Flurry_iOS_SDK
 
 class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
 
@@ -30,8 +31,8 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
     
     // MARK: -
     override func viewDidLayoutSubviews() {
-        for view in self.webview.subviews as! [UIView] {
-            for subview in view.subviews as! [UIView] {
+        for view in self.webview.subviews {
+            for subview in view.subviews {
                 subview.backgroundColor = UIColor.whiteColor()
             }
         }
@@ -47,7 +48,7 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
             items.append(route)
         }
         
-        let pdfData = NSData(contentsOfFile: url.absoluteString!)
+        let pdfData = NSData(contentsOfFile: url.absoluteString)
         items.append(pdfData!)
         
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)

@@ -1,4 +1,6 @@
-platform :ios, '7.0'
+platform :ios, '8.0'
+use_frameworks!
 
-pod 'FMDB'
-pod 'FlurrySDK', '~> 5.3'
+pod 'FMDB', :git => 'https://github.com/robertmryan/fmdb.git', :branch => 'swiftFramework'
+pod 'Flurry-iOS-SDK/FlurrySDK'
+pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'

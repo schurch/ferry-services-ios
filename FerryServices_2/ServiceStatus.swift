@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
+import SwiftyJSON
+
 class ServiceStatus: Equatable {
     
     static let dateFormatter: NSDateFormatter = {
@@ -34,11 +36,11 @@ class ServiceStatus: Equatable {
         self.disruptionStatus = .Normal
     }
     
-    init(data: JSONValue) {
+    init(data: JSON) {
         
         self.area = data["area"].string
         
-        if let disruptionStatus = data["status"].integer {
+        if let disruptionStatus = data["status"].int {
             self.disruptionStatus = DisriptionStatus(rawValue: disruptionStatus)
         }
         
@@ -47,8 +49,8 @@ class ServiceStatus: Equatable {
         }
         
         self.route = data["route"].string
-        self.serviceId = data["service_id"].integer
-        self.sortOrder = data["sort_order"].integer
+        self.serviceId = data["service_id"].int
+        self.sortOrder = data["sort_order"].int
     }
 }
 

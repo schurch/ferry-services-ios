@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
+import SwiftyJSON
+
 class DisruptionDetails: ServiceStatus {
     
     var additionalInfo: String?
@@ -24,7 +26,7 @@ class DisruptionDetails: ServiceStatus {
     var lastUpdated: String? {
         if let updatedDate = self.disruptionUpdatedDate  {
             let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
-            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: updatedDate, toDate: NSDate(), options: nil)
+            let components = calendar.components([NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: updatedDate, toDate: NSDate(), options: [])
             
             var updated: String
             
@@ -51,7 +53,7 @@ class DisruptionDetails: ServiceStatus {
         super.init()
     }
     
-    override init(data: JSONValue) {
+    override init(data: JSON) {
         super.init(data: data)
         
         if let additionalInfo = data["additional_info"].string {

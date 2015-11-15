@@ -1,19 +1,35 @@
 PODS:
-  - FlurrySDK (5.3.0):
-    - FlurrySDK/FlurrySDK (= 5.3.0)
-  - FlurrySDK/FlurrySDK (5.3.0)
-  - FMDB (2.3):
-    - FMDB/standard (= 2.3)
-  - FMDB/common (2.3)
-  - FMDB/standard (2.3):
+  - Flurry-iOS-SDK/FlurrySDK (7.3.0)
+  - FMDB (2.5):
+    - FMDB/standard (= 2.5)
+  - FMDB/common (2.5)
+  - FMDB/standard (2.5):
     - FMDB/common
+  - SwiftyJSON (2.3.1)
 
 DEPENDENCIES:
-  - FlurrySDK (~> 5.3)
-  - FMDB
+  - Flurry-iOS-SDK/FlurrySDK
+  - FMDB (from `https://github.com/robertmryan/fmdb.git`, branch `swiftFramework`)
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+
+EXTERNAL SOURCES:
+  FMDB:
+    :branch: swiftFramework
+    :git: https://github.com/robertmryan/fmdb.git
+  SwiftyJSON:
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+CHECKOUT OPTIONS:
+  FMDB:
+    :commit: 43881cfcff4aedf5d8ea4045ab21a8f097ed35fa
+    :git: https://github.com/robertmryan/fmdb.git
+  SwiftyJSON:
+    :commit: 10f67900bdf2fb0faba3371249a6fefdcaa880c5
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
-  FlurrySDK: a3b6d2b35787c721fa5019075f2416d59cbbc104
-  FMDB: 773d79bb74226959b7e2286b1d6e0bd857c88915
+  Flurry-iOS-SDK: 054befae0fa0244fb000985bfe757d70f87a9f60
+  FMDB: 8e59e93d20d76d0b135db26ecc83ae88d016076d
+  SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
 
-COCOAPODS: 0.36.4
+COCOAPODS: 0.39.0
