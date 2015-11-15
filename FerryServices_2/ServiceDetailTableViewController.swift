@@ -574,6 +574,19 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         return mapRect
     }
+    
+    private func setMapVisibleRect() {
+        if (self.navigationController != nil) {
+            let rect = self.calculateMapRectForAnnotations(self.annotations!)
+            
+            let topInset = self.navigationController?.navigationBar.frame.size.height
+            let bottomInset = self.view.bounds.size.height - MainStoryBoard.Constants.contentInset
+            
+            let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset!, 35, bottomInset + 5, 35))
+            
+            self.mapView.setVisibleMapRect(visibleRect, animated: false)            
+        }
+    }
 
     
     // MARK: - UITableViewDatasource
@@ -729,12 +742,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         mapView.deselectAnnotation(view.annotation, animated: false)
     }
     
-    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
-        let rect = self.calculateMapRectForAnnotations(self.annotations!)
-        let topInset = MainStoryBoard.Constants.contentInset + 20
-        let bottomInset = self.mapView.frame.size.height - (MainStoryBoard.Constants.contentInset * 2) + 60
-        let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset, 35, bottomInset, 35))
-        self.mapView.setVisibleMapRect(visibleRect, animated: false)
+    func mapViewWillStartLoadingMap(mapView: MKMapView) {
+        self.setMapVisibleRect()
     }
     
     // MARK: - ServiceDetailWeatherCellDelegate
