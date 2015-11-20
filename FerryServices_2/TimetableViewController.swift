@@ -294,7 +294,12 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
     func didTouchTimetableInfoButtonForCell(cell: TimetableTimeTableViewCell) {
         if let indexPath = self.tableView.indexPathForCell(cell) {
             if let trip = self.tripForIndexPath(indexPath) {
-                UIAlertView(title: nil, message: trip.notes, delegate: nil, cancelButtonTitle: "OK").show()
+                let alertController = UIAlertController(title: nil, message: trip.notes, preferredStyle: .Alert)
+                
+                let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
             }
         }
     }

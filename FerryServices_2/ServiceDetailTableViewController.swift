@@ -194,42 +194,40 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        // don't clip bounds as map extends past top allowing blur view to be pushed up and not 
+        // don't clip bounds as map extends past top allowing blur view to be pushed up and not
         // have nasty effect as it gets near top
         self.view.clipsToBounds = false
         
         // Update dynamic shortcuts
-        if #available(iOS 9.0, *) {
-            if let area = self.serviceStatus.area, route = self.serviceStatus.route, serviceId = self.serviceStatus.serviceId {
-                var shortcutItems = UIApplication.sharedApplication().shortcutItems ?? []
-                
-                let exitingShortcutItem = shortcutItems.filter { shortcut in
-                    if let shortcutServiceId = shortcut.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
-                        return shortcutServiceId == serviceId
-                    }
-                    
-                    return false
-                }.first
-                
-                if let shortcut = exitingShortcutItem {
-                    shortcutItems.removeAtIndex(shortcutItems.indexOf(shortcut)!)
-                    shortcutItems.insert(shortcut, atIndex: 0)
-                }
-                else {
-                    let shortcut = UIMutableApplicationShortcutItem(type: AppDelegate.applicationShortcutTypeRecentService, localizedTitle: area, localizedSubtitle: route, icon: nil, userInfo: [
-                            AppDelegate.applicationShortcutUserInfoKeyServiceId : serviceId
-                        ]
-                    )
-                    
-                    shortcutItems.insert(shortcut, atIndex: 0)
-                    
-                    if shortcutItems.count > 4 {
-                        shortcutItems.removeRange(4...(shortcutItems.count - 1))
-                    }
+        if let area = self.serviceStatus.area, route = self.serviceStatus.route, serviceId = self.serviceStatus.serviceId {
+            var shortcutItems = UIApplication.sharedApplication().shortcutItems ?? []
+            
+            let exitingShortcutItem = shortcutItems.filter { shortcut in
+                if let shortcutServiceId = shortcut.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
+                    return shortcutServiceId == serviceId
                 }
                 
-                UIApplication.sharedApplication().shortcutItems = shortcutItems
+                return false
+            }.first
+            
+            if let shortcut = exitingShortcutItem {
+                shortcutItems.removeAtIndex(shortcutItems.indexOf(shortcut)!)
+                shortcutItems.insert(shortcut, atIndex: 0)
             }
+            else {
+                let shortcut = UIMutableApplicationShortcutItem(type: AppDelegate.applicationShortcutTypeRecentService, localizedTitle: area, localizedSubtitle: route, icon: nil, userInfo: [
+                    AppDelegate.applicationShortcutUserInfoKeyServiceId : serviceId
+                    ]
+                )
+                
+                shortcutItems.insert(shortcut, atIndex: 0)
+                
+                if shortcutItems.count > 4 {
+                    shortcutItems.removeRange(4...(shortcutItems.count - 1))
+                }
+            }
+            
+            UIApplication.sharedApplication().shortcutItems = shortcutItems
         }
     }
     
@@ -356,7 +354,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                             }
                             
                             self.showWebInfoViewWithTitle("Disruption information", content:disruptionInformation)
-                        })
+                            })
                     }
                     else {
                         disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.")
@@ -388,7 +386,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 let departuresRow: Row = Row.Basic(title: "Departures", subtitle: nil,  action: {
                     [unowned self] in
                     self.showDepartures()
-                })
+                    })
                 timetableRows.append(departuresRow)
             }
         }
@@ -398,7 +396,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let winterTimetableRow: Row = Row.Basic(title: "Winter timetable", subtitle: nil, action: {
                 [unowned self] in
                 self.showWinterTimetable()
-            })
+                })
             timetableRows.append(winterTimetableRow)
         }
         
@@ -407,7 +405,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let summerTimetableRow: Row = Row.Basic(title: "Summer timetable", subtitle: nil, action: {
                 [unowned self] in
                 self.showSummerTimetable()
-            })
+                })
             timetableRows.append(summerTimetableRow)
         }
         
@@ -501,7 +499,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
         }
     }
-
+    
     private func indexPathForLocation(location: Location) -> NSIndexPath? {
         var sectionCount = 0
         
@@ -599,7 +597,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         disruptionViewController.html = content
         self.navigationController?.pushViewController(disruptionViewController, animated: true)
     }
-
+    
     private func calculateMapRectForAnnotations(annotations: [MKPointAnnotation]) -> MKMapRect {
         var mapRect = MKMapRectNull
         for annotation in annotations {
@@ -618,10 +616,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             
             let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset!, 35, bottomInset + 5, 35))
             
-            self.mapView.setVisibleMapRect(visibleRect, animated: false)            
+            self.mapView.setVisibleMapRect(visibleRect, animated: false)
         }
     }
-
+    
     
     // MARK: - UITableViewDatasource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -646,7 +644,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         switch row {
         case let .Basic(title, subtitle, action):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.basicCell
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) 
+            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
             cell.textLabel!.text = title
             
             if let subtitle = subtitle {

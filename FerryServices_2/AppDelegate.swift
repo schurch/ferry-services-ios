@@ -14,7 +14,6 @@ struct AppConstants {
 }
 
 @UIApplicationMain
-@available(iOS 9.0, *)
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     static let applicationShortcutTypeRecentService = "UIApplicationShortcutIconTypeRecentService"
@@ -34,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Crashlytics.startWithAPIKey(APIKeys.CrashlyticsAPIKey)
         
         Parse.setApplicationId(APIKeys.ParseApplicationId, clientKey: APIKeys.ParseClientKey)
+        print("Parse App ID: \(APIKeys.ParseApplicationId); Parse Client key: \(APIKeys.ParseClientKey)")
         
         // Global colors
         self.window?.tintColor = UIColor.tealTintColor()
@@ -45,23 +45,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(notificationSettings)
         application.registerForRemoteNotifications()
         
-        if #available(iOS 9.0, *) {
-            if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
-                launchedShortcutItem = shortcutItem
-                // This will block "performActionForShortcutItem:completionHandler" from being called.
-                shouldPerformAdditionalDelegateHandling = false
-            }
+        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+            launchedShortcutItem = shortcutItem
+            // This will block "performActionForShortcutItem:completionHandler" from being called.
+            shouldPerformAdditionalDelegateHandling = false
         }
         
         return shouldPerformAdditionalDelegateHandling
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {        
-        if #available(iOS 9.0, *) {
-            guard let shortcut = launchedShortcutItem else { return }
-            handleShortCutItem(shortcut)
-            launchedShortcutItem = nil
-        }
+    func applicationDidBecomeActive(application: UIApplication) {
+        guard let shortcut = launchedShortcutItem else { return }
+        handleShortCutItem(shortcut)
+        launchedShortcutItem = nil
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
@@ -77,7 +73,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFPush.handlePush(userInfo)
     }
 
-    @available(iOS 9.0, *)
     func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: Bool -> Void) {
         let handledShortCutItem = handleShortCutItem(shortcutItem)
         completionHandler(handledShortCutItem)
@@ -85,7 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     // MARK: -
-    @available(iOS 9.0, *)
     func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
         var handled = false
         
