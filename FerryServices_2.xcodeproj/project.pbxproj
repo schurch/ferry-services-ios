@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		53A7B4521D177BBCE7B9B5E6 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D9493F193C4A87EAD799AC /* Pods.framework */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
+		FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */; };
 		FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */; };
 		FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */; };
 		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
@@ -17,6 +18,8 @@
 		FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */; };
 		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
 		FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5BF4E01A539EC4009D799E /* PropellerView.swift */; };
+		FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */; };
+		FD5E247F1C001BBE006B3E65 /* ServiceStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E247D1C001BBE006B3E65 /* ServiceStatusCell.xib */; };
 		FD5E7DBB197A316F00F438F6 /* ServicesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* ServicesAPIClient.swift */; };
 		FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */; };
 		FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD60D97E1AA173360054A131 /* AlertCell.xib */; };
@@ -87,6 +90,7 @@
 		A2A7F2853FF7E1F502C8C853 /* Pods_FerryServices_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FerryServices_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD7597146748CC36832D1D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
 		FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +99,8 @@
 		FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
 		FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		FD5BF4E01A539EC4009D799E /* PropellerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropellerView.swift; sourceTree = "<group>"; };
+		FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusCell.swift; sourceTree = "<group>"; };
+		FD5E247D1C001BBE006B3E65 /* ServiceStatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceStatusCell.xib; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FD5E7DBA197A316F00F438F6 /* ServicesAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ServicesAPIClient.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailReceiveAlertCellTableViewCell.swift; sourceTree = "<group>"; };
@@ -334,6 +340,7 @@
 				FD74D0A51A9020E200013095 /* TextOnlyCell.xib */,
 				FD60D97E1AA173360054A131 /* AlertCell.xib */,
 				FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */,
+				FD5E247D1C001BBE006B3E65 /* ServiceStatusCell.xib */,
 				FD5E7DB9197A310600F438F6 /* View Controllers */,
 				FD5BF4E21A539ED1009D799E /* Views */,
 				FD5E7DBC197A317800F438F6 /* API Client */,
@@ -415,6 +422,8 @@
 			isa = PBXGroup;
 			children = (
 				FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */,
+				FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */,
+				FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */,
 				FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */,
 			);
 			name = Services;
@@ -540,6 +549,7 @@
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				FDC03DE919DFDD8D000CE1FA /* services.json in Resources */,
 				FD74D0A41A90125700013095 /* NoDisruptionsCell.xib in Resources */,
+				FD5E247F1C001BBE006B3E65 /* ServiceStatusCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,6 +636,7 @@
 				FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */,
 				FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */,
 				FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */,
+				FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */,
 				FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */,
 				FDA0ECE81A69E3FE00EDF5DA /* UIColor_extensions.swift in Sources */,
 				FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */,
@@ -644,6 +655,7 @@
 				FDA1220E1B58E03500813EF6 /* JSONRequester.swift in Sources */,
 				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
 				FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,
+				FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */,
 				FD5E7DBB197A316F00F438F6 /* ServicesAPIClient.swift in Sources */,
 				FDAC1B671B3FDFE8000353EA /* Double_extensions.swift in Sources */,
 				FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */,

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M6G-w3-Rgm">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -9,81 +8,12 @@
         <!--Ferries-->
         <scene sceneID="CfR-48-wwL">
             <objects>
-                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="uiG-sM-ILp" customClass="ServicesViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="uiG-sM-ILp" customClass="ServicesViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="PzK-zD-OtV">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="shJ-HZ-Odo">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="uiG-sM-ILp" id="Zo5-Yv-0Tl"/>
-                            </connections>
-                        </searchBar>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="serviceStatusCell" rowHeight="44" id="AGI-Hw-gFy" customClass="ServiceStatusTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="94" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AGI-Hw-gFy" id="oz8-yh-9eU">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vxl-fx-ggN">
-                                            <rect key="frame" x="42" y="4" width="525" height="21"/>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="EX9-MV-q27"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zxh-GO-J3P">
-                                            <rect key="frame" x="42" y="20" width="525" height="21"/>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="y5Q-bO-HSW"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Ts-7V-2Sv">
-                                            <rect key="frame" x="11" y="10" width="24" height="24"/>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="24" id="SQI-jR-iad"/>
-                                                <constraint firstAttribute="width" constant="24" id="Y5j-34-3jr"/>
-                                            </constraints>
-                                        </imageView>
-                                    </subviews>
-                                    <animations/>
-                                    <constraints>
-                                        <constraint firstItem="Zxh-GO-J3P" firstAttribute="top" secondItem="oz8-yh-9eU" secondAttribute="top" constant="20" id="3pf-NE-g0Z"/>
-                                        <constraint firstAttribute="trailing" secondItem="Vxl-fx-ggN" secondAttribute="trailing" id="MvI-wU-sXk"/>
-                                        <constraint firstItem="0Ts-7V-2Sv" firstAttribute="leading" secondItem="oz8-yh-9eU" secondAttribute="leading" constant="11" id="bzl-gE-chj"/>
-                                        <constraint firstItem="Vxl-fx-ggN" firstAttribute="leading" secondItem="Zxh-GO-J3P" secondAttribute="leading" id="fmC-nS-OOS"/>
-                                        <constraint firstAttribute="trailing" secondItem="Zxh-GO-J3P" secondAttribute="trailing" id="jTx-vj-j05"/>
-                                        <constraint firstAttribute="centerY" secondItem="0Ts-7V-2Sv" secondAttribute="centerY" id="uCS-Hj-VvE"/>
-                                        <constraint firstItem="Vxl-fx-ggN" firstAttribute="leading" secondItem="oz8-yh-9eU" secondAttribute="leading" constant="42" id="uR5-ES-hTJ"/>
-                                        <constraint firstItem="Vxl-fx-ggN" firstAttribute="top" secondItem="oz8-yh-9eU" secondAttribute="top" constant="4" id="v4n-N6-Qj9"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="constraintTitleLeadingSpace" destination="uR5-ES-hTJ" id="Iab-jX-SJx"/>
-                                    <outlet property="imageViewStatus" destination="0Ts-7V-2Sv" id="LYH-4v-IN0"/>
-                                    <outlet property="labelSubtitle" destination="Zxh-GO-J3P" id="pBq-EO-JRb"/>
-                                    <outlet property="labelTitle" destination="Vxl-fx-ggN" id="tdS-eu-lZb"/>
-                                    <segue destination="ISC-5h-72Q" kind="show" identifier="showServiceDetail" id="gAQ-dx-Ip2"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="uiG-sM-ILp" id="Ml7-J2-JPi"/>
                             <outlet property="delegate" destination="uiG-sM-ILp" id="9Me-sz-A7N"/>
@@ -91,22 +21,61 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="Ferries" id="ndA-Xd-ojl"/>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="pt8-HI-Yzq" id="143-IY-5N0"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t8E-hL-GNH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="pt8-HI-Yzq">
-                    <connections>
-                        <outlet property="delegate" destination="uiG-sM-ILp" id="szy-bW-r6I"/>
-                        <outlet property="searchBar" destination="shJ-HZ-Odo" id="tOf-O5-5rf"/>
-                        <outlet property="searchContentsController" destination="uiG-sM-ILp" id="YCq-fp-PE8"/>
-                        <outlet property="searchResultsDataSource" destination="uiG-sM-ILp" id="kbq-Ha-oin"/>
-                        <outlet property="searchResultsDelegate" destination="uiG-sM-ILp" id="os7-OY-JKy"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="561" y="154"/>
+        </scene>
+        <!--Search Results View Controller-->
+        <scene sceneID="ao6-mH-kUg">
+            <objects>
+                <viewController storyboardIdentifier="SearchResultsController" id="SvL-w8-QSF" customClass="SearchResultsViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BI8-79-J1n"/>
+                        <viewControllerLayoutGuide type="bottom" id="hQR-3V-iM6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0Di-8t-had">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRk-bw-9yD">
+                                <rect key="frame" x="0.0" y="73" width="600" height="527"/>
+                                <animations/>
+                                <connections>
+                                    <outlet property="delegate" destination="SvL-w8-QSF" id="ZKi-pF-rvg"/>
+                                </connections>
+                            </mapView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="40f-Ts-kFH">
+                                <rect key="frame" x="0.0" y="73" width="600" height="527"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="SvL-w8-QSF" id="MMx-hv-aaM"/>
+                                    <outlet property="delegate" destination="SvL-w8-QSF" id="Iwy-ah-ExD"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QRk-bw-9yD" firstAttribute="top" secondItem="BI8-79-J1n" secondAttribute="bottom" constant="53" id="69R-t5-e0G"/>
+                            <constraint firstItem="hQR-3V-iM6" firstAttribute="top" secondItem="40f-Ts-kFH" secondAttribute="bottom" id="7t1-iC-LuD"/>
+                            <constraint firstItem="40f-Ts-kFH" firstAttribute="leading" secondItem="0Di-8t-had" secondAttribute="leading" id="K2M-4l-0K9"/>
+                            <constraint firstAttribute="trailing" secondItem="40f-Ts-kFH" secondAttribute="trailing" id="Z9f-us-cWZ"/>
+                            <constraint firstItem="QRk-bw-9yD" firstAttribute="leading" secondItem="0Di-8t-had" secondAttribute="leading" id="dsZ-oL-DY3"/>
+                            <constraint firstAttribute="trailing" secondItem="QRk-bw-9yD" secondAttribute="trailing" id="r5r-EP-oUi"/>
+                            <constraint firstItem="40f-Ts-kFH" firstAttribute="top" secondItem="BI8-79-J1n" secondAttribute="bottom" constant="53" id="xKP-nd-gwE"/>
+                            <constraint firstItem="hQR-3V-iM6" firstAttribute="top" secondItem="QRk-bw-9yD" secondAttribute="bottom" id="yRz-XG-To4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="QRk-bw-9yD" id="Tyu-gz-U0r"/>
+                        <outlet property="tableView" destination="40f-Ts-kFH" id="ZE4-1V-REc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="get-Zt-KmS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="561" y="848"/>
         </scene>
         <!--Web Information View Controller-->
         <scene sceneID="T5f-hj-VZk">
@@ -147,8 +116,8 @@
         <!--Navigation Controller-->
         <scene sceneID="2b3-kD-Hbs">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="M6G-w3-Rgm" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout"/>
+                <navigationController id="M6G-w3-Rgm" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="tJe-9Z-iYr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -168,24 +137,24 @@
         <!--Service Detail Table View Controller-->
         <scene sceneID="t16-wn-hjG">
             <objects>
-                <viewController id="ISC-5h-72Q" customClass="ServiceDetailTableViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ServiceDetailTableViewController" id="ISC-5h-72Q" customClass="ServiceDetailTableViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dSu-df-ofQ"/>
                         <viewControllerLayoutGuide type="bottom" id="Ify-K7-wFo"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hen-jj-MOU">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jnL-zy-irC">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <animations/>
                                 <connections>
                                     <outlet property="delegate" destination="ISC-5h-72Q" id="B14-nf-FBx"/>
                                 </connections>
                             </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="pKD-PB-YuA">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <visualEffectView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" id="oiY-r1-Do8">
@@ -240,7 +209,7 @@
                                 </visualEffectView>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="basicCell" textLabel="fm0-5P-uRO" detailTextLabel="xSd-DF-UTc" rowHeight="44" style="IBUITableViewCellStyleValue1" id="tl9-jW-qQ6" userLabel="Cell - basic">
-                                        <rect key="frame" x="0.0" y="127" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="126.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tl9-jW-qQ6" id="rRe-VT-Nv1">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -268,10 +237,10 @@
                                         <animations/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="loadingCell" rowHeight="55" id="2yD-yy-f20" userLabel="Cell - loading" customClass="ServiceDetailLoadingTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="171" width="600" height="55"/>
+                                        <rect key="frame" x="0.0" y="170.5" width="600" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2yD-yy-f20" id="2b4-pU-4Be">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="54.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <activityIndicatorView opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lzV-PZ-DRb">
@@ -383,7 +352,7 @@
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="dateCell" id="kEi-c4-xz2" userLabel="dateCell" customClass="TimetableDateTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kEi-c4-xz2" id="T8N-OQ-Zb2">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -426,7 +395,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="headerCell" id="xlw-j9-uRE" userLabel="headerCell" customClass="TimetableHeaderViewCell" customModule="FerryServices_2" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="94" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="93.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xlw-j9-uRE" id="TbW-hp-7Gx">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -464,10 +433,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="timeCell" id="ofM-OP-DfL" userLabel="timeCell" customClass="TimetableTimeTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="138" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="137.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ofM-OP-DfL" id="GBo-t4-Vff">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07:20" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tlf-MS-3Fs">
@@ -531,7 +500,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerCell" rowHeight="216" id="Y56-vq-JKv" userLabel="datePickerCell">
-                                        <rect key="frame" x="0.0" y="182" width="600" height="216"/>
+                                        <rect key="frame" x="0.0" y="181.5" width="600" height="216"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y56-vq-JKv" id="qw8-g7-rpv">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="215.5"/>

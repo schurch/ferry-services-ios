@@ -10,6 +10,31 @@ import FMDB
 
 class Location : Hashable {
     
+    class func fetchLocations() -> [Location]? {
+        let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
+        let database = FMDatabase(path: path)
+        
+        if (!database.open()) {
+            return nil
+        }
+        
+        let query = "SELECT l.Name, l.Latitude, l.Longitude FROM Location l"
+        
+        let resultSet = database.executeQuery(query, withArgumentsInArray: nil)
+        var locations = [Location]()
+        
+        while (resultSet.next()) {
+            let name = resultSet.stringForColumn("Name")
+            let latitude = resultSet.doubleForColumn("Latitude")
+            let longitude = resultSet.doubleForColumn("Longitude")
+            locations += [Location(name: name, latitude: latitude, longitude: longitude)]
+        }
+        
+        database.close()
+        
+        return locations
+    }
+    
     class func fetchLocationsForSericeId(serviceId: Int) -> [Location]? {
         let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
         let database = FMDatabase(path: path)
