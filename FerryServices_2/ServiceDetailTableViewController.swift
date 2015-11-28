@@ -198,6 +198,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         // have nasty effect as it gets near top
         self.view.clipsToBounds = false
         
+        self.setMapVisibleRect()
+        
         // Update dynamic shortcuts
         if let area = self.serviceStatus.area, route = self.serviceStatus.route, serviceId = self.serviceStatus.serviceId {
             var shortcutItems = UIApplication.sharedApplication().shortcutItems ?? []
@@ -772,10 +774,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     // MARK: - MKMapViewDelegate
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         mapView.deselectAnnotation(view.annotation, animated: false)
-    }
-    
-    func mapViewWillStartLoadingMap(mapView: MKMapView) {
-        self.setMapVisibleRect()
     }
     
     // MARK: - ServiceDetailWeatherCellDelegate

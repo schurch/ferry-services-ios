@@ -8,6 +8,11 @@
 
 import UIKit
 import MapKit
+import Flurry_iOS_SDK
+
+protocol SearchResultsViewControllerDelegate: class {
+    func didSelectServiceStatus(serviceStatus: ServiceStatus)
+}
 
 class SearchResultsViewController: UIViewController {
     
@@ -24,8 +29,12 @@ class SearchResultsViewController: UIViewController {
     
     var arrayOfServices: [ServiceStatus] = []
     
-    private var arrayOfFilteredServices: [ServiceStatus] = []
+    weak var delegate: SearchResultsViewControllerDelegate?
+    
     private var arrayOfAnnotations: [MKPointAnnotation] = []
+    private var arrayOfFilteredServices: [ServiceStatus] = []
+    private var arrayOfLocations = Location.fetchLocations()
+    private var text: String?
     private var viewMode: Mode = .List
     
     // MARK: - View lifecycle
@@ -54,19 +63,31 @@ class SearchResultsViewController: UIViewController {
         
         switch self.viewMode {
         case .List:
-            self.tableView.reloadData()
-            
-            self.tableView.hidden = false
-            self.mapView.hidden = true
+            configureListView()
         case .Map:
-            
-            self.tableView.hidden = true
-            self.mapView.hidden = false
+            configureMapView()
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    private func configureListView() {
+        filterResults()
         
+        self.tableView.reloadData()
+        
+        self.tableView.hidden = false
+        self.mapView.hidden = true
+    }
+    
+    private func configureMapView() {
+        filterResults()
+        
+        // Show scotland
+        let coordinate = CLLocationCoordinate2D(latitude: 56.1, longitude: -4.5)
+        let region = MKCoordinateRegionMakeWithDistance(coordinate, 500000, 500000)
+        self.mapView.setRegion(self.mapView.regionThatFits(region), animated: false)
+        
+        self.tableView.hidden = true
+        self.mapView.hidden = false
     }
     
     // MARK: - Public
@@ -80,32 +101,56 @@ class SearchResultsViewController: UIViewController {
         self.configureView()
     }
     
-    private func filterResultsWithText(filterText: String?) {
-        guard let filterText = filterText else {
+    private func filterResults() {
+        guard let filterText = self.text else {
             return
         }
         
-        self.arrayOfFilteredServices = self.arrayOfServices.filter { service in
-            var containsArea = false
-            if let area = service.area?.lowercaseString {
-                containsArea = area.containsString(filterText.lowercaseString)
+        switch self.viewMode {
+        case .List:
+            self.arrayOfFilteredServices = self.arrayOfServices.filter { service in
+                var containsArea = false
+                if let area = service.area?.lowercaseString {
+                    containsArea = area.containsString(filterText.lowercaseString)
+                }
+                
+                var containsRoute = false
+                if let route = service.route?.lowercaseString {
+                    containsRoute = route.containsString(filterText.lowercaseString)
+                }
+                
+                return containsArea || containsRoute
             }
             
-            var containsRoute = false
-            if let route = service.route?.lowercaseString {
-                containsRoute = route.containsString(filterText.lowercaseString)
+            self.tableView.reloadData()
+        case .Map:
+            if let locations = self.arrayOfLocations {
+                let filteredLocations = locations.filter { location in
+                    if let containsString = location.name?.lowercaseString.containsString(filterText.lowercaseString) {
+                        return containsString
+                    }
+                    
+                    return false
+                }
+                
+                let annotations: [MKPointAnnotation] = filteredLocations.map { location in
+                    let annotation = MKPointAnnotation()
+                    annotation.title = location.name
+                    annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude!, longitude: location.longitude!)
+                    return annotation
+                }
+                
+                self.mapView.removeAnnotations(self.mapView.annotations)
+                self.mapView.addAnnotations(annotations)
             }
-            
-            return containsArea || containsRoute
         }
-        
-        self.tableView.reloadData()
     }
 }
 
 extension SearchResultsViewController: UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        self.filterResultsWithText(searchController.searchBar.text)
+        self.text = searchController.searchBar.text
+        self.filterResults()
     }
 }
 
@@ -125,13 +170,13 @@ extension SearchResultsViewController: UITableViewDataSource {
 
 extension SearchResultsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        self.delegate?.didSelectServiceStatus(self.arrayOfFilteredServices[indexPath.row])
     }
 }
 
 extension SearchResultsViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        guard !annotation.isKindOfClass(MKUserLocation.self) else {
+        if annotation.isKindOfClass(MKUserLocation.self) {
             return nil
         }
         
@@ -142,11 +187,35 @@ extension SearchResultsViewController: MKMapViewDelegate {
             pinView.pinTintColor = UIColor.redColor()
             pinView.animatesDrop = false
             pinView.canShowCallout = true
+            
+            let directionsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 100))
+            directionsButton.backgroundColor = UIColor(red:0.13, green:0.75, blue:0.67, alpha:1)
+            directionsButton.setImage(UIImage(named: "directions_arrow"), forState: UIControlState.Normal)
+            directionsButton.setImage(UIImage(named: "directions_arrow_highlighted"), forState: UIControlState.Highlighted)
+            directionsButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 56, right: 0)
+            
+            pinView.rightCalloutAccessoryView = directionsButton
         }
         else {
             pinView.annotation = annotation
         }
         
         return pinView
+    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        Flurry.logEvent("Show driving directions to port")
+        
+        let annotation = view.annotation
+        
+        let placemark = MKPlacemark(coordinate: annotation!.coordinate, addressDictionary: nil)
+        
+        let destination = MKMapItem(placemark: placemark)
+        destination.name = annotation!.title!
+        
+        let items = [destination]
+        let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        
+        MKMapItem.openMapsWithItems(items, launchOptions: options)
     }
 }
