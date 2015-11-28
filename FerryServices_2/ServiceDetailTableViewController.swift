@@ -71,6 +71,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var disruptionDetails: DisruptionDetails?
     var headerHeight: CGFloat!
     var mapMotionEffect: UIMotionEffectGroup!
+    var mapRectSet = false
     var refreshingDisruptionInfo: Bool = true // show table as refreshing initially
     var serviceStatus: ServiceStatus!
     var viewBackground: UIView!
@@ -198,8 +199,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         // have nasty effect as it gets near top
         self.view.clipsToBounds = false
         
-        self.setMapVisibleRect()
-        
         // Update dynamic shortcuts
         if let area = self.serviceStatus.area, route = self.serviceStatus.route, serviceId = self.serviceStatus.serviceId {
             var shortcutItems = UIApplication.sharedApplication().shortcutItems ?? []
@@ -240,6 +239,16 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.view.clipsToBounds = true
         
         self.windAnimationTimer.invalidate()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !mapRectSet {
+            // Need to do this at this point as we need to know the size of the view to calculate the rect that is shown
+            setMapVisibleRect()
+            mapRectSet = true
+        }
     }
     
     func applicationDidBecomeActive(notification: NSNotification) {

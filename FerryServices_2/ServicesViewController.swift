@@ -143,7 +143,7 @@ class ServicesViewController: UITableViewController {
         
         self.searchResultsController.arrayOfServices = self.arrayServiceStatuses
         
-        refresh()
+        self.refreshWithContentInsetReset(false)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -173,11 +173,11 @@ class ServicesViewController: UITableViewController {
     
     // MARK: - Notifications
     func applicationDidBecomeActive(notification: NSNotification) {
-        self.refresh()
+        self.refreshWithContentInsetReset(false)
     }
     
     // MARK: - Refresh
-    func refresh() {
+    func refreshWithContentInsetReset(resetContentInset: Bool) {
         self.refreshing = true
         self.propellerView.percentComplete = 1.0
         self.propellerView.startRotating()
@@ -193,12 +193,18 @@ class ServicesViewController: UITableViewController {
             self.tableView.reloadData()
             
             // reset pull to refresh on completion
-            UIView.animateWithDuration(0.25, animations: {
-                self.tableView.contentInset = UIEdgeInsetsZero
-                }, completion: { (finished) -> () in
-                    self.propellerView.stopRotating()
-                    self.refreshing = false
-            })
+            if resetContentInset {
+                UIView.animateWithDuration(0.25, animations: {
+                    self.tableView.contentInset = UIEdgeInsetsZero
+                    }, completion: { (finished) -> () in
+                        self.propellerView.stopRotating()
+                        self.refreshing = false
+                })
+            }
+            else {
+                self.propellerView.stopRotating()
+                self.refreshing = false
+            }
         }
     }
     
@@ -312,7 +318,7 @@ class ServicesViewController: UITableViewController {
     
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y < -Constants.PullToRefresh.refreshOffset {
-            refresh()
+            refreshWithContentInsetReset(true)
             
             let contentOffset = scrollView.contentOffset
             var newInset = scrollView.contentInset

@@ -55,7 +55,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
-        guard let shortcut = launchedShortcutItem else { return }
+        application.applicationIconBadgeNumber = 0
+        
+        guard let shortcut = launchedShortcutItem else {
+            return
+        }
+        
         handleShortCutItem(shortcut)
         launchedShortcutItem = nil
     }
