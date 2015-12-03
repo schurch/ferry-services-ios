@@ -34,6 +34,7 @@ class SearchResultsViewController: UIViewController {
     private var arrayOfAnnotations: [MKPointAnnotation] = []
     private var arrayOfFilteredServices: [ServiceStatus] = []
     private var arrayOfLocations = Location.fetchLocations()
+    private var bottomInset: CGFloat = 0.0
     private var text: String?
     private var viewMode: Mode = .List
     
@@ -42,6 +43,9 @@ class SearchResultsViewController: UIViewController {
         super.viewDidLoad()
         
         self.tableView.registerNib(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: SearchResultsViewController.serviceStatusReuseId)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShownNotification:"), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillBeHiddenNotification:"), name: UIKeyboardWillHideNotification, object: nil)
         
         self.configureView()
     }
@@ -63,14 +67,14 @@ class SearchResultsViewController: UIViewController {
         
         switch self.viewMode {
         case .List:
-            configureListView()
+            self.configureListView()
         case .Map:
-            configureMapView()
+            self.configureMapView()
         }
     }
     
     private func configureListView() {
-        filterResults()
+        self.filterResults()
         
         self.tableView.reloadData()
         
@@ -79,18 +83,34 @@ class SearchResultsViewController: UIViewController {
     }
     
     private func configureMapView() {
-        filterResults()
-        
-        // Show scotland
-        let coordinate = CLLocationCoordinate2D(latitude: 56.1, longitude: -4.5)
-        let region = MKCoordinateRegionMakeWithDistance(coordinate, 500000, 500000)
-        self.mapView.setRegion(self.mapView.regionThatFits(region), animated: false)
+        self.filterResults()
         
         self.tableView.hidden = true
         self.mapView.hidden = false
     }
     
     // MARK: - Public
+    func keyboardShownNotification(notification: NSNotification) {
+        if let height = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size.height {
+            let inset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: height, right: 0.0)
+            self.tableView.contentInset = inset
+            self.tableView.scrollIndicatorInsets = inset
+            
+            self.bottomInset = height + 10.0
+            
+            self.showVisibleMapRectAnimated(false)
+        }
+    }
+    
+    func keyboardWillBeHiddenNotification(notification: NSNotification) {
+        self.tableView.contentInset = UIEdgeInsetsZero
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
+        
+        self.bottomInset = 0.0
+        
+        self.showVisibleMapRectAnimated(false)
+    }
+    
     func showList() {
         self.viewMode = .List
         self.configureView()
@@ -101,6 +121,7 @@ class SearchResultsViewController: UIViewController {
         self.configureView()
     }
     
+    // MARK: - Utility methods
     private func filterResults() {
         guard let filterText = self.text else {
             return
@@ -133,16 +154,31 @@ class SearchResultsViewController: UIViewController {
                     return false
                 }
                 
-                let annotations: [MKPointAnnotation] = filteredLocations.map { location in
-                    let annotation = MKPointAnnotation()
-                    annotation.title = location.name
-                    annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude!, longitude: location.longitude!)
-                    return annotation
-                }
+                let annotations = annotationsForLocations(filteredLocations)
                 
                 self.mapView.removeAnnotations(self.mapView.annotations)
                 self.mapView.addAnnotations(annotations)
+                
+                self.showVisibleMapRectAnimated(true)
             }
+        }
+    }
+    
+    private func annotationsForLocations(locations: [Location]) -> [MKPointAnnotation] {
+        return locations.map { location in
+            let annotation = MKPointAnnotation()
+            annotation.title = location.name
+            annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude!, longitude: location.longitude!)
+            return annotation
+        }
+    }
+    
+    private func showVisibleMapRectAnimated(animated: Bool) {
+        if let locations = self.arrayOfLocations {
+            let allAnnotations = self.annotationsForLocations(locations)
+            let rect = calculateMapRectForAnnotations(allAnnotations)
+            let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsets(top: 50.0, left: 25.0, bottom: self.bottomInset, right: 40.0))
+            self.mapView.setVisibleMapRect(visibleRect, animated: animated)
         }
     }
 }

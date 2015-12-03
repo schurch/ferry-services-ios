@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let navigationController = self.window?.rootViewController as? UINavigationController {
             if let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {
                 if let serviceId = shortcutItem.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
-                    servicesViewController.showDetailsForServiceId(serviceId)
+                    servicesViewController.showDetailsForServiceId(serviceId, shouldFindAndHighlightRow: true)
                     handled = true
                 }
             }

@@ -57,7 +57,7 @@ class ServicesViewController: UITableViewController {
     }
     
     // MARK: - Public
-    func showDetailsForServiceId(serviceId: Int) {
+    func showDetailsForServiceId(serviceId: Int, shouldFindAndHighlightRow: Bool = false) {
         if self.arrayServiceStatuses.count == 0 {
             // We haven't loaded yet so set the service ID to show when we do
             self.serviceIdToShow = serviceId
@@ -66,9 +66,11 @@ class ServicesViewController: UITableViewController {
             self.navigationController?.popToRootViewControllerAnimated(false)
             
             if let index = self.indexOfServiceWithServiceId(serviceId, services: self.arrayServiceStatuses) {
-//                let section = !self.arrayRecentServiceStatues.isEmpty ? 1 : 0;
-//                let indexPath = NSIndexPath(forRow: index, inSection: section)
-//                self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
+                if shouldFindAndHighlightRow {
+                    let section = !self.arrayRecentServiceStatues.isEmpty ? 1 : 0;
+                    let indexPath = NSIndexPath(forRow: index, inSection: section)
+                    self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
+                }
                 
                 let serviceStatus = self.arrayServiceStatuses[index]
                 
@@ -137,7 +139,7 @@ class ServicesViewController: UITableViewController {
         
         if let serviceIdToShow = self.serviceIdToShow {
             // If this is set, then there was a request to show a service before the view had loaded
-            self.showDetailsForServiceId(serviceIdToShow)
+            self.showDetailsForServiceId(serviceIdToShow, shouldFindAndHighlightRow: true)
             self.serviceIdToShow = nil
         }
         

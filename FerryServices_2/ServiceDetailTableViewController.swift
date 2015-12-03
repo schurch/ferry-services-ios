@@ -609,18 +609,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.navigationController?.pushViewController(disruptionViewController, animated: true)
     }
     
-    private func calculateMapRectForAnnotations(annotations: [MKPointAnnotation]) -> MKMapRect {
-        var mapRect = MKMapRectNull
-        for annotation in annotations {
-            let point = MKMapPointForCoordinate(annotation.coordinate)
-            mapRect = MKMapRectUnion(mapRect, MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
-        }
-        return mapRect
-    }
-    
     private func setMapVisibleRect() {
         if (self.navigationController != nil) {
-            let rect = self.calculateMapRectForAnnotations(self.annotations!)
+            let rect = calculateMapRectForAnnotations(self.annotations!)
             
             let topInset = self.navigationController?.navigationBar.frame.size.height
             let bottomInset = self.view.bounds.size.height - MainStoryBoard.Constants.contentInset

@@ -28,11 +28,11 @@ class ServiceStatusCell: UITableViewCell {
             case .SailingsCancelled:
                 self.imageViewStatus.image = UIImage(named: "red")
             case .Unknown:
-                self.imageViewStatus.image = nil
+                self.imageViewStatus.image = UIImage(named: "grey")
             }
         }
         else {
-            self.imageViewStatus.image = nil
+            self.imageViewStatus.image = UIImage(named: "grey")
         }
         
         if self.imageViewStatus.image == nil {
