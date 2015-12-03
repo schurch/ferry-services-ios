@@ -46,9 +46,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
-            launchedShortcutItem = shortcutItem
+            self.launchedShortcutItem = shortcutItem
             // This will block "performActionForShortcutItem:completionHandler" from being called.
             shouldPerformAdditionalDelegateHandling = false
+        }
+        else if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
+            self.application(application, didReceiveRemoteNotification: remoteNotification)
         }
         
         return shouldPerformAdditionalDelegateHandling
@@ -57,14 +60,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         application.applicationIconBadgeNumber = 0
         
-        guard let shortcut = launchedShortcutItem else {
+        guard let shortcut = self.launchedShortcutItem else {
             return
         }
         
-        handleShortCutItem(shortcut)
-        launchedShortcutItem = nil
+        self.handleShortCutItem(shortcut)
+        self.launchedShortcutItem = nil
     }
     
+    // MARK: - Push notifications
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         // Store the deviceToken in the current installation and save it to Parse.
         let currentInstallation = PFInstallation.currentInstallation()
@@ -75,29 +79,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        PFPush.handlePush(userInfo)
+        if application.applicationState == .Active {
+            if let message = userInfo["aps"]?["alert"] as? String {
+                let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .Alert)
+                
+                let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                
+                self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+            }
+        }
+        else {
+            if let serviceId = userInfo["service_id"] as? Int {
+                self.showDetailsForServiceId(serviceId)
+            }
+        }
     }
-
+    
+    // MARK: - Shortcut items
     func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: Bool -> Void) {
         let handledShortCutItem = handleShortCutItem(shortcutItem)
         completionHandler(handledShortCutItem)
     }
-
     
-    // MARK: -
     func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
         var handled = false
-        
-        if let navigationController = self.window?.rootViewController as? UINavigationController {
-            if let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {
-                if let serviceId = shortcutItem.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
-                    servicesViewController.showDetailsForServiceId(serviceId, shouldFindAndHighlightRow: true)
-                    handled = true
-                }
-            }
+        if let serviceId = shortcutItem.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
+            self.showDetailsForServiceId(serviceId)
+            handled = true
         }
         
         return handled
+    }
+    
+    // MARK: - Utility methods
+    private func showDetailsForServiceId(serviceId: Int) {
+        if let navigationController = self.window?.rootViewController as? UINavigationController, let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {
+            servicesViewController.showDetailsForServiceId(serviceId, shouldFindAndHighlightRow: true)
+        }
     }
 }
 
