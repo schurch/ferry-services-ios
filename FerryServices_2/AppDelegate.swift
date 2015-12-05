@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Crashlytics.startWithAPIKey(APIKeys.CrashlyticsAPIKey)
         
         Parse.setApplicationId(APIKeys.ParseApplicationId, clientKey: APIKeys.ParseClientKey)
-        print("Parse App ID: \(APIKeys.ParseApplicationId); Parse Client key: \(APIKeys.ParseClientKey)")
         
         // Global colors
         self.window?.tintColor = UIColor.tealTintColor()
