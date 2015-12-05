@@ -118,7 +118,7 @@ class PropellerView: UIView {
         propellerBezier.addLineToPoint(CGPointMake(frame.minX + 0.47820 * frame.width, frame.minY + 0.44116 * frame.height))
         propellerBezier.closePath()
         
-        propellerBezier.miterLimit = 4;
+        propellerBezier.miterLimit = 4
 
         propellerLayer.path = propellerBezier.CGPath
     }

@@ -14,6 +14,8 @@ import Flurry_iOS_SDK
 class ServicesViewController: UITableViewController {
     
     // MARK: - Variables & Constants
+    static let subscribedServiceIdsUserDefaultsKey = "com.ferryservices.userdefaultkeys.subscribedservices"
+    
     private struct MainStoryboard {
         struct TableViewCellIdentifiers {
             static let serviceStatusCell = "serviceStatusCellReuseId"
@@ -22,16 +24,12 @@ class ServicesViewController: UITableViewController {
     
     private struct Constants {
         struct TableViewSections {
-            static let recent = 0
+            static let subscribed = 0
             static let services = 1
         }
         struct TableViewSectionHeaders {
-            static let recent = "Recent"
+            static let subscribed = "Subscribed"
             static let services = "Services"
-        }
-        struct TapCount {
-            static let userDefaultsKey = "com.ferryservices.userdefaultkeys.tapcount"
-            static let minimumCount = 2
         }
         struct PullToRefresh {
             static let refreshOffset = CGFloat(120.0)
@@ -39,17 +37,14 @@ class ServicesViewController: UITableViewController {
     }
     
     private var arrayServiceStatuses = [ServiceStatus]()
-    private var arrayRecentServiceStatues = [ServiceStatus]()
+    private var arraySubscribedServiceStatuses = [ServiceStatus]()
     private var propellerView: PropellerView!
     private var refreshing = false
     private var searchController: UISearchController!
     private var searchResultsController: SearchResultsViewController!
     
     // Set if we should show a service when finished loading
-    private var serviceIdToShow: Int?;
-    
-    private var tapCountDictionary = NSUserDefaults.standardUserDefaults().dictionaryForKey("com.ferryservices.userdefaultkeys.tapcount")
-        ?? [NSObject: AnyObject]()
+    private var serviceIdToShow: Int?
     
     // MARK: -
     deinit {
@@ -67,7 +62,7 @@ class ServicesViewController: UITableViewController {
             
             if let index = self.indexOfServiceWithServiceId(serviceId, services: self.arrayServiceStatuses) {
                 if shouldFindAndHighlightRow {
-                    let section = !self.arrayRecentServiceStatues.isEmpty ? 1 : 0;
+                    let section = !self.arraySubscribedServiceStatuses.isEmpty ? 1 : 0
                     let indexPath = NSIndexPath(forRow: index, inSection: section)
                     self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
                 }
@@ -85,7 +80,6 @@ class ServicesViewController: UITableViewController {
                 }
                 
                 self.navigationController?.pushViewController(serviceDetailViewController, animated: true)
-
             }
         }
     }
@@ -115,7 +109,7 @@ class ServicesViewController: UITableViewController {
         self.definesPresentationContext = true
         
         searchController.searchBar.layer.borderColor = UIColor.tealBackgroundColor().CGColor
-        searchController.searchBar.layer.borderWidth = 1;
+        searchController.searchBar.layer.borderWidth = 1
         
         // Grey subview in tableview appears when pulling to refresh. Not sure what it's for :/
         for subview in self.tableView.subviews {
@@ -125,9 +119,6 @@ class ServicesViewController: UITableViewController {
         }
         
         self.loadDefaultFerryServices()
-        self.reloadRecents()
-        
-        self.navigationItem.rightBarButtonItem = self.arrayRecentServiceStatues.count > 0 ? self.editButtonItem() : nil
         
         // custom pull to refresh
         propellerView = PropellerView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
@@ -135,7 +126,7 @@ class ServicesViewController: UITableViewController {
         propellerView.percentComplete = 0.0
         self.tableView.addSubview(propellerView)
         
-        self.tableView.rowHeight = 44;
+        self.tableView.rowHeight = 44
         
         if let serviceIdToShow = self.serviceIdToShow {
             // If this is set, then there was a request to show a service before the view had loaded
@@ -154,15 +145,9 @@ class ServicesViewController: UITableViewController {
         if let indexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
         
-        reloadRecents()
-        tableView.reloadData()
-        
-        navigationItem.rightBarButtonItem = arrayRecentServiceStatues.count > 0 ? editButtonItem() : nil
+        self.arraySubscribedServiceStatuses = self.generateArrayOfSubscribedServiceIds()
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -187,11 +172,10 @@ class ServicesViewController: UITableViewController {
         ServicesAPIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
             if let statuses = serviceStatuses {
                 self.arrayServiceStatuses = statuses
+                self.arraySubscribedServiceStatuses = self.generateArrayOfSubscribedServiceIds()
                 self.searchResultsController.arrayOfServices = self.arrayServiceStatuses
             }
             
-            self.reloadRecents()
-            self.navigationItem.rightBarButtonItem = self.arrayRecentServiceStatues.count > 0 ? self.editButtonItem() : nil
             self.tableView.reloadData()
             
             // reset pull to refresh on completion
@@ -212,30 +196,30 @@ class ServicesViewController: UITableViewController {
     
     // MARK: - UITableViewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.arrayRecentServiceStatues.isEmpty ? 1 : 2
+        return self.arraySubscribedServiceStatuses.isEmpty ? 1 : 2
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if self.arrayRecentServiceStatues.isEmpty {
+        if self.arraySubscribedServiceStatuses.isEmpty {
             return nil
         }
         
         switch(section) {
-        case Constants.TableViewSections.recent:
-            return Constants.TableViewSectionHeaders.recent
+        case Constants.TableViewSections.subscribed:
+            return Constants.TableViewSectionHeaders.subscribed
         default:
             return Constants.TableViewSectionHeaders.services
         }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.arrayRecentServiceStatues.isEmpty {
+        if self.arraySubscribedServiceStatuses.isEmpty {
             return self.arrayServiceStatuses.count
         }
         
         switch (section) {
-        case Constants.TableViewSections.recent:
-            return self.arrayRecentServiceStatues.count
+        case Constants.TableViewSections.subscribed:
+            return self.arraySubscribedServiceStatuses.count
         default:
             return self.arrayServiceStatuses.count
         }
@@ -249,58 +233,13 @@ class ServicesViewController: UITableViewController {
         return serviceStatusCell
     }
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if tableView.numberOfSections == 1 {
-            return false
-        }
-        else {
-            return indexPath.section == Constants.TableViewSections.recent
-        }
-    }
-    
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == Constants.TableViewSections.recent && editingStyle == .Delete {
-            
-            let serviceStatus = arrayRecentServiceStatues[indexPath.row]
-            tapCountDictionary.removeValueForKey(String(serviceStatus.serviceId!))
-            
-            NSUserDefaults.standardUserDefaults().setObject(tapCountDictionary, forKey: Constants.TapCount.userDefaultsKey)
-            NSUserDefaults.standardUserDefaults().synchronize()
-            
-            reloadRecents()
-            
-            tableView.beginUpdates()
-            if arrayRecentServiceStatues.count == 0 {
-                tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-                setEditing(false, animated: false)
-            }
-            else {
-                tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath.row, inSection: Constants.TableViewSections.recent)], withRowAnimation: .Automatic)
-            }
-            tableView.endUpdates()
-            
-            navigationItem.rightBarButtonItem = arrayRecentServiceStatues.count > 0 ? editButtonItem() : nil
-            
-        }
-    }
-    
     // MARK: - UITableViewDelegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let serviceStatus = self.serviceStatusForTableView(tableView, indexPath: indexPath)
         
-        if tableView.numberOfSections == 1 || tableView.numberOfSections == 2 && indexPath.section == Constants.TableViewSections.recent {
-            if let serviceId = serviceStatus.serviceId {
-                self.incrementTapCountForServiceId(serviceId)
-            }
-        }
-        
         if let serviceId = serviceStatus.serviceId {
             self.showDetailsForServiceId(serviceId)
         }
-    }
-    
-    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return indexPath.section == Constants.TableViewSections.recent ? .Delete : .None
     }
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -379,67 +318,29 @@ class ServicesViewController: UITableViewController {
     }
     
     private func serviceStatusForTableView(tableView: UITableView, indexPath: NSIndexPath) -> ServiceStatus {
-        // If we have a single section...
-        if self.numberOfSectionsInTableView(tableView) == 1 {
+        if self.arraySubscribedServiceStatuses.isEmpty {
             return self.arrayServiceStatuses[indexPath.row]
         }
         
-        // If we have two sections...
         switch(indexPath.section) {
-        case Constants.TableViewSections.recent:
-            return self.arrayRecentServiceStatues[indexPath.row]
+        case Constants.TableViewSections.subscribed:
+            return self.arraySubscribedServiceStatuses[indexPath.row]
         default:
             return self.arrayServiceStatuses[indexPath.row]
         }
     }
     
-    private func incrementTapCountForServiceId(serviceId: Int) {
-        func countTaps() -> Int {
-            if let count: AnyObject = self.tapCountDictionary[String(serviceId)] {
-                return count as! Int
-            } else {
-                return 0
-            }
+    private func generateArrayOfSubscribedServiceIds() -> [ServiceStatus] {
+        guard let subscribedServiceIds = NSUserDefaults.standardUserDefaults().arrayForKey(ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] else {
+            return [ServiceStatus]()
         }
         
-        self.tapCountDictionary[String(serviceId)] = countTaps() + 1
-        
-        NSUserDefaults.standardUserDefaults().setObject(self.tapCountDictionary, forKey: Constants.TapCount.userDefaultsKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
-    }
-    
-    private func recentServiceIds() -> [Int] {
-        var recentServiceIds = [Int]()
-        
-        for (serviceId, tapCount) in self.tapCountDictionary {
-            let count = tapCount as! Int
-            
-            if count < Constants.TapCount.minimumCount {
-                continue
-            }
-            
-            // How to convert NSObject to Int?
-            // This is not good :(
-            let id = Int((serviceId as! String))
-            
-            recentServiceIds.append(id!)
+        let subscribedServiceStatuses = subscribedServiceIds.map { serviceId in
+            return self.arrayServiceStatuses.filter { $0.serviceId == serviceId }.first
         }
         
-        return recentServiceIds
+        return subscribedServiceStatuses.flatMap({ $0 }).sort({ $0.sortOrder < $1.sortOrder })
     }
-    
-    private func reloadRecents() {
-        let ids = self.recentServiceIds()
-        
-        self.arrayRecentServiceStatues = self.arrayServiceStatuses.filter { item in
-            if let id = item.serviceId {
-                return ids.contains(id)
-            }
-            
-            return false
-        }
-    }
-    
 }
 
 extension ServicesViewController: SearchResultsViewControllerDelegate {

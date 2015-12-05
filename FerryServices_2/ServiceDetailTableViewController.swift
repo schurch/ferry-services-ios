@@ -138,16 +138,25 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.alertCell.configureLoading()
         
         PFPush.getSubscribedChannelsInBackgroundWithBlock { [weak self] (channels, error) in
-            if self == nil {
+            guard self != nil else {
                 // self might be nil if we've popped the view controller when the completion block is called
                 return
             }
             
-            if channels != nil {
-                self!.alertCell.configureLoadedWithSwitchOn(channels.contains(self!.parseChannel))
+            guard let channels = channels else {
+                self!.alertCell.configureLoadedWithSwitchOn(false)
+                self?.removeServiceIdFromSubscribedList()
+                return
+            }
+            
+            let subscribed = channels.contains(self!.parseChannel)
+            self!.alertCell.configureLoadedWithSwitchOn(subscribed)
+            
+            if subscribed {
+                self?.addServiceIdToSubscribedList()
             }
             else {
-                self!.alertCell.configureLoadedWithSwitchOn(false)
+                self?.removeServiceIdFromSubscribedList()
             }
         }
         
@@ -297,17 +306,21 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         
         self.alertCell.configureLoading()
+        
         currentInstallation.saveInBackgroundWithBlock { [weak self] (succeeded, error)  in
-            if self == nil {
+            guard self != nil else {
                 // self might be nil if we've popped the view controller when the completion block is called
                 return
             }
             
-            if succeeded {
-                self!.alertCell.configureLoadedWithSwitchOn(isSwitchOn)
+            let subscribed = succeeded && isSwitchOn
+            self!.alertCell.configureLoadedWithSwitchOn(subscribed)
+            
+            if subscribed {
+                self?.addServiceIdToSubscribedList()
             }
             else {
-                self!.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
+                self?.removeServiceIdFromSubscribedList()
             }
         }
     }
@@ -436,7 +449,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                     weatherRows.append(weatherRow)
                     sections.append(Section(title: location.name, footer: nil, rows: weatherRows))
                 default:
-                    break;
+                    break
                 }
             }
         }
@@ -622,6 +635,39 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
     }
     
+    private func addServiceIdToSubscribedList() {
+        guard let serviceId = self.serviceStatus.serviceId else {
+            return
+        }
+        
+        var currentServiceIds = NSUserDefaults.standardUserDefaults().arrayForKey(ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
+        
+        if let existingServiceId = currentServiceIds.filter({ $0 == serviceId }).first {
+            currentServiceIds.removeAtIndex(currentServiceIds.indexOf(existingServiceId)!)
+            currentServiceIds.append(existingServiceId)
+        }
+        else {
+            currentServiceIds.insert(serviceId, atIndex: 0)
+        }
+        
+        NSUserDefaults.standardUserDefaults().setValue(currentServiceIds, forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    private func removeServiceIdFromSubscribedList() {
+        guard let serviceId = self.serviceStatus.serviceId else {
+            return
+        }
+        
+        var currentServiceIds = NSUserDefaults.standardUserDefaults().arrayForKey(ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
+        
+        if let existingServiceId = currentServiceIds.filter({ $0 == serviceId }).first {
+            currentServiceIds.removeAtIndex(currentServiceIds.indexOf(existingServiceId)!)
+        }
+        
+        NSUserDefaults.standardUserDefaults().setValue(currentServiceIds, forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
     
     // MARK: - UITableViewDatasource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -731,7 +777,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 action()
             }
         default:
-            break;
+            break
         }
     }
     
