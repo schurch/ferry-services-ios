@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WatchConnectivity
 import Flurry_iOS_SDK
 
 struct AppConstants {
@@ -14,7 +15,7 @@ struct AppConstants {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     
     static let applicationShortcutTypeRecentService = "UIApplicationShortcutIconTypeRecentService"
     static let applicationShortcutUserInfoKeyServiceId = "ServiceId"
@@ -53,18 +54,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.application(application, didReceiveRemoteNotification: remoteNotification)
         }
         
+        if WCSession.isSupported() {
+            let session = WCSession.defaultSession()
+            session.delegate = self;
+            session.activateSession()
+        }
+        
         return shouldPerformAdditionalDelegateHandling
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
         application.applicationIconBadgeNumber = 0
         
-        guard let shortcut = self.launchedShortcutItem else {
-            return
+        if let shortcut = self.launchedShortcutItem {
+            self.handleShortCutItem(shortcut)
+            self.launchedShortcutItem = nil
         }
         
-        self.handleShortCutItem(shortcut)
-        self.launchedShortcutItem = nil
+        
+        self.sendWatchAppContext()
     }
     
     // MARK: - Push notifications
@@ -111,11 +119,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return handled
     }
     
+    // MARK: - Watch context updates
+    func sendWatchAppContext() {
+        guard WCSession.isSupported() else {
+            print("Watch sessions not supported")
+            return
+        }
+        
+        let session = WCSession.defaultSession()
+        
+        if session.paired && session.watchAppInstalled {
+            do {
+                let serviceIds = NSUserDefaults.standardUserDefaults().arrayForKey(ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
+                try session.updateApplicationContext(["subscribedServiceIds": serviceIds])
+            }
+            catch let error as NSError {
+                print("Error sending context to watch: \(error)")
+            }
+        }
+    }
+    
     // MARK: - Utility methods
     private func showDetailsForServiceId(serviceId: Int) {
         if let navigationController = self.window?.rootViewController as? UINavigationController, let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {
             servicesViewController.showDetailsForServiceId(serviceId, shouldFindAndHighlightRow: true)
         }
     }
+    
 }
 

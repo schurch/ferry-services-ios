@@ -68,6 +68,14 @@
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
+		FDE391A31C1561AD000EDE26 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDE391A11C1561AD000EDE26 /* Interface.storyboard */; };
+		FDE391A51C1561AD000EDE26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDE391A41C1561AD000EDE26 /* Assets.xcassets */; };
+		FDE391AC1C1561AD000EDE26 /* Watch App Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FDE391AB1C1561AD000EDE26 /* Watch App Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FDE391B31C1561AD000EDE26 /* ServiceDetailInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE391B21C1561AD000EDE26 /* ServiceDetailInterfaceController.swift */; };
+		FDE391B51C1561AD000EDE26 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE391B41C1561AD000EDE26 /* ExtensionDelegate.swift */; };
+		FDE391B71C1561AD000EDE26 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE391B61C1561AD000EDE26 /* NotificationController.swift */; };
+		FDE391B91C1561AD000EDE26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDE391B81C1561AD000EDE26 /* Assets.xcassets */; };
+		FDE391BD1C1561AD000EDE26 /* Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FDE3919F1C1561AD000EDE26 /* Watch App.app */; };
 		FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */; };
 		FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */; };
 		FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */; };
@@ -82,7 +90,46 @@
 			remoteGlobalIDString = FD753ECF197A256E00CC5DE3;
 			remoteInfo = FerryServices_2;
 		};
+		FDE391AD1C1561AD000EDE26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD753EC8197A256E00CC5DE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDE391AA1C1561AD000EDE26;
+			remoteInfo = "Watch App Extension";
+		};
+		FDE391BB1C1561AD000EDE26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD753EC8197A256E00CC5DE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDE3919E1C1561AD000EDE26;
+			remoteInfo = "Watch App";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FDE391C11C1561AE000EDE26 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FDE391AC1C1561AD000EDE26 /* Watch App Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDE391C51C1561AE000EDE26 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				FDE391BD1C1561AD000EDE26 /* Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		02D9493F193C4A87EAD799AC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +205,17 @@
 		FDCB33441A4BD6D1000033BC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		FDE3919F1C1561AD000EDE26 /* Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDE391A21C1561AD000EDE26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		FDE391A41C1561AD000EDE26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FDE391A61C1561AD000EDE26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDE391AB1C1561AD000EDE26 /* Watch App Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Watch App Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDE391B11C1561AD000EDE26 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		FDE391B21C1561AD000EDE26 /* ServiceDetailInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailInterfaceController.swift; sourceTree = "<group>"; };
+		FDE391B41C1561AD000EDE26 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		FDE391B61C1561AD000EDE26 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		FDE391B81C1561AD000EDE26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FDE391BA1C1561AD000EDE26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ServiceStatus.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTextOnlyCell.swift; sourceTree = "<group>"; };
 		FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DisruptionDetails.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -191,6 +249,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FD753EDF197A256E00CC5DE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDE391A81C1561AD000EDE26 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -313,6 +378,8 @@
 			children = (
 				FD753ED2197A256E00CC5DE3 /* FerryServices_2 */,
 				FD753EE5197A256E00CC5DE3 /* FerryServices_2Tests */,
+				FDE391A01C1561AD000EDE26 /* Watch App */,
+				FDE391AF1C1561AD000EDE26 /* Watch App Extension */,
 				FD753ED1197A256E00CC5DE3 /* Products */,
 				6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */,
 				DD94561C4C63A4CFEA5FD1DF /* Pods */,
@@ -324,6 +391,8 @@
 			children = (
 				FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */,
 				FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */,
+				FDE3919F1C1561AD000EDE26 /* Watch App.app */,
+				FDE391AB1C1561AD000EDE26 /* Watch App Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -418,6 +487,37 @@
 			name = Library;
 			sourceTree = "<group>";
 		};
+		FDE391A01C1561AD000EDE26 /* Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				FDE391A11C1561AD000EDE26 /* Interface.storyboard */,
+				FDE391A41C1561AD000EDE26 /* Assets.xcassets */,
+				FDE391A61C1561AD000EDE26 /* Info.plist */,
+			);
+			path = "Watch App";
+			sourceTree = "<group>";
+		};
+		FDE391AF1C1561AD000EDE26 /* Watch App Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FDE391B21C1561AD000EDE26 /* ServiceDetailInterfaceController.swift */,
+				FDE391B41C1561AD000EDE26 /* ExtensionDelegate.swift */,
+				FDE391B61C1561AD000EDE26 /* NotificationController.swift */,
+				FDE391B81C1561AD000EDE26 /* Assets.xcassets */,
+				FDE391BA1C1561AD000EDE26 /* Info.plist */,
+				FDE391B01C1561AD000EDE26 /* Supporting Files */,
+			);
+			path = "Watch App Extension";
+			sourceTree = "<group>";
+		};
+		FDE391B01C1561AD000EDE26 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FDE391B11C1561AD000EDE26 /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		FDEA4B20198C72160023A5A7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -457,10 +557,12 @@
 				BBF92DCA1122475BAD83A58B /* Copy Pods Resources */,
 				FD8DDDB019B0947B008479DC /* Crashlytics */,
 				0018A1ABB9C78D0FA8D39F7D /* Embed Pods Frameworks */,
+				FDE391C51C1561AE000EDE26 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FDE391BC1C1561AD000EDE26 /* PBXTargetDependency */,
 			);
 			name = FerryServices_2;
 			productName = FerryServices_2;
@@ -485,6 +587,40 @@
 			productReference = FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		FDE3919E1C1561AD000EDE26 /* Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDE391C21C1561AE000EDE26 /* Build configuration list for PBXNativeTarget "Watch App" */;
+			buildPhases = (
+				FDE3919D1C1561AD000EDE26 /* Resources */,
+				FDE391C11C1561AE000EDE26 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FDE391AE1C1561AD000EDE26 /* PBXTargetDependency */,
+			);
+			name = "Watch App";
+			productName = "Watch App";
+			productReference = FDE3919F1C1561AD000EDE26 /* Watch App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		FDE391AA1C1561AD000EDE26 /* Watch App Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDE391BE1C1561AE000EDE26 /* Build configuration list for PBXNativeTarget "Watch App Extension" */;
+			buildPhases = (
+				FDE391A71C1561AD000EDE26 /* Sources */,
+				FDE391A81C1561AD000EDE26 /* Frameworks */,
+				FDE391A91C1561AD000EDE26 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Watch App Extension";
+			productName = "Watch App Extension";
+			productReference = FDE391AB1C1561AD000EDE26 /* Watch App Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -492,7 +628,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0710;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Stefan Church";
 				TargetAttributes = {
@@ -512,6 +648,13 @@
 						CreatedOnToolsVersion = 6.0;
 						TestTargetID = FD753ECF197A256E00CC5DE3;
 					};
+					FDE3919E1C1561AD000EDE26 = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = L832SX5MC4;
+					};
+					FDE391AA1C1561AD000EDE26 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
 				};
 			};
 			buildConfigurationList = FD753ECB197A256E00CC5DE3 /* Build configuration list for PBXProject "FerryServices_2" */;
@@ -529,6 +672,8 @@
 			targets = (
 				FD753ECF197A256E00CC5DE3 /* FerryServices_2 */,
 				FD753EE1197A256E00CC5DE3 /* FerryServices_2Tests */,
+				FDE3919E1C1561AD000EDE26 /* Watch App */,
+				FDE391AA1C1561AD000EDE26 /* Watch App Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -557,6 +702,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDE3919D1C1561AD000EDE26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDE391A51C1561AD000EDE26 /* Assets.xcassets in Resources */,
+				FDE391A31C1561AD000EDE26 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDE391A91C1561AD000EDE26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDE391B91C1561AD000EDE26 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,6 +836,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FDE391A71C1561AD000EDE26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDE391B71C1561AD000EDE26 /* NotificationController.swift in Sources */,
+				FDE391B51C1561AD000EDE26 /* ExtensionDelegate.swift in Sources */,
+				FDE391B31C1561AD000EDE26 /* ServiceDetailInterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -681,6 +853,16 @@
 			isa = PBXTargetDependency;
 			target = FD753ECF197A256E00CC5DE3 /* FerryServices_2 */;
 			targetProxy = FD753EE3197A256E00CC5DE3 /* PBXContainerItemProxy */;
+		};
+		FDE391AE1C1561AD000EDE26 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDE391AA1C1561AD000EDE26 /* Watch App Extension */;
+			targetProxy = FDE391AD1C1561AD000EDE26 /* PBXContainerItemProxy */;
+		};
+		FDE391BC1C1561AD000EDE26 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDE3919E1C1561AD000EDE26 /* Watch App */;
+			targetProxy = FDE391BB1C1561AD000EDE26 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -691,6 +873,14 @@
 				FD753EDA197A256E00CC5DE3 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FDE391A11C1561AD000EDE26 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDE391A21C1561AD000EDE26 /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -867,6 +1057,80 @@
 			};
 			name = Release;
 		};
+		FDE391BF1C1561AE000EDE26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Watch App Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		FDE391C01C1561AE000EDE26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Watch App Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		FDE391C31C1561AE000EDE26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IBSC_MODULE = Watch_App_Extension;
+				INFOPLIST_FILE = "Watch App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		FDE391C41C1561AE000EDE26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IBSC_MODULE = Watch_App_Extension;
+				INFOPLIST_FILE = "Watch App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -893,6 +1157,24 @@
 			buildConfigurations = (
 				FD753EF0197A256E00CC5DE3 /* Debug */,
 				FD753EF1197A256E00CC5DE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDE391BE1C1561AE000EDE26 /* Build configuration list for PBXNativeTarget "Watch App Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDE391BF1C1561AE000EDE26 /* Debug */,
+				FDE391C01C1561AE000EDE26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDE391C21C1561AE000EDE26 /* Build configuration list for PBXNativeTarget "Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDE391C31C1561AE000EDE26 /* Debug */,
+				FDE391C41C1561AE000EDE26 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

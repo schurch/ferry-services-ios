@@ -652,6 +652,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         NSUserDefaults.standardUserDefaults().setValue(currentServiceIds, forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey)
         NSUserDefaults.standardUserDefaults().synchronize()
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        appDelegate?.sendWatchAppContext()
     }
     
     private func removeServiceIdFromSubscribedList() {
@@ -667,6 +670,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         NSUserDefaults.standardUserDefaults().setValue(currentServiceIds, forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey)
         NSUserDefaults.standardUserDefaults().synchronize()
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        appDelegate?.sendWatchAppContext()
     }
     
     // MARK: - UITableViewDatasource

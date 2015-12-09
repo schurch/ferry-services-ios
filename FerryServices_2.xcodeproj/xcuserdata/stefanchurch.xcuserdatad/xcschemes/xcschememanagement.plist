@@ -3,7 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>SchemeUserState</key>
-	<dict/>
+	<dict>
+		<key>FerryServicesWatch.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Notification - Watch App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>Watch App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>FD753ECF197A256E00CC5DE3</key>
@@ -12,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>FD753EE1197A256E00CC5DE3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDE3919E1C1561AD000EDE26</key>
 		<dict>
 			<key>primary</key>
 			<true/>
