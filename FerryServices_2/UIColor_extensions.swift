@@ -10,14 +10,14 @@ import UIKit
 
 extension UIColor {
     class func tealBackgroundColor() -> UIColor {
-        return UIColor(red: 248/255.0, green: 251/255.0, blue: 250/255.0, alpha: 255/255.0)
+        return UIColor(red: 248.0/255.0, green: 251.0/255.0, blue: 250.0/255.0, alpha: 1.0)
     }
     
     class func tealTextColor() -> UIColor {
-        return UIColor(red: 90/255.0, green: 152/255.0, blue: 152/255.0, alpha: 255/255.0)
+        return UIColor(red: 90.0/255.0, green: 152.0/255.0, blue: 152.0/255.0, alpha: 1.0)
     }
     
     class func tealTintColor() -> UIColor {
-        return UIColor(red:0.13, green:0.75, blue:0.67, alpha:1)
+        return UIColor(red: 33.0/255.0, green:191.0/255.0, blue:170.0/255.0, alpha:1.0)
     }
 }

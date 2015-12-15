@@ -119,6 +119,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         return handled
     }
     
+    // MARK: - Handoff
+    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+        if userActivity.activityType == "com.stefanchurch.ferryservices.viewservice" {
+            if let serviceId = userActivity.userInfo?["serviceId"] as? Int {
+                self.showDetailsForServiceId(serviceId)
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     // MARK: - Watch context updates
     func sendWatchAppContext() {
         guard WCSession.isSupported() else {

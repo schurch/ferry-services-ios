@@ -22,15 +22,15 @@ class ServiceDetailInterfaceController: WKInterfaceController {
     
     var dataTask: NSURLSessionDataTask?
     var lastFetchTime: NSDate?
-    var serviceId: Int!
-    var serviceData: [String: AnyObject]?
+    var service: Service?
 
     // MARK: - View lifecycle
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        if let serviceId = context as? Int {
-            self.serviceId = serviceId
+        if let service = context as? Service {
+            self.service = service
+            self.configureView()
         }
     }
 
@@ -40,9 +40,17 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         fetchDisruptionDetails()
     }
     
+    override func didAppear() {
+        super.didAppear()
+        
+        if let service = self.service {
+            self.updateUserActivity("com.stefanchurch.ferryservices.viewservice", userInfo: ["serviceId": service.serviceId], webpageURL: nil)
+        }
+    }
+    
     // MARK: - Utility methods
     private func fetchDisruptionDetails() {
-        guard let serviceId = self.serviceId else {
+        guard let service = self.service else {
             return
         }
         
@@ -58,6 +66,8 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             }
         }
         
+        self.configureLoadingView()
+        
         let semaphore = dispatch_semaphore_create(0)
         
         NSProcessInfo().performExpiringActivityWithReason("Download ferry service details") { expired in
@@ -70,7 +80,7 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             dispatch_semaphore_wait(semaphore, timeout)
         }
 
-        let url = NSURL(string: "http://stefanchurch.com:4567/services/\(serviceId)")!
+        let url = NSURL(string: "http://stefanchurch.com:4567/services/\(service.serviceId)")!
         print("Fetching from \(url)")
         
         dataTask = NSURLSession.sharedSession().dataTaskWithURL(url) { data, response, error in
@@ -80,6 +90,7 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             }
             
             guard error == nil else {
+                self.configureErrorView()
                 return
             }
             
@@ -89,54 +100,67 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             
             do {
                 if let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? [String: AnyObject] {
-                    self.serviceData = jsonDictionary
-                    self.configureView()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.service = Service(json: jsonDictionary)
+                        self.configureView()
+                    })
                 }
                 
             } catch let error as NSError {
-                print("Error: \(error)")
+                print(error.localizedDescription)
             }
         }
         
         dataTask?.resume()
     }
     
+    private func configureLoadingView() {
+        self.labelStatus.setText("Loading...")
+        self.labelDisruptionInformation.setText("")
+        self.imageStatus.setImageNamed("grey")
+    }
+    
+    private func configureErrorView() {
+        self.labelArea.setText("")
+        self.labelRoute.setText("There was an error loading the information. Please check your connection and try again.")
+        self.labelStatus.setText("")
+        self.labelDisruptionInformation.setText("")
+        self.imageStatus.setImage(nil)
+    }
+    
     private func configureView() {
-        if let area = self.serviceData?["area"] as? String,
-            let route = self.serviceData?["route"] as? String,
-            let status = self.serviceData?["status"] as? Int {
-                self.labelArea.setText(area)
-                self.labelRoute.setText(route)
-                
-
-                if let disruptionDetailsHtml = self.serviceData?["disruption_details"] as? String {
-                    if let data = disruptionDetailsHtml.dataUsingEncoding(NSUTF8StringEncoding) {
-                        do {
-                            let attributeText = try NSAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil)
-                            self.labelDisruptionInformation.setAttributedText(attributeText)
-                        } catch let error as NSError {
-                            print(error.localizedDescription)
-                        }
-                    }  
-                }
+        guard let service = self.service else {
+            return
+        }
         
-                switch status {
-                case 0:
-                    self.labelStatus.setText("Normal")
-                    self.imageStatus.setImageNamed("green")
-                case 1:
-                    self.labelStatus.setText("Disrupted")
-                    self.imageStatus.setImageNamed("amber")
-                case 2:
-                    self.labelStatus.setText("Cancelled")
-                    self.imageStatus.setImageNamed("red")
-                case -99:
-                    self.labelStatus.setText("Unknown")
-                    self.imageStatus.setImageNamed("grey")
-                default:
-                    self.labelStatus.setText("Unknown")
-                    self.imageStatus.setImageNamed("grey")
+        self.setTitle(service.area)
+        
+        self.labelRoute.setText(service.route)
+        
+        if let disruptionDetailsHtml = service.disruptionDetails {
+            if let data = disruptionDetailsHtml.dataUsingEncoding(NSUTF8StringEncoding) {
+                do {
+                    let attributeText = try NSAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil)
+                    self.labelDisruptionInformation.setAttributedText(attributeText)
+                } catch let error as NSError {
+                    print(error.localizedDescription)
                 }
+            }
+        }
+        
+        switch service.status {
+        case .Normal:
+            self.labelStatus.setText("Normal")
+            self.imageStatus.setImageNamed("green")
+        case .SailingsAffected:
+            self.labelStatus.setText("Disrupted")
+            self.imageStatus.setImageNamed("amber")
+        case .SailingsCancelled:
+            self.labelStatus.setText("Cancelled")
+            self.imageStatus.setImageNamed("red")
+        case .Unknown:
+            self.labelStatus.setText("Unknown")
+            self.imageStatus.setImageNamed("grey")
         }
     }
 

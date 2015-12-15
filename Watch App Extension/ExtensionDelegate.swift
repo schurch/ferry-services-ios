@@ -12,7 +12,27 @@ import WatchConnectivity
 let subscribedServiceIdsUserDefaultsKey = "com.ferryservices.userdefaultkeys.subscribedservices"
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
-
+    
+    lazy var defaultServices: [Service] = {
+        var services = [Service]()
+        
+        guard let defaultServicesFilePath = NSBundle.mainBundle().pathForResource("services", ofType: "json") else {
+            return services
+        }
+        
+        do {
+            let serviceData = try NSData(contentsOfFile: defaultServicesFilePath, options: .DataReadingMappedIfSafe)
+            if let serviceStatusData = try NSJSONSerialization.JSONObjectWithData(serviceData, options: []) as? [[String: AnyObject]] {
+                let possibleServices = serviceStatusData.map { Service(json: $0) }
+                services = possibleServices.flatMap { $0 } // remove nils
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+        return services
+    }()
+    
     func applicationDidFinishLaunching() {
         guard WCSession.isSupported() else {
             print("Sessions not supported")
@@ -25,40 +45,56 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         
         reloadServices()
     }
-
+    
     func applicationDidBecomeActive() {
         
     }
-
+    
     func applicationWillResignActive() {
         
     }
     
     private func reloadServices() {
-        if let currentServiceIds = NSUserDefaults.standardUserDefaults().arrayForKey(subscribedServiceIdsUserDefaultsKey) as? [Int] {
-            if currentServiceIds.count > 0 {
-                WKInterfaceController.reloadRootControllersWithNames(Array(count: currentServiceIds.count, repeatedValue: "ServiceDetail"), contexts: currentServiceIds)
+        guard let currentServiceIds = NSUserDefaults.standardUserDefaults().arrayForKey(subscribedServiceIdsUserDefaultsKey) as? [Int] else {
+            WKInterfaceController.reloadRootControllersWithNames(["EmptyState"], contexts: nil)
+            return
+        }
+        
+        if currentServiceIds.count > 0 {
+            let services: [Service] = currentServiceIds.map { serviceId in
+                if let index = defaultServices.indexOf( { $0.serviceId == serviceId } ) {
+                    return defaultServices[index]
+                }
+                else  {
+                    return Service(serviceId: serviceId, sortOrder: 0, area: "", route: "", status: .Unknown)
+                }
             }
-            else {
-                WKInterfaceController.reloadRootControllersWithNames(["EmptyState"], contexts: nil)
-            }
+            
+            WKInterfaceController.reloadRootControllersWithNames(Array(count: currentServiceIds.count, repeatedValue: "ServiceDetail"), contexts: services)
         }
         else {
             WKInterfaceController.reloadRootControllersWithNames(["EmptyState"], contexts: nil)
         }
     }
-
+    
 }
 
 extension ExtensionDelegate: WCSessionDelegate {
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        if let subscribedServiceIds = applicationContext["subscribedServiceIds"] as? [Int] {
-            let sortedServices = subscribedServiceIds.sort()
-            NSUserDefaults.standardUserDefaults().setObject(sortedServices, forKey: subscribedServiceIdsUserDefaultsKey)
-            NSUserDefaults.standardUserDefaults().synchronize()
-            
-            reloadServices()
+        guard let subscribedServiceIds = applicationContext["subscribedServiceIds"] as? [Int] else {
+            return
+        }
+        
+        let sortedServices = subscribedServiceIds.sort()
+        if let serviceIds = NSUserDefaults.standardUserDefaults().arrayForKey(subscribedServiceIdsUserDefaultsKey) as? [Int] {
+            let localSortedServiceIds = serviceIds.sort()
+            if sortedServices != localSortedServiceIds {
+                NSUserDefaults.standardUserDefaults().setObject(sortedServices, forKey: subscribedServiceIdsUserDefaultsKey)
+                NSUserDefaults.standardUserDefaults().synchronize()
+                
+                reloadServices()
+            }
         }
     }
     
