@@ -15,7 +15,7 @@ struct AppConstants {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
     
     static let applicationShortcutTypeRecentService = "UIApplicationShortcutIconTypeRecentService"
     static let applicationShortcutUserInfoKeyServiceId = "ServiceId"
@@ -158,5 +158,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         }
     }
     
+}
+
+extension AppDelegate: WCSessionDelegate {
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+        guard let action = message["action"] as? String else {
+            return
+        }
+        
+        if action == "fetchSubscribedServices" {
+            let serviceIds = NSUserDefaults.standardUserDefaults().arrayForKey(ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
+            replyHandler(["subscribedServiceIds": serviceIds])
+        }
+    }
 }
 

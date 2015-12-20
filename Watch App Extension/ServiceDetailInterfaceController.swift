@@ -18,7 +18,9 @@ class ServiceDetailInterfaceController: WKInterfaceController {
     @IBOutlet var labelDisruptionInformation: WKInterfaceLabel!
     @IBOutlet var labelRoute: WKInterfaceLabel!
     @IBOutlet var labelStatus: WKInterfaceLabel!
+    @IBOutlet var labelViewOnPhone: WKInterfaceLabel!
     @IBOutlet var imageStatus: WKInterfaceImage!
+    @IBOutlet var separator: WKInterfaceSeparator!
     
     var dataTask: NSURLSessionDataTask?
     var lastFetchTime: NSDate?
@@ -30,6 +32,12 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         
         if let service = context as? Service {
             self.service = service
+            
+            if service.isDefault {
+                super.becomeCurrentPage()
+                service.isDefault = false
+            }
+            
             self.configureView()
         }
     }
@@ -48,7 +56,7 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         }
     }
     
-    // MARK: - Utility methods
+    // MARK: - Fetch
     private func fetchDisruptionDetails() {
         guard let service = self.service else {
             return
@@ -85,12 +93,14 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         
         dataTask = NSURLSession.sharedSession().dataTaskWithURL(url) { data, response, error in
             defer {
-                self.lastFetchTime = NSDate()
                 dispatch_semaphore_signal(semaphore)
             }
             
             guard error == nil else {
-                self.configureErrorView()
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.configureErrorViewWithMessage("There was an error. Please check your connection.")
+                    self.lastFetchTime = nil
+                })
                 return
             }
             
@@ -101,31 +111,51 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             do {
                 if let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? [String: AnyObject] {
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.service = Service(json: jsonDictionary)
-                        self.configureView()
+                        if let service = Service(json: jsonDictionary) {
+                            self.service =  service
+                            self.configureView()
+                            self.lastFetchTime = NSDate()
+                        }
+                        else {
+                            self.configureErrorViewWithMessage("There was a problem with the server response.")
+                            self.lastFetchTime = nil
+                        }
                     })
                 }
                 
             } catch let error as NSError {
-                print(error.localizedDescription)
+                print("Error parsing json: \(error.localizedDescription)")
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.configureErrorViewWithMessage("There was a problem with the server response.")
+                    self.lastFetchTime = nil
+                })
             }
         }
         
         dataTask?.resume()
     }
     
+    // MARK: - View configuration
     private func configureLoadingView() {
+        if let service = self.service {
+            self.labelRoute.setText(service.route)
+        }
+        
         self.labelStatus.setText("Loading...")
         self.labelDisruptionInformation.setText("")
         self.imageStatus.setImageNamed("grey")
+        self.separator.setHidden(false)
+        self.labelViewOnPhone.setHidden(true)
     }
     
-    private func configureErrorView() {
+    private func configureErrorViewWithMessage(message: String) {
         self.labelArea.setText("")
-        self.labelRoute.setText("There was an error loading the information. Please check your connection and try again.")
+        self.labelRoute.setText(message)
         self.labelStatus.setText("")
         self.labelDisruptionInformation.setText("")
         self.imageStatus.setImage(nil)
+        self.separator.setHidden(true)
+        self.labelViewOnPhone.setHidden(true)
     }
     
     private func configureView() {
@@ -162,6 +192,9 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             self.labelStatus.setText("Unknown")
             self.imageStatus.setImageNamed("grey")
         }
+        
+        self.separator.setHidden(false)
+        self.labelViewOnPhone.setHidden(false)
     }
 
 }

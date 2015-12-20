@@ -23,6 +23,7 @@ class Service {
     var serviceId: Int
     var sortOrder: Int
     var area: String
+    var isDefault: Bool // Set if should be default service on startup
     var route: String
     var status: DisriptionStatus
     
@@ -32,6 +33,7 @@ class Service {
         self.serviceId = serviceId
         self.sortOrder = sortOrder
         self.area = area
+        self.isDefault = false
         self.route = route
         self.status = status
     }

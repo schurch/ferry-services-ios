@@ -309,7 +309,8 @@ class ServicesViewController: UITableViewController {
                 let json = JSON(serviceStatusData!)
                 
                 if let serviceStatuses = json.array?.map({ json in ServiceStatus(data: json) }) {
-                    self.arrayServiceStatuses = serviceStatuses
+                    let sortedServiceStatuses = serviceStatuses.sort { $0.sortOrder < $1.sortOrder }
+                    self.arrayServiceStatuses = sortedServiceStatuses
                 }
             } catch let error as NSError {
                 fileReadError = error
