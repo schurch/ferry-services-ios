@@ -19,7 +19,7 @@ enum DisriptionStatus: Int {
     case SailingsCancelled = 2
 }
 
-class Service {
+class Service: Equatable {
     var serviceId: Int
     var sortOrder: Int
     var area: String

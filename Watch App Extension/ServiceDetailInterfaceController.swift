@@ -9,10 +9,10 @@
 import WatchKit
 import Foundation
 
-
 class ServiceDetailInterfaceController: WKInterfaceController {
     
     static let cacheTimeoutSeconds = 600.0 // 10 minutes
+    static let connectionErrorMessage = "There was problem with the connection. Force touch the screen to refresh."
     
     @IBOutlet var labelArea: WKInterfaceLabel!
     @IBOutlet var labelDisruptionInformation: WKInterfaceLabel!
@@ -56,6 +56,12 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         }
     }
     
+    // MARK: - UI Actions
+    @IBAction func refresh() {
+        lastFetchTime = nil
+        fetchDisruptionDetails()
+    }
+    
     // MARK: - Fetch
     private func fetchDisruptionDetails() {
         guard let service = self.service else {
@@ -91,15 +97,19 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         let url = NSURL(string: "http://stefanchurch.com:4567/services/\(service.serviceId)")!
         print("Fetching from \(url)")
         
-        dataTask = NSURLSession.sharedSession().dataTaskWithURL(url) { data, response, error in
+        dataTask = NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] data, response, error in
             defer {
                 dispatch_semaphore_signal(semaphore)
             }
             
+            guard self != nil else {
+                return
+            }
+            
             guard error == nil else {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.configureErrorViewWithMessage("There was an error. Please check your connection.")
-                    self.lastFetchTime = nil
+                    self?.configureErrorViewWithMessage(ServiceDetailInterfaceController.connectionErrorMessage)
+                    self?.lastFetchTime = nil
                 })
                 return
             }
@@ -112,13 +122,13 @@ class ServiceDetailInterfaceController: WKInterfaceController {
                 if let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? [String: AnyObject] {
                     dispatch_async(dispatch_get_main_queue(), {
                         if let service = Service(json: jsonDictionary) {
-                            self.service =  service
-                            self.configureView()
-                            self.lastFetchTime = NSDate()
+                            self?.service =  service
+                            self?.configureView()
+                            self?.lastFetchTime = NSDate()
                         }
                         else {
-                            self.configureErrorViewWithMessage("There was a problem with the server response.")
-                            self.lastFetchTime = nil
+                            self?.configureErrorViewWithMessage("There was a problem with the server response.")
+                            self?.lastFetchTime = nil
                         }
                     })
                 }
@@ -126,8 +136,8 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             } catch let error as NSError {
                 print("Error parsing json: \(error.localizedDescription)")
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.configureErrorViewWithMessage("There was a problem with the server response.")
-                    self.lastFetchTime = nil
+                    self?.configureErrorViewWithMessage("There was a problem with the server response.")
+                    self?.lastFetchTime = nil
                 })
             }
         }

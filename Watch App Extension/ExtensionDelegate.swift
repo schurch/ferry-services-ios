@@ -20,6 +20,13 @@ enum RequestResult<T> {
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
     
+    //MARK: - Class functions
+    private class func setDefaultServiceToServiceWithId(serviceId: Int, forServices services: [Service]) {
+        for service in services {
+            service.isDefault = service.serviceId == serviceId
+        }
+    }
+    
     //MARK: - Properties
     lazy var defaultServices: [Service] = {
         var services = [Service]()
@@ -42,10 +49,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         return services
     }()
     
-    private var subscribedServicesExist: Bool {
-        return self.subscribedServiceIds != nil
-    }
-    
     private var subscribedServiceIds: [Int]? {
         get {
             return NSUserDefaults.standardUserDefaults().arrayForKey(Defaults.subscribedServiceIdsKey) as? [Int]
@@ -56,8 +59,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         }
     }
     
-    private var fetchingServiceIds: Bool = false
-    private var defaultServiceIdToShow: Int?
+    private var defaultServiceIdToShow: Int? // Set when we receive a notification if we are currently fetching service IDs
+    private var subscribedServicesFetcher = SubscribedServicesFetcher()
     
     //MARK: - Lifecyle
     func applicationDidFinishLaunching() {
@@ -68,28 +71,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         let session = WCSession.defaultSession()
         session.delegate = self
         session.activateSession()
-        
-        if !subscribedServicesExist {
-            fetchSubscribedServiceIdsWithCompletion { result in
-                switch result {
-                case let .Result(serviceIds):
-                    self.subscribedServiceIds = serviceIds
-                    
-                    if let defaultServiceId = self.defaultServiceIdToShow {
-                        self.reloadServicesWithDefaultServiceId(defaultServiceId)
-                        self.defaultServiceIdToShow = nil
-                    }
-                    else {
-                        self.reloadServicesWithDefaultServiceId(nil)
-                    }
-                case .Error:
-                    WKInterfaceController.reloadRootControllersWithNames(["EmptyState"], contexts: nil)
-                }
-            }
-        }
-        else {
-            reloadServicesWithDefaultServiceId(nil)
-        }
+
+        configureApp()
     }
     
     //MARK: - Notification handling
@@ -98,72 +81,61 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             return
         }
         
-        guard !fetchingServiceIds else {
+        guard self.subscribedServicesFetcher.state == .Stopped else {
             self.defaultServiceIdToShow = serviceId
             return
         }
         
-        let configureApp = {
-            var serviceIds = self.subscribedServiceIds ?? [Int]()
-            if !serviceIds.contains(serviceId) {
-                serviceIds.append(serviceId)
-                self.subscribedServiceIds = serviceIds
+        reloadServicesWithDefaultServiceId(serviceId)
+    }
+    
+    //MARK: - Utility methods
+    internal func configureApp() {
+        if self.subscribedServiceIds == nil {
+            WKInterfaceController.reloadRootControllersWithNames(["Loading"], contexts: nil)
+            
+            let semaphore = dispatch_semaphore_create(0)
+            
+            NSProcessInfo().performExpiringActivityWithReason("Sync subscribed services") { expired in
+                guard !expired else {
+                    dispatch_semaphore_signal(semaphore)
+                    return
+                }
+                
+                let timeout = dispatch_time(DISPATCH_TIME_NOW, Int64(30 * Double(NSEC_PER_SEC)))
+                dispatch_semaphore_wait(semaphore, timeout)
             }
             
-            self.reloadServicesWithDefaultServiceId(serviceId)
-        }
-        
-        if !subscribedServicesExist {
-            fetchSubscribedServiceIdsWithCompletion { result in
+            subscribedServicesFetcher.fetchSubscribedServicesIdsWithCompletion { result in
+                defer {
+                    dispatch_semaphore_signal(semaphore)
+                }
+                
                 switch result {
-                case let .Result(serviceIds):
-                    self.subscribedServiceIds = serviceIds
-                    configureApp()
-                case .Error:
-                    configureApp()
+                case let .Result(subscribedServiceIds):
+                    self.subscribedServiceIds = subscribedServiceIds
+                    self.reloadServicesWithDefaultServiceId(self.defaultServiceIdToShow)
+                    self.defaultServiceIdToShow = nil
+                case let .Error(error):
+                    WKInterfaceController.reloadRootControllersWithNames(["ErrorState"], contexts: [error.localizedDescription])
                 }
             }
         }
         else {
-            configureApp()
+            reloadServicesWithDefaultServiceId(nil)
         }
-    }
-    
-    //MARK: - Utility methods
-    private func fetchSubscribedServiceIdsWithCompletion(completion: RequestResult<[Int]> -> Void) {
-        guard !fetchingServiceIds else {
-            return
-        }
-        
-        fetchingServiceIds = true
-        
-        WKInterfaceController.reloadRootControllersWithNames(["Loading"], contexts: nil)
-        
-        WCSession.defaultSession().sendMessage(["action": "fetchSubscribedServices"], replyHandler: { response in
-            dispatch_async(dispatch_get_main_queue(), {
-                if let subscribedServiceIds = response["subscribedServiceIds"] as? [Int] {
-                    completion(.Result(result: subscribedServiceIds))
-                }
-                else {
-                    let empty = [Int]()
-                    completion(.Result(result: empty))
-                }
-                
-                self.fetchingServiceIds = false
-            })
-        }, errorHandler: { error in
-            dispatch_async(dispatch_get_main_queue(), {
-                completion(.Error(error: error))
-                self.fetchingServiceIds = false
-            })
-        })
     }
     
     private func reloadServicesWithDefaultServiceId(defaultServiceId: Int?) {
-        let services = generateSubscribedServices()
+        var services: [Service]
         
         if let defaultServiceId = defaultServiceId {
-            setDefaultServiceToServiceWithId(defaultServiceId, forServices: services)
+            ensureServiceIdInSubscribedServiceIds(defaultServiceId)
+            services = generateSubscribedServices()
+            ExtensionDelegate.setDefaultServiceToServiceWithId(defaultServiceId, forServices: services)
+        }
+        else {
+            services = generateSubscribedServices()
         }
         
         if services.count > 0 {
@@ -174,10 +146,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         }
     }
     
-    private func setDefaultServiceToServiceWithId(serviceId: Int, forServices services: [Service]) {
-        if let defaultService = services.filter( {$0.serviceId == serviceId} ).first {
-            defaultService.isDefault = true
+    private func ensureServiceIdInSubscribedServiceIds(serviceId: Int) {
+        var subscribedServiceIds = self.subscribedServiceIds ?? [Int]()
+        if !subscribedServiceIds.contains(serviceId) {
+            subscribedServiceIds.append(serviceId)
         }
+        self.subscribedServiceIds = subscribedServiceIds
     }
     
     private func generateSubscribedServices() -> [Service] {
@@ -202,7 +176,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
 extension ExtensionDelegate: WCSessionDelegate {
     
     func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        guard !fetchingServiceIds else {
+        guard subscribedServicesFetcher.state == .Stopped else {
             return
         }
         

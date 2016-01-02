@@ -34,6 +34,15 @@
                             <fontDescription key="font" type="italicSystem" pointSize="12"/>
                         </label>
                     </items>
+                    <menu key="menu" id="IHI-HQ-rvA">
+                        <items>
+                            <menuItem title="Refresh" icon="repeat" id="qUy-Dt-dlB">
+                                <connections>
+                                    <action selector="refresh" destination="AgC-eL-Hgc" id="jIS-NL-qR4"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
                     <connections>
                         <outlet property="imageStatus" destination="YXF-r1-0GK" id="JKA-Pk-GwH"/>
                         <outlet property="labelArea" destination="PpB-xJ-Zji" id="XpZ-Ph-g2O"/>
@@ -55,8 +64,8 @@
                         <label alignment="left" text="Alert Label" numberOfLines="0" id="RNh-wt-Usw"/>
                     </items>
                     <notificationCategory key="notificationCategory" identifier="disruption" id="3kZ-Ma-s5X">
-                        <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="sashColor" red="0.59999999999999998" green="0.88235294119999996" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.0035146772861480713" green="0.99592894315719604" blue="0.94492340087890625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sashColor" white="0.36137952302631576" alpha="1" colorSpace="calibratedWhite"/>
                     </notificationCategory>
                     <connections>
                         <outlet property="notificationAlertLabel" destination="RNh-wt-Usw" id="2Hc-It-6tO"/>
@@ -90,6 +99,37 @@
                 </controller>
             </objects>
             <point key="canvasLocation" x="654" y="330"/>
+        </scene>
+        <!--Ferries-->
+        <scene sceneID="2vi-bj-TmA">
+            <objects>
+                <controller identifier="ErrorState" title="Ferries" id="XFa-aC-GxM" customClass="ErrorInterfaceController" customModule="Watch_App_Extension">
+                    <items>
+                        <label alignment="center" verticalAlignment="center" text="Error" id="dP6-HQ-E4q"/>
+                        <label width="1" alignment="center" verticalAlignment="center" text="An error occured. Please open the app on the phone" textAlignment="center" numberOfLines="0" id="XIj-PT-VYT">
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                        </label>
+                        <label width="1" alignment="center" verticalAlignment="center" text="Force touch the screen to refresh." textAlignment="center" numberOfLines="0" id="fFk-zE-jE6">
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                        </label>
+                    </items>
+                    <menu key="menu" id="ycH-p7-Yns">
+                        <items>
+                            <menuItem title="Menu Item" icon="repeat" id="dAi-Id-Ft9">
+                                <connections>
+                                    <action selector="touchedReload" destination="XFa-aC-GxM" id="esK-49-Mh7"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                    <connections>
+                        <outlet property="labelErrorMessage" destination="XIj-PT-VYT" id="7qM-aN-i1F"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="441" y="577"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.59999999999999998" green="0.88235294117647056" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>

@@ -14,6 +14,10 @@ struct AppConstants {
     static let parseChannelPrefix = "S"
 }
 
+struct ErrorMessages {
+    static let errorFetchingSubscribedServiceIds = "There was an error fetching your subscribed services"
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -81,7 +85,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let currentInstallation = PFInstallation.currentInstallation()
         currentInstallation.setDeviceTokenFromData(deviceToken)
         currentInstallation.saveInBackgroundWithBlock { success, error in
-            
+            if error != nil {
+                print("Error registering for push notificaitons: \(error)")
+            }
         }
     }
     
@@ -162,13 +168,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: WCSessionDelegate {
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
-        guard let action = message["action"] as? String else {
-            return
+        var identifier = UIBackgroundTaskInvalid
+        
+        identifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler {
+            replyHandler(["error": ErrorMessages.errorFetchingSubscribedServiceIds])
+            
+            if identifier != UIBackgroundTaskInvalid {
+                UIApplication.sharedApplication().endBackgroundTask(identifier)
+            }
         }
         
-        if action == "fetchSubscribedServices" {
-            let serviceIds = NSUserDefaults.standardUserDefaults().arrayForKey(ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
-            replyHandler(["subscribedServiceIds": serviceIds])
+        if let action = message["action"] as? String {
+            switch action {
+            case "fetchSubscribedServices":
+                let serviceIds = NSUserDefaults.standardUserDefaults().arrayForKey(ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
+                replyHandler(["subscribedServiceIds": serviceIds])
+            default:
+                replyHandler(["error": ErrorMessages.errorFetchingSubscribedServiceIds])
+                print("Unrecognized action from watch")
+            }
+        }
+        else {
+            replyHandler(["error": ErrorMessages.errorFetchingSubscribedServiceIds])
+        }
+        
+        if identifier != UIBackgroundTaskInvalid {
+            UIApplication.sharedApplication().endBackgroundTask(identifier)
         }
     }
 }

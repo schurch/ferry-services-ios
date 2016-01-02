@@ -36,6 +36,8 @@
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
 		FD753EE9197A256E00CC5DE3 /* FerryServices_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */; };
 		FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */; };
+		FD7B65C81C378C67007481F5 /* ErrorInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7B65C71C378C67007481F5 /* ErrorInterfaceController.swift */; };
+		FD8271BE1C3389750001A2E1 /* SubscribedServicesFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8271BD1C3389750001A2E1 /* SubscribedServicesFetcher.swift */; };
 		FD8819E21A998BA2002A976A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E11A998BA2002A976A /* Parse.framework */; };
 		FD8819E41A998BAC002A976A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E31A998BAC002A976A /* Bolts.framework */; };
 		FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E51A998BDA002A976A /* AudioToolbox.framework */; };
@@ -170,6 +172,8 @@
 		FD753EE7197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServices_2Tests.swift; sourceTree = "<group>"; };
 		FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
+		FD7B65C71C378C67007481F5 /* ErrorInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInterfaceController.swift; sourceTree = "<group>"; };
+		FD8271BD1C3389750001A2E1 /* SubscribedServicesFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribedServicesFetcher.swift; sourceTree = "<group>"; };
 		FD8819E11A998BA2002A976A /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		FD8819E31A998BAC002A976A /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		FD8819E51A998BDA002A976A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -451,6 +455,31 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		FD7B65C91C378C71007481F5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FDC0A5CA1C19576E003407A1 /* Service.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		FD7B65CA1C378C79007481F5 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				FD8271BD1C3389750001A2E1 /* SubscribedServicesFetcher.swift */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		FD7B65CB1C378C80007481F5 /* Interface Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FDE391B21C1561AD000EDE26 /* ServiceDetailInterfaceController.swift */,
+				FD7B65C71C378C67007481F5 /* ErrorInterfaceController.swift */,
+			);
+			name = "Interface Controllers";
+			sourceTree = "<group>";
+		};
 		FD9432DA19CD1376003BBD23 /* Timetable Preview */ = {
 			isa = PBXGroup;
 			children = (
@@ -502,8 +531,9 @@
 			isa = PBXGroup;
 			children = (
 				FDE391B41C1561AD000EDE26 /* ExtensionDelegate.swift */,
-				FDE391B21C1561AD000EDE26 /* ServiceDetailInterfaceController.swift */,
-				FDC0A5CA1C19576E003407A1 /* Service.swift */,
+				FD7B65CB1C378C80007481F5 /* Interface Controllers */,
+				FD7B65C91C378C71007481F5 /* Model */,
+				FD7B65CA1C378C79007481F5 /* Utility */,
 				FDE391B81C1561AD000EDE26 /* Assets.xcassets */,
 				FDE391BA1C1561AD000EDE26 /* Info.plist */,
 				FDE391B01C1561AD000EDE26 /* Supporting Files */,
@@ -637,10 +667,16 @@
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = L832SX5MC4;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 							com.apple.InAppPurchase = {
 								enabled = 0;
 							};
 							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -655,6 +691,7 @@
 					};
 					FDE391AA1C1561AD000EDE26 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = L832SX5MC4;
 					};
 				};
 			};
@@ -843,6 +880,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDC0A5CB1C19576E003407A1 /* Service.swift in Sources */,
+				FD8271BE1C3389750001A2E1 /* SubscribedServicesFetcher.swift in Sources */,
+				FD7B65C81C378C67007481F5 /* ErrorInterfaceController.swift in Sources */,
 				FDE391B51C1561AD000EDE26 /* ExtensionDelegate.swift in Sources */,
 				FDE391B31C1561AD000EDE26 /* ServiceDetailInterfaceController.swift in Sources */,
 			);
@@ -976,8 +1015,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Church (N8V73QMGL4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stefan Church (N8V73QMGL4)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -989,7 +1028,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5f59615b-4f00-49bd-9ba9-9c1bcdfe92dd";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1062,12 +1101,15 @@
 		FDE391BF1C1561AE000EDE26 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Church (N8V73QMGL4)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer: Stefan Church (N8V73QMGL4)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1078,6 +1120,8 @@
 		FDE391C01C1561AE000EDE26 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1085,6 +1129,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1096,8 +1141,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Church (N8V73QMGL4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stefan Church (N8V73QMGL4)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1105,6 +1150,7 @@
 				INFOPLIST_FILE = "Watch App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
