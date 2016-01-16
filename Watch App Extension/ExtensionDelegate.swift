@@ -89,7 +89,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         reloadServicesWithDefaultServiceId(serviceId)
     }
     
-    //MARK: - Utility methods
+    //MARK: - App configuration
     internal func configureApp() {
         if self.subscribedServiceIds == nil {
             WKInterfaceController.reloadRootControllersWithNames(["Loading"], contexts: nil)
@@ -102,7 +102,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
                     return
                 }
                 
-                let timeout = dispatch_time(DISPATCH_TIME_NOW, Int64(30 * Double(NSEC_PER_SEC)))
+                let timeout = dispatch_time(DISPATCH_TIME_NOW, Int64(10 * Double(NSEC_PER_SEC)))
                 dispatch_semaphore_wait(semaphore, timeout)
             }
             
@@ -126,6 +126,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         }
     }
     
+    //MARK: - Utility methods
     private func reloadServicesWithDefaultServiceId(defaultServiceId: Int?) {
         var services: [Service]
         

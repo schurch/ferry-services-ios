@@ -18,9 +18,8 @@ class ServiceDetailInterfaceController: WKInterfaceController {
     @IBOutlet var labelDisruptionInformation: WKInterfaceLabel!
     @IBOutlet var labelRoute: WKInterfaceLabel!
     @IBOutlet var labelStatus: WKInterfaceLabel!
-    @IBOutlet var labelViewOnPhone: WKInterfaceLabel!
+    @IBOutlet var map: WKInterfaceMap!
     @IBOutlet var imageStatus: WKInterfaceImage!
-    @IBOutlet var separator: WKInterfaceSeparator!
     
     var dataTask: NSURLSessionDataTask?
     var lastFetchTime: NSDate?
@@ -51,9 +50,96 @@ class ServiceDetailInterfaceController: WKInterfaceController {
     override func didAppear() {
         super.didAppear()
         
+        // When paging through controllers if the user hit refresh before the controller was ready the app would hang forever
+        // so we only add the menu item once the controllelr had appeared
+        addMenuItemWithItemIcon(.Repeat, title: "Refresh", action: Selector("refresh"))
+        
         if let service = self.service {
             self.updateUserActivity("com.stefanchurch.ferryservices.viewservice", userInfo: ["serviceId": service.serviceId], webpageURL: nil)
         }
+    }
+    
+    override func willDisappear() {
+        super.willDisappear()
+        
+        clearAllMenuItems()
+    }
+    
+    // MARK: - View configuration
+    private func configureLoadingView() {
+        if let service = self.service {
+            self.labelRoute.setText(service.route)
+        }
+        
+        self.labelStatus.setText("LOADING...")
+        self.labelDisruptionInformation.setText("")
+        self.imageStatus.setImageNamed("grey")
+    }
+    
+    private func configureErrorViewWithMessage(message: String) {
+        self.labelRoute.setText(message)
+        self.labelStatus.setText("")
+        self.labelDisruptionInformation.setText("")
+        self.imageStatus.setImage(nil)
+    }
+    
+    private func configureView() {
+        guard let service = self.service else {
+            return
+        }
+        
+        self.labelArea.setText(service.area)
+        
+        self.labelRoute.setText(service.route)
+        
+        if let disruptionDetailsHtml = service.disruptionDetails {
+            if let data = disruptionDetailsHtml.dataUsingEncoding(NSUTF8StringEncoding) {
+                do {
+                    let attributeText = try NSAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil)
+                    self.labelDisruptionInformation.setAttributedText(attributeText)
+                } catch let error as NSError {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+        switch service.status {
+        case .Normal:
+            self.labelStatus.setText("NO DISRUPTIONS")
+            self.imageStatus.setImageNamed("green")
+        case .SailingsAffected:
+            self.labelStatus.setText("DISRUPTED")
+            self.imageStatus.setImageNamed("amber")
+        case .SailingsCancelled:
+            self.labelStatus.setText("CANCELLED")
+            self.imageStatus.setImageNamed("red")
+        case .Unknown:
+            self.labelStatus.setText("UNKNOWN")
+            self.imageStatus.setImageNamed("grey")
+        }
+        
+        if let ports = service.ports {
+            configureMapWithPorts(ports)
+        }
+    }
+    
+    private func configureMapWithPorts(ports: [Port]) {
+        var coordinates = [CLLocationCoordinate2D]()
+        
+        for port in ports {
+            let location = CLLocationCoordinate2D(latitude: port.latitude, longitude: port.longitude)
+            coordinates.append(location)
+            self.map.addAnnotation(location, withPinColor: .Red)
+        }
+        
+        let mapRectForCoords = calculateMapRectForCoordinates(coordinates)
+        
+        let origin = MKMapPoint(x: mapRectForCoords.origin.x, y: mapRectForCoords.origin.y - 170000)
+        let size = MKMapSize(width: mapRectForCoords.size.width, height: mapRectForCoords.size.height + 190000)
+        
+        let mapRect = MKMapRect(origin: origin, size: size)
+        
+        self.map.setVisibleMapRect(mapRect)
     }
     
     // MARK: - UI Actions
@@ -84,6 +170,8 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         
         let semaphore = dispatch_semaphore_create(0)
         
+        let url = NSURL(string: "http://stefanchurch.com:4567/services/\(service.serviceId)")!
+        
         NSProcessInfo().performExpiringActivityWithReason("Download ferry service details") { expired in
             guard !expired else {
                 dispatch_semaphore_signal(semaphore)
@@ -93,9 +181,6 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             let timeout = dispatch_time(DISPATCH_TIME_NOW, Int64(30 * Double(NSEC_PER_SEC)))
             dispatch_semaphore_wait(semaphore, timeout)
         }
-
-        let url = NSURL(string: "http://stefanchurch.com:4567/services/\(service.serviceId)")!
-        print("Fetching from \(url)")
         
         dataTask = NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] data, response, error in
             defer {
@@ -144,67 +229,14 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         
         dataTask?.resume()
     }
-    
-    // MARK: - View configuration
-    private func configureLoadingView() {
-        if let service = self.service {
-            self.labelRoute.setText(service.route)
-        }
-        
-        self.labelStatus.setText("Loading...")
-        self.labelDisruptionInformation.setText("")
-        self.imageStatus.setImageNamed("grey")
-        self.separator.setHidden(false)
-        self.labelViewOnPhone.setHidden(true)
-    }
-    
-    private func configureErrorViewWithMessage(message: String) {
-        self.labelArea.setText("")
-        self.labelRoute.setText(message)
-        self.labelStatus.setText("")
-        self.labelDisruptionInformation.setText("")
-        self.imageStatus.setImage(nil)
-        self.separator.setHidden(true)
-        self.labelViewOnPhone.setHidden(true)
-    }
-    
-    private func configureView() {
-        guard let service = self.service else {
-            return
-        }
-        
-        self.setTitle(service.area)
-        
-        self.labelRoute.setText(service.route)
-        
-        if let disruptionDetailsHtml = service.disruptionDetails {
-            if let data = disruptionDetailsHtml.dataUsingEncoding(NSUTF8StringEncoding) {
-                do {
-                    let attributeText = try NSAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil)
-                    self.labelDisruptionInformation.setAttributedText(attributeText)
-                } catch let error as NSError {
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        
-        switch service.status {
-        case .Normal:
-            self.labelStatus.setText("Normal")
-            self.imageStatus.setImageNamed("green")
-        case .SailingsAffected:
-            self.labelStatus.setText("Disrupted")
-            self.imageStatus.setImageNamed("amber")
-        case .SailingsCancelled:
-            self.labelStatus.setText("Cancelled")
-            self.imageStatus.setImageNamed("red")
-        case .Unknown:
-            self.labelStatus.setText("Unknown")
-            self.imageStatus.setImageNamed("grey")
-        }
-        
-        self.separator.setHidden(false)
-        self.labelViewOnPhone.setHidden(false)
-    }
 
+    // MARK: -
+    private func calculateMapRectForCoordinates(coordinates: [CLLocationCoordinate2D]) -> MKMapRect {
+        var mapRect = MKMapRectNull
+        for coordinate in coordinates {
+            let point = MKMapPointForCoordinate(coordinate)
+            mapRect = MKMapRectUnion(mapRect, MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
+        }
+        return mapRect
+    }
 }

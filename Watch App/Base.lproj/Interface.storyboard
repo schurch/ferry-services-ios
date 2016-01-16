@@ -5,52 +5,43 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="9515"/>
     </dependencies>
     <scenes>
-        <!--Disruption-->
+        <!--Ferries-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller identifier="ServiceDetail" title="Disruption" id="AgC-eL-Hgc" customClass="ServiceDetailInterfaceController" customModule="Watch_App_Extension">
+                <controller identifier="ServiceDetail" title="Ferries" id="AgC-eL-Hgc" customClass="ServiceDetailInterfaceController" customModule="Watch_App_Extension">
                     <items>
-                        <label alignment="left" numberOfLines="0" id="PpB-xJ-Zji">
-                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
-                        </label>
-                        <label alignment="left" numberOfLines="0" id="RKx-aU-cYe">
-                            <fontDescription key="font" style="UICTFontTextStyleSubhead"/>
-                        </label>
-                        <group width="1" height="19.5" alignment="left" id="tXc-kI-aFQ">
+                        <group width="1" alignment="left" layout="vertical" spacing="0.0" id="XdM-wm-Z08">
                             <items>
-                                <imageView width="15" height="15" alignment="left" verticalAlignment="center" id="YXF-r1-0GK"/>
-                                <label alignment="left" verticalAlignment="center" id="bk0-hT-Wcx">
-                                    <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                <label alignment="center" textAlignment="center" numberOfLines="0" id="EB1-Au-TfA">
+                                    <fontDescription key="font" type="system" weight="light" pointSize="17"/>
+                                </label>
+                                <label alignment="center" textAlignment="left" numberOfLines="0" id="RKx-aU-cYe">
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="font" type="system" pointSize="10"/>
                                 </label>
                             </items>
                         </group>
-                        <separator width="0.80000000000000004" alignment="center" id="aeQ-17-qKW">
-                            <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        </separator>
+                        <group height="19.5" alignment="center" id="tXc-kI-aFQ">
+                            <items>
+                                <imageView width="10" height="10" alignment="left" verticalAlignment="center" id="YXF-r1-0GK"/>
+                                <label alignment="center" verticalAlignment="center" id="bk0-hT-Wcx">
+                                    <fontDescription key="font" type="system" pointSize="10"/>
+                                </label>
+                            </items>
+                        </group>
+                        <map width="1" height="64" alignment="left" id="VFn-Mc-38a"/>
                         <label alignment="left" numberOfLines="0" id="jid-gb-Pp5">
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
                         </label>
-                        <label alignment="left" text="View more on phone" id="g7A-pp-d78">
-                            <fontDescription key="font" type="italicSystem" pointSize="12"/>
-                        </label>
                     </items>
-                    <menu key="menu" id="IHI-HQ-rvA">
-                        <items>
-                            <menuItem title="Refresh" icon="repeat" id="qUy-Dt-dlB">
-                                <connections>
-                                    <action selector="refresh" destination="AgC-eL-Hgc" id="jIS-NL-qR4"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
                     <connections>
                         <outlet property="imageStatus" destination="YXF-r1-0GK" id="JKA-Pk-GwH"/>
-                        <outlet property="labelArea" destination="PpB-xJ-Zji" id="XpZ-Ph-g2O"/>
+                        <outlet property="labelArea" destination="EB1-Au-TfA" id="vy2-vH-fTw"/>
                         <outlet property="labelDisruptionInformation" destination="jid-gb-Pp5" id="wgx-Nl-afe"/>
                         <outlet property="labelRoute" destination="RKx-aU-cYe" id="SeC-aa-HLS"/>
                         <outlet property="labelStatus" destination="bk0-hT-Wcx" id="kPp-Tm-T0H"/>
-                        <outlet property="labelViewOnPhone" destination="g7A-pp-d78" id="WP7-vb-8pe"/>
-                        <outlet property="separator" destination="aeQ-17-qKW" id="l8R-LE-6fZ"/>
+                        <outlet property="map" destination="VFn-Mc-38a" id="EH2-3u-9Tr"/>
                     </connections>
                 </controller>
             </objects>
@@ -72,7 +63,7 @@
                     </connections>
                 </notificationController>
             </objects>
-            <point key="canvasLocation" x="218" y="594"/>
+            <point key="canvasLocation" x="220" y="585"/>
         </scene>
         <!--Ferries-->
         <scene sceneID="aG9-5j-O9d">
@@ -80,7 +71,7 @@
                 <controller identifier="EmptyState" title="Ferries" id="HRe-Nd-cbC">
                     <items>
                         <label alignment="center" verticalAlignment="center" text="Unsubscribed" id="lWC-C3-ga1"/>
-                        <label width="1" alignment="center" verticalAlignment="center" text="You are not currently subscribed to any services" textAlignment="center" numberOfLines="0" id="5Rz-Ke-Vrg">
+                        <label width="1" alignment="center" verticalAlignment="center" text="You are currently not subscribed to any services" textAlignment="center" numberOfLines="0" id="5Rz-Ke-Vrg">
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
                         </label>
@@ -98,7 +89,7 @@
                     </items>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="654" y="330"/>
+            <point key="canvasLocation" x="643" y="345"/>
         </scene>
         <!--Ferries-->
         <scene sceneID="2vi-bj-TmA">
@@ -106,7 +97,7 @@
                 <controller identifier="ErrorState" title="Ferries" id="XFa-aC-GxM" customClass="ErrorInterfaceController" customModule="Watch_App_Extension">
                     <items>
                         <label alignment="center" verticalAlignment="center" text="Error" id="dP6-HQ-E4q"/>
-                        <label width="1" alignment="center" verticalAlignment="center" text="An error occured. Please open the app on the phone" textAlignment="center" numberOfLines="0" id="XIj-PT-VYT">
+                        <label width="1" alignment="center" verticalAlignment="center" text="Please open the app on the phone." textAlignment="center" numberOfLines="0" id="XIj-PT-VYT">
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
                         </label>
@@ -117,7 +108,7 @@
                     </items>
                     <menu key="menu" id="ycH-p7-Yns">
                         <items>
-                            <menuItem title="Menu Item" icon="repeat" id="dAi-Id-Ft9">
+                            <menuItem title="Refresh" icon="repeat" id="dAi-Id-Ft9">
                                 <connections>
                                     <action selector="touchedReload" destination="XFa-aC-GxM" id="esK-49-Mh7"/>
                                 </connections>
@@ -129,7 +120,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="441" y="577"/>
+            <point key="canvasLocation" x="816" y="350"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.59999999999999998" green="0.88235294117647056" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
