@@ -29,11 +29,15 @@
                                 </label>
                             </items>
                         </group>
-                        <map width="1" height="64" alignment="left" id="VFn-Mc-38a"/>
-                        <label alignment="left" numberOfLines="0" id="jid-gb-Pp5">
-                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
-                        </label>
+                        <group width="1" alignment="left" layout="vertical" spacing="6" id="NMO-CX-GMI">
+                            <items>
+                                <map width="1" height="72" alignment="left" id="VFn-Mc-38a"/>
+                                <label alignment="left" numberOfLines="0" id="jid-gb-Pp5">
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                </label>
+                            </items>
+                        </group>
                     </items>
                     <connections>
                         <outlet property="imageStatus" destination="YXF-r1-0GK" id="JKA-Pk-GwH"/>

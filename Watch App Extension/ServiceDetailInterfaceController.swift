@@ -134,12 +134,13 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         
         let mapRectForCoords = calculateMapRectForCoordinates(coordinates)
         
-        let origin = MKMapPoint(x: mapRectForCoords.origin.x, y: mapRectForCoords.origin.y - 170000)
-        let size = MKMapSize(width: mapRectForCoords.size.width, height: mapRectForCoords.size.height + 190000)
+        var region = MKCoordinateRegionForMapRect(mapRectForCoords)
+        region.span.latitudeDelta = 1.4
+        region.span.longitudeDelta = 1.4
         
-        let mapRect = MKMapRect(origin: origin, size: size)
+        region.center = CLLocationCoordinate2D(latitude: region.center.latitude + 0.24, longitude: region.center.longitude)
         
-        self.map.setVisibleMapRect(mapRect)
+        self.map.setRegion(region)
     }
     
     // MARK: - UI Actions
@@ -232,11 +233,9 @@ class ServiceDetailInterfaceController: WKInterfaceController {
 
     // MARK: -
     private func calculateMapRectForCoordinates(coordinates: [CLLocationCoordinate2D]) -> MKMapRect {
-        var mapRect = MKMapRectNull
-        for coordinate in coordinates {
+        return coordinates.reduce(MKMapRectNull) { rect, coordinate in
             let point = MKMapPointForCoordinate(coordinate)
-            mapRect = MKMapRectUnion(mapRect, MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
+            return MKMapRectUnion(rect, MKMapRect(origin: point, size: MKMapSize(width: 0.0, height: 0.0)))
         }
-        return mapRect
     }
 }
