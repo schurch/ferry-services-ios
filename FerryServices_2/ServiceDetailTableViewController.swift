@@ -384,7 +384,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                         disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.")
                     }
                 case .Unknown:
-                    break
+                    disruptionRow = Row.TextOnly(text: "Unable to fetch the disruption status for this service.")
                 }
             }
             else {
@@ -580,7 +580,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func summerPath() -> String {
-        return (NSBundle.mainBundle().bundlePath as NSString).stringByAppendingPathComponent("Timetables/2015/Summer/\(serviceStatus.serviceId!).pdf")
+        return (NSBundle.mainBundle().bundlePath as NSString).stringByAppendingPathComponent("Timetables/2016/Summer/\(serviceStatus.serviceId!).pdf")
     }
     
     private func showPDFTimetableAtPath(path: String, title: String) {
