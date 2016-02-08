@@ -59,8 +59,12 @@
 		FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */; };
 		FD9C66171A16CADC0050D99F /* Timetables in Resources */ = {isa = PBXBuildFile; fileRef = FD9C66161A16CADC0050D99F /* Timetables */; };
 		FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate_extensions.swift */; };
+		FD9D7CA41C644D6C00FE8592 /* VesselsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9D7CA31C644D6C00FE8592 /* VesselsAPIClient.swift */; };
+		FD9D7CA61C644E1300FE8592 /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9D7CA51C644E1300FE8592 /* Vessel.swift */; };
 		FDA0ECE81A69E3FE00EDF5DA /* UIColor_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */; };
 		FDA1220E1B58E03500813EF6 /* JSONRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1220D1B58E03500813EF6 /* JSONRequester.swift */; };
+		FDA26A2D1C65870C006D81FC /* Repeater.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA26A2C1C65870C006D81FC /* Repeater.swift */; };
+		FDA26A2F1C65889F006D81FC /* VesselMapConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA26A2E1C65889F006D81FC /* VesselMapConfigurator.swift */; };
 		FDAC1B671B3FDFE8000353EA /* Double_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC0A5C91C1956FB003407A1 /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
@@ -200,8 +204,12 @@
 		FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
 		FD9C66161A16CADC0050D99F /* Timetables */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Timetables; sourceTree = SOURCE_ROOT; };
 		FD9C66181A16D2380050D99F /* NSDate_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate_extensions.swift; sourceTree = "<group>"; };
+		FD9D7CA31C644D6C00FE8592 /* VesselsAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VesselsAPIClient.swift; sourceTree = "<group>"; };
+		FD9D7CA51C644E1300FE8592 /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
 		FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor_extensions.swift; sourceTree = "<group>"; };
 		FDA1220D1B58E03500813EF6 /* JSONRequester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRequester.swift; sourceTree = "<group>"; };
+		FDA26A2C1C65870C006D81FC /* Repeater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repeater.swift; sourceTree = "<group>"; };
+		FDA26A2E1C65889F006D81FC /* VesselMapConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VesselMapConfigurator.swift; sourceTree = "<group>"; };
 		FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double_extensions.swift; sourceTree = "<group>"; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FDC0A5CA1C19576E003407A1 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -358,6 +366,7 @@
 				FD9432DA19CD1376003BBD23 /* Timetable Preview */,
 				FD6C45651A2ACEF6005E1FB8 /* Web Information */,
 				FDCB33461A4BD6D6000033BC /* Map */,
+				FDA26A2E1C65889F006D81FC /* VesselMapConfigurator.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -367,6 +376,7 @@
 			children = (
 				FD5177F61A565E9D00F4B6B0 /* Services Client */,
 				FD5177F91A565EDA00F4B6B0 /* Weather Client */,
+				FD9D7CA71C644E1D00FE8592 /* Vessels Client */,
 				FDA1220D1B58E03500813EF6 /* JSONRequester.swift */,
 			);
 			name = "API Client";
@@ -491,6 +501,15 @@
 			name = "Timetable Preview";
 			sourceTree = "<group>";
 		};
+		FD9D7CA71C644E1D00FE8592 /* Vessels Client */ = {
+			isa = PBXGroup;
+			children = (
+				FD9D7CA31C644D6C00FE8592 /* VesselsAPIClient.swift */,
+				FD9D7CA51C644E1300FE8592 /* Vessel.swift */,
+			);
+			name = "Vessels Client";
+			sourceTree = "<group>";
+		};
 		FDC7761119844C4500B3782F /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -516,6 +535,7 @@
 				FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */,
 				FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */,
 				FDF9807A1B50818000672393 /* Utility.swift */,
+				FDA26A2C1C65870C006D81FC /* Repeater.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -833,6 +853,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD9D7CA41C644D6C00FE8592 /* VesselsAPIClient.swift in Sources */,
 				FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */,
 				FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
@@ -849,6 +870,7 @@
 				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
 				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
+				FDA26A2D1C65870C006D81FC /* Repeater.swift in Sources */,
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
 				FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */,
@@ -856,7 +878,9 @@
 				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
 				FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */,
 				FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */,
+				FDA26A2F1C65889F006D81FC /* VesselMapConfigurator.swift in Sources */,
 				FDA1220E1B58E03500813EF6 /* JSONRequester.swift in Sources */,
+				FD9D7CA61C644E1300FE8592 /* Vessel.swift in Sources */,
 				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
 				FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,
 				FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */,

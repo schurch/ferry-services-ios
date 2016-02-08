@@ -45,7 +45,7 @@ internal class SubscribedServicesFetcher {
             }
             else {
                 let errorMessage = response["error"] as? String ?? "There was an error fetching subscribed services"
-                let error = NSError(domain: "com.stefanchurch.ferryservices.watchkitapp.watchkitextension", code: 1, userInfo: [NSLocalizedDescriptionKey: errorMessage])
+                let error = NSError(domain: "com.stefanchurch.ferryservices.watchkitapp.watchkitextension", code: 2, userInfo: [NSLocalizedDescriptionKey: errorMessage])
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     completion(RequestResult.Error(error: error))

@@ -9,7 +9,11 @@
 class ServicesAPIClient {
     static let sharedInstance = ServicesAPIClient()
     
+#if DEBUG
+    static let baseURL = NSURL(string: "http://stefanchurch.com:5678/")
+#else
     static let baseURL = NSURL(string: "http://stefanchurch.com:4567/")
+#endif
     
     // MARK: - methods
     func fetchFerryServicesWithCompletion(completion: (serviceStatuses: [ServiceStatus]?, error: NSError?) -> ()) {

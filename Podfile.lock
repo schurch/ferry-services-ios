@@ -1,35 +1,44 @@
 PODS:
+  - Alamofire (3.1.5)
   - Flurry-iOS-SDK/FlurrySDK (7.3.0)
   - FMDB (2.5):
     - FMDB/standard (= 2.5)
   - FMDB/common (2.5)
   - FMDB/standard (2.5):
     - FMDB/common
-  - SwiftyJSON (2.3.1)
+  - Interstellar (1.4.0):
+    - Interstellar/Core (= 1.4.0)
+    - Interstellar/Warpdrive (= 1.4.0)
+  - Interstellar/Core (1.4.0)
+  - Interstellar/Warpdrive (1.4.0):
+    - Interstellar/Core
+  - SwiftyJSON (2.3.2)
+  - SwiftyTimer (1.2.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 3.0)
   - Flurry-iOS-SDK/FlurrySDK
   - FMDB (from `https://github.com/robertmryan/fmdb.git`, branch `swiftFramework`)
-  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+  - Interstellar
+  - SwiftyJSON
+  - SwiftyTimer
 
 EXTERNAL SOURCES:
   FMDB:
     :branch: swiftFramework
     :git: https://github.com/robertmryan/fmdb.git
-  SwiftyJSON:
-    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 CHECKOUT OPTIONS:
   FMDB:
     :commit: 43881cfcff4aedf5d8ea4045ab21a8f097ed35fa
     :git: https://github.com/robertmryan/fmdb.git
-  SwiftyJSON:
-    :commit: 10f67900bdf2fb0faba3371249a6fefdcaa880c5
-    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
+  Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
   Flurry-iOS-SDK: 054befae0fa0244fb000985bfe757d70f87a9f60
   FMDB: 8e59e93d20d76d0b135db26ecc83ae88d016076d
-  SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
+  Interstellar: 40fc666872436d6c1b3524c59437ebdb5dec1c6a
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SwiftyTimer: 5453593e0aaacfb1611fb6986d257281140913bb
 
 COCOAPODS: 0.39.0

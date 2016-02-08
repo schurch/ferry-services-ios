@@ -10,8 +10,9 @@ import UIKit
 import MapKit
 import QuickLook
 import Flurry_iOS_SDK
+import SwiftyTimer
 
-class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, ServiceDetailWeatherCellDelegate {
+class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, ServiceDetailWeatherCellDelegate, VesselMapConfigurator {
     
     class Section {
         var title: String?
@@ -76,6 +77,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var serviceStatus: ServiceStatus!
     var viewBackground: UIView!
     var windAnimationTimer: NSTimer!
+    var repeater: Repeater!
     
     lazy var parseChannel: String = {
         return "\(AppConstants.parseChannelPrefix)\(self.serviceStatus.serviceId!)"
@@ -186,6 +188,15 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.configureMapView()
         self.initializeTable()
         self.refresh()
+        
+        repeater = Repeater(interval: 5.seconds) { [unowned self] in
+            VesselsAPIClient.fetchVessels().next { vessels in
+                self.configureMap(self.mapView, vessels: vessels)
+            }
+            .error { error in
+                print("Error fetching vessels: \(error)")
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

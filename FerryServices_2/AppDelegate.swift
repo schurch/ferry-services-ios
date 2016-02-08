@@ -9,6 +9,7 @@
 import UIKit
 import WatchConnectivity
 import Flurry_iOS_SDK
+import Interstellar
 
 struct AppConstants {
     static let parseChannelPrefix = "S"
