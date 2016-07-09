@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TimetableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TimetableTimeTableViewCellDelegate {
+class TimetableViewController: UIViewController {
     
     private struct MainStoryboard {
         struct TableViewCellIdentifiers {
@@ -26,9 +26,6 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
     
     @IBOutlet var tableView: UITableView!
     
-    // MARK: - public
-    var routeId: Int!
-    
     // MARK: - constants
     private let dateFormatter: NSDateFormatter = {
         let dateFormatter = NSDateFormatter()
@@ -36,8 +33,10 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         return dateFormatter
     }()
     
+    var serviceId: Int!
+    
     // MARK: - private
-    private var arrayOfRoutes: [Route]?
+    private var journeys: [[Journey]]!
     private var date: NSDate!
     private var datePickerIndexPath: NSIndexPath?
     private var pickerCellRowHeight: Int!
@@ -46,57 +45,48 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Departures"
+        title = "Departures"
         
-        self.tableView.estimatedRowHeight = 44
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableViewAutomaticDimension
         
-        if let pickerCell = self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) {
-            self.pickerCellRowHeight = Int(pickerCell.frame.size.height)
+        if let pickerCell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.datePickerCell) {
+            pickerCellRowHeight = Int(pickerCell.frame.size.height)
         }
         
-        self.date = NSDate.stripTimeComponentsFromDate(NSDate())
-        self.updateTrips()
+        date = NSDate.stripTimeComponentsFromDate(NSDate())
+        updateTrips()
     }
     
     // MARK: - UI Actions
     @IBAction func dateAction(sender: UIDatePicker) {
-        if self.hasInlineDatePicker() {
-            self.date = NSDate.stripTimeComponentsFromDate(sender.date)
-            self.updateTrips()            
+        if hasInlineDatePicker() {
+            date = NSDate.stripTimeComponentsFromDate(sender.date)
+            updateTrips()
         }
     }
     
     // MARK: - Utility methods
     func updateTrips() {
-        if self.routeId != nil && self.date != nil {
-            self.arrayOfRoutes = Route.fetchRoutesForServiceId(self.routeId, date: self.date)?.filter { $0.trips?.count > 0 }
-        }
-        
-        self.tableView.reloadData()
-    }
-    
-    func routeForIndexPath(indexPath: NSIndexPath) -> Route? {
-        if let routes = self.arrayOfRoutes {
-            return routes[indexPath.section - 1]
-        }
-        
-        return nil
-    }
-    
-    func tripForIndexPath(indexPath: NSIndexPath) -> Trip? {
-        if let route = self.routeForIndexPath(indexPath) {
-            if let trips = route.trips {
-                return trips[indexPath.row - 1]
+        Database.defaultDatabase().fetchJourneys(serviceId: serviceId, date: date)
+            .map { journeys in
+                let groups = journeys.categorise { $0.from }
+                
+                return groups.reduce([]) { array, entry in
+                    let (_, journeys) = entry
+                    return array + [journeys]
+                }
             }
-        }
-        
-        return nil
+            .next { (groupedJourneys: [[Journey]]) in
+                self.journeys = groupedJourneys
+                self.tableView.reloadData()
+            }
     }
+
     
     // MARK: - Inline date picker methods
     func hasInlineDatePicker() -> Bool {
-        return self.datePickerIndexPath != nil
+        return datePickerIndexPath != nil
     }
     
     func hasDatePickerForIndexPath(indexPath: NSIndexPath) -> Bool {
@@ -104,7 +94,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
         
         let indexPathToCheck = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
         
-        if let datePickerCell = self.tableView.cellForRowAtIndexPath(indexPathToCheck) {
+        if let datePickerCell = tableView.cellForRowAtIndexPath(indexPathToCheck) {
             datePicker = datePickerCell.viewWithTag(MainStoryboard.Constants.datePickerTag)
         }
         
@@ -112,50 +102,50 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func updateDatePicker() {
-        if let datePickerIndexPath = self.datePickerIndexPath {
-            let datePickerCell = self.tableView.cellForRowAtIndexPath(datePickerIndexPath)
+        if let datePickerIndexPath = datePickerIndexPath {
+            let datePickerCell = tableView.cellForRowAtIndexPath(datePickerIndexPath)
             if let datePicker = datePickerCell?.viewWithTag(MainStoryboard.Constants.datePickerTag) as? UIDatePicker {
-                datePicker.setDate(self.date, animated: false)
+                datePicker.setDate(date, animated: false)
             }
         }
     }
     
     func isPickerAtIndexPath(indexPath: NSIndexPath) -> Bool {
-        if self.hasInlineDatePicker() {
-            return self.datePickerIndexPath!.section == indexPath.section && self.datePickerIndexPath!.row == indexPath.row
+        if hasInlineDatePicker() {
+            return datePickerIndexPath!.section == indexPath.section && datePickerIndexPath!.row == indexPath.row
         }
         
         return false
     }
     
     func toggleDatePickerForSelectedIndexPath(indexPath: NSIndexPath) {
-        self.tableView.beginUpdates()
+        tableView.beginUpdates()
         
         let pickerIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
         
-        if self.hasDatePickerForIndexPath(pickerIndexPath) {
-            self.tableView.deleteRowsAtIndexPaths([pickerIndexPath], withRowAnimation: .Fade)
+        if hasDatePickerForIndexPath(pickerIndexPath) {
+            tableView.deleteRowsAtIndexPaths([pickerIndexPath], withRowAnimation: .Fade)
         }
         else {
-            self.tableView.insertRowsAtIndexPaths([pickerIndexPath], withRowAnimation: .Fade)
+            tableView.insertRowsAtIndexPaths([pickerIndexPath], withRowAnimation: .Fade)
         }
         
-        self.tableView.endUpdates()
+        tableView.endUpdates()
     }
     
     func displayInlineDatePickerForRowAtIndexPath(indexPath: NSIndexPath) {
-        self.tableView.beginUpdates()
+        tableView.beginUpdates()
         
         var isBefore = false //indicates if the date picker is below "indexPath", help us determine which row to reveal
         var wasSameCellTapped = false
         
-        if self.hasInlineDatePicker() {
-            isBefore = self.datePickerIndexPath!.row - 1 < indexPath.row
-            wasSameCellTapped = self.datePickerIndexPath!.row - 1 == indexPath.row
+        if hasInlineDatePicker() {
+            isBefore = datePickerIndexPath!.row - 1 < indexPath.row
+            wasSameCellTapped = datePickerIndexPath!.row - 1 == indexPath.row
             
             // remove any date picker that exists
-            self.tableView.deleteRowsAtIndexPaths([self.datePickerIndexPath!], withRowAnimation: .Fade)
-            self.datePickerIndexPath = nil
+            tableView.deleteRowsAtIndexPaths([datePickerIndexPath!], withRowAnimation: .Fade)
+            datePickerIndexPath = nil
         }
         
         if !wasSameCellTapped {
@@ -163,39 +153,30 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
             let rowToReveal = isBefore ? indexPath.row - 1 : indexPath.row
             let indexPathToReveal = NSIndexPath(forRow: rowToReveal, inSection: indexPath.section)
             
-            self.toggleDatePickerForSelectedIndexPath(indexPathToReveal)
-            self.datePickerIndexPath = NSIndexPath(forRow: indexPathToReveal.row + 1, inSection: indexPathToReveal.section)
+            toggleDatePickerForSelectedIndexPath(indexPathToReveal)
+            datePickerIndexPath = NSIndexPath(forRow: indexPathToReveal.row + 1, inSection: indexPathToReveal.section)
         }
         
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.tableView.endUpdates()
-        self.updateDatePicker()
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.endUpdates()
+        updateDatePicker()
     }
+
+}
+
+extension TimetableViewController: UITableViewDataSource {
     
-    // MARK: - UITableViewDatasource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        var count = 0
-        if let routes = self.arrayOfRoutes {
-            count = routes.count
-        }
-        
-        return count + 1
+        return self.journeys.count + 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return self.hasInlineDatePicker() ? 2 : 1
+            return hasInlineDatePicker() ? 2 : 1
         }
         else {
-            if let route = self.arrayOfRoutes?[section - 1] {
-                if let trips = route.trips {
-                    let tripCount = trips.count + 1
-                    return tripCount
-                }
-            }
+            return journeys[section - 1].count + 1
         }
-        
-        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -205,7 +186,7 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
                 let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.dateCell) as! TimetableDateTableViewCell
                 cell.labelDeparturesArrivals.text = "Departs on"
                 
-                let date = self.dateFormatter.stringFromDate(self.date)
+                let date = dateFormatter.stringFromDate(self.date)
                 cell.labelSelectedDate.text = "\(date)"
                 
                 return cell
@@ -216,57 +197,33 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
         else {
-            let routeForIndexPath = self.routeForIndexPath(indexPath)
             if indexPath.row == 0 {
-                // routes
-                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.headerCell) as! TimetableHeaderViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.headerCell, forIndexPath: indexPath) as! TimetableHeaderViewCell
                 
-                if let route = routeForIndexPath {
-                    cell.labelHeader.text = route.routeDescription()
-                    
-                    if let routeType = route.routeType {
-                        var image :UIImage
-                        switch routeType {
-                        case .Ferry:
-                            image = UIImage(named: "ferry_icon")!
-                        case .Train:
-                            image = UIImage(named: "train_icon")!
-                        }
-                        
-                        cell.imageViewTransportType.image = image
-                    }
-                }
+                let journey = journeys[indexPath.section - 1].first!
+                cell.labelHeader.text = "\(journey.from) to \(journey.to)"
                 
                 return cell
             }
             else {
-                // trips
-                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.timeCell) as! TimetableTimeTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.timeCell, forIndexPath: indexPath) as! TimetableTimeTableViewCell
                 
-                cell.delegate = self
+                let journey = journeys[indexPath.section - 1][indexPath.row - 1]
                 
-                if let trip = self.tripForIndexPath(indexPath) {
-                    cell.labelTime.text = trip.deparuteTime
-                    cell.labelTimeCounterpart.text = "arriving at \(trip.arrivalTime)"
-                    
-                    if let notes = trip.notes?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
-                        if notes.characters.count > 0 {
-                            cell.buttonInfo.hidden = false
-                        }
-                        else {
-                            cell.buttonInfo.hidden = true
-                        }
-                    }
-                }
+                cell.labelTime.text = journey.departureTime
+                cell.labelTimeCounterpart.text = "arriving at \(journey.arrivalTime)"
                 
                 return cell
             }
         }
     }
     
-    // MARK: - UITableViewDelegate
+}
+
+extension TimetableViewController: UITableViewDelegate {
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return self.isPickerAtIndexPath(indexPath) ? CGFloat(self.pickerCellRowHeight) : self.tableView.rowHeight
+        return isPickerAtIndexPath(indexPath) ? CGFloat(pickerCellRowHeight) : tableView.rowHeight
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -280,27 +237,14 @@ class TimetableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = self.tableView.cellForRowAtIndexPath(indexPath) {
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
             if cell.reuseIdentifier == MainStoryboard.TableViewCellIdentifiers.dateCell {
-                self.displayInlineDatePickerForRowAtIndexPath(indexPath)
+                displayInlineDatePickerForRowAtIndexPath(indexPath)
             }
             else {
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
         }
     }
     
-    // MARK: - TimetableTimeTableViewCellDelegate
-    func didTouchTimetableInfoButtonForCell(cell: TimetableTimeTableViewCell) {
-        if let indexPath = self.tableView.indexPathForCell(cell) {
-            if let trip = self.tripForIndexPath(indexPath) {
-                let alertController = UIAlertController(title: nil, message: trip.notes, preferredStyle: .Alert)
-                
-                let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-                alertController.addAction(cancelAction)
-                
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
-        }
-    }
 }

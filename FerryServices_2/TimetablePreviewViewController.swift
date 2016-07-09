@@ -25,7 +25,7 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
         let request = NSURLRequest(URL: url)
         webview.loadRequest(request)
         
-        let shareItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "share")
+        let shareItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(TimetablePreviewViewController.share))
         self.navigationItem.rightBarButtonItem = shareItem
     }
     

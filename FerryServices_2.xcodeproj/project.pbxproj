@@ -7,13 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		53A7B4521D177BBCE7B9B5E6 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D9493F193C4A87EAD799AC /* Pods.framework */; };
+		4DC35243B6C6CE4159256E24 /* Pods_FerryServices_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF32063C2CCCA20C66C3110F /* Pods_FerryServices_2.framework */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
+		FD0821311D17BA390078C390 /* Int+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0821301D17BA390078C390 /* Int+extensions.swift */; };
+		FD1D18DF1D0FA8A1009E3228 /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1D18DE1D0FA8A1009E3228 /* Journey.swift */; };
+		FD1D18E11D0FA970009E3228 /* Datebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1D18E01D0FA970009E3228 /* Datebase.swift */; };
 		FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */; };
 		FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */; };
 		FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */; };
 		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
 		FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */; };
+		FD5309321D0FBEE9005D0FD2 /* StopPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5309311D0FBEE9005D0FD2 /* StopPoint.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
 		FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */; };
 		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
@@ -37,6 +41,7 @@
 		FD753EE9197A256E00CC5DE3 /* FerryServices_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */; };
 		FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */; };
 		FD7B65C81C378C67007481F5 /* ErrorInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7B65C71C378C67007481F5 /* ErrorInterfaceController.swift */; };
+		FD8249731D1A20140062B52F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FD8249721D1A20140062B52F /* timetables.sqlite */; };
 		FD8271BE1C3389750001A2E1 /* SubscribedServicesFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8271BD1C3389750001A2E1 /* SubscribedServicesFetcher.swift */; };
 		FD8819E21A998BA2002A976A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E11A998BA2002A976A /* Parse.framework */; };
 		FD8819E41A998BAC002A976A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E31A998BAC002A976A /* Bolts.framework */; };
@@ -58,17 +63,15 @@
 		FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */; };
 		FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */; };
 		FD9C66171A16CADC0050D99F /* Timetables in Resources */ = {isa = PBXBuildFile; fileRef = FD9C66161A16CADC0050D99F /* Timetables */; };
-		FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate_extensions.swift */; };
-		FDA0ECE81A69E3FE00EDF5DA /* UIColor_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */; };
+		FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate+extensions.swift */; };
+		FDA0ECE81A69E3FE00EDF5DA /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */; };
 		FDA1220E1B58E03500813EF6 /* JSONRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1220D1B58E03500813EF6 /* JSONRequester.swift */; };
-		FDAC1B671B3FDFE8000353EA /* Double_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */; };
+		FDA6A3ED1D162166006AB6C2 /* FetchJourneysQuery.sql in Resources */ = {isa = PBXBuildFile; fileRef = FDA6A3EC1D162166006AB6C2 /* FetchJourneysQuery.sql */; };
+		FDA6A3EF1D164D02006AB6C2 /* SequenceType+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA6A3EE1D164D02006AB6C2 /* SequenceType+extensions.swift */; };
+		FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC0A5C91C1956FB003407A1 /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC0A5CB1C19576E003407A1 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC0A5CA1C19576E003407A1 /* Service.swift */; };
-		FDC7760C19844C2B00B3782F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760B19844C2B00B3782F /* Route.swift */; };
-		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
-		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
-		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
 		FDD3ED681C49C681003444A2 /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD3ED671C49C681003444A2 /* Port.swift */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
@@ -83,6 +86,8 @@
 		FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */; };
 		FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */; };
 		FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */; };
+		FDEAC20D1D19310A00ABC17A /* FetchStopPointsQuery.sql in Resources */ = {isa = PBXBuildFile; fileRef = FDEAC20C1D19310A00ABC17A /* FetchStopPointsQuery.sql */; };
+		FDEAC20F1D19313700ABC17A /* FetchStopPointsForServiceQuery.sql in Resources */ = {isa = PBXBuildFile; fileRef = FDEAC20E1D19313700ABC17A /* FetchStopPointsForServiceQuery.sql */; };
 		FDF9807B1B50818000672393 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF9807A1B50818000672393 /* Utility.swift */; };
 /* End PBXBuildFile section */
 
@@ -137,15 +142,19 @@
 
 /* Begin PBXFileReference section */
 		02D9493F193C4A87EAD799AC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		308E6839E9B5E67AF1DA630D /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		A2A7F2853FF7E1F502C8C853 /* Pods_FerryServices_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FerryServices_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C7CD7597146748CC36832D1D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		98A198B19178C2699DA3AE3F /* Pods-FerryServices_2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FerryServices_2.release.xcconfig"; path = "Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2.release.xcconfig"; sourceTree = "<group>"; };
+		AF32063C2CCCA20C66C3110F /* Pods_FerryServices_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FerryServices_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBBCB197CA9D845C9C83EACB /* Pods-FerryServices_2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FerryServices_2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2.debug.xcconfig"; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		FD0821301D17BA390078C390 /* Int+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+extensions.swift"; sourceTree = "<group>"; };
+		FD1D18DE1D0FA8A1009E3228 /* Journey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Journey.swift; sourceTree = "<group>"; };
+		FD1D18E01D0FA970009E3228 /* Datebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Datebase.swift; sourceTree = "<group>"; };
 		FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
 		FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
 		FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
+		FD5309311D0FBEE9005D0FD2 /* StopPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopPoint.swift; sourceTree = "<group>"; };
 		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
 		FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
 		FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
@@ -174,6 +183,7 @@
 		FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServices_2Tests.swift; sourceTree = "<group>"; };
 		FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		FD7B65C71C378C67007481F5 /* ErrorInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInterfaceController.swift; sourceTree = "<group>"; };
+		FD8249721D1A20140062B52F /* timetables.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = timetables.sqlite; sourceTree = "<group>"; };
 		FD8271BD1C3389750001A2E1 /* SubscribedServicesFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribedServicesFetcher.swift; sourceTree = "<group>"; };
 		FD8819E11A998BA2002A976A /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		FD8819E31A998BAC002A976A /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -199,16 +209,14 @@
 		FD9432D619CD0EA4003BBD23 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
 		FD9C66161A16CADC0050D99F /* Timetables */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Timetables; sourceTree = SOURCE_ROOT; };
-		FD9C66181A16D2380050D99F /* NSDate_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate_extensions.swift; sourceTree = "<group>"; };
-		FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor_extensions.swift; sourceTree = "<group>"; };
+		FD9C66181A16D2380050D99F /* NSDate+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+extensions.swift"; sourceTree = "<group>"; };
+		FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
 		FDA1220D1B58E03500813EF6 /* JSONRequester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRequester.swift; sourceTree = "<group>"; };
-		FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double_extensions.swift; sourceTree = "<group>"; };
+		FDA6A3EC1D162166006AB6C2 /* FetchJourneysQuery.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FetchJourneysQuery.sql; sourceTree = "<group>"; };
+		FDA6A3EE1D164D02006AB6C2 /* SequenceType+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SequenceType+extensions.swift"; sourceTree = "<group>"; };
+		FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FDC0A5CA1C19576E003407A1 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
-		FDC7760B19844C2B00B3782F /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Route.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FDC7760D19844C3500B3782F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Location.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Trip.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FDC77612198450AC00B3782F /* timetables.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = timetables.sqlite; sourceTree = "<group>"; };
 		FDCB33441A4BD6D1000033BC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		FDD3ED671C49C681003444A2 /* Port.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
 		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -226,10 +234,19 @@
 		FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ServiceStatus.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTextOnlyCell.swift; sourceTree = "<group>"; };
 		FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DisruptionDetails.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FDEAC20C1D19310A00ABC17A /* FetchStopPointsQuery.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FetchStopPointsQuery.sql; sourceTree = "<group>"; };
+		FDEAC20E1D19313700ABC17A /* FetchStopPointsForServiceQuery.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FetchStopPointsForServiceQuery.sql; sourceTree = "<group>"; };
 		FDF9807A1B50818000672393 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6539BAAB26681D9467CCF5CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FD753ECD197A256E00CC5DE3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -251,7 +268,7 @@
 				FD8819E41A998BAC002A976A /* Bolts.framework in Frameworks */,
 				FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */,
 				FD8819E21A998BA2002A976A /* Parse.framework in Frameworks */,
-				53A7B4521D177BBCE7B9B5E6 /* Pods.framework in Frameworks */,
+				4DC35243B6C6CE4159256E24 /* Pods_FerryServices_2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +289,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5094FBD528C269BF90A92711 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CBBCB197CA9D845C9C83EACB /* Pods-FerryServices_2.debug.xcconfig */,
+				98A198B19178C2699DA3AE3F /* Pods-FerryServices_2.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,18 +323,9 @@
 				FD8819E31A998BAC002A976A /* Bolts.framework */,
 				FD8819E11A998BA2002A976A /* Parse.framework */,
 				02D9493F193C4A87EAD799AC /* Pods.framework */,
-				A2A7F2853FF7E1F502C8C853 /* Pods_FerryServices_2.framework */,
+				AF32063C2CCCA20C66C3110F /* Pods_FerryServices_2.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		DD94561C4C63A4CFEA5FD1DF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				308E6839E9B5E67AF1DA630D /* Pods.debug.xcconfig */,
-				C7CD7597146748CC36832D1D /* Pods.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		FD4F6BD719B183B2007E88A1 /* Timetable */ = {
@@ -389,7 +406,7 @@
 				FDE391AF1C1561AD000EDE26 /* Watch App Extension */,
 				FD753ED1197A256E00CC5DE3 /* Products */,
 				6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */,
-				DD94561C4C63A4CFEA5FD1DF /* Pods */,
+				5094FBD528C269BF90A92711 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -407,7 +424,7 @@
 		FD753ED2197A256E00CC5DE3 /* FerryServices_2 */ = {
 			isa = PBXGroup;
 			children = (
-				FDC77612198450AC00B3782F /* timetables.sqlite */,
+				FD8249721D1A20140062B52F /* timetables.sqlite */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
@@ -436,6 +453,9 @@
 				FD9C66161A16CADC0050D99F /* Timetables */,
 				FDC03DE819DFDD8D000CE1FA /* services.json */,
 				FD753ED4197A256E00CC5DE3 /* Info.plist */,
+				FDA6A3EC1D162166006AB6C2 /* FetchJourneysQuery.sql */,
+				FDEAC20C1D19310A00ABC17A /* FetchStopPointsQuery.sql */,
+				FDEAC20E1D19313700ABC17A /* FetchStopPointsForServiceQuery.sql */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -494,9 +514,8 @@
 		FDC7761119844C4500B3782F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FDC7760B19844C2B00B3782F /* Route.swift */,
-				FDC7760D19844C3500B3782F /* Location.swift */,
-				FDC7760F19844C4000B3782F /* Trip.swift */,
+				FD5309311D0FBEE9005D0FD2 /* StopPoint.swift */,
+				FD1D18DE1D0FA8A1009E3228 /* Journey.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -512,10 +531,13 @@
 		FDDEC68D198E3CFB0060B18F /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				FD9C66181A16D2380050D99F /* NSDate_extensions.swift */,
-				FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */,
-				FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */,
+				FD9C66181A16D2380050D99F /* NSDate+extensions.swift */,
+				FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */,
+				FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */,
 				FDF9807A1B50818000672393 /* Utility.swift */,
+				FD1D18E01D0FA970009E3228 /* Datebase.swift */,
+				FDA6A3EE1D164D02006AB6C2 /* SequenceType+extensions.swift */,
+				FD0821301D17BA390078C390 /* Int+extensions.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -584,14 +606,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD753EEC197A256E00CC5DE3 /* Build configuration list for PBXNativeTarget "FerryServices_2" */;
 			buildPhases = (
-				44BEF411A32145BAAD7DDE2A /* Check Pods Manifest.lock */,
+				5E35B529E31AF86E9FEB4A0E /* [CP] Check Pods Manifest.lock */,
 				FD753ECC197A256E00CC5DE3 /* Sources */,
 				FD753ECD197A256E00CC5DE3 /* Frameworks */,
 				FD753ECE197A256E00CC5DE3 /* Resources */,
-				BBF92DCA1122475BAD83A58B /* Copy Pods Resources */,
 				FD8DDDB019B0947B008479DC /* Crashlytics */,
-				0018A1ABB9C78D0FA8D39F7D /* Embed Pods Frameworks */,
 				FDE391C51C1561AE000EDE26 /* Embed Watch Content */,
+				40C9199FFD909C697D1E78E8 /* [CP] Embed Pods Frameworks */,
+				B9E6A2A0E01F146114755493 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -627,6 +649,7 @@
 			buildPhases = (
 				FDE3919D1C1561AD000EDE26 /* Resources */,
 				FDE391C11C1561AE000EDE26 /* Embed App Extensions */,
+				6539BAAB26681D9467CCF5CD /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -727,15 +750,18 @@
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
 				FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */,
+				FDEAC20D1D19310A00ABC17A /* FetchStopPointsQuery.sql in Resources */,
 				FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */,
 				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
 				FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */,
+				FDEAC20F1D19313700ABC17A /* FetchStopPointsForServiceQuery.sql in Resources */,
+				FDA6A3ED1D162166006AB6C2 /* FetchJourneysQuery.sql in Resources */,
 				FD74D0A61A9020E200013095 /* TextOnlyCell.xib in Resources */,
-				FDC77613198450AC00B3782F /* timetables.sqlite in Resources */,
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				FDC03DE919DFDD8D000CE1FA /* services.json in Resources */,
 				FD74D0A41A90125700013095 /* NoDisruptionsCell.xib in Resources */,
 				FD5E247F1C001BBE006B3E65 /* ServiceStatusCell.xib in Resources */,
+				FD8249731D1A20140062B52F /* timetables.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -767,29 +793,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0018A1ABB9C78D0FA8D39F7D /* Embed Pods Frameworks */ = {
+		40C9199FFD909C697D1E78E8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		44BEF411A32145BAAD7DDE2A /* Check Pods Manifest.lock */ = {
+		5E35B529E31AF86E9FEB4A0E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -797,19 +823,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		BBF92DCA1122475BAD83A58B /* Copy Pods Resources */ = {
+		B9E6A2A0E01F146114755493 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD8DDDB019B0947B008479DC /* Crashlytics */ = {
@@ -840,28 +866,30 @@
 				FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */,
 				FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */,
 				FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */,
+				FDA6A3EF1D164D02006AB6C2 /* SequenceType+extensions.swift in Sources */,
 				FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */,
 				FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */,
-				FDA0ECE81A69E3FE00EDF5DA /* UIColor_extensions.swift in Sources */,
-				FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */,
-				FDC7760E19844C3500B3782F /* Location.swift in Sources */,
+				FDA0ECE81A69E3FE00EDF5DA /* UIColor+extensions.swift in Sources */,
+				FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */,
 				FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */,
 				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
+				FD1D18DF1D0FA8A1009E3228 /* Journey.swift in Sources */,
 				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
 				FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */,
 				FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */,
-				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
+				FD0821311D17BA390078C390 /* Int+extensions.swift in Sources */,
 				FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */,
 				FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */,
+				FD5309321D0FBEE9005D0FD2 /* StopPoint.swift in Sources */,
 				FDA1220E1B58E03500813EF6 /* JSONRequester.swift in Sources */,
-				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
 				FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,
 				FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */,
 				FD5E7DBB197A316F00F438F6 /* ServicesAPIClient.swift in Sources */,
-				FDAC1B671B3FDFE8000353EA /* Double_extensions.swift in Sources */,
+				FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */,
+				FD1D18E11D0FA970009E3228 /* Datebase.swift in Sources */,
 				FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */,
 				FDF9807B1B50818000672393 /* Utility.swift in Sources */,
 				FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */,
@@ -1013,7 +1041,7 @@
 		};
 		FD753EED197A256E00CC5DE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 308E6839E9B5E67AF1DA630D /* Pods.debug.xcconfig */;
+			baseConfigurationReference = CBBCB197CA9D845C9C83EACB /* Pods-FerryServices_2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1040,7 +1068,7 @@
 		};
 		FD753EEE197A256E00CC5DE3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7CD7597146748CC36832D1D /* Pods.release.xcconfig */;
+			baseConfigurationReference = 98A198B19178C2699DA3AE3F /* Pods-FerryServices_2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

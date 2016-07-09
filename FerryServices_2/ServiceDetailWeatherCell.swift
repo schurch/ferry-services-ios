@@ -30,11 +30,11 @@ class ServiceDetailWeatherCell: UITableViewCell {
     @IBOutlet weak var viewRightContainer: UIView!
     @IBOutlet weak var viewSeparator: UIView!
     
-    var location: Location!
+    var stopPoint: StopPoint!
     var configuring = false
     
     lazy var rotationAngle: Double? = {
-        if let windDirection = self.location.weather?.windDirection {
+        if let windDirection = self.stopPoint.weather?.windDirection {
             return windDirection + 180.0
         }
         
@@ -46,10 +46,10 @@ class ServiceDetailWeatherCell: UITableViewCell {
             .instantiateWithOwner(nil, options: nil).first as! ServiceDetailWeatherCell
     }
     
-    class func heightWithLocation(location: Location, tableView: UITableView) -> CGFloat {
+    class func heightWithStopPoint(stopPoint: StopPoint, tableView: UITableView) -> CGFloat {
         let cell = self.SizingCell.instance
         
-        cell.configureWithLocation(location, animate: false)
+        cell.configureWithStopPoint(stopPoint, animate: false)
         cell.bounds = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: cell.bounds.size.height)
         
         cell.setNeedsLayout()
@@ -85,14 +85,14 @@ class ServiceDetailWeatherCell: UITableViewCell {
     }
     
     // MARK: - Configure
-    func configureWithLocation(location: Location, animate: Bool) {
+    func configureWithStopPoint(stopPoint: StopPoint, animate: Bool) {
         self.configuring = true
         
-        self.location = location
+        self.stopPoint = stopPoint
         
         self.imageViewWindDirection.layer.removeAllAnimations()
         
-        if location.weatherFetchError != nil {
+        if stopPoint.weatherFetchError != nil {
             buttonReload.hidden = false
             viewSeparator.hidden = true
             viewRightContainer.hidden = true
@@ -104,7 +104,7 @@ class ServiceDetailWeatherCell: UITableViewCell {
             viewRightContainer.hidden = false
             viewLeftContainer.hidden = false
             
-            if let locationWeather = self.location.weather {
+            if let locationWeather = self.stopPoint.weather {
                 if let temp = locationWeather.tempCelsius {
                     self.labelTemperature.text = "\(Int(round(temp)))ºC"
                 }

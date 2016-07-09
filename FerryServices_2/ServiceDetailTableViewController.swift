@@ -36,7 +36,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         case NoDisruption(disruptionDetails: DisruptionDetails?, action: () -> ())
         case Loading
         case TextOnly(text: String)
-        case Weather(location: Location)
+        case Weather(stopPoint: StopPoint)
         case Alert
     }
     
@@ -74,19 +74,12 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var mapRectSet = false
     var refreshingDisruptionInfo: Bool = true // show table as refreshing initially
     var serviceStatus: ServiceStatus!
+    var stopPoints: [StopPoint]?
     var viewBackground: UIView!
     var windAnimationTimer: NSTimer!
     
     lazy var parseChannel: String = {
         return "\(AppConstants.parseChannelPrefix)\(self.serviceStatus.serviceId!)"
-    }()
-    
-    lazy var locations: [Location]? = {
-        if let serviceId = self.serviceStatus.serviceId {
-            return Location.fetchLocationsForSericeId(serviceId)
-        }
-        
-        return nil
     }()
     
     // MARK: -
@@ -99,6 +92,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         super.viewDidLoad()
         
         self.title = self.serviceStatus.area
+        
+        Database.defaultDatabase().fetchStopPoints(serviceId: serviceStatus.serviceId!).next { stopPoints in
+            self.stopPoints = stopPoints
+        }
         
         // configure header
         self.labelArea.text = self.serviceStatus.area
@@ -125,7 +122,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         self.tableView.addSubview(self.viewBackground)
         self.tableView.sendSubviewToBack(self.viewBackground)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         self.tableView.registerNib(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
         self.tableView.registerNib(UINib(nibName: "NoDisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
@@ -134,7 +131,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         // alert cell
         self.alertCell = UINib(nibName: "AlertCell", bundle: nil).instantiateWithOwner(nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
-        self.alertCell.switchAlert.addTarget(self, action: Selector("alertSwitchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+        self.alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
         self.alertCell.configureLoading()
         
         PFPush.getSubscribedChannelsInBackgroundWithBlock { [weak self] (channels, error) in
@@ -162,7 +159,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         // map button
         let mapButton = UIButton(frame: CGRectMake(0, -MainStoryBoard.Constants.contentInset, self.view.bounds.size.width, self.view.bounds.size.height))
-        mapButton.addTarget(self, action: "touchedButtonShowMap:", forControlEvents: UIControlEvents.TouchUpInside)
+        mapButton.addTarget(self, action: #selector(ServiceDetailTableViewController.touchedButtonShowMap(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.tableView.addSubview(mapButton)
         self.tableView.sendSubviewToBack(mapButton)
         
@@ -198,7 +195,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
         }
         
-        self.windAnimationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("animateWindVanes"), userInfo: nil, repeats: true)
+        self.windAnimationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(ServiceDetailTableViewController.animateWindVanes), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -266,8 +263,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     // MARK: - mapview configuration
     func configureMapView() {
-        if let locations = self.locations {
-            if locations.count == 0 {
+        if let stopPoints = self.stopPoints {
+            if stopPoints.count == 0 {
                 return
             }
             
@@ -275,10 +272,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 self.mapView.removeAnnotations(annotations)
             }
             
-            let annotations: [MKPointAnnotation]? = locations.map { location in
+            let annotations: [MKPointAnnotation]? = stopPoints.map { stopPoint in
                 let annotation = MKPointAnnotation()
-                annotation.title = location.name
-                annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude!, longitude: location.longitude!)
+                annotation.title = stopPoint.name
+                annotation.coordinate = CLLocationCoordinate2D(latitude: stopPoint.latitude, longitude: stopPoint.longitude)
                 return annotation
             }
             
@@ -405,15 +402,11 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         var timetableRows = [Row]()
         
         // depatures if available
-        if let routeId = self.serviceStatus.serviceId {
-            if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: NSDate()) {
-                let departuresRow: Row = Row.Basic(title: "Departures", subtitle: nil,  action: {
-                    [unowned self] in
-                    self.showDepartures()
-                    })
-                timetableRows.append(departuresRow)
-            }
+        let departuresRow: Row = Row.Basic(title: "Departures", subtitle: nil) { [unowned self] in
+            self.showDepartures()
         }
+        
+        timetableRows.append(departuresRow)
         
         // winter timetable
         if isWinterTimetableAvailable() {
@@ -439,18 +432,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         
         // weather sections
-        if let locations = self.locations {
-            for location in locations {
-                var weatherRows = [Row]()
-                
-                switch (location.latitude, location.longitude) {
-                case (.Some(_), .Some(_)):
-                    let weatherRow = Row.Weather(location: location)
-                    weatherRows.append(weatherRow)
-                    sections.append(Section(title: location.name, footer: nil, rows: weatherRows))
-                default:
-                    break
-                }
+        if let stopPoints = self.stopPoints {
+            for stopPoint in stopPoints {
+                let weatherRows = [Row.Weather(stopPoint: stopPoint)]
+                sections.append(Section(title: stopPoint.name, footer: nil, rows: weatherRows))
             }
         }
         
@@ -498,9 +483,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func fetchLatestWeatherData() {
-        if let locations = self.locations {
-            for location in locations {
-                WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] weather, error in
+        if let stopPoints = self.stopPoints {
+            for stopPoint in stopPoints  {
+                WeatherAPIClient.sharedInstance.fetchWeatherForStopPoint(stopPoint) { [weak self] weather, error in
                     if self == nil {
                         return
                     }
@@ -509,22 +494,22 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                         NSLog("Error loading weather: \(error)")
                     }
                     
-                    location.weather = weather
-                    location.weatherFetchError = error
+                    stopPoint.weather = weather
+                    stopPoint.weatherFetchError = error
                     
-                    self!.reloadWeatherForLocation(location)
+                    self!.reloadWeatherForStopPoint(stopPoint)
                 }
             }
         }
     }
     
-    private func reloadWeatherForLocation(location: Location) {
-        if let indexPath = self.indexPathForLocation(location) {
+    private func reloadWeatherForStopPoint(stopPoint: StopPoint) {
+        if let indexPath = self.indexPathForStopPoint(stopPoint) {
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
         }
     }
     
-    private func indexPathForLocation(location: Location) -> NSIndexPath? {
+    private func indexPathForStopPoint(stopPoint: StopPoint) -> NSIndexPath? {
         var sectionCount = 0
         
         for section in self.dataSource {
@@ -532,8 +517,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             var rowCount = 0
             for row in section.rows {
                 switch row {
-                case let .Weather(rowLocation):
-                    if location == rowLocation {
+                case let .Weather(rowStopPoint):
+                    if stopPoint == rowStopPoint {
                         return NSIndexPath(forRow: rowCount, inSection: sectionCount)
                     }
                 default:
@@ -608,11 +593,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     private func showDepartures() {
         Flurry.logEvent("Show departures")
-        if let routeId = self.serviceStatus.serviceId {
-            let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as! TimetableViewController
-            timetableViewController.routeId = routeId
-            self.navigationController?.pushViewController(timetableViewController, animated: true)
-        }
+        let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as! TimetableViewController
+        timetableViewController.serviceId = serviceStatus.serviceId
+        self.navigationController?.pushViewController(timetableViewController, animated: true)
     }
     
     private func showWebInfoViewWithTitle(title: String, content: String) {
@@ -623,8 +606,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     private func setMapVisibleRect() {
-        if (self.navigationController != nil) {
-            let rect = calculateMapRectForAnnotations(self.annotations!)
+        if let annotations = self.annotations {
+            let rect = calculateMapRectForAnnotations(annotations)
             
             let topInset = self.navigationController?.navigationBar.frame.size.height
             let bottomInset = self.view.bounds.size.height - MainStoryBoard.Constants.contentInset
@@ -632,6 +615,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset!, 35, bottomInset + 5, 35))
             
             self.mapView.setVisibleMapRect(visibleRect, animated: false)
+
         }
     }
     
@@ -731,11 +715,11 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailTextOnlyCell
             cell.labelText.text = text
             return cell
-        case let .Weather(location):
+        case let .Weather(stopPoint):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailWeatherCell
             cell.selectionStyle = .None
-            cell.configureWithLocation(location, animate: true)
+            cell.configureWithStopPoint(stopPoint, animate: true)
             cell.delegate = self
             return cell
         case .Alert:
@@ -761,8 +745,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         case let .TextOnly(text):
             let height = ServiceDetailTextOnlyCell.heightWithText(text, tableView: tableView)
             return height
-        case let .Weather(location):
-            let height = ServiceDetailWeatherCell.heightWithLocation(location, tableView: tableView)
+        case let .Weather(stopPoint):
+            let height = ServiceDetailWeatherCell.heightWithStopPoint(stopPoint, tableView: tableView)
             return height
         case .Alert:
             return 44.0
@@ -834,8 +818,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         let row = dataSource[indexPath.section].rows[indexPath.row]
         
         switch row {
-        case let .Weather(location):
-            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] weather, error in
+        case let .Weather(stopPoint):
+            WeatherAPIClient.sharedInstance.fetchWeatherForStopPoint(stopPoint) { [weak self] weather, error in
                 if self == nil {
                     return
                 }
@@ -844,10 +828,10 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                     NSLog("Error loading weather: \(error)")
                 }
                 
-                location.weather = weather
-                location.weatherFetchError = error
+                stopPoint.weather = weather
+                stopPoint.weatherFetchError = error
                 
-                self!.reloadWeatherForLocation(location)
+                self!.reloadWeatherForStopPoint(stopPoint)
             }
         default:
             break

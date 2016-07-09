@@ -1,0 +1,1 @@
+SELECT StopPointId, Name, Latitude, Longitude FROM StopPoint

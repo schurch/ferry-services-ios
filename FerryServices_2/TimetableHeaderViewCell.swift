@@ -15,11 +15,6 @@ class TimetableHeaderViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         self.labelHeader.text = ""
-        self.imageViewTransportType.image = nil
     }
-
-    override func prepareForReuse() {
-        self.labelHeader.text = ""
-        self.imageViewTransportType.image = nil
-    }
+    
 }

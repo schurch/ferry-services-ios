@@ -33,7 +33,7 @@ class SearchResultsViewController: UIViewController {
     
     private var arrayOfAnnotations: [MKPointAnnotation] = []
     private var arrayOfFilteredServices: [ServiceStatus] = []
-    private var arrayOfLocations = Location.fetchLocations()
+    private var filteredStopPoints: [StopPoint]?
     private var bottomInset: CGFloat = 0.0
     private var text: String?
     private var viewMode: Mode = .List
@@ -44,8 +44,8 @@ class SearchResultsViewController: UIViewController {
         
         self.tableView.registerNib(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: SearchResultsViewController.serviceStatusReuseId)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShownNotification:"), name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillBeHiddenNotification:"), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchResultsViewController.keyboardShownNotification(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchResultsViewController.keyboardWillBeHiddenNotification(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         self.configureView()
     }
@@ -145,40 +145,36 @@ class SearchResultsViewController: UIViewController {
             
             self.tableView.reloadData()
         case .Map:
-            if let locations = self.arrayOfLocations {
-                let filteredLocations = locations.filter { location in
-                    if let containsString = location.name?.lowercaseString.containsString(filterText.lowercaseString) {
-                        return containsString
-                    }
-                    
-                    return false
+            Database.defaultDatabase().fetchStopPoints().next { stopPoints in
+                let filteredStopPoints = stopPoints.filter { stopPoint in
+                    return stopPoint.name.lowercaseString.containsString(filterText.lowercaseString)
                 }
                 
-                let annotations = annotationsForLocations(filteredLocations)
-                
+                let annotations = self.annotationsForStopPoints(filteredStopPoints)
                 self.mapView.removeAnnotations(self.mapView.annotations)
                 self.mapView.addAnnotations(annotations)
                 
+                self.filteredStopPoints = filteredStopPoints
                 self.showVisibleMapRectAnimated(true)
             }
         }
     }
     
-    private func annotationsForLocations(locations: [Location]) -> [MKPointAnnotation] {
-        return locations.map { location in
-            let annotation = MKPointAnnotation()
-            annotation.title = location.name
-            annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude!, longitude: location.longitude!)
-            return annotation
-        }
-    }
-    
     private func showVisibleMapRectAnimated(animated: Bool) {
-        if let locations = self.arrayOfLocations {
-            let allAnnotations = self.annotationsForLocations(locations)
+        if let stopPoints = filteredStopPoints {
+            let allAnnotations = self.annotationsForStopPoints(stopPoints)
             let rect = calculateMapRectForAnnotations(allAnnotations)
             let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsets(top: 50.0, left: 25.0, bottom: self.bottomInset, right: 40.0))
             self.mapView.setVisibleMapRect(visibleRect, animated: animated)
+        }
+    }
+    
+    private func annotationsForStopPoints(stopPoints: [StopPoint]) -> [MKPointAnnotation] {
+        return stopPoints.map { location in
+            let annotation = MKPointAnnotation()
+            annotation.title = location.name
+            annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            return annotation
         }
     }
 }
