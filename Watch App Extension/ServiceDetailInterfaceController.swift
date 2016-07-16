@@ -52,7 +52,7 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         
         // When paging through controllers if the user hit refresh before the controller was ready the app would hang forever
         // so we only add the menu item once the controllelr had appeared
-        addMenuItemWithItemIcon(.Repeat, title: "Refresh", action: Selector("refresh"))
+        addMenuItemWithItemIcon(.Repeat, title: "Refresh", action: #selector(ServiceDetailInterfaceController.refresh))
         
         if let service = self.service {
             self.updateUserActivity("com.stefanchurch.ferryservices.viewservice", userInfo: ["serviceId": service.serviceId], webpageURL: nil)

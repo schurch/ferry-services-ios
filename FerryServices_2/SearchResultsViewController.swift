@@ -44,8 +44,8 @@ class SearchResultsViewController: UIViewController {
         
         self.tableView.registerNib(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: SearchResultsViewController.serviceStatusReuseId)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShownNotification:"), name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillBeHiddenNotification:"), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchResultsViewController.keyboardShownNotification(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchResultsViewController.keyboardWillBeHiddenNotification(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         self.configureView()
     }
