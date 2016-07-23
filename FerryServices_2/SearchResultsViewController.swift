@@ -35,6 +35,7 @@ class SearchResultsViewController: UIViewController {
     private var arrayOfFilteredServices: [ServiceStatus] = []
     private var arrayOfLocations = Location.fetchLocations()
     private var bottomInset: CGFloat = 0.0
+    private var previewingIndexPath: NSIndexPath?
     private var text: String?
     private var viewMode: Mode = .List
     
@@ -48,6 +49,8 @@ class SearchResultsViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchResultsViewController.keyboardWillBeHiddenNotification(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         self.configureView()
+        
+        registerForPreviewingWithDelegate(self, sourceView: tableView)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -253,5 +256,30 @@ extension SearchResultsViewController: MKMapViewDelegate {
         let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
         
         MKMapItem.openMapsWithItems(items, launchOptions: options)
+    }
+}
+
+extension SearchResultsViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForRowAtPoint(location),
+            cell = tableView.cellForRowAtIndexPath(indexPath) else { return nil }
+
+        previewingContext.sourceRect = cell.frame
+        
+        previewingIndexPath = indexPath
+        
+        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ServiceDetailTableViewController") as! ServiceDetailTableViewController
+        serviceDetailViewController.viewConfiguration = .Previewing
+        
+        let serviceStatus = self.arrayOfFilteredServices[indexPath.row]
+        serviceDetailViewController.serviceStatus = serviceStatus
+        
+        return serviceDetailViewController
+    }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        guard let previewingIndexPath = previewingIndexPath else { return }
+        
+        self.delegate?.didSelectServiceStatus(self.arrayOfFilteredServices[previewingIndexPath.row])
     }
 }

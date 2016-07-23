@@ -11,7 +11,14 @@ import MapKit
 import QuickLook
 import Flurry_iOS_SDK
 
-class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, ServiceDetailWeatherCellDelegate {
+typealias viewControllerGenerator = Void -> UIViewController?
+
+class ServiceDetailTableViewController: UIViewController {
+    
+    enum ViewConfiguration {
+        case Previewing
+        case Full
+    }
     
     class Section {
         var title: String?
@@ -31,9 +38,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     }
     
     enum Row {
-        case Basic(title: String, subtitle: String?, action: (() -> ())?)
-        case Disruption(disruptionDetails: DisruptionDetails, action: () -> ())
-        case NoDisruption(disruptionDetails: DisruptionDetails?, action: () -> ())
+        case Basic(title: String, subtitle: String?, viewControllerGenerator: viewControllerGenerator)
+        case Disruption(disruptionDetails: DisruptionDetails, viewControllerGenerator: viewControllerGenerator)
+        case NoDisruption(disruptionDetails: DisruptionDetails?, viewControllerGenerator: viewControllerGenerator)
         case Loading
         case TextOnly(text: String)
         case Weather(location: Location)
@@ -64,7 +71,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     @IBOutlet weak var labelRoute: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var alertCell: ServiceDetailReceiveAlertCellTableViewCell!
+    
+    var alertCell: ServiceDetailReceiveAlertCellTableViewCell = UINib(nibName: "AlertCell", bundle: nil).instantiateWithOwner(nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
     
     var annotations: [MKPointAnnotation]?
     var dataSource: [Section] = []
@@ -75,6 +83,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     var refreshingDisruptionInfo: Bool = true // show table as refreshing initially
     var serviceStatus: ServiceStatus!
     var viewBackground: UIView!
+    var viewConfiguration: ViewConfiguration = .Full
     var windAnimationTimer: NSTimer!
     
     lazy var parseChannel: String = {
@@ -100,7 +109,6 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         self.title = self.serviceStatus.area
         
-        // configure header
         self.labelArea.text = self.serviceStatus.area
         self.labelRoute.text = self.serviceStatus.route
         
@@ -109,83 +117,90 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         self.tableView.tableHeaderView!.setNeedsLayout()
         self.tableView.tableHeaderView!.layoutIfNeeded()
-        
         self.headerHeight = self.tableView.tableHeaderView!.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
         self.tableView.tableHeaderView!.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.headerHeight)
         
-        // if the visualeffect view goes past the top of the screen we want to keep showing mapview blur
-        self.constraintMapViewTop.constant = -self.headerHeight
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ServiceDetailTableViewController.applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
         
-        // configure tableview
-        self.tableView.backgroundColor = UIColor.clearColor()
-        self.tableView.contentInset = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
+        if viewConfiguration == .Full {
+            // if the visualeffect view goes past the top of the screen we want to keep showing mapview blur
+            self.constraintMapViewTop.constant = -self.headerHeight
+            
+            // configure tableview
+            self.tableView.contentInset = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
+            
+            // alert cell
+            self.alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+            self.alertCell.configureLoading()
+            
+            PFPush.getSubscribedChannelsInBackgroundWithBlock { [weak self] (channels, error) in
+                guard self != nil else {
+                    // self might be nil if we've popped the view controller when the completion block is called
+                    return
+                }
+                
+                guard let channels = channels else {
+                    self!.alertCell.configureLoadedWithSwitchOn(false)
+                    self?.removeServiceIdFromSubscribedList()
+                    return
+                }
+                
+                let subscribed = channels.contains(self!.parseChannel)
+                self!.alertCell.configureLoadedWithSwitchOn(subscribed)
+                
+                if subscribed {
+                    self?.addServiceIdToSubscribedList()
+                }
+                else {
+                    self?.removeServiceIdFromSubscribedList()
+                }
+            }
+            
+            // map button
+            let mapButton = UIButton(frame: CGRectMake(0, -MainStoryBoard.Constants.contentInset, self.view.bounds.size.width, self.view.bounds.size.height))
+            mapButton.addTarget(self, action: #selector(ServiceDetailTableViewController.touchedButtonShowMap(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            self.tableView.addSubview(mapButton)
+            self.tableView.sendSubviewToBack(mapButton)
+            
+            // map motion effect
+            let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: UIInterpolatingMotionEffectType.TiltAlongHorizontalAxis)
+            horizontalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
+            horizontalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
+            
+            let vertiacalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: UIInterpolatingMotionEffectType.TiltAlongVerticalAxis)
+            vertiacalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
+            vertiacalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
+            
+            self.mapMotionEffect = UIMotionEffectGroup()
+            self.mapMotionEffect.motionEffects = [horizontalMotionEffect, vertiacalMotionEffect]
+            self.mapView.addMotionEffect(self.mapMotionEffect)
+            
+            // extend edges of map as motion effect will move them
+            self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
+            self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
+            
+            self.configureMapView()
+        }
+        else {
+            mapView.removeFromSuperview()
+        }
         
-        self.viewBackground = UIView(frame: CGRectMake(0, self.headerHeight, self.view.bounds.size.width, self.view.bounds.size.height))
+        let backgroundViewFrame = CGRect(x: 0, y: self.headerHeight ?? 0, width: view.bounds.width, height: view.bounds.height)
+        self.viewBackground = UIView(frame: backgroundViewFrame)
         self.viewBackground.backgroundColor = UIColor.tealBackgroundColor()
         self.tableView.addSubview(self.viewBackground)
         self.tableView.sendSubviewToBack(self.viewBackground)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        self.tableView.backgroundColor = UIColor.clearColor()
         
         self.tableView.registerNib(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
         self.tableView.registerNib(UINib(nibName: "NoDisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
         self.tableView.registerNib(UINib(nibName: "TextOnlyCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell)
         self.tableView.registerNib(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.weatherCell)
         
-        // alert cell
-        self.alertCell = UINib(nibName: "AlertCell", bundle: nil).instantiateWithOwner(nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
-        self.alertCell.switchAlert.addTarget(self, action: Selector("alertSwitchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
-        self.alertCell.configureLoading()
-        
-        PFPush.getSubscribedChannelsInBackgroundWithBlock { [weak self] (channels, error) in
-            guard self != nil else {
-                // self might be nil if we've popped the view controller when the completion block is called
-                return
-            }
-            
-            guard let channels = channels else {
-                self!.alertCell.configureLoadedWithSwitchOn(false)
-                self?.removeServiceIdFromSubscribedList()
-                return
-            }
-            
-            let subscribed = channels.contains(self!.parseChannel)
-            self!.alertCell.configureLoadedWithSwitchOn(subscribed)
-            
-            if subscribed {
-                self?.addServiceIdToSubscribedList()
-            }
-            else {
-                self?.removeServiceIdFromSubscribedList()
-            }
-        }
-        
-        // map button
-        let mapButton = UIButton(frame: CGRectMake(0, -MainStoryBoard.Constants.contentInset, self.view.bounds.size.width, self.view.bounds.size.height))
-        mapButton.addTarget(self, action: "touchedButtonShowMap:", forControlEvents: UIControlEvents.TouchUpInside)
-        self.tableView.addSubview(mapButton)
-        self.tableView.sendSubviewToBack(mapButton)
-        
-        // map motion effect
-        let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: UIInterpolatingMotionEffectType.TiltAlongHorizontalAxis)
-        horizontalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
-        horizontalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
-        
-        let vertiacalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: UIInterpolatingMotionEffectType.TiltAlongVerticalAxis)
-        vertiacalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
-        vertiacalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
-        
-        self.mapMotionEffect = UIMotionEffectGroup()
-        self.mapMotionEffect.motionEffects = [horizontalMotionEffect, vertiacalMotionEffect]
-        self.mapView.addMotionEffect(self.mapMotionEffect)
-        
-        // extend edges of map as motion effect will move them
-        self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
-        self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
-        
-        self.configureMapView()
         self.initializeTable()
         self.refresh()
+        
+        registerForPreviewingWithDelegate(self, sourceView: tableView)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -198,7 +213,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
         }
         
-        self.windAnimationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("animateWindVanes"), userInfo: nil, repeats: true)
+        self.windAnimationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(ServiceDetailTableViewController.animateWindVanes), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -292,7 +307,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     // MARK: - ui actions
     @IBAction func touchedButtonShowMap(sender: UIButton) {
-        self.showMap()
+        showViewController(mapViewController(), sender: self)
     }
     
     func alertSwitchChanged(switchState: UISwitch) {
@@ -336,7 +351,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         var sections = [Section]()
         
         //disruption section
-        var disruptionRow: Row?
+        let disruptionRow: Row
         var footer: String?
         
         if self.refreshingDisruptionInfo {
@@ -350,25 +365,18 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 switch disruptionStatus {
                 case .Normal:
                     if self.disruptionDetails!.hasAdditionalInfo {
-                        var action: () -> () = {}
-                        
-                        action = {
-                            [unowned self] in
-                            Flurry.logEvent("Show additional info")
-                            self.showWebInfoViewWithTitle("Additional info", content: self.disruptionDetails!.additionalInfo!)
-                        }
-                        
-                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action: action)
+                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, viewControllerGenerator: { [unowned self] in
+                                return self.webInfoViewController("Additional info", content: self.disruptionDetails!.additionalInfo!)
+                            })
                     }
                     else {
-                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, action: {})
+                        disruptionRow = Row.NoDisruption(disruptionDetails: disruptionDetails!, viewControllerGenerator: { return nil })
                     }
                 case .SailingsAffected, .SailingsCancelled:
                     if let disruptionInfo = disruptionDetails {
                         footer = disruptionInfo.lastUpdated
                         
-                        disruptionRow = Row.Disruption(disruptionDetails: disruptionInfo, action: {
-                            [unowned self] in
+                        disruptionRow = Row.Disruption(disruptionDetails: disruptionInfo, viewControllerGenerator: { [unowned self] in
                             Flurry.logEvent("Show disruption information")
                             
                             var disruptionInformation = disruptionInfo.details ?? ""
@@ -377,7 +385,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                                 disruptionInformation += self.disruptionDetails!.additionalInfo!
                             }
                             
-                            self.showWebInfoViewWithTitle("Disruption information", content:disruptionInformation)
+                            return self.webInfoViewController("Disruption information", content:disruptionInformation)
                             })
                     }
                     else {
@@ -389,53 +397,52 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             }
             else {
                 // no disruptionStatus
-                disruptionRow = Row.NoDisruption(disruptionDetails: nil, action: {})
+                disruptionRow = Row.NoDisruption(disruptionDetails: nil, viewControllerGenerator: { return nil })
             }
         }
         
-        if let disruptionRow = disruptionRow {
-            let alertRow = Row.Alert
+        let disruptionSection: Section
+        switch viewConfiguration {
+        case .Full:
+            disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow, Row.Alert])
+        case .Previewing:
+            disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow])
+        }
+        sections.append(disruptionSection)
+        
+        if viewConfiguration == .Full {
+            var timetableRows = [Row]()
             
-            let disruptionSection = Section(title: nil, footer: footer, rows: [disruptionRow, alertRow])
-            sections.append(disruptionSection)
-        }
-        
-        
-        // timetable section
-        var timetableRows = [Row]()
-        
-        // depatures if available
-        if let routeId = self.serviceStatus.serviceId {
-            if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: NSDate()) {
-                let departuresRow: Row = Row.Basic(title: "Departures", subtitle: nil,  action: {
-                    [unowned self] in
-                    self.showDepartures()
-                    })
-                timetableRows.append(departuresRow)
+            // depatures if available
+            if let routeId = self.serviceStatus.serviceId {
+                if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: NSDate()) {
+                    let departuresRow: Row = Row.Basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
+                        return self.departuresViewController()
+                        })
+                    timetableRows.append(departuresRow)
+                }
             }
-        }
-        
-        // winter timetable
-        if isWinterTimetableAvailable() {
-            let winterTimetableRow: Row = Row.Basic(title: "Winter timetable", subtitle: nil, action: {
-                [unowned self] in
-                self.showWinterTimetable()
-                })
-            timetableRows.append(winterTimetableRow)
-        }
-        
-        // summer timetable
-        if isSummerTimetableAvailable() {
-            let summerTimetableRow: Row = Row.Basic(title: "Summer timetable", subtitle: nil, action: {
-                [unowned self] in
-                self.showSummerTimetable()
-                })
-            timetableRows.append(summerTimetableRow)
-        }
-        
-        if timetableRows.count > 0 {
-            let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
-            sections.append(timetableSection)
+            
+            // winter timetable
+            if isWinterTimetableAvailable() {
+                let winterTimetableRow: Row = Row.Basic(title: "Winter timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
+                    return self.pdfTimeTableViewController(self.winterPath(), title: "Winter timetable")
+                    })
+                timetableRows.append(winterTimetableRow)
+            }
+            
+            // summer timetable
+            if isSummerTimetableAvailable() {
+                let summerTimetableRow: Row = Row.Basic(title: "Summer timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
+                    self.pdfTimeTableViewController(self.summerPath(), title: "Summer timetable")
+                    })
+                timetableRows.append(summerTimetableRow)
+            }
+            
+            if timetableRows.count > 0 {
+                let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
+                sections.append(timetableSection)
+            }
         }
         
         // weather sections
@@ -461,7 +468,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     func animateWindVanes() {
         for cell in self.tableView.visibleCells {
             if let weatherCell = cell as? ServiceDetailWeatherCell {
-                let randomDelay = Double(arc4random_uniform(5))
+                let randomDelay = Double(arc4random_uniform(4))
                 delay(randomDelay) {
                     weatherCell.tryAnimateWindArrow()
                 }
@@ -564,17 +571,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         
         return NSFileManager.defaultManager().fileExistsAtPath(summerPath())
     }
-    
-    private func showWinterTimetable() {
-        Flurry.logEvent("Show winter timetable")
-        showPDFTimetableAtPath(winterPath(), title: "Winter timetable")
-    }
-    
-    private func showSummerTimetable() {
-        Flurry.logEvent("Show summer timetable")
-        showPDFTimetableAtPath(summerPath(), title: "Summer timetable")
-    }
-    
+
     private func winterPath() -> String {
         return (NSBundle.mainBundle().bundlePath as NSString).stringByAppendingPathComponent("Timetables/2015/Winter/\(serviceStatus.serviceId!).pdf")
     }
@@ -583,16 +580,16 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         return (NSBundle.mainBundle().bundlePath as NSString).stringByAppendingPathComponent("Timetables/2016/Summer/\(serviceStatus.serviceId!).pdf")
     }
     
-    private func showPDFTimetableAtPath(path: String, title: String) {
+    private func pdfTimeTableViewController(path: String, title: String) -> UIViewController {
         let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TimetablePreview") as! TimetablePreviewViewController
         previewViewController.serviceStatus = self.serviceStatus
         previewViewController.url = NSURL(string: path)
         previewViewController.title = title
-        self.navigationController?.pushViewController(previewViewController, animated: true)
+        
+        return previewViewController
     }
     
-    private func showMap() {
-        Flurry.logEvent("Show map")
+    private func mapViewController() -> UIViewController {
         let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapViewController") as! MapViewController
         
         if let actualRoute = self.serviceStatus.route {
@@ -603,23 +600,23 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         }
         
         mapViewController.annotations = self.annotations
-        self.navigationController?.pushViewController(mapViewController, animated: true)
+        
+        return mapViewController
     }
     
-    private func showDepartures() {
-        Flurry.logEvent("Show departures")
-        if let routeId = self.serviceStatus.serviceId {
-            let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as! TimetableViewController
-            timetableViewController.routeId = routeId
-            self.navigationController?.pushViewController(timetableViewController, animated: true)
-        }
+    private func departuresViewController() -> UIViewController? {
+        guard let routeId = self.serviceStatus.serviceId else { return nil }
+        
+        let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("timetableViewController") as! TimetableViewController
+        timetableViewController.routeId = routeId
+        return timetableViewController
     }
     
-    private func showWebInfoViewWithTitle(title: String, content: String) {
+    private func webInfoViewController(title: String, content: String) -> UIViewController {
         let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("WebInformation") as! WebInformationViewController
         disruptionViewController.title = title
         disruptionViewController.html = content
-        self.navigationController?.pushViewController(disruptionViewController, animated: true)
+        return disruptionViewController
     }
     
     private func setMapVisibleRect() {
@@ -674,8 +671,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         appDelegate?.sendWatchAppContext()
     }
-    
-    // MARK: - UITableViewDatasource
+}
+
+extension ServiceDetailTableViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return dataSource.count
     }
@@ -696,7 +694,7 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
         let row = dataSource[indexPath.section].rows[indexPath.row]
         
         switch row {
-        case let .Basic(title, subtitle, action):
+        case let .Basic(title, subtitle, viewControllerGenerator):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.basicCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
             cell.textLabel!.text = title
@@ -708,7 +706,8 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
                 cell.detailTextLabel!.text = ""
             }
             
-            cell.accessoryType = action == nil ? .None : .DisclosureIndicator
+            let shouldHideDisclosure = viewControllerGenerator() == nil || viewConfiguration == .Previewing
+            cell.accessoryType = shouldHideDisclosure ? .None : .DisclosureIndicator
             
             return cell
         case let .Disruption(disruptionDetails, _):
@@ -720,6 +719,11 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             let identifier = MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell
             let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ServiceDetailNoDisruptionTableViewCell
             cell.configureWithDisruptionDetails(disruptionDetails)
+            
+            if viewConfiguration == .Previewing {
+                cell.hideInfoButton()
+            }
+            
             return cell
         case .Loading:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.loadingCell
@@ -742,8 +746,9 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             return self.alertCell
         }
     }
-    
-    // MARK: - UITableViewDelegate
+}
+
+extension ServiceDetailTableViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let row = dataSource[indexPath.section].rows[indexPath.row]
         
@@ -771,19 +776,22 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let row = dataSource[indexPath.section].rows[indexPath.row]
+        
+        let viewController: UIViewController?
+        
         switch row {
-        case let .Basic(_, _, possibleAction):
-            if let action = possibleAction {
-                action()
-            }
-        case let .Disruption(_, action):
-            action()
-        case let .NoDisruption(disruptionDetails, action):
-            if disruptionDetails != nil && disruptionDetails!.hasAdditionalInfo {
-                action()
-            }
+        case .Basic(_, _, let viewControllerGenerator):
+            viewController = viewControllerGenerator()
+        case .Disruption(_, let viewControllerGenerator):
+            viewController = viewControllerGenerator()
+        case .NoDisruption(_, let viewControllerGenerator):
+            viewController = viewControllerGenerator()
         default:
-            break
+            viewController = nil;
+        }
+        
+        if let viewController = viewController {
+            showViewController(viewController, sender: self)
         }
     }
     
@@ -822,13 +830,41 @@ class ServiceDetailTableViewController: UIViewController, UITableViewDelegate, U
             return CGFloat.min
         }
     }
-    
-    // MARK: - MKMapViewDelegate
+}
+
+extension ServiceDetailTableViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         mapView.deselectAnnotation(view.annotation, animated: false)
     }
+}
+
+extension ServiceDetailTableViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForRowAtPoint(location),
+            cell = tableView.cellForRowAtIndexPath(indexPath) else { return nil }
+        
+        previewingContext.sourceRect = cell.frame
+        
+        let row = dataSource[indexPath.section].rows[indexPath.row]
+        
+        switch row {
+        case .Basic(_, _, let viewControllerGenerator):
+            return viewControllerGenerator()
+        case .Disruption(_, let viewControllerGenerator):
+            return viewControllerGenerator()
+        case .NoDisruption(_, let viewControllerGenerator):
+            return viewControllerGenerator()
+        default:
+            return nil
+        }
+    }
     
-    // MARK: - ServiceDetailWeatherCellDelegate
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        showViewController(viewControllerToCommit, sender: self)
+    }
+}
+
+extension ServiceDetailTableViewController: ServiceDetailWeatherCellDelegate{
     func didTouchReloadForWeatherCell(cell: ServiceDetailWeatherCell) {
         let indexPath = tableView.indexPathForCell(cell)!
         let row = dataSource[indexPath.section].rows[indexPath.row]

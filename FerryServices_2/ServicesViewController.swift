@@ -38,6 +38,7 @@ class ServicesViewController: UITableViewController {
     
     private var arrayServiceStatuses = [ServiceStatus]()
     private var arraySubscribedServiceStatuses = [ServiceStatus]()
+    private var previewingIndexPath: NSIndexPath?
     private var propellerView: PropellerView!
     private var refreshing = false
     private var searchController: UISearchController!
@@ -88,7 +89,7 @@ class ServicesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ServicesViewController.applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         self.tableView.backgroundView = nil
         self.tableView.backgroundColor = UIColor.tealBackgroundColor()
@@ -137,6 +138,8 @@ class ServicesViewController: UITableViewController {
         self.searchResultsController.arrayOfServices = self.arrayServiceStatuses
         
         self.refreshWithContentInsetReset(false)
+        
+        registerForPreviewingWithDelegate(self, sourceView: view)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -378,5 +381,36 @@ extension ServicesViewController: UISearchControllerDelegate {
     
     func willDismissSearchController(searchController: UISearchController) {
         self.navigationController?.navigationBar.translucent = false
+    }
+}
+
+extension ServicesViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForRowAtPoint(location),
+            cell = tableView.cellForRowAtIndexPath(indexPath) else { return nil }
+        
+        previewingContext.sourceRect = cell.frame
+        previewingIndexPath = indexPath
+        
+        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ServiceDetailTableViewController") as! ServiceDetailTableViewController
+        serviceDetailViewController.viewConfiguration = .Previewing
+        
+        let serviceStatus = serviceStatusForTableView(tableView, indexPath: indexPath)
+        serviceDetailViewController.serviceStatus = serviceStatus
+        
+        return serviceDetailViewController
+    }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        guard let previewingIndexPath = previewingIndexPath else { return }
+        
+        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ServiceDetailTableViewController") as! ServiceDetailTableViewController
+        serviceDetailViewController.viewConfiguration = .Full
+        
+        let serviceStatus = serviceStatusForTableView(tableView, indexPath: previewingIndexPath)
+        serviceDetailViewController.serviceStatus = serviceStatus
+        
+        showViewController(serviceDetailViewController, sender: self)
+
     }
 }

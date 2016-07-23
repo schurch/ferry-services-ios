@@ -165,7 +165,7 @@ class ServiceDetailWeatherCell: UITableViewCell {
             
             let animation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
             
-            let values = [0, -5, 5, -4, 4, -3, 3, 0].map { angle in
+            let values = [0, -7, 7, -5, 5, -3, 3, 0].map { angle in
                 return (startingAngle + angle).degreesToRadians()
             }
             
