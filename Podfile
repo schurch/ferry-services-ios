@@ -5,4 +5,5 @@ target 'FerryServices_2' do
 	pod 'FMDB'
 	pod 'Flurry-iOS-SDK/FlurrySDK'
 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+    pod 'Parse'
 end

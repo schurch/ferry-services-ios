@@ -9,6 +9,7 @@
 import UIKit
 import WatchConnectivity
 import Flurry_iOS_SDK
+import Parse
 
 struct AppConstants {
     static let parseChannelPrefix = "S"
@@ -37,7 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Crashlytics.startWithAPIKey(APIKeys.CrashlyticsAPIKey)
         
-        Parse.setApplicationId(APIKeys.ParseApplicationId, clientKey: APIKeys.ParseClientKey)
+        Parse.initializeWithConfiguration(ParseClientConfiguration { configuration in
+            configuration.applicationId = APIKeys.ParseApplicationId
+            configuration.server = "http://scottishferryapp.com:1337/parse"
+        })
         
         // Global colors
         self.window?.tintColor = UIColor.tealTintColor()
@@ -82,13 +86,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Push notifications
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         // Store the deviceToken in the current installation and save it to Parse.
-        let currentInstallation = PFInstallation.currentInstallation()
-        currentInstallation.setDeviceTokenFromData(deviceToken)
-        currentInstallation.saveInBackgroundWithBlock { success, error in
-            if error != nil {
-                print("Error registering for push notificaitons: \(error)")
-            }
-        }
+        let installation = PFInstallation.currentInstallation()
+        installation.deviceToken = "" // For some reason the installation isn't saving unless we do this before setting the token below.
+        installation.setDeviceTokenFromData(deviceToken)
+        installation.saveInBackground()
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

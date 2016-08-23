@@ -13,7 +13,7 @@ class ServiceStatus: Equatable {
     static let dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
         //"2015-04-18T23:08:00+00:00"
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss+00:00"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss 'UTC'"
         formatter.timeZone = NSTimeZone(abbreviation: "UTC")
         return formatter
     }()

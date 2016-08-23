@@ -38,8 +38,6 @@
 		FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */; };
 		FD7B65C81C378C67007481F5 /* ErrorInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7B65C71C378C67007481F5 /* ErrorInterfaceController.swift */; };
 		FD8271BE1C3389750001A2E1 /* SubscribedServicesFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8271BD1C3389750001A2E1 /* SubscribedServicesFetcher.swift */; };
-		FD8819E21A998BA2002A976A /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E11A998BA2002A976A /* Parse.framework */; };
-		FD8819E41A998BAC002A976A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E31A998BAC002A976A /* Bolts.framework */; };
 		FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E51A998BDA002A976A /* AudioToolbox.framework */; };
 		FD8819E81A998BE4002A976A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E71A998BE4002A976A /* CFNetwork.framework */; };
 		FD8819EA1A998BEE002A976A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E91A998BEE002A976A /* CoreGraphics.framework */; };
@@ -175,8 +173,6 @@
 		FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		FD7B65C71C378C67007481F5 /* ErrorInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInterfaceController.swift; sourceTree = "<group>"; };
 		FD8271BD1C3389750001A2E1 /* SubscribedServicesFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribedServicesFetcher.swift; sourceTree = "<group>"; };
-		FD8819E11A998BA2002A976A /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		FD8819E31A998BAC002A976A /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		FD8819E51A998BDA002A976A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FD8819E71A998BE4002A976A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		FD8819E91A998BEE002A976A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -255,9 +251,7 @@
 				FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */,
 				FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */,
 				FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */,
-				FD8819E41A998BAC002A976A /* Bolts.framework in Frameworks */,
 				FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */,
-				FD8819E21A998BA2002A976A /* Parse.framework in Frameworks */,
 				4D8B44F3B3BF85FB0D076106 /* Pods_FerryServices_2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,8 +295,6 @@
 				FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */,
 				FD8DDDB119B094B0008479DC /* Crashlytics.framework */,
 				FDE0814E1983B9F600760870 /* MapKit.framework */,
-				FD8819E31A998BAC002A976A /* Bolts.framework */,
-				FD8819E11A998BA2002A976A /* Parse.framework */,
 				02D9493F193C4A87EAD799AC /* Pods.framework */,
 				A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */,
 			);

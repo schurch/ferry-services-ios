@@ -10,8 +10,9 @@ import UIKit
 import MapKit
 import QuickLook
 import Flurry_iOS_SDK
+import Parse
 
-typealias viewControllerGenerator = Void -> UIViewController?
+typealias ViewControllerGenerator = Void -> UIViewController?
 
 class ServiceDetailTableViewController: UIViewController {
     
@@ -38,9 +39,9 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     enum Row {
-        case Basic(title: String, subtitle: String?, viewControllerGenerator: viewControllerGenerator)
-        case Disruption(disruptionDetails: DisruptionDetails, viewControllerGenerator: viewControllerGenerator)
-        case NoDisruption(disruptionDetails: DisruptionDetails?, viewControllerGenerator: viewControllerGenerator)
+        case Basic(title: String, subtitle: String?, viewControllerGenerator: ViewControllerGenerator)
+        case Disruption(disruptionDetails: DisruptionDetails, viewControllerGenerator: ViewControllerGenerator)
+        case NoDisruption(disruptionDetails: DisruptionDetails?, viewControllerGenerator: ViewControllerGenerator)
         case Loading
         case TextOnly(text: String)
         case Weather(location: Location)

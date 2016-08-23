@@ -1,13 +1,17 @@
 PODS:
+  - Bolts/Tasks (1.8.1)
   - Flurry-iOS-SDK/FlurrySDK (7.3.0)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
+  - Parse (1.13.0):
+    - Bolts/Tasks (~> 1.6)
   - SwiftyJSON (2.3.1)
 
 DEPENDENCIES:
   - Flurry-iOS-SDK/FlurrySDK
   - FMDB
+  - Parse
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
 EXTERNAL SOURCES:
@@ -20,10 +24,12 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
+  Bolts: 89c0c6dd1b9c975a3452a62d57a6be6739e5f433
   Flurry-iOS-SDK: 054befae0fa0244fb000985bfe757d70f87a9f60
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
   SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
 
-PODFILE CHECKSUM: d6fb6c71ee80d22318d91afaf5a5f60fcfa9848a
+PODFILE CHECKSUM: b83e1a11ac8122ee017e35312e7a4c34f3f60b7f
 
 COCOAPODS: 1.0.1

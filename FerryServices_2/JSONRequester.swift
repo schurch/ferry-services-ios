@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import Parse
 
 class JSONRequester {
     static let errorDomain = "JSONRequesterErrorDomain"
