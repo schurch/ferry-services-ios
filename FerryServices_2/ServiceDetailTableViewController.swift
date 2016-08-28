@@ -329,6 +329,11 @@ class ServiceDetailTableViewController: UIViewController {
                 return
             }
             
+            guard error == nil else {
+                print("Error subscribing to services: \(error)")
+                return
+            }
+            
             let subscribed = succeeded && isSwitchOn
             self!.alertCell.configureLoadedWithSwitchOn(subscribed)
             

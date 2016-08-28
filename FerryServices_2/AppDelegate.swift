@@ -40,7 +40,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Parse.initializeWithConfiguration(ParseClientConfiguration { configuration in
             configuration.applicationId = APIKeys.ParseApplicationId
-            configuration.server = "http://scottishferryapp.com:1337/parse"
+            #if DEBUG
+                configuration.server = "http://test.scottishferryapp.com/parse"
+            #else
+                configuration.server = "http://scottishferryapp.com/parse"
+            #endif
         })
         
         // Global colors

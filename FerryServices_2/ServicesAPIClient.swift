@@ -10,9 +10,9 @@ class ServicesAPIClient {
     static let sharedInstance = ServicesAPIClient()
 
     #if DEBUG
-    static let baseURL = NSURL(string: "http://scottishferryapp.com:5678")
+    static let baseURL = NSURL(string: "http://test.scottishferryapp.com")
     #else
-    static let baseURL = NSURL(string: "http://scottishferryapp.com:4567")
+    static let baseURL = NSURL(string: "http://scottishferryapp.com")
     #endif
     
     
