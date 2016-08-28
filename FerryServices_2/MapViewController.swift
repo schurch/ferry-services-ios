@@ -20,6 +20,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     var annotations: [MKPointAnnotation]!
     
+    private var didShowAnnotations = false
+    
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,12 +29,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         mapView.addAnnotations(annotations)
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !didShowAnnotations {
+            mapView.showAnnotations(self.annotations, animated: false)
+            didShowAnnotations = true
+        }
+    }
 
     // MARK: - MKMapViewDelegate
-    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
-        mapView.showAnnotations(self.annotations, animated: false)
-    }
-    
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation.isKindOfClass(MKUserLocation.self) {
             return nil
