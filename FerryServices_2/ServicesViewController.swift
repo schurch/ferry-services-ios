@@ -14,7 +14,7 @@ import Flurry_iOS_SDK
 class ServicesViewController: UITableViewController {
     
     // MARK: - Variables & Constants
-    static let subscribedServiceIdsUserDefaultsKey = "com.ferryservices.userdefaultkeys.subscribedservices"
+    static let subscribedServiceIdsUserDefaultsKey = "com.ferryservices.userdefaultkeys.subscribedservices.v2"
     
     private struct MainStoryboard {
         struct TableViewCellIdentifiers {
