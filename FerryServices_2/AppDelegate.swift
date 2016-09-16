@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             #if DEBUG
                 configuration.server = "http://test.scottishferryapp.com/parse"
             #else
-                configuration.server = "http://scottishferryapp.com/parse"
+                configuration.server = "http://www.scottishferryapp.com/parse"
             #endif
         })
         
@@ -93,7 +93,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let installation = PFInstallation.currentInstallation()
         installation.deviceToken = "" // For some reason the installation isn't saving unless we do this before setting the token below.
         installation.setDeviceTokenFromData(deviceToken)
-        installation.saveInBackground()
+        installation.saveInBackgroundWithBlock { (success, error) in
+            if error != nil {
+                print("Error registering device token \(error)")
+            }
+        }
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

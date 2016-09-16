@@ -324,24 +324,25 @@ class ServiceDetailTableViewController: UIViewController {
         self.alertCell.configureLoading()
         
         currentInstallation.saveInBackgroundWithBlock { [weak self] (succeeded, error)  in
-            guard self != nil else {
+            guard let `self` = self else {
                 // self might be nil if we've popped the view controller when the completion block is called
                 return
             }
             
             guard error == nil else {
+                self.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
                 print("Error subscribing to services: \(error)")
                 return
             }
             
             let subscribed = succeeded && isSwitchOn
-            self!.alertCell.configureLoadedWithSwitchOn(subscribed)
+            self.alertCell.configureLoadedWithSwitchOn(subscribed)
             
             if subscribed {
-                self?.addServiceIdToSubscribedList()
+                self.addServiceIdToSubscribedList()
             }
             else {
-                self?.removeServiceIdFromSubscribedList()
+                self.removeServiceIdFromSubscribedList()
             }
         }
     }

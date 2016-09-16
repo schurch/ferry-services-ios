@@ -12,7 +12,7 @@ class ServicesAPIClient {
     #if DEBUG
     static let baseURL = NSURL(string: "http://test.scottishferryapp.com")
     #else
-    static let baseURL = NSURL(string: "http://scottishferryapp.com")
+    static let baseURL = NSURL(string: "http://www.scottishferryapp.com")
     #endif
     
     
