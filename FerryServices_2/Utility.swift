@@ -9,12 +9,12 @@
 import Foundation
 import MapKit
 
-func delay(delay: Double, closure: () -> ()) {
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue(), closure)
+func delay(_ delay: Double, closure: @escaping () -> ()) {
+    let delayTime = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: delayTime, execute: closure)
 }
 
-func calculateMapRectForAnnotations(annotations: [MKPointAnnotation]) -> MKMapRect {
+func calculateMapRectForAnnotations(_ annotations: [MKPointAnnotation]) -> MKMapRect {
     var mapRect = MKMapRectNull
     for annotation in annotations {
         let point = MKMapPointForCoordinate(annotation.coordinate)

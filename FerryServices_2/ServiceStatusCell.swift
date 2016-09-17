@@ -15,19 +15,19 @@ class ServiceStatusCell: UITableViewCell {
     @IBOutlet weak var labelSubtitle: UILabel!
     @IBOutlet weak var labelTitle: UILabel!
     
-    func configureCellWithServiceStatus(serviceStatus: ServiceStatus) {
+    func configureCellWithServiceStatus(_ serviceStatus: ServiceStatus) {
         self.labelTitle.text = serviceStatus.area
         self.labelSubtitle.text = serviceStatus.route
         
         if let disruptionStatus = serviceStatus.disruptionStatus {
             switch disruptionStatus {
-            case .Normal:
+            case .normal:
                 self.imageViewStatus.image = UIImage(named: "green")
-            case .SailingsAffected:
+            case .sailingsAffected:
                 self.imageViewStatus.image = UIImage(named: "amber")
-            case .SailingsCancelled:
+            case .sailingsCancelled:
                 self.imageViewStatus.image = UIImage(named: "red")
-            case .Unknown:
+            case .unknown:
                 self.imageViewStatus.image = UIImage(named: "grey")
             }
         }

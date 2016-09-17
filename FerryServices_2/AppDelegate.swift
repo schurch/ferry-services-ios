@@ -8,7 +8,6 @@
 
 import UIKit
 import WatchConnectivity
-import Flurry_iOS_SDK
 import Parse
 
 struct AppConstants {
@@ -29,16 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var launchedShortcutItem: UIApplicationShortcutItem? // Saved shortcut item used as a result of an app launch, used later when app is activated.
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         var shouldPerformAdditionalDelegateHandling = true
         
-        // Setup 3rd party frameworks
-        Flurry.setCrashReportingEnabled(false)
-        Flurry.startSession(APIKeys.FlurryAPIKey)
+        Crashlytics.start(withAPIKey: APIKeys.CrashlyticsAPIKey)
         
-        Crashlytics.startWithAPIKey(APIKeys.CrashlyticsAPIKey)
-        
-        Parse.initializeWithConfiguration(ParseClientConfiguration { configuration in
+        Parse.initialize(with: ParseClientConfiguration { configuration in
             configuration.applicationId = APIKeys.ParseApplicationId
             #if DEBUG
                 configuration.server = "http://test.scottishferryapp.com/parse"
@@ -51,35 +46,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.tintColor = UIColor.tealTintColor()
         
         // Configure push notifications
-        let userNotificationTypes: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound]
-        let notificationSettings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+        let userNotificationTypes: UIUserNotificationType = [UIUserNotificationType.badge, UIUserNotificationType.alert, UIUserNotificationType.sound]
+        let notificationSettings = UIUserNotificationSettings(types: userNotificationTypes, categories: nil)
         
         application.registerUserNotificationSettings(notificationSettings)
         application.registerForRemoteNotifications()
         
-        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
             self.launchedShortcutItem = shortcutItem
             // This will block "performActionForShortcutItem:completionHandler" from being called.
             shouldPerformAdditionalDelegateHandling = false
         }
-        else if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
+        else if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
             self.application(application, didReceiveRemoteNotification: remoteNotification)
         }
         
         if WCSession.isSupported() {
-            let session = WCSession.defaultSession()
+            let session = WCSession.default()
             session.delegate = self;
-            session.activateSession()
+            session.activate()
         }
         
         return shouldPerformAdditionalDelegateHandling
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
         
         if let shortcut = self.launchedShortcutItem {
-            self.handleShortCutItem(shortcut)
+            let _ = self.handleShortCutItem(shortcut)
             self.launchedShortcutItem = nil
         }
         
@@ -88,43 +83,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Push notifications
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Store the deviceToken in the current installation and save it to Parse.
-        let installation = PFInstallation.currentInstallation()
-        installation.deviceToken = "" // For some reason the installation isn't saving unless we do this before setting the token below.
-        installation.setDeviceTokenFromData(deviceToken)
-        installation.saveInBackgroundWithBlock { (success, error) in
+        let installation = PFInstallation.current()
+        installation?.deviceToken = "" // For some reason the installation isn't saving unless we do this before setting the token below.
+        installation?.setDeviceTokenFrom(deviceToken)
+        installation?.saveInBackground { (success, error) in
             if error != nil {
                 print("Error registering device token \(error)")
             }
         }
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        if application.applicationState == .Active {
-            if let message = userInfo["aps"]?["alert"] as? String {
-                let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .Alert)
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        guard let info = userInfo as? [String: AnyObject] else { return }
+        
+        if application.applicationState == .active {
+            guard let aps = info["aps"] as? [String: AnyObject] else { return }
+            guard let message = aps["alert"] as? String else { return }
+
+            let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
                 
-                let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-                alertController.addAction(cancelAction)
-                
-                self.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
-            }
+            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            
+            self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
         }
         else {
-            if let serviceId = userInfo["service_id"] as? Int {
+            if let serviceId = info["service_id"] as? Int {
                 self.showDetailsForServiceId(serviceId)
             }
         }
     }
     
     // MARK: - Shortcut items
-    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: Bool -> Void) {
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         let handledShortCutItem = handleShortCutItem(shortcutItem)
         completionHandler(handledShortCutItem)
     }
     
-    func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+    func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
         var handled = false
         if let serviceId = shortcutItem.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
             self.showDetailsForServiceId(serviceId)
@@ -135,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Handoff
-    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType == "com.stefanchurch.ferryservices.viewservice" {
             if let serviceId = userActivity.userInfo?["serviceId"] as? Int {
                 self.showDetailsForServiceId(serviceId)
@@ -153,11 +151,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        let session = WCSession.defaultSession()
+        let session = WCSession.default()
         
-        if session.paired && session.watchAppInstalled {
+        if session.isPaired && session.isWatchAppInstalled {
             do {
-                let serviceIds = NSUserDefaults.standardUserDefaults().arrayForKey(ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
+                let serviceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
                 try session.updateApplicationContext(["subscribedServiceIds": serviceIds])
             }
             catch let error as NSError {
@@ -167,7 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Utility methods
-    private func showDetailsForServiceId(serviceId: Int) {
+    fileprivate func showDetailsForServiceId(_ serviceId: Int) {
         if let navigationController = self.window?.rootViewController as? UINavigationController, let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {
             servicesViewController.showDetailsForServiceId(serviceId, shouldFindAndHighlightRow: true)
         }
@@ -176,21 +174,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: WCSessionDelegate {
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+    
+    @available(iOS 9.3, *)
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) { }
+    
+    @available(iOS 9.3, *)
+    func sessionDidBecomeInactive(_ session: WCSession) { }
+    
+    @available(iOS 9.3, *)
+    func sessionDidDeactivate(_ session: WCSession) { }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
         var identifier = UIBackgroundTaskInvalid
         
-        identifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler {
+        identifier = UIApplication.shared.beginBackgroundTask (expirationHandler: {
             replyHandler(["error": ErrorMessages.errorFetchingSubscribedServiceIds])
             
             if identifier != UIBackgroundTaskInvalid {
-                UIApplication.sharedApplication().endBackgroundTask(identifier)
+                UIApplication.shared.endBackgroundTask(identifier)
             }
-        }
+        })
         
         if let action = message["action"] as? String {
             switch action {
             case "fetchSubscribedServices":
-                let serviceIds = NSUserDefaults.standardUserDefaults().arrayForKey(ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
+                let serviceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
                 replyHandler(["subscribedServiceIds": serviceIds])
             default:
                 replyHandler(["error": ErrorMessages.errorFetchingSubscribedServiceIds])
@@ -202,7 +210,7 @@ extension AppDelegate: WCSessionDelegate {
         }
         
         if identifier != UIBackgroundTaskInvalid {
-            UIApplication.sharedApplication().endBackgroundTask(identifier)
+            UIApplication.shared.endBackgroundTask(identifier)
         }
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TimetableTimeTableViewCellDelegate: class {
-    func didTouchTimetableInfoButtonForCell(cell :TimetableTimeTableViewCell)
+    func didTouchTimetableInfoButtonForCell(_ cell :TimetableTimeTableViewCell)
 }
 
 class TimetableTimeTableViewCell: UITableViewCell {
@@ -21,17 +21,17 @@ class TimetableTimeTableViewCell: UITableViewCell {
     weak var delegate: TimetableTimeTableViewCellDelegate?
     
     override func awakeFromNib() {
-        self.buttonInfo.hidden = true
+        self.buttonInfo.isHidden = true
         self.labelTime.text = ""
         self.labelTimeCounterpart.text = ""
     }
     
-    @IBAction func touchedButtonInfo(sender: UIButton) {
+    @IBAction func touchedButtonInfo(_ sender: UIButton) {
         self.delegate?.didTouchTimetableInfoButtonForCell(self)
     }
     
     override func prepareForReuse() {
-        self.buttonInfo.hidden = true
+        self.buttonInfo.isHidden = true
         self.labelTime.text = ""
         self.labelTimeCounterpart.text = ""
     }

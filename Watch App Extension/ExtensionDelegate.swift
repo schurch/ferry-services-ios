@@ -14,14 +14,14 @@ struct Defaults {
 }
 
 enum RequestResult<T> {
-    case Result(result: T)
-    case Error(error: NSError)
+    case result(result: T)
+    case error(error: NSError)
 }
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
     
     //MARK: - Class functions
-    private class func setDefaultServiceToServiceWithId(serviceId: Int, forServices services: [Service]) {
+    fileprivate class func setDefaultServiceToServiceWithId(_ serviceId: Int, forServices services: [Service]) {
         for service in services {
             service.isDefault = service.serviceId == serviceId
         }
@@ -31,16 +31,16 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     lazy var defaultServices: [Service] = {
         var services = [Service]()
         
-        guard let defaultServicesFilePath = NSBundle.mainBundle().pathForResource("services", ofType: "json") else {
+        guard let defaultServicesFilePath = Bundle.main.path(forResource: "services", ofType: "json") else {
             return services
         }
         
         do {
-            let serviceData = try NSData(contentsOfFile: defaultServicesFilePath, options: .DataReadingMappedIfSafe)
-            if let serviceStatusData = try NSJSONSerialization.JSONObjectWithData(serviceData, options: []) as? [[String: AnyObject]] {
+            let serviceData = try Data(contentsOf: URL(fileURLWithPath: defaultServicesFilePath), options: .mappedIfSafe)
+            if let serviceStatusData = try JSONSerialization.jsonObject(with: serviceData, options: []) as? [[String: AnyObject]] {
                 let possibleServices = serviceStatusData.map { Service(json: $0) }
                 services = possibleServices.flatMap { $0 } // remove nils
-                services = services.sort { $0.sortOrder < $1.sortOrder }
+                services = services.sorted { $0.sortOrder < $1.sortOrder }
             }
         } catch let error as NSError {
             print(error.localizedDescription)
@@ -49,18 +49,18 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         return services
     }()
     
-    private var subscribedServiceIds: [Int]? {
+    fileprivate var subscribedServiceIds: [Int]? {
         get {
-            return NSUserDefaults.standardUserDefaults().arrayForKey(Defaults.subscribedServiceIdsKey) as? [Int]
+            return UserDefaults.standard.array(forKey: Defaults.subscribedServiceIdsKey) as? [Int]
         }
         set {
-            NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: Defaults.subscribedServiceIdsKey)
-            NSUserDefaults.standardUserDefaults().synchronize()
+            UserDefaults.standard.set(newValue, forKey: Defaults.subscribedServiceIdsKey)
+            UserDefaults.standard.synchronize()
         }
     }
     
-    private var defaultServiceIdToShow: Int? // Set when we receive a notification if we are currently fetching service IDs
-    private var subscribedServicesFetcher = SubscribedServicesFetcher()
+    fileprivate var defaultServiceIdToShow: Int? // Set when we receive a notification if we are currently fetching service IDs
+    fileprivate var subscribedServicesFetcher = SubscribedServicesFetcher()
     
     //MARK: - Lifecyle
     func applicationDidFinishLaunching() {
@@ -68,20 +68,20 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             return
         }
         
-        let session = WCSession.defaultSession()
+        let session = WCSession.default()
         session.delegate = self
-        session.activateSession()
+        session.activate()
 
         configureApp()
     }
     
     //MARK: - Notification handling
-    func handleActionWithIdentifier(identifier: String?, forRemoteNotification remoteNotification: [NSObject : AnyObject]) {
+    func handleAction(withIdentifier identifier: String?, forRemoteNotification remoteNotification: [AnyHashable: Any]) {
         guard let serviceId = remoteNotification["service_id"] as? Int else {
             return
         }
         
-        guard self.subscribedServicesFetcher.state == .Stopped else {
+        guard self.subscribedServicesFetcher.state == .stopped else {
             self.defaultServiceIdToShow = serviceId
             return
         }
@@ -92,32 +92,32 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     //MARK: - App configuration
     internal func configureApp() {
         if self.subscribedServiceIds == nil {
-            WKInterfaceController.reloadRootControllersWithNames(["Loading"], contexts: nil)
+            WKInterfaceController.reloadRootControllers(withNames: ["Loading"], contexts: nil)
             
-            let semaphore = dispatch_semaphore_create(0)
+            let semaphore = DispatchSemaphore(value: 0)
             
-            NSProcessInfo().performExpiringActivityWithReason("Sync subscribed services") { expired in
+            ProcessInfo().performExpiringActivity(withReason: "Sync subscribed services") { expired in
                 guard !expired else {
-                    dispatch_semaphore_signal(semaphore)
+                    semaphore.signal()
                     return
                 }
                 
-                let timeout = dispatch_time(DISPATCH_TIME_NOW, Int64(10 * Double(NSEC_PER_SEC)))
-                dispatch_semaphore_wait(semaphore, timeout)
+                let timeout = DispatchTime.now() + Double(Int64(10 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                let _ = semaphore.wait(timeout: timeout)
             }
             
             subscribedServicesFetcher.fetchSubscribedServicesIdsWithCompletion { result in
                 defer {
-                    dispatch_semaphore_signal(semaphore)
+                    semaphore.signal()
                 }
                 
                 switch result {
-                case let .Result(subscribedServiceIds):
+                case let .result(subscribedServiceIds):
                     self.subscribedServiceIds = subscribedServiceIds
                     self.reloadServicesWithDefaultServiceId(self.defaultServiceIdToShow)
                     self.defaultServiceIdToShow = nil
-                case let .Error(error):
-                    WKInterfaceController.reloadRootControllersWithNames(["ErrorState"], contexts: [error.localizedDescription])
+                case let .error(error):
+                    WKInterfaceController.reloadRootControllers(withNames: ["ErrorState"], contexts: [error.localizedDescription])
                 }
             }
         }
@@ -127,7 +127,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
     }
     
     //MARK: - Utility methods
-    private func reloadServicesWithDefaultServiceId(defaultServiceId: Int?) {
+    fileprivate func reloadServicesWithDefaultServiceId(_ defaultServiceId: Int?) {
         var services: [Service]
         
         if let defaultServiceId = defaultServiceId {
@@ -140,14 +140,14 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         }
         
         if services.count > 0 {
-            WKInterfaceController.reloadRootControllersWithNames(Array(count: services.count, repeatedValue: "ServiceDetail"), contexts: services)
+            WKInterfaceController.reloadRootControllers(withNames: Array(repeating: "ServiceDetail", count: services.count), contexts: services)
         }
         else {
-            WKInterfaceController.reloadRootControllersWithNames(["EmptyState"], contexts: nil)
+            WKInterfaceController.reloadRootControllers(withNames: ["EmptyState"], contexts: nil)
         }
     }
     
-    private func ensureServiceIdInSubscribedServiceIds(serviceId: Int) {
+    fileprivate func ensureServiceIdInSubscribedServiceIds(_ serviceId: Int) {
         var subscribedServiceIds = self.subscribedServiceIds ?? [Int]()
         if !subscribedServiceIds.contains(serviceId) {
             subscribedServiceIds.append(serviceId)
@@ -155,29 +155,34 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         self.subscribedServiceIds = subscribedServiceIds
     }
     
-    private func generateSubscribedServices() -> [Service] {
+    fileprivate func generateSubscribedServices() -> [Service] {
         guard let currentServiceIds = self.subscribedServiceIds else {
             return [Service]()
         }
         
         let services: [Service] = currentServiceIds.map { serviceId in
-            if let index = defaultServices.indexOf( { $0.serviceId == serviceId } ) {
+            if let index = defaultServices.index( where: { $0.serviceId == serviceId } ) {
                 return defaultServices[index]
             }
             else  {
-                return Service(serviceId: serviceId, sortOrder: 0, area: "", route: "", status: .Unknown)
+                return Service(serviceId: serviceId, sortOrder: 0, area: "", route: "", status: .unknown)
             }
         }
         
-        return services.sort { $0.sortOrder < $1.sortOrder }
+        return services.sorted { $0.sortOrder < $1.sortOrder }
     }
     
 }
 
 extension ExtensionDelegate: WCSessionDelegate {
     
-    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        guard subscribedServicesFetcher.state == .Stopped else {
+    @available(watchOSApplicationExtension 2.2, *)
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+            
+    }
+    
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        guard subscribedServicesFetcher.state == .stopped else {
             return
         }
         
@@ -185,10 +190,10 @@ extension ExtensionDelegate: WCSessionDelegate {
             return
         }
         
-        let sortedReceivedServiceIds = receivedServiceIds.sort()
+        let sortedReceivedServiceIds = receivedServiceIds.sorted()
         
         let localServiceIds = self.subscribedServiceIds ?? [Int]()
-        let sortedLocalServiceIds = localServiceIds.sort()
+        let sortedLocalServiceIds = localServiceIds.sorted()
         
         if sortedReceivedServiceIds != sortedLocalServiceIds {
             self.subscribedServiceIds = receivedServiceIds

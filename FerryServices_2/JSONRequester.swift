@@ -13,39 +13,39 @@ import Parse
 class JSONRequester {
     static let errorDomain = "JSONRequesterErrorDomain"
     
-    func requestWithURL(url: NSURL, completion:(json: JSON?, error: NSError?) -> ()) {
-        PFNetworkActivityIndicatorManager.sharedManager().incrementActivityCount()
+    func requestWithURL(_ url: URL, completion:@escaping (_ json: JSON?, _ error: NSError?) -> ()) {
+        PFNetworkActivityIndicatorManager.shared().incrementActivityCount()
         
-        let session = NSURLSession.sharedSession()
-        let dataTask = session.dataTaskWithURL(url) { data, response, error in
-            PFNetworkActivityIndicatorManager.sharedManager().decrementActivityCount()
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
+            PFNetworkActivityIndicatorManager.shared().decrementActivityCount()
             
             guard error == nil else {
-                completion(json: nil, error: error)
+                completion(nil, error as? NSError)
                 return
             }
             
             guard let data = data else {
-                completion(json: nil, error: NSError(domain: JSONRequester.errorDomain, code: 1, userInfo: [NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."]))
+                completion(nil, NSError(domain: JSONRequester.errorDomain, code: 1, userInfo: [NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."]))
                 return
             }
             
-            let jsonDictionary: AnyObject?
+            let jsonDictionary: Any?
             
             do {
-                jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
+                jsonDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
                 
                 if let jsonDictionary = jsonDictionary {
                     let json = JSON(jsonDictionary)
-                    completion(json: json, error: nil)
+                    completion(json, nil)
                 }
                 else {
-                    completion(json: nil, error: NSError(domain: JSONRequester.errorDomain, code: 1, userInfo: [NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."]))
+                    completion(nil, NSError(domain: JSONRequester.errorDomain, code: 1, userInfo: [NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."]))
                 }
             } catch let error as NSError {
-                completion(json: nil, error: error)
+                completion(nil, error)
             }
-        }
+        }) 
         
         dataTask.resume()
     }

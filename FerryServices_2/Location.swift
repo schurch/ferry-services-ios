@@ -6,40 +6,38 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
-import FMDB
-
 class Location : Hashable {
     
     class func fetchLocations() -> [Location]? {
-        let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
+        let path = Bundle.main.path(forResource: "timetables", ofType: "sqlite")
         let database = FMDatabase(path: path)
         
-        if (!database.open()) {
+        if (!(database?.open())!) {
             return nil
         }
         
         let query = "SELECT l.Name, l.Latitude, l.Longitude FROM Location l"
         
-        let resultSet = database.executeQuery(query, withArgumentsInArray: nil)
+        let resultSet = database?.executeQuery(query, withArgumentsIn: nil)
         var locations = [Location]()
         
-        while (resultSet.next()) {
-            let name = resultSet.stringForColumn("Name")
-            let latitude = resultSet.doubleForColumn("Latitude")
-            let longitude = resultSet.doubleForColumn("Longitude")
+        while (resultSet?.next())! {
+            let name = resultSet?.string(forColumn: "Name")
+            let latitude = resultSet?.double(forColumn: "Latitude")
+            let longitude = resultSet?.double(forColumn: "Longitude")
             locations += [Location(name: name, latitude: latitude, longitude: longitude)]
         }
         
-        database.close()
+        database?.close()
         
         return locations
     }
     
-    class func fetchLocationsForSericeId(serviceId: Int) -> [Location]? {
-        let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
+    class func fetchLocationsForSericeId(_ serviceId: Int) -> [Location]? {
+        let path = Bundle.main.path(forResource: "timetables", ofType: "sqlite")
         let database = FMDatabase(path: path)
         
-        if (!database.open()) {
+        if (!(database?.open())!) {
             return nil
         }
         
@@ -55,42 +53,42 @@ class Location : Hashable {
         query += "WHERE r.serviceId = (?) AND r.Type = 1\n"
         query += ")"
         
-        let resultSet = database.executeQuery(query, withArgumentsInArray: [serviceId, serviceId])
+        let resultSet = database?.executeQuery(query, withArgumentsIn: [serviceId, serviceId])
         var locations = [Location]()
         
-        while (resultSet.next()) {
-            let name = resultSet.stringForColumn("Name")
-            let latitude = resultSet.doubleForColumn("Latitude")
-            let longitude = resultSet.doubleForColumn("Longitude")
+        while (resultSet?.next())! {
+            let name = resultSet?.string(forColumn: "Name")
+            let latitude = resultSet?.double(forColumn: "Latitude")
+            let longitude = resultSet?.double(forColumn: "Longitude")
             locations += [Location(name: name, latitude: latitude, longitude: longitude)]
         }
         
-        database.close()
+        database?.close()
         
         return locations
     }
     
-    class func fetchLocationWithId(locationId: Int) -> Location? {
-        let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
+    class func fetchLocationWithId(_ locationId: Int) -> Location? {
+        let path = Bundle.main.path(forResource: "timetables", ofType: "sqlite")
         let database = FMDatabase(path: path)
         
-        if (!database.open()) {
+        if (!(database?.open())!) {
             return nil
         }
         
         let query = "SELECT l.Name, l.Latitude, l.Longitude FROM Location l WHERE l.LocationId = (?)"
         
-        let resultSet = database.executeQuery(query, withArgumentsInArray: [locationId])
+        let resultSet = database?.executeQuery(query, withArgumentsIn: [locationId])
         var location: Location? = nil
         
-        while (resultSet.next()) {
-            let name = resultSet.stringForColumn("Name")
-            let latitude = resultSet.doubleForColumn("Latitude")
-            let longitude = resultSet.doubleForColumn("Longitude")
+        while (resultSet?.next())! {
+            let name = resultSet?.string(forColumn: "Name")
+            let latitude = resultSet?.double(forColumn: "Latitude")
+            let longitude = resultSet?.double(forColumn: "Longitude")
             location = Location(name: name, latitude: latitude, longitude: longitude)
         }
         
-        database.close()
+        database?.close()
         
         return location
 

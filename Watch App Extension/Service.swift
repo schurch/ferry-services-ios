@@ -13,10 +13,10 @@ func == (lhs: Service, rhs: Service) -> Bool {
 }
 
 enum DisriptionStatus: Int {
-    case Unknown = -99
-    case Normal = 0
-    case SailingsAffected = 1
-    case SailingsCancelled = 2
+    case unknown = -99
+    case normal = 0
+    case sailingsAffected = 1
+    case sailingsCancelled = 2
 }
 
 class Service: Equatable {
@@ -41,10 +41,10 @@ class Service: Equatable {
     
     convenience init?(json: [String: AnyObject]) {
         if let serviceId = json["service_id"] as? Int,
-            sortOrder = json["sort_order"] as? Int,
-            area = json["area"] as? String,
-            route = json["route"] as? String,
-            status = json["status"] as? Int {
+            let sortOrder = json["sort_order"] as? Int,
+            let area = json["area"] as? String,
+            let route = json["route"] as? String,
+            let status = json["status"] as? Int {
                 self.init(serviceId: serviceId, sortOrder: sortOrder, area: area, route: route, status: DisriptionStatus(rawValue: status)!)
                 
                 if let disruptionDetails = json["disruption_details"] as? String {
@@ -54,8 +54,8 @@ class Service: Equatable {
                 if let portsData = json["ports"] as? [[String: AnyObject]] {
                     let ports: [Port?] = portsData.map { portData in
                         if let name = portData["name"] as? String,
-                            latitude = portData["latitude"] as? Double,
-                            longitude = portData["longitude"] as? Double {
+                            let latitude = portData["latitude"] as? Double,
+                            let longitude = portData["longitude"] as? Double {
                                 return Port(name: name, latitude: latitude, longitude: longitude)
                             
                         }

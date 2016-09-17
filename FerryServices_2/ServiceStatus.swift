@@ -10,30 +10,30 @@ import SwiftyJSON
 
 class ServiceStatus: Equatable {
     
-    static let dateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
         //"2015-04-18T23:08:00+00:00"
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss 'UTC'"
-        formatter.timeZone = NSTimeZone(abbreviation: "UTC")
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
         return formatter
     }()
     
     enum DisriptionStatus: Int {
-        case Unknown = -99
-        case Normal = 0
-        case SailingsAffected = 1
-        case SailingsCancelled = 2
+        case unknown = -99
+        case normal = 0
+        case sailingsAffected = 1
+        case sailingsCancelled = 2
     }
     
     var serviceId: Int?
     var sortOrder: Int?
     var area: String?
     var route: String?
-    var updated: NSDate?
+    var updated: Date?
     var disruptionStatus: DisriptionStatus?
     
     init() {
-        self.disruptionStatus = .Normal
+        self.disruptionStatus = .normal
     }
     
     init(data: JSON) {
@@ -45,7 +45,7 @@ class ServiceStatus: Equatable {
         }
         
         if let updatedDate = data["updated"].string {
-            self.updated = DisruptionDetails.dateFormatter.dateFromString(updatedDate)
+            self.updated = DisruptionDetails.dateFormatter.date(from: updatedDate)
         }
         
         self.route = data["route"].string

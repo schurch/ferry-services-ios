@@ -12,47 +12,47 @@ class ServicesAPIClient {
     #if DEBUG
     static let baseURL = NSURL(string: "http://test.scottishferryapp.com")
     #else
-    static let baseURL = NSURL(string: "http://www.scottishferryapp.com")
+    static let baseURL = URL(string: "http://www.scottishferryapp.com")
     #endif
     
     
     // MARK: - methods
-    func fetchFerryServicesWithCompletion(completion: (serviceStatuses: [ServiceStatus]?, error: NSError?) -> ()) {
-        let url = NSURL(string: "services/", relativeToURL: ServicesAPIClient.baseURL)
+    func fetchFerryServicesWithCompletion(_ completion: @escaping (_ serviceStatuses: [ServiceStatus]?, _ error: NSError?) -> ()) {
+        let url = URL(string: "services/", relativeTo: ServicesAPIClient.baseURL as URL?)
         JSONRequester().requestWithURL(url!) { json, error in
             if error == nil {
                 if let json = json {
                     var results = json.array?.map { json in ServiceStatus(data: json) }
-                    results?.sortInPlace{ $0.sortOrder < $1.sortOrder }
+                    results?.sort{ $0.sortOrder! < $1.sortOrder! }
                     
-                    dispatch_async(dispatch_get_main_queue(), {
-                        completion(serviceStatuses: results, error: nil)
+                    DispatchQueue.main.async(execute: {
+                        completion(results, nil)
                     })
                 }
             }
             else {
-                dispatch_async(dispatch_get_main_queue(), {
-                    completion(serviceStatuses: nil, error: error)
+                DispatchQueue.main.async(execute: {
+                    completion(nil, error)
                 })
             }
         }
     }
     
-    func fetchDisruptionDetailsForFerryServiceId(ferryServiceId: Int, completion: (disruptionsDetails: DisruptionDetails?, error: NSError?) -> ()) {
-        let url = NSURL(string: "/services/\(ferryServiceId)", relativeToURL: ServicesAPIClient.baseURL)
+    func fetchDisruptionDetailsForFerryServiceId(_ ferryServiceId: Int, completion: @escaping (_ disruptionsDetails: DisruptionDetails?, _ error: NSError?) -> ()) {
+        let url = URL(string: "/services/\(ferryServiceId)", relativeTo: ServicesAPIClient.baseURL as URL?)
         JSONRequester().requestWithURL(url!) { json, error in
             if error == nil {
                 if let json = json {
                      let disruptionDetails = DisruptionDetails(data: json)
                     
-                    dispatch_async(dispatch_get_main_queue(), {
-                        completion(disruptionsDetails: disruptionDetails, error: nil)
+                    DispatchQueue.main.async(execute: {
+                        completion(disruptionDetails, nil)
                     })
                 }
             }
             else {
-                dispatch_async(dispatch_get_main_queue(), {
-                    completion(disruptionsDetails: nil, error: error)
+                DispatchQueue.main.async(execute: {
+                    completion(nil, error)
                 })
             }
         }

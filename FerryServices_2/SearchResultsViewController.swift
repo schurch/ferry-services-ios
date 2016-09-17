@@ -8,10 +8,9 @@
 
 import UIKit
 import MapKit
-import Flurry_iOS_SDK
 
 protocol SearchResultsViewControllerDelegate: class {
-    func didSelectServiceStatus(serviceStatus: ServiceStatus)
+    func didSelectServiceStatus(_ serviceStatus: ServiceStatus)
 }
 
 class SearchResultsViewController: UIViewController {
@@ -20,8 +19,8 @@ class SearchResultsViewController: UIViewController {
     static let portAnnotationReuseId = "portAnnotationReuseId"
 
     enum Mode: Int {
-        case List = 0
-        case Map = 1
+        case list = 0
+        case map = 1
     }
     
     @IBOutlet weak var mapView: MKMapView!
@@ -31,70 +30,70 @@ class SearchResultsViewController: UIViewController {
     
     weak var delegate: SearchResultsViewControllerDelegate?
     
-    private var arrayOfAnnotations: [MKPointAnnotation] = []
-    private var arrayOfFilteredServices: [ServiceStatus] = []
-    private var arrayOfLocations = Location.fetchLocations()
-    private var bottomInset: CGFloat = 0.0
-    private var previewingIndexPath: NSIndexPath?
-    private var text: String?
-    private var viewMode: Mode = .List
+    fileprivate var arrayOfAnnotations: [MKPointAnnotation] = []
+    fileprivate var arrayOfFilteredServices: [ServiceStatus] = []
+    fileprivate var arrayOfLocations = Location.fetchLocations()
+    fileprivate var bottomInset: CGFloat = 0.0
+    fileprivate var previewingIndexPath: IndexPath?
+    fileprivate var text: String?
+    fileprivate var viewMode: Mode = .list
     
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.registerNib(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: SearchResultsViewController.serviceStatusReuseId)
+        self.tableView.register(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: SearchResultsViewController.serviceStatusReuseId)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchResultsViewController.keyboardShownNotification(_:)), name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SearchResultsViewController.keyboardWillBeHiddenNotification(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SearchResultsViewController.keyboardShownNotification(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SearchResultsViewController.keyboardWillBeHiddenNotification(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         self.configureView()
         
-        registerForPreviewingWithDelegate(self, sourceView: tableView)
+        registerForPreviewing(with: self, sourceView: tableView)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if self.viewMode == .List {
+        if self.viewMode == .list {
             if let selectedIndexPath = self.tableView.indexPathForSelectedRow {
-                self.tableView.deselectRowAtIndexPath(selectedIndexPath, animated: true)
+                self.tableView.deselectRow(at: selectedIndexPath, animated: true)
             }
         }
     }
     
-    private func configureView() {
-        guard self.isViewLoaded() else {
+    fileprivate func configureView() {
+        guard self.isViewLoaded else {
             return
         }
         
         switch self.viewMode {
-        case .List:
+        case .list:
             self.configureListView()
-        case .Map:
+        case .map:
             self.configureMapView()
         }
     }
     
-    private func configureListView() {
+    fileprivate func configureListView() {
         self.filterResults()
         
         self.tableView.reloadData()
         
-        self.tableView.hidden = false
-        self.mapView.hidden = true
+        self.tableView.isHidden = false
+        self.mapView.isHidden = true
     }
     
-    private func configureMapView() {
+    fileprivate func configureMapView() {
         self.filterResults()
         
-        self.tableView.hidden = true
-        self.mapView.hidden = false
+        self.tableView.isHidden = true
+        self.mapView.isHidden = false
     }
     
     // MARK: - Public
-    func keyboardShownNotification(notification: NSNotification) {
-        if let height = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size.height {
+    func keyboardShownNotification(_ notification: Notification) {
+        if let height = ((notification as NSNotification).userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size.height {
             let inset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: height, right: 0.0)
             self.tableView.contentInset = inset
             self.tableView.scrollIndicatorInsets = inset
@@ -105,9 +104,9 @@ class SearchResultsViewController: UIViewController {
         }
     }
     
-    func keyboardWillBeHiddenNotification(notification: NSNotification) {
-        self.tableView.contentInset = UIEdgeInsetsZero
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero
+    func keyboardWillBeHiddenNotification(_ notification: Notification) {
+        self.tableView.contentInset = UIEdgeInsets.zero
+        self.tableView.scrollIndicatorInsets = UIEdgeInsets.zero
         
         self.bottomInset = 0.0
         
@@ -115,42 +114,42 @@ class SearchResultsViewController: UIViewController {
     }
     
     func showList() {
-        self.viewMode = .List
+        self.viewMode = .list
         self.configureView()
     }
     
     func showMap() {
-        self.viewMode = .Map
+        self.viewMode = .map
         self.configureView()
     }
     
     // MARK: - Utility methods
-    private func filterResults() {
+    fileprivate func filterResults() {
         guard let filterText = self.text else {
             return
         }
         
         switch self.viewMode {
-        case .List:
+        case .list:
             self.arrayOfFilteredServices = self.arrayOfServices.filter { service in
                 var containsArea = false
-                if let area = service.area?.lowercaseString {
-                    containsArea = area.containsString(filterText.lowercaseString)
+                if let area = service.area?.lowercased() {
+                    containsArea = area.contains(filterText.lowercased())
                 }
                 
                 var containsRoute = false
-                if let route = service.route?.lowercaseString {
-                    containsRoute = route.containsString(filterText.lowercaseString)
+                if let route = service.route?.lowercased() {
+                    containsRoute = route.contains(filterText.lowercased())
                 }
                 
                 return containsArea || containsRoute
             }
             
             self.tableView.reloadData()
-        case .Map:
+        case .map:
             if let locations = self.arrayOfLocations {
                 let filteredLocations = locations.filter { location in
-                    if let containsString = location.name?.lowercaseString.containsString(filterText.lowercaseString) {
+                    if let containsString = location.name?.lowercased().contains(filterText.lowercased()) {
                         return containsString
                     }
                     
@@ -167,7 +166,7 @@ class SearchResultsViewController: UIViewController {
         }
     }
     
-    private func annotationsForLocations(locations: [Location]) -> [MKPointAnnotation] {
+    fileprivate func annotationsForLocations(_ locations: [Location]) -> [MKPointAnnotation] {
         return locations.map { location in
             let annotation = MKPointAnnotation()
             annotation.title = location.name
@@ -176,7 +175,7 @@ class SearchResultsViewController: UIViewController {
         }
     }
     
-    private func showVisibleMapRectAnimated(animated: Bool) {
+    fileprivate func showVisibleMapRectAnimated(_ animated: Bool) {
         if let locations = self.arrayOfLocations {
             let allAnnotations = self.annotationsForLocations(locations)
             let rect = calculateMapRectForAnnotations(allAnnotations)
@@ -187,20 +186,20 @@ class SearchResultsViewController: UIViewController {
 }
 
 extension SearchResultsViewController: UISearchResultsUpdating {
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         self.text = searchController.searchBar.text
         self.filterResults()
     }
 }
 
 extension SearchResultsViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.arrayOfFilteredServices.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let serviceStatusCell = self.tableView.dequeueReusableCellWithIdentifier(SearchResultsViewController.serviceStatusReuseId, forIndexPath: indexPath) as! ServiceStatusCell
-        let serviceStatus = self.arrayOfFilteredServices[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let serviceStatusCell = self.tableView.dequeueReusableCell(withIdentifier: SearchResultsViewController.serviceStatusReuseId, for: indexPath) as! ServiceStatusCell
+        let serviceStatus = self.arrayOfFilteredServices[(indexPath as NSIndexPath).row]
         serviceStatusCell.configureCellWithServiceStatus(serviceStatus)
         
         return serviceStatusCell
@@ -208,43 +207,41 @@ extension SearchResultsViewController: UITableViewDataSource {
 }
 
 extension SearchResultsViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.delegate?.didSelectServiceStatus(self.arrayOfFilteredServices[indexPath.row])
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.delegate?.didSelectServiceStatus(self.arrayOfFilteredServices[(indexPath as NSIndexPath).row])
     }
 }
 
 extension SearchResultsViewController: MKMapViewDelegate {
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation.isKindOfClass(MKUserLocation.self) {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation.isKind(of: MKUserLocation.self) {
             return nil
         }
         
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(SearchResultsViewController.portAnnotationReuseId) as! MKPinAnnotationView!
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: SearchResultsViewController.portAnnotationReuseId) as! MKPinAnnotationView!
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: SearchResultsViewController.portAnnotationReuseId)
-            pinView.pinTintColor = UIColor.redColor()
-            pinView.animatesDrop = false
-            pinView.canShowCallout = true
+            pinView?.pinTintColor = UIColor.red
+            pinView?.animatesDrop = false
+            pinView?.canShowCallout = true
             
             let directionsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 100))
             directionsButton.backgroundColor = UIColor(red:0.13, green:0.75, blue:0.67, alpha:1)
-            directionsButton.setImage(UIImage(named: "directions_arrow"), forState: UIControlState.Normal)
-            directionsButton.setImage(UIImage(named: "directions_arrow_highlighted"), forState: UIControlState.Highlighted)
+            directionsButton.setImage(UIImage(named: "directions_arrow"), for: UIControlState())
+            directionsButton.setImage(UIImage(named: "directions_arrow_highlighted"), for: UIControlState.highlighted)
             directionsButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 56, right: 0)
             
-            pinView.rightCalloutAccessoryView = directionsButton
+            pinView?.rightCalloutAccessoryView = directionsButton
         }
         else {
-            pinView.annotation = annotation
+            pinView?.annotation = annotation
         }
         
         return pinView
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        Flurry.logEvent("Show driving directions to port")
-        
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let annotation = view.annotation
         
         let placemark = MKPlacemark(coordinate: annotation!.coordinate, addressDictionary: nil)
@@ -255,31 +252,31 @@ extension SearchResultsViewController: MKMapViewDelegate {
         let items = [destination]
         let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
         
-        MKMapItem.openMapsWithItems(items, launchOptions: options)
+        MKMapItem.openMaps(with: items, launchOptions: options)
     }
 }
 
 extension SearchResultsViewController: UIViewControllerPreviewingDelegate {
-    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        guard let indexPath = tableView.indexPathForRowAtPoint(location),
-            cell = tableView.cellForRowAtIndexPath(indexPath) else { return nil }
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForRow(at: location),
+            let cell = tableView.cellForRow(at: indexPath) else { return nil }
 
         previewingContext.sourceRect = cell.frame
         
         previewingIndexPath = indexPath
         
-        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ServiceDetailTableViewController") as! ServiceDetailTableViewController
-        serviceDetailViewController.viewConfiguration = .Previewing
+        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
+        serviceDetailViewController.viewConfiguration = .previewing
         
-        let serviceStatus = self.arrayOfFilteredServices[indexPath.row]
+        let serviceStatus = self.arrayOfFilteredServices[(indexPath as NSIndexPath).row]
         serviceDetailViewController.serviceStatus = serviceStatus
         
         return serviceDetailViewController
     }
     
-    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         guard let previewingIndexPath = previewingIndexPath else { return }
         
-        self.delegate?.didSelectServiceStatus(self.arrayOfFilteredServices[previewingIndexPath.row])
+        self.delegate?.didSelectServiceStatus(self.arrayOfFilteredServices[(previewingIndexPath as NSIndexPath).row])
     }
 }

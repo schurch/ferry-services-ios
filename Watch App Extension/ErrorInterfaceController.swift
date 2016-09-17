@@ -13,8 +13,8 @@ class ErrorInterfaceController: WKInterfaceController {
 
     @IBOutlet var labelErrorMessage: WKInterfaceLabel!
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         if let errorMessage = context as? String {
             labelErrorMessage.setText(errorMessage)
@@ -22,7 +22,7 @@ class ErrorInterfaceController: WKInterfaceController {
     }
     
     @IBAction func touchedReload() {
-        let appDelegate = WKExtension.sharedExtension().delegate as? ExtensionDelegate
+        let appDelegate = WKExtension.shared().delegate as? ExtensionDelegate
         appDelegate?.configureApp()
     }
     

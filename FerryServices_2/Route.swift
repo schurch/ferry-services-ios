@@ -7,15 +7,14 @@
 //
 
 import Foundation
-import FMDB
 
 class Route {
     
-    class func fetchRoutesForServiceId(serviceId: Int, date: NSDate) -> [Route]? {
-        let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
+    class func fetchRoutesForServiceId(_ serviceId: Int, date: Date) -> [Route]? {
+        let path = Bundle.main.path(forResource: "timetables", ofType: "sqlite")
         let database = FMDatabase(path: path)
         
-        if (!database.open()) {
+        if (!(database?.open())!) {
             return nil
         }
         
@@ -26,31 +25,31 @@ class Route {
         query += "FROM Route r\n"
         query += "WHERE r.ServiceId = (?)"
         
-        let resultSet = database.executeQuery(query, withArgumentsInArray: [serviceId])
+        let resultSet = database?.executeQuery(query, withArgumentsIn: [serviceId])
 
         var routes = [Route]()
-        while (resultSet.next()) {
-            let destination = Location.fetchLocationWithId(Int(resultSet.intForColumn("DestinationLocationId")))
-            let source = Location.fetchLocationWithId(Int(resultSet.intForColumn("SourceLocationId")))
+        while (resultSet?.next())! {
+            let destination = Location.fetchLocationWithId(Int((resultSet?.int(forColumn: "DestinationLocationId"))!))
+            let source = Location.fetchLocationWithId(Int((resultSet?.int(forColumn: "SourceLocationId"))!))
             let serviceId = serviceId
             
-            let routeId = Int(resultSet.intForColumn("RouteId"))
+            let routeId = Int((resultSet?.int(forColumn: "RouteId"))!)
             let trips: [Trip]? = Trip.fetchTripsForRouteId(routeId, date: date)
             
-            let routeType = RouteType(rawValue: Int(resultSet.intForColumn("RouteType")))
+            let routeType = RouteType(rawValue: Int((resultSet?.int(forColumn: "RouteType"))!))
             
             let route = Route(destination: destination, source: source, serviceId: serviceId, trips: trips, routeType:routeType)
             routes += [route]
         }
     
-        database.close()
+        database?.close()
         
         return routes
     }
     
     enum RouteType: Int {
-        case Ferry = 1
-        case Train = 2
+        case ferry = 1
+        case train = 2
     }
     
     var destination: Location?

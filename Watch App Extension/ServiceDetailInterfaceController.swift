@@ -21,13 +21,13 @@ class ServiceDetailInterfaceController: WKInterfaceController {
     @IBOutlet var map: WKInterfaceMap!
     @IBOutlet var imageStatus: WKInterfaceImage!
     
-    var dataTask: NSURLSessionDataTask?
-    var lastFetchTime: NSDate?
+    var dataTask: URLSessionDataTask?
+    var lastFetchTime: Date?
     var service: Service?
 
     // MARK: - View lifecycle
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         if let service = context as? Service {
             self.service = service
@@ -52,7 +52,7 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         
         // When paging through controllers if the user hit refresh before the controller was ready the app would hang forever
         // so we only add the menu item once the controllelr had appeared
-        addMenuItemWithItemIcon(.Repeat, title: "Refresh", action: #selector(ServiceDetailInterfaceController.refresh))
+        addMenuItem(with: .repeat, title: "Refresh", action: #selector(ServiceDetailInterfaceController.refresh))
         
         if let service = self.service {
             self.updateUserActivity("com.stefanchurch.ferryservices.viewservice", userInfo: ["serviceId": service.serviceId], webpageURL: nil)
@@ -66,7 +66,7 @@ class ServiceDetailInterfaceController: WKInterfaceController {
     }
     
     // MARK: - View configuration
-    private func configureLoadingView() {
+    fileprivate func configureLoadingView() {
         if let service = self.service {
             self.labelRoute.setText(service.route)
         }
@@ -76,14 +76,14 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         self.imageStatus.setImageNamed("grey")
     }
     
-    private func configureErrorViewWithMessage(message: String) {
+    fileprivate func configureErrorViewWithMessage(_ message: String) {
         self.labelRoute.setText(message)
         self.labelStatus.setText("")
         self.labelDisruptionInformation.setText("")
         self.imageStatus.setImage(nil)
     }
     
-    private func configureView() {
+    fileprivate func configureView() {
         guard let service = self.service else {
             return
         }
@@ -93,9 +93,9 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         self.labelRoute.setText(service.route)
         
         if let disruptionDetailsHtml = service.disruptionDetails {
-            if let data = disruptionDetailsHtml.dataUsingEncoding(NSUTF8StringEncoding) {
+            if let data = disruptionDetailsHtml.data(using: .utf8) {
                 do {
-                    let attributeText = try NSAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil)
+                    let attributeText = try NSAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: String.Encoding.utf8.rawValue], documentAttributes: nil)
                     self.labelDisruptionInformation.setAttributedText(attributeText)
                 } catch let error as NSError {
                     print(error.localizedDescription)
@@ -104,16 +104,16 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         }
         
         switch service.status {
-        case .Normal:
+        case .normal:
             self.labelStatus.setText("NO DISRUPTIONS")
             self.imageStatus.setImageNamed("green")
-        case .SailingsAffected:
+        case .sailingsAffected:
             self.labelStatus.setText("DISRUPTED")
             self.imageStatus.setImageNamed("amber")
-        case .SailingsCancelled:
+        case .sailingsCancelled:
             self.labelStatus.setText("CANCELLED")
             self.imageStatus.setImageNamed("red")
-        case .Unknown:
+        case .unknown:
             self.labelStatus.setText("UNKNOWN")
             self.imageStatus.setImageNamed("grey")
         }
@@ -123,13 +123,13 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         }
     }
     
-    private func configureMapWithPorts(ports: [Port]) {
+    fileprivate func configureMapWithPorts(_ ports: [Port]) {
         var coordinates = [CLLocationCoordinate2D]()
         
         for port in ports {
             let location = CLLocationCoordinate2D(latitude: port.latitude, longitude: port.longitude)
             coordinates.append(location)
-            self.map.addAnnotation(location, withPinColor: .Red)
+            self.map.addAnnotation(location, with: .red)
         }
         
         let mapRectForCoords = calculateMapRectForCoordinates(coordinates)
@@ -150,17 +150,17 @@ class ServiceDetailInterfaceController: WKInterfaceController {
     }
     
     // MARK: - Fetch
-    private func fetchDisruptionDetails() {
+    fileprivate func fetchDisruptionDetails() {
         guard let service = self.service else {
             return
         }
         
-        guard self.dataTask?.state != .Running else {
+        guard self.dataTask?.state != .running else {
             return
         }
         
         if let lastFetchTime = self.lastFetchTime {
-            let secondsSinceLastFetch = NSDate().timeIntervalSinceDate(lastFetchTime)
+            let secondsSinceLastFetch = Date().timeIntervalSince(lastFetchTime)
             guard secondsSinceLastFetch > ServiceDetailInterfaceController.cacheTimeoutSeconds else {
                 self.configureView()
                 return
@@ -169,23 +169,23 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         
         self.configureLoadingView()
         
-        let semaphore = dispatch_semaphore_create(0)
+        let semaphore = DispatchSemaphore(value: 0)
         
-        let url = NSURL(string: "http://stefanchurch.com:4567/services/\(service.serviceId)")!
+        let url = URL(string: "http://www.scottishferryapp.com/services/\(service.serviceId)")!
         
-        NSProcessInfo().performExpiringActivityWithReason("Download ferry service details") { expired in
+        ProcessInfo().performExpiringActivity(withReason: "Download ferry service details") { expired in
             guard !expired else {
-                dispatch_semaphore_signal(semaphore)
+                semaphore.signal()
                 return
             }
             
-            let timeout = dispatch_time(DISPATCH_TIME_NOW, Int64(30 * Double(NSEC_PER_SEC)))
-            dispatch_semaphore_wait(semaphore, timeout)
+            let timeout = DispatchTime.now() + Double(Int64(30 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            let _ = semaphore.wait(timeout: timeout)
         }
         
-        dataTask = NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] data, response, error in
+        dataTask = URLSession.shared.dataTask(with: url, completionHandler: { [weak self] data, response, error in
             defer {
-                dispatch_semaphore_signal(semaphore)
+                semaphore.signal()
             }
             
             guard self != nil else {
@@ -193,7 +193,7 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             }
             
             guard error == nil else {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self?.configureErrorViewWithMessage(ServiceDetailInterfaceController.connectionErrorMessage)
                     self?.lastFetchTime = nil
                 })
@@ -205,12 +205,12 @@ class ServiceDetailInterfaceController: WKInterfaceController {
             }
             
             do {
-                if let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? [String: AnyObject] {
-                    dispatch_async(dispatch_get_main_queue(), {
+                if let jsonDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: AnyObject] {
+                    DispatchQueue.main.async(execute: {
                         if let service = Service(json: jsonDictionary) {
                             self?.service =  service
                             self?.configureView()
-                            self?.lastFetchTime = NSDate()
+                            self?.lastFetchTime = Date()
                         }
                         else {
                             self?.configureErrorViewWithMessage("There was a problem with the server response.")
@@ -221,18 +221,18 @@ class ServiceDetailInterfaceController: WKInterfaceController {
                 
             } catch let error as NSError {
                 print("Error parsing json: \(error.localizedDescription)")
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self?.configureErrorViewWithMessage("There was a problem with the server response.")
                     self?.lastFetchTime = nil
                 })
             }
-        }
+        }) 
         
         dataTask?.resume()
     }
 
     // MARK: -
-    private func calculateMapRectForCoordinates(coordinates: [CLLocationCoordinate2D]) -> MKMapRect {
+    fileprivate func calculateMapRectForCoordinates(_ coordinates: [CLLocationCoordinate2D]) -> MKMapRect {
         return coordinates.reduce(MKMapRectNull) { rect, coordinate in
             let point = MKMapPointForCoordinate(coordinate)
             return MKMapRectUnion(rect, MKMapRect(origin: point, size: MKMapSize(width: 0.0, height: 0.0)))

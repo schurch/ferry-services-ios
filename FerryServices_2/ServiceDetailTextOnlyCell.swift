@@ -14,10 +14,10 @@ class ServiceDetailTextOnlyCell: UITableViewCell {
     
     struct SizingCell {
         static let instance = UINib(nibName: "TextOnlyCell", bundle: nil)
-            .instantiateWithOwner(nil, options: nil).first as! ServiceDetailTextOnlyCell
+            .instantiate(withOwner: nil, options: nil).first as! ServiceDetailTextOnlyCell
     }
     
-    class func heightWithText(text: String, tableView: UITableView) -> CGFloat {
+    class func heightWithText(_ text: String, tableView: UITableView) -> CGFloat {
         let cell = self.SizingCell.instance
         
         cell.labelText.text = text
@@ -27,9 +27,9 @@ class ServiceDetailTextOnlyCell: UITableViewCell {
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         
-        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        let height = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
         
-        let separatorHeight = UIScreen.mainScreen().scale / 2.0
+        let separatorHeight = UIScreen.main.scale / 2.0
         
         return height + separatorHeight
     }
