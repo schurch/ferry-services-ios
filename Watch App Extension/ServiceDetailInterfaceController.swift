@@ -171,7 +171,7 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         
         let semaphore = dispatch_semaphore_create(0)
         
-        let url = NSURL(string: "http://stefanchurch.com:4567/services/\(service.serviceId)")!
+        let url = NSURL(string: "http://www.scottishferryapp.com/services/\(service.serviceId)")!
         
         NSProcessInfo().performExpiringActivityWithReason("Download ferry service details") { expired in
             guard !expired else {
