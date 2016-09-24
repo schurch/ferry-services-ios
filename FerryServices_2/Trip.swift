@@ -7,40 +7,35 @@
 //
 
 import Foundation
-import Flurry_iOS_SDK
-import FMDB
 
 class Trip {
     
-    private struct formatters {
-        private static let weekdayFormatter :NSDateFormatter = {
-            let formatter = NSDateFormatter()
+    fileprivate struct formatters {
+        fileprivate static let weekdayFormatter :DateFormatter = {
+            let formatter = DateFormatter()
             formatter.dateFormat = "EEEE"
             return formatter
         }()
     }
     
-    class func areTripsAvailableForRouteId(routeId: Int, onOrAfterDate: NSDate) -> Bool {
-        let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
+    class func areTripsAvailableForRouteId(_ routeId: Int, onOrAfterDate: Date) -> Bool {
+        let path = Bundle.main.path(forResource: "timetables", ofType: "sqlite")
         if path == nil {
-            Flurry.logEvent("Missing timetable database path")
             return false
         }
         
         let database = FMDatabase(path: path)
         if database == nil {
-            Flurry.logEvent("Unable to create database file")
             return false
         }
         
-        if (!database.open()) {
-            Flurry.logEvent("Unable to open database")
+        if (!(database?.open())!) {
             return false
         }
         
-        let strippedDate = NSDate.stripTimeComponentsFromDate(onOrAfterDate)
+        let strippedDate = Date.stripTimeComponentsFromDate(onOrAfterDate)
         
-        let weekday = self.formatters.weekdayFormatter.stringFromDate(strippedDate)
+        let weekday = self.formatters.weekdayFormatter.string(from: strippedDate)
         
         var query = "SELECT COUNT(*)\n"
         query += "FROM CalendarTrip ct,\n"
@@ -61,29 +56,26 @@ class Trip {
         let dateAsEpoc = strippedDate.timeIntervalSince1970
         
         var count = 0
-        if let resultSet = database.executeQuery(query, withArgumentsInArray: [dateAsEpoc, dateAsEpoc, routeId]) {
+        if let resultSet = database?.executeQuery(query, withArgumentsIn: [dateAsEpoc, dateAsEpoc, routeId]) {
             if resultSet.next() {
-                count = Int(resultSet.intForColumnIndex(0))
+                count = Int(resultSet.int(forColumnIndex: 0))
             }
         }
-        else {
-            Flurry.logEvent("NO result set for 'areTripsAvailableForRouteId:onOrAfterDate' method")
-        }
-        
-        database.close()
+
+        database?.close()
         
         return count > 0
     }
     
-    class func fetchTripsForRouteId(routeId: Int, date: NSDate) -> [Trip]? {
-        let path = NSBundle.mainBundle().pathForResource("timetables", ofType: "sqlite")
+    class func fetchTripsForRouteId(_ routeId: Int, date: Date) -> [Trip]? {
+        let path = Bundle.main.path(forResource: "timetables", ofType: "sqlite")
         let database = FMDatabase(path: path)
         
-        if (!database.open()) {
+        if (!(database?.open())!) {
             return nil
         }
         
-        let weekday = self.formatters.weekdayFormatter.stringFromDate(date)
+        let weekday = self.formatters.weekdayFormatter.string(from: date)
         
         var query = "SELECT t.Notes as Notes, t.DepartureHour as DepartureHour, t.DepartureMinute as DepartureMinute,"
         query += "t.ArrivalHour as ArrivalHour, t.ArrivalMinute as ArrivalMinute\n"
@@ -105,21 +97,21 @@ class Trip {
         
         let dateAsEpoc = date.timeIntervalSince1970
         
-        let resultSet = database.executeQuery(query, withArgumentsInArray: [dateAsEpoc, dateAsEpoc, dateAsEpoc, routeId])
+        let resultSet = database?.executeQuery(query, withArgumentsIn: [dateAsEpoc, dateAsEpoc, dateAsEpoc, routeId])
         
         var trips = [Trip]()
-        while (resultSet.next()) {
-            let departureHour = resultSet.doubleForColumn("DepartureHour")
-            let departureMinute = resultSet.doubleForColumn("DepartureMinute")
-            let arrivalHour = resultSet.doubleForColumn("ArrivalHour")
-            let arrivalMinute = resultSet.doubleForColumn("ArrivalMinute")
-            let notes = resultSet.stringForColumn("Notes")
+        while (resultSet?.next())! {
+            let departureHour = resultSet?.double(forColumn: "DepartureHour")
+            let departureMinute = resultSet?.double(forColumn: "DepartureMinute")
+            let arrivalHour = resultSet?.double(forColumn: "ArrivalHour")
+            let arrivalMinute = resultSet?.double(forColumn: "ArrivalMinute")
+            let notes = resultSet?.string(forColumn: "Notes")
             
-            let trip = Trip(departureHour: departureHour, departureMinute: departureMinute, arrivalHour: arrivalHour, arrivalMinute: arrivalMinute, notes: notes, routeId: routeId)
+            let trip = Trip(departureHour: departureHour!, departureMinute: departureMinute!, arrivalHour: arrivalHour!, arrivalMinute: arrivalMinute!, notes: notes, routeId: routeId)
             trips += [trip]
         }
         
-        database.close()
+        database?.close()
         
         return trips
     }
@@ -152,7 +144,7 @@ class Trip {
         self.routeId = routeId
     }
     
-    private func padWithZero(number: Double) -> String {
+    fileprivate func padWithZero(_ number: Double) -> String {
         return number < 10 ? "0\(Int(number))" : "\(Int(number))"
     }
     

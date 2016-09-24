@@ -8,11 +8,10 @@
 
 import UIKit
 import MapKit
-import Flurry_iOS_SDK
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
-    private struct Constants {
+    fileprivate struct Constants {
         static let portAnnotationReuseIdentifier = "PortAnnotationReuseId"
     }
 
@@ -20,7 +19,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     var annotations: [MKPointAnnotation]!
     
-    private var didShowAnnotations = false
+    fileprivate var didShowAnnotations = false
     
     // MARK: - View lifecycle
     override func viewDidLoad() {
@@ -40,37 +39,35 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     // MARK: - MKMapViewDelegate
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation.isKindOfClass(MKUserLocation.self) {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation.isKind(of: MKUserLocation.self) {
             return nil
         }
         
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.portAnnotationReuseIdentifier) as! MKPinAnnotationView!
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.portAnnotationReuseIdentifier) as! MKPinAnnotationView!
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.portAnnotationReuseIdentifier)
-            pinView.pinTintColor = UIColor.redColor()
-            pinView.animatesDrop = false
-            pinView.canShowCallout = true
+            pinView?.pinTintColor = UIColor.red
+            pinView?.animatesDrop = false
+            pinView?.canShowCallout = true
             
             let directionsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 100))
             directionsButton.backgroundColor = UIColor(red:0.13, green:0.75, blue:0.67, alpha:1)
-            directionsButton.setImage(UIImage(named: "directions_arrow"), forState: UIControlState.Normal)
-            directionsButton.setImage(UIImage(named: "directions_arrow_highlighted"), forState: UIControlState.Highlighted)
+            directionsButton.setImage(UIImage(named: "directions_arrow"), for: UIControlState())
+            directionsButton.setImage(UIImage(named: "directions_arrow_highlighted"), for: UIControlState.highlighted)
             directionsButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 56, right: 0)
             
-            pinView.rightCalloutAccessoryView = directionsButton
+            pinView?.rightCalloutAccessoryView = directionsButton
         }
         else {
-            pinView.annotation = annotation
+            pinView?.annotation = annotation
         }
         
         return pinView
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        Flurry.logEvent("Show driving directions to port")
-        
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {        
         let annotation = view.annotation
         
         let placemark = MKPlacemark(coordinate: annotation!.coordinate, addressDictionary: nil)
@@ -81,6 +78,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let items = [destination]
         let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
         
-        MKMapItem.openMapsWithItems(items, launchOptions: options)
+        MKMapItem.openMaps(with: items, launchOptions: options)
     }
 }

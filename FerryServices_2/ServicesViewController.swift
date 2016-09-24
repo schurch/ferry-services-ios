@@ -9,20 +9,31 @@
 import UIKit
 import Foundation
 import SwiftyJSON
-import Flurry_iOS_SDK
+
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class ServicesViewController: UITableViewController {
     
     // MARK: - Variables & Constants
     static let subscribedServiceIdsUserDefaultsKey = "com.ferryservices.userdefaultkeys.subscribedservices.v2"
     
-    private struct MainStoryboard {
+    fileprivate struct MainStoryboard {
         struct TableViewCellIdentifiers {
             static let serviceStatusCell = "serviceStatusCellReuseId"
         }
     }
     
-    private struct Constants {
+    fileprivate struct Constants {
         struct TableViewSections {
             static let subscribed = 0
             static let services = 1
@@ -36,49 +47,42 @@ class ServicesViewController: UITableViewController {
         }
     }
     
-    private var arrayServiceStatuses = [ServiceStatus]()
-    private var arraySubscribedServiceStatuses = [ServiceStatus]()
-    private var previewingIndexPath: NSIndexPath?
-    private var propellerView: PropellerView!
-    private var refreshing = false
-    private var searchController: UISearchController!
-    private var searchResultsController: SearchResultsViewController!
+    fileprivate var arrayServiceStatuses = [ServiceStatus]()
+    fileprivate var arraySubscribedServiceStatuses = [ServiceStatus]()
+    fileprivate var previewingIndexPath: IndexPath?
+    fileprivate var propellerView: PropellerView!
+    fileprivate var refreshing = false
+    fileprivate var searchController: UISearchController!
+    fileprivate var searchResultsController: SearchResultsViewController!
     
     // Set if we should show a service when finished loading
-    private var serviceIdToShow: Int?
+    fileprivate var serviceIdToShow: Int?
     
     // MARK: -
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Public
-    func showDetailsForServiceId(serviceId: Int, shouldFindAndHighlightRow: Bool = false) {
+    func showDetailsForServiceId(_ serviceId: Int, shouldFindAndHighlightRow: Bool = false) {
         if self.arrayServiceStatuses.count == 0 {
             // We haven't loaded yet so set the service ID to show when we do
             self.serviceIdToShow = serviceId
         }
         else {
-            self.navigationController?.popToRootViewControllerAnimated(false)
+            let _ = self.navigationController?.popToRootViewController(animated: false)
             
             if let index = self.indexOfServiceWithServiceId(serviceId, services: self.arrayServiceStatuses) {
                 if shouldFindAndHighlightRow {
                     let section = !self.arraySubscribedServiceStatuses.isEmpty ? 1 : 0
-                    let indexPath = NSIndexPath(forRow: index, inSection: section)
-                    self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
+                    let indexPath = IndexPath(row: index, section: section)
+                    self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
                 }
                 
                 let serviceStatus = self.arrayServiceStatuses[index]
                 
-                let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ServiceDetailTableViewController") as! ServiceDetailTableViewController
+                let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
                 serviceDetailViewController.serviceStatus = serviceStatus
-                
-                if let route = serviceStatus.route {
-                    Flurry.logEvent("Viewed service detail", withParameters: ["Route": route])
-                }
-                else {
-                    Flurry.logEvent("Viewed service detail")
-                }
                 
                 self.navigationController?.pushViewController(serviceDetailViewController, animated: true)
             }
@@ -89,13 +93,13 @@ class ServicesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ServicesViewController.applicationDidBecomeActive(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ServicesViewController.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
         self.tableView.backgroundView = nil
         self.tableView.backgroundColor = UIColor.tealBackgroundColor()
-        self.tableView.registerNib(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: MainStoryboard.TableViewCellIdentifiers.serviceStatusCell)
+        self.tableView.register(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: MainStoryboard.TableViewCellIdentifiers.serviceStatusCell)
         
-        self.searchResultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("SearchResultsController") as! SearchResultsViewController
+        self.searchResultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultsController") as! SearchResultsViewController
         self.searchResultsController.delegate = self
             
         self.searchController = UISearchController(searchResultsController: self.searchResultsController)
@@ -109,7 +113,7 @@ class ServicesViewController: UITableViewController {
         
         self.definesPresentationContext = true
         
-        searchController.searchBar.layer.borderColor = UIColor.tealBackgroundColor().CGColor
+        searchController.searchBar.layer.borderColor = UIColor.tealBackgroundColor().cgColor
         searchController.searchBar.layer.borderWidth = 1
         
         // Grey subview in tableview appears when pulling to refresh. Not sure what it's for :/
@@ -139,35 +143,35 @@ class ServicesViewController: UITableViewController {
         
         self.refreshWithContentInsetReset(false)
         
-        registerForPreviewingWithDelegate(self, sourceView: view)
+        registerForPreviewing(with: self, sourceView: view)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
         }
         
         self.arraySubscribedServiceStatuses = self.generateArrayOfSubscribedServiceIds()
         self.tableView.reloadData()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // Using a hack to stop search bar disappearing when it becomes active by setting this to true,
         // so set it to false when the view disappears
-        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.isTranslucent = false
     }
     
     // MARK: - Notifications
-    func applicationDidBecomeActive(notification: NSNotification) {
+    func applicationDidBecomeActive(_ notification: Notification) {
         self.refreshWithContentInsetReset(false)
     }
     
     // MARK: - Refresh
-    func refreshWithContentInsetReset(resetContentInset: Bool) {
+    func refreshWithContentInsetReset(_ resetContentInset: Bool) {
         self.refreshing = true
         self.propellerView.percentComplete = 1.0
         self.propellerView.startRotating()
@@ -183,8 +187,8 @@ class ServicesViewController: UITableViewController {
             
             // reset pull to refresh on completion
             if resetContentInset {
-                UIView.animateWithDuration(0.25, animations: {
-                    self.tableView.contentInset = UIEdgeInsetsZero
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.tableView.contentInset = UIEdgeInsets.zero
                     }, completion: { (finished) -> () in
                         self.propellerView.stopRotating()
                         self.refreshing = false
@@ -198,11 +202,11 @@ class ServicesViewController: UITableViewController {
     }
     
     // MARK: - UITableViewDataSource
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return self.arraySubscribedServiceStatuses.isEmpty ? 1 : 2
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if self.arraySubscribedServiceStatuses.isEmpty {
             return nil
         }
@@ -215,7 +219,7 @@ class ServicesViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.arraySubscribedServiceStatuses.isEmpty {
             return self.arrayServiceStatuses.count
         }
@@ -228,8 +232,8 @@ class ServicesViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let serviceStatusCell = self.tableView.dequeueReusableCellWithIdentifier(MainStoryboard.TableViewCellIdentifiers.serviceStatusCell, forIndexPath: indexPath) as! ServiceStatusCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let serviceStatusCell = self.tableView.dequeueReusableCell(withIdentifier: MainStoryboard.TableViewCellIdentifiers.serviceStatusCell, for: indexPath) as! ServiceStatusCell
         let serviceStatus = serviceStatusForTableView(tableView, indexPath: indexPath)
         serviceStatusCell.configureCellWithServiceStatus(serviceStatus)
         
@@ -237,7 +241,7 @@ class ServicesViewController: UITableViewController {
     }
     
     // MARK: - UITableViewDelegate
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let serviceStatus = self.serviceStatusForTableView(tableView, indexPath: indexPath)
         
         if let serviceId = serviceStatus.serviceId {
@@ -245,13 +249,13 @@ class ServicesViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel!.textColor = UIColor.tealTextColor()
     }
     
     // MARK: - UIScrollViewDelegate
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if self.refreshing {
             return
         }
@@ -260,7 +264,7 @@ class ServicesViewController: UITableViewController {
         propellerView.percentComplete = Float(pullToRefreshPercent)
     }
     
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView.contentOffset.y < -Constants.PullToRefresh.refreshOffset {
             refreshWithContentInsetReset(true)
             
@@ -268,28 +272,28 @@ class ServicesViewController: UITableViewController {
             var newInset = scrollView.contentInset
             newInset.top = propellerView.bounds.size.height + 14
             
-            UIView.animateWithDuration(0.25) {
+            UIView.animate(withDuration: 0.25, animations: {
                 scrollView.contentInset = newInset
                 scrollView.contentOffset = contentOffset
-            }
+            }) 
         }
     }
     
     // MARK: - Helpers
-    private func indexOfServiceWithServiceId(serviceId :Int, services :[ServiceStatus]) -> Int? {
+    fileprivate func indexOfServiceWithServiceId(_ serviceId :Int, services :[ServiceStatus]) -> Int? {
         let filteredServices = services.filter { $0.serviceId == serviceId }
         if let service = filteredServices.first {
-            return services.indexOf(service)
+            return services.index(of: service)
         }
         
         return nil
     }
 
-    private func loadDefaultFerryServices() {
-        if let defaultServicesFilePath = NSBundle.mainBundle().pathForResource("services", ofType: "json") {
+    fileprivate func loadDefaultFerryServices() {
+        if let defaultServicesFilePath = Bundle.main.path(forResource: "services", ofType: "json") {
             var fileReadError: NSError?
             do {
-                let serviceData = try NSData(contentsOfFile: defaultServicesFilePath, options: .DataReadingMappedIfSafe)
+                let serviceData = try Data(contentsOf: URL(fileURLWithPath: defaultServicesFilePath), options: .mappedIfSafe)
                 if fileReadError != nil {
                     NSLog("Error loading default services data: %@", fileReadError!)
                     return
@@ -297,9 +301,9 @@ class ServicesViewController: UITableViewController {
                 
                 var jsonParseError: NSError?
                 
-                let serviceStatusData: AnyObject?
+                let serviceStatusData: Any?
                 do {
-                    serviceStatusData = try NSJSONSerialization.JSONObjectWithData(serviceData, options: [])
+                    serviceStatusData = try JSONSerialization.jsonObject(with: serviceData, options: [])
                 } catch let error as NSError {
                     jsonParseError = error
                     serviceStatusData = nil
@@ -312,7 +316,7 @@ class ServicesViewController: UITableViewController {
                 let json = JSON(serviceStatusData!)
                 
                 if let serviceStatuses = json.array?.map({ json in ServiceStatus(data: json) }) {
-                    let sortedServiceStatuses = serviceStatuses.sort { $0.sortOrder < $1.sortOrder }
+                    let sortedServiceStatuses = serviceStatuses.sorted { $0.sortOrder < $1.sortOrder }
                     self.arrayServiceStatuses = sortedServiceStatuses
                 }
             } catch let error as NSError {
@@ -321,21 +325,21 @@ class ServicesViewController: UITableViewController {
         }
     }
     
-    private func serviceStatusForTableView(tableView: UITableView, indexPath: NSIndexPath) -> ServiceStatus {
+    fileprivate func serviceStatusForTableView(_ tableView: UITableView, indexPath: IndexPath) -> ServiceStatus {
         if self.arraySubscribedServiceStatuses.isEmpty {
-            return self.arrayServiceStatuses[indexPath.row]
+            return self.arrayServiceStatuses[(indexPath as NSIndexPath).row]
         }
         
-        switch(indexPath.section) {
+        switch((indexPath as NSIndexPath).section) {
         case Constants.TableViewSections.subscribed:
-            return self.arraySubscribedServiceStatuses[indexPath.row]
+            return self.arraySubscribedServiceStatuses[(indexPath as NSIndexPath).row]
         default:
-            return self.arrayServiceStatuses[indexPath.row]
+            return self.arrayServiceStatuses[(indexPath as NSIndexPath).row]
         }
     }
     
-    private func generateArrayOfSubscribedServiceIds() -> [ServiceStatus] {
-        guard let subscribedServiceIds = NSUserDefaults.standardUserDefaults().arrayForKey(ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] else {
+    fileprivate func generateArrayOfSubscribedServiceIds() -> [ServiceStatus] {
+        guard let subscribedServiceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] else {
             return [ServiceStatus]()
         }
         
@@ -343,12 +347,12 @@ class ServicesViewController: UITableViewController {
             return self.arrayServiceStatuses.filter { $0.serviceId == serviceId }.first
         }
         
-        return subscribedServiceStatuses.flatMap({ $0 }).sort({ $0.sortOrder < $1.sortOrder })
+        return subscribedServiceStatuses.flatMap({ $0 }).sorted(by: { $0.sortOrder < $1.sortOrder })
     }
 }
 
 extension ServicesViewController: SearchResultsViewControllerDelegate {
-    func didSelectServiceStatus(serviceStatus: ServiceStatus) {
+    func didSelectServiceStatus(_ serviceStatus: ServiceStatus) {
         if let serviceId = serviceStatus.serviceId {
             self.showDetailsForServiceId(serviceId)
         }
@@ -356,11 +360,11 @@ extension ServicesViewController: SearchResultsViewControllerDelegate {
 }
 
 extension ServicesViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
     
-    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         switch selectedScope {
         case 0:
             self.searchResultsController.showList()
@@ -375,25 +379,25 @@ extension ServicesViewController: UISearchBarDelegate {
 extension ServicesViewController: UISearchControllerDelegate {
     // Hack to stop searchbar disappearing off screen when it becomes active
     
-    func willPresentSearchController(searchController: UISearchController) {
-        self.navigationController?.navigationBar.translucent = true
+    func willPresentSearchController(_ searchController: UISearchController) {
+        self.navigationController?.navigationBar.isTranslucent = true
     }
     
-    func willDismissSearchController(searchController: UISearchController) {
-        self.navigationController?.navigationBar.translucent = false
+    func willDismissSearchController(_ searchController: UISearchController) {
+        self.navigationController?.navigationBar.isTranslucent = false
     }
 }
 
 extension ServicesViewController: UIViewControllerPreviewingDelegate {
-    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        guard let indexPath = tableView.indexPathForRowAtPoint(location),
-            cell = tableView.cellForRowAtIndexPath(indexPath) else { return nil }
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForRow(at: location),
+            let cell = tableView.cellForRow(at: indexPath) else { return nil }
         
         previewingContext.sourceRect = cell.frame
         previewingIndexPath = indexPath
         
-        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ServiceDetailTableViewController") as! ServiceDetailTableViewController
-        serviceDetailViewController.viewConfiguration = .Previewing
+        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
+        serviceDetailViewController.viewConfiguration = .previewing
         
         let serviceStatus = serviceStatusForTableView(tableView, indexPath: indexPath)
         serviceDetailViewController.serviceStatus = serviceStatus
@@ -401,16 +405,16 @@ extension ServicesViewController: UIViewControllerPreviewingDelegate {
         return serviceDetailViewController
     }
     
-    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         guard let previewingIndexPath = previewingIndexPath else { return }
         
-        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ServiceDetailTableViewController") as! ServiceDetailTableViewController
-        serviceDetailViewController.viewConfiguration = .Full
+        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
+        serviceDetailViewController.viewConfiguration = .full
         
         let serviceStatus = serviceStatusForTableView(tableView, indexPath: previewingIndexPath)
         serviceDetailViewController.serviceStatus = serviceStatus
         
-        showViewController(serviceDetailViewController, sender: self)
+        show(serviceDetailViewController, sender: self)
 
     }
 }

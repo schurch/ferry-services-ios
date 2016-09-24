@@ -41,13 +41,13 @@ struct LocationWeather: Equatable {
     var cityId: Int?
     var cityName: String?
     
-    var dateReceieved: NSDate?
+    var dateReceieved: Date?
     
     var latitude: Double?
     var longitude: Double?
     
-    var sunrise: NSDate?
-    var sunset: NSDate?
+    var sunrise: Date?
+    var sunset: Date?
     
     // wind
     var windSpeed: Double? // meters per second
@@ -84,18 +84,18 @@ struct LocationWeather: Equatable {
         self.cityName = data["name"].string
         
         if let dateReceivedData = data["dt"].double {
-            self.dateReceieved = NSDate(timeIntervalSince1970: dateReceivedData)
+            self.dateReceieved = Date(timeIntervalSince1970: dateReceivedData)
         }
         
         self.latitude = data["coord"]["lat"].double
         self.longitude = data["coord"]["lon"].double
         
         if let sunriseData = data["sys"]["sunrise"].double {
-            self.sunrise = NSDate(timeIntervalSince1970: sunriseData)
+            self.sunrise = Date(timeIntervalSince1970: sunriseData)
         }
         
         if let sunsetData = data["sys"]["sunset"].double {
-            self.sunset = NSDate(timeIntervalSince1970: sunsetData)
+            self.sunset = Date(timeIntervalSince1970: sunsetData)
         }
         
         self.windSpeed = data["wind"]["speed"].double
@@ -149,12 +149,8 @@ struct LocationWeather: Equatable {
         self.weather = data["weather"].array?.map { json in Weather(data: json) }
         
         if let weather = self.weather {
-            let descriptions = weather.filter { $0.weatherDescription != nil }.map { $0.weatherDescription!.lowercaseString }
-            
-            var combined =  descriptions.joinWithSeparator(", ")
-            combined.replaceRange(combined.startIndex...combined.startIndex, with: String(combined[combined.startIndex]).capitalizedString)
-            
-            self.combinedWeatherDescription = combined
+            let descriptions = weather.filter { $0.weatherDescription != nil }.map { $0.weatherDescription!.lowercased() }
+            self.combinedWeatherDescription = descriptions.joined(separator: ", ").capitalizingFirstLetter()
         }
     }
 }

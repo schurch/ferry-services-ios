@@ -7,25 +7,24 @@
 //
 
 import UIKit
-import Flurry_iOS_SDK
 
 class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
 
     @IBOutlet var webview: UIWebView!
     
     var serviceStatus: ServiceStatus!
-    var url: NSURL!
+    var url: URL!
     
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.isTranslucent = false
         
-        let request = NSURLRequest(URL: url)
+        let request = URLRequest(url: url)
         webview.loadRequest(request)
         
-        let shareItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(TimetablePreviewViewController.share))
+        let shareItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(TimetablePreviewViewController.share))
         self.navigationItem.rightBarButtonItem = shareItem
     }
     
@@ -33,25 +32,23 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
     override func viewDidLayoutSubviews() {
         for view in self.webview.subviews {
             for subview in view.subviews {
-                subview.backgroundColor = UIColor.whiteColor()
+                subview.backgroundColor = UIColor.white
             }
         }
     }
     
     //MARK: - Share action
     func share() {
-        Flurry.logEvent("Shared timetable")
-        
         var items = [AnyObject]()
         
         if let route = serviceStatus.route {
-            items.append(route)
+            items.append(route as AnyObject)
         }
         
-        let pdfData = NSData(contentsOfFile: url.absoluteString)
-        items.append(pdfData!)
+        let pdfData = try? Data(contentsOf: URL(fileURLWithPath: url.absoluteString))
+        items.append(pdfData! as AnyObject)
         
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        self.navigationController?.presentViewController(activityViewController, animated: true, completion: {})
+        self.navigationController?.present(activityViewController, animated: true, completion: {})
     }
 }

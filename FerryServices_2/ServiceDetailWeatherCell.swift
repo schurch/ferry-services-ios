@@ -9,10 +9,10 @@
 import UIKit
 
 protocol ServiceDetailWeatherCellDelegate: class {
-    func didTouchReloadForWeatherCell(cell: ServiceDetailWeatherCell)
+    func didTouchReloadForWeatherCell(_ cell: ServiceDetailWeatherCell)
 }
 
-class ServiceDetailWeatherCell: UITableViewCell {
+class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
     
     let animationDuration = 6.0
     
@@ -43,10 +43,10 @@ class ServiceDetailWeatherCell: UITableViewCell {
     
     struct SizingCell {
         static let instance = UINib(nibName: "WeatherCell", bundle: nil)
-            .instantiateWithOwner(nil, options: nil).first as! ServiceDetailWeatherCell
+            .instantiate(withOwner: nil, options: nil).first as! ServiceDetailWeatherCell
     }
     
-    class func heightWithLocation(location: Location, tableView: UITableView) -> CGFloat {
+    class func heightWithLocation(_ location: Location, tableView: UITableView) -> CGFloat {
         let cell = self.SizingCell.instance
         
         cell.configureWithLocation(location, animate: false)
@@ -55,9 +55,9 @@ class ServiceDetailWeatherCell: UITableViewCell {
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         
-        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        let height = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
         
-        let separatorHeight = UIScreen.mainScreen().scale / 2.0
+        let separatorHeight = UIScreen.main.scale / 2.0
         
         return height + separatorHeight
     }
@@ -77,15 +77,15 @@ class ServiceDetailWeatherCell: UITableViewCell {
         super.awakeFromNib()
         
         // 0.5 separator width
-        self.constraintViewSeparatorWidth.constant = 1 / UIScreen.mainScreen().scale
+        self.constraintViewSeparatorWidth.constant = 1 / UIScreen.main.scale
     }
     
-    @IBAction func touchedButtonReload(sender: UIButton) {
+    @IBAction func touchedButtonReload(_ sender: UIButton) {
         delegate?.didTouchReloadForWeatherCell(self)
     }
     
     // MARK: - Configure
-    func configureWithLocation(location: Location, animate: Bool) {
+    func configureWithLocation(_ location: Location, animate: Bool) {
         self.configuring = true
         
         self.location = location
@@ -93,16 +93,16 @@ class ServiceDetailWeatherCell: UITableViewCell {
         self.imageViewWindDirection.layer.removeAllAnimations()
         
         if location.weatherFetchError != nil {
-            buttonReload.hidden = false
-            viewSeparator.hidden = true
-            viewRightContainer.hidden = true
-            viewLeftContainer.hidden = true
+            buttonReload.isHidden = false
+            viewSeparator.isHidden = true
+            viewRightContainer.isHidden = true
+            viewLeftContainer.isHidden = true
         }
         else {
-            buttonReload.hidden = true
-            viewSeparator.hidden = false
-            viewRightContainer.hidden = false
-            viewLeftContainer.hidden = false
+            buttonReload.isHidden = true
+            viewSeparator.isHidden = false
+            viewRightContainer.isHidden = false
+            viewLeftContainer.isHidden = false
             
             if let locationWeather = self.location.weather {
                 if let temp = locationWeather.tempCelsius {
@@ -121,8 +121,8 @@ class ServiceDetailWeatherCell: UITableViewCell {
                 
                 if animate {
                     if let rotationAngle = self.rotationAngle {
-                        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-                            self.imageViewWindDirection.transform = CGAffineTransformMakeRotation(rotationAngle.degreesToRadians())
+                        UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                            self.imageViewWindDirection.transform = CGAffineTransform(rotationAngle: rotationAngle.degreesToRadians())
                             }, completion: { finished in
                                 self.configuring = false
                         })
@@ -156,7 +156,7 @@ class ServiceDetailWeatherCell: UITableViewCell {
             return
         }
         
-        if self.imageViewWindDirection.layer.animationForKey("wind") != nil {
+        if self.imageViewWindDirection.layer.animation(forKey: "wind") != nil {
             return
         }
         
@@ -175,15 +175,15 @@ class ServiceDetailWeatherCell: UITableViewCell {
             }
             
             animation.values = values
-            animation.keyTimes = keyTimes
+            animation.keyTimes = keyTimes as [NSNumber]?
             animation.duration = animationDuration
             animation.delegate = self
             
             CATransaction.setCompletionBlock {
-                self.imageViewWindDirection.layer.removeAnimationForKey("wind")
+                self.imageViewWindDirection.layer.removeAnimation(forKey: "wind")
             }
             
-            self.imageViewWindDirection.layer.addAnimation(animation, forKey: "wind")
+            self.imageViewWindDirection.layer.add(animation, forKey: "wind")
             
             CATransaction.commit()
         }

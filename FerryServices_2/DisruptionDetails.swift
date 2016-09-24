@@ -13,7 +13,7 @@ class DisruptionDetails: ServiceStatus {
     var additionalInfo: String?
     var details: String?
     var reason: String?
-    var disruptionUpdatedDate: NSDate?
+    var disruptionUpdatedDate: Date?
     
     var hasAdditionalInfo: Bool {
         if self.additionalInfo != nil && !self.additionalInfo!.isEmpty {
@@ -25,16 +25,16 @@ class DisruptionDetails: ServiceStatus {
     
     var lastUpdated: String? {
         if let updatedDate = self.disruptionUpdatedDate  {
-            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
-            let components = calendar.components([NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute], fromDate: updatedDate, toDate: NSDate(), options: [])
+            let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+            let components = (calendar as NSCalendar).components([NSCalendar.Unit.day, NSCalendar.Unit.hour, NSCalendar.Unit.minute], from: updatedDate, to: Date(), options: [])
             
             var updated: String
             
-            if components.day > 0 {
+            if components.day! > 0 {
                 let dayText = components.day == 1 ? "day" : "days"
                 updated = "\(components.day) \(dayText) ago"
             }
-            else if components.hour > 0 {
+            else if components.hour! > 0 {
                 let hourText = components.hour == 1 ? "hour" : "hours"
                 updated = "\(components.hour) \(hourText) ago"
             }
@@ -65,7 +65,7 @@ class DisruptionDetails: ServiceStatus {
         }
         
         if let disruptionDate = data["disruption_date"].string {
-            self.disruptionUpdatedDate = DisruptionDetails.dateFormatter.dateFromString(disruptionDate)
+            self.disruptionUpdatedDate = DisruptionDetails.dateFormatter.date(from: disruptionDate)
         }
         
         self.reason = data["disruption_reason"].string

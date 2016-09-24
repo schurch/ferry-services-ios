@@ -8,23 +8,19 @@
 
 import UIKit
 
-extension NSDate {
-    class func stripTimeComponentsFromDate(date: NSDate) -> NSDate {
-        if let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian) {
-            calendar.timeZone = NSTimeZone(abbreviation: "UTC")!
-            
-            let components = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute, NSCalendarUnit.Second], fromDate: date)
-            
-            components.hour = 0
-            components.minute = 0
-            components.second = 0
-            
-            let date = calendar.dateFromComponents(components)
-            
-            return date!
-        }
-        else {
-            return NSDate()
-        }
+extension Date {
+    static func stripTimeComponentsFromDate(_ date: Date) -> Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(abbreviation: "UTC")!
+        
+        var components = (calendar as NSCalendar).components([NSCalendar.Unit.year, NSCalendar.Unit.month, NSCalendar.Unit.day, NSCalendar.Unit.hour, NSCalendar.Unit.minute, NSCalendar.Unit.second], from: date)
+        
+        components.hour = 0
+        components.minute = 0
+        components.second = 0
+        
+        let date = calendar.date(from: components)
+        
+        return date!
     }
 }

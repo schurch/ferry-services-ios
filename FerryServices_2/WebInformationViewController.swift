@@ -28,12 +28,12 @@ class WebInformationViewController: UIViewController {
 }
 
 extension WebInformationViewController: UIWebViewDelegate {
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        guard navigationType == .LinkClicked else { return true }
-        guard let url = request.URL else { return true }
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        guard navigationType == .linkClicked else { return true }
+        guard let url = request.url else { return true }
         
-        let safariViewController = SFSafariViewController(URL: url)
-        presentViewController(safariViewController, animated: true, completion: nil)
+        let safariViewController = SFSafariViewController(url: url)
+        present(safariViewController, animated: true, completion: nil)
         
         return false
     }

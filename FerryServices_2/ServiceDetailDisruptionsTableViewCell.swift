@@ -17,10 +17,10 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     
     struct SizingCell {
         static let instance = UINib(nibName: "DisruptionsCell", bundle: nil)
-            .instantiateWithOwner(nil, options: nil).first as! ServiceDetailDisruptionsTableViewCell
+            .instantiate(withOwner: nil, options: nil).first as! ServiceDetailDisruptionsTableViewCell
     }
     
-    class func heightWithDisruptionDetails(disruptionDetails: DisruptionDetails, tableView: UITableView) -> CGFloat {
+    class func heightWithDisruptionDetails(_ disruptionDetails: DisruptionDetails, tableView: UITableView) -> CGFloat {
         let cell = self.SizingCell.instance
         
         cell.configureWithDisruptionDetails(disruptionDetails)
@@ -29,9 +29,9 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         
-        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        let height = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
         
-        let separatorHeight = UIScreen.mainScreen().scale / 2.0
+        let separatorHeight = UIScreen.main.scale / 2.0
         
         return height + separatorHeight
     }
@@ -48,9 +48,9 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     }
     
     // MARK: - Configure
-    func configureWithDisruptionDetails(disruptionDetails: DisruptionDetails) {
+    func configureWithDisruptionDetails(_ disruptionDetails: DisruptionDetails) {
         if let status = disruptionDetails.disruptionStatus {
-            if status == .SailingsCancelled {
+            if status == .sailingsCancelled {
                 self.labelDisruptionDetails.text = "Sailings have been cancelled for this service"
             }
             else {
@@ -60,15 +60,15 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
         
         if let disruptionStatus = disruptionDetails.disruptionStatus {
             switch disruptionStatus {
-            case .SailingsAffected:
+            case .sailingsAffected:
                 self.imageViewDisruption.image = UIImage(named: "amber")
-            case .SailingsCancelled:
+            case .sailingsCancelled:
                 self.imageViewDisruption.image = UIImage(named: "red")
             default:
                 self.imageViewDisruption.image = nil
             }
         }
         
-        self.labelReason.text = disruptionDetails.reason?.capitalizedString
+        self.labelReason.text = disruptionDetails.reason?.capitalized
     }
 }

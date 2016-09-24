@@ -16,10 +16,10 @@ class ServiceDetailNoDisruptionTableViewCell: UITableViewCell {
     
     struct SizingCell {
         static let instance = UINib(nibName: "NoDisruptionsCell", bundle: nil)
-            .instantiateWithOwner(nil, options: nil).first as! ServiceDetailNoDisruptionTableViewCell
+            .instantiate(withOwner: nil, options: nil).first as! ServiceDetailNoDisruptionTableViewCell
     }
     
-    class func heightWithDisruptionDetails(disruptionDetails: DisruptionDetails?, tableView: UITableView) -> CGFloat {
+    class func heightWithDisruptionDetails(_ disruptionDetails: DisruptionDetails?, tableView: UITableView) -> CGFloat {
         let cell = self.SizingCell.instance
         
         cell.configureWithDisruptionDetails(disruptionDetails)
@@ -28,9 +28,9 @@ class ServiceDetailNoDisruptionTableViewCell: UITableViewCell {
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         
-        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        let height = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
         
-        let separatorHeight = UIScreen.mainScreen().scale / 2.0
+        let separatorHeight = UIScreen.main.scale / 2.0
         
         return height + separatorHeight
     }
@@ -46,7 +46,7 @@ class ServiceDetailNoDisruptionTableViewCell: UITableViewCell {
         super.layoutSubviews()
     }
     
-    func configureWithDisruptionDetails(disruptionDetails: DisruptionDetails?) {
+    func configureWithDisruptionDetails(_ disruptionDetails: DisruptionDetails?) {
         if disruptionDetails != nil && disruptionDetails!.hasAdditionalInfo {
             showInfoButton()
         }
@@ -56,12 +56,12 @@ class ServiceDetailNoDisruptionTableViewCell: UITableViewCell {
     }
     
     func showInfoButton() {
-        buttonInfo.hidden = false
+        buttonInfo.isHidden = false
         constraintButtonWidth.constant = 22
     }
     
     func hideInfoButton() {
-        buttonInfo.hidden = true
+        buttonInfo.isHidden = true
         constraintButtonWidth.constant = 0
     }
 }
