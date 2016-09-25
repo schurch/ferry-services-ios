@@ -1,9 +1,12 @@
-platform :ios, '8.0'
+platform :ios, '10.0'
 use_frameworks!
 
 target 'FerryServices_2' do
 	pod 'SwiftyJSON'
     pod 'Parse'
+    pod 'RxSwift', '~> 3.0.0-beta.1'
+    pod 'RxCocoa', '~> 3.0.0-beta.1'
+    pod 'Alamofire', '~> 4.0'
 end
 
 post_install do |installer|

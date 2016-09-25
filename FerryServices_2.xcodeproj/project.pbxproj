@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D8B44F3B3BF85FB0D076106 /* Pods_FerryServices_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
+		FD1AA3691D978D1C003496B1 /* ServiceMapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */; };
 		FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */; };
 		FD3CF9991D972A3100B6CC99 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3CF98F1D972A3100B6CC99 /* FMDatabase.m */; };
 		FD3CF99A1D972A3100B6CC99 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3CF9911D972A3100B6CC99 /* FMDatabaseAdditions.m */; };
@@ -68,6 +69,8 @@
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC0A5C91C1956FB003407A1 /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC0A5CB1C19576E003407A1 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC0A5CA1C19576E003407A1 /* Service.swift */; };
+		FDC336351D97440C00730481 /* VesselsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC336341D97440C00730481 /* VesselsAPIClient.swift */; };
+		FDC336371D97442900730481 /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC336361D97442900730481 /* Vessel.swift */; };
 		FDC34B5C1D97362200A12758 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC34B5B1D97362200A12758 /* String+extensions.swift */; };
 		FDC7760C19844C2B00B3782F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760B19844C2B00B3782F /* Route.swift */; };
 		FDC7760E19844C3500B3782F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760D19844C3500B3782F /* Location.swift */; };
@@ -145,6 +148,7 @@
 		A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FerryServices_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E758783495CB24FC9D7FDCC4 /* Pods-FerryServices_2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FerryServices_2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2.debug.xcconfig"; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceMapDelegate.swift; sourceTree = "<group>"; };
 		FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		FD3CF98E1D972A3100B6CC99 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		FD3CF98F1D972A3100B6CC99 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -218,6 +222,8 @@
 		FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double_extensions.swift; sourceTree = "<group>"; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FDC0A5CA1C19576E003407A1 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		FDC336341D97440C00730481 /* VesselsAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VesselsAPIClient.swift; sourceTree = "<group>"; };
+		FDC336361D97442900730481 /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
 		FDC34B5B1D97362200A12758 /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FerryServices_2.entitlements; sourceTree = "<group>"; };
 		FDC7760B19844C2B00B3782F /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Route.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -403,6 +409,7 @@
 			children = (
 				FD5177F61A565E9D00F4B6B0 /* Services Client */,
 				FD5177F91A565EDA00F4B6B0 /* Weather Client */,
+				FDC336381D97443100730481 /* Vessels Client */,
 				FDA1220D1B58E03500813EF6 /* JSONRequester.swift */,
 			);
 			name = "API Client";
@@ -528,6 +535,15 @@
 			name = "Timetable Preview";
 			sourceTree = "<group>";
 		};
+		FDC336381D97443100730481 /* Vessels Client */ = {
+			isa = PBXGroup;
+			children = (
+				FDC336341D97440C00730481 /* VesselsAPIClient.swift */,
+				FDC336361D97442900730481 /* Vessel.swift */,
+			);
+			name = "Vessels Client";
+			sourceTree = "<group>";
+		};
 		FDC7761119844C4500B3782F /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -555,6 +571,7 @@
 				FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */,
 				FDF9807A1B50818000672393 /* Utility.swift */,
 				FDC34B5B1D97362200A12758 /* String+extensions.swift */,
+				FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -885,6 +902,7 @@
 				FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */,
 				FD3CF99D1D972A3100B6CC99 /* FMResultSet.m in Sources */,
 				FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */,
+				FD1AA3691D978D1C003496B1 /* ServiceMapDelegate.swift in Sources */,
 				FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */,
 				FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */,
 				FD3CF99C1D972A3100B6CC99 /* FMDatabaseQueue.m in Sources */,
@@ -896,6 +914,7 @@
 				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
 				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
+				FDC336371D97442900730481 /* Vessel.swift in Sources */,
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
 				FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */,
@@ -912,6 +931,7 @@
 				FDAC1B671B3FDFE8000353EA /* Double_extensions.swift in Sources */,
 				FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */,
 				FDF9807B1B50818000672393 /* Utility.swift in Sources */,
+				FDC336351D97440C00730481 /* VesselsAPIClient.swift in Sources */,
 				FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */,
 				FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */,
 				FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */,
@@ -1020,7 +1040,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1060,7 +1080,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1085,7 +1105,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
@@ -1115,7 +1135,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1170,12 +1190,14 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Church (N8V73QMGL4)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = L832SX5MC4;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e4669a21-1a65-4241-8e6a-479b5ebd9793";
+				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev WatchKit Extension";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -1211,11 +1233,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Church (N8V73QMGL4)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = L832SX5MC4;
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Watch_App_Extension;
 				INFOPLIST_FILE = "Watch App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1d75d14d-8b7f-4b34-b45c-9d33cfa058cb";
+				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev WatchKit";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;

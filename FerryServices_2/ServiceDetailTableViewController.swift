@@ -74,7 +74,7 @@ class ServiceDetailTableViewController: UIViewController {
     
     var alertCell: ServiceDetailReceiveAlertCellTableViewCell = UINib(nibName: "AlertCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
     
-    var annotations: [MKPointAnnotation]?
+    var mapViewDelegate: ServiceMapDelegate?
     var dataSource: [Section] = []
     var disruptionDetails: DisruptionDetails?
     var headerHeight: CGFloat!
@@ -179,7 +179,11 @@ class ServiceDetailTableViewController: UIViewController {
             self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
             self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
             
-            self.configureMapView()
+            if let locations = self.locations {
+                mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: locations, showVessels: true)
+                mapViewDelegate?.shouldAllowAnnotationSelection = false
+                mapView.delegate = mapViewDelegate
+            }
         }
         else {
             mapView.removeFromSuperview()
@@ -278,33 +282,7 @@ class ServiceDetailTableViewController: UIViewController {
     func applicationDidBecomeActive(_ notification: Notification) {
         self.refresh()
     }
-    
-    // MARK: - mapview configuration
-    func configureMapView() {
-        if let locations = self.locations {
-            if locations.count == 0 {
-                return
-            }
-            
-            if let annotations = self.annotations {
-                self.mapView.removeAnnotations(annotations)
-            }
-            
-            let annotations: [MKPointAnnotation]? = locations.map { location in
-                let annotation = MKPointAnnotation()
-                annotation.title = location.name
-                annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude!, longitude: location.longitude!)
-                return annotation
-            }
-            
-            self.annotations = annotations
-            
-            if self.annotations != nil {
-                self.mapView.addAnnotations(self.annotations!)
-            }
-        }
-    }
-    
+
     // MARK: - ui actions
     @IBAction func touchedButtonShowMap(_ sender: UIButton) {
         show(mapViewController(), sender: self)
@@ -604,7 +582,7 @@ class ServiceDetailTableViewController: UIViewController {
             mapViewController.title = "Map"
         }
         
-        mapViewController.annotations = self.annotations
+        mapViewController.locations = self.locations
         
         return mapViewController
     }
@@ -625,16 +603,16 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func setMapVisibleRect() {
-        if (self.navigationController != nil) {
-            let rect = calculateMapRectForAnnotations(self.annotations!)
-            
-            let topInset = self.navigationController?.navigationBar.frame.size.height
-            let bottomInset = self.view.bounds.size.height - MainStoryBoard.Constants.contentInset
-            
-            let visibleRect = self.mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset!, 35, bottomInset + 5, 35))
-            
-            self.mapView.setVisibleMapRect(visibleRect, animated: false)
-        }
+        guard let mapViewDelegate = mapViewDelegate else { return }
+        guard let navigationController = navigationController else { return }
+        
+        let rect = calculateMapRectForAnnotations(mapViewDelegate.portAnnotations)
+        
+        let topInset = navigationController.navigationBar.frame.size.height
+        let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset
+        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset, 35, bottomInset + 5, 35))
+        
+        mapView.setVisibleMapRect(visibleRect, animated: false)
     }
     
     fileprivate func addServiceIdToSubscribedList() {
@@ -834,12 +812,6 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
         else {
             return CGFloat.leastNormalMagnitude
         }
-    }
-}
-
-extension ServiceDetailTableViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        mapView.deselectAnnotation(view.annotation, animated: false)
     }
 }
 

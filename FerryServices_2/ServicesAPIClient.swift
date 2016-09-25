@@ -10,11 +10,10 @@ class ServicesAPIClient {
     static let sharedInstance = ServicesAPIClient()
 
     #if DEBUG
-    static let baseURL = NSURL(string: "http://test.scottishferryapp.com")
+    static let baseURL = URL(string: "http://test.scottishferryapp.com")
     #else
     static let baseURL = URL(string: "http://www.scottishferryapp.com")
     #endif
-    
     
     // MARK: - methods
     func fetchFerryServicesWithCompletion(_ completion: @escaping (_ serviceStatuses: [ServiceStatus]?, _ error: NSError?) -> ()) {
