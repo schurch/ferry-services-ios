@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D8B44F3B3BF85FB0D076106 /* Pods_FerryServices_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
+		FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1464F41D97BE090087262D /* UIImage+extensions.swift */; };
 		FD1AA3691D978D1C003496B1 /* ServiceMapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */; };
 		FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */; };
 		FD3CF9991D972A3100B6CC99 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3CF98F1D972A3100B6CC99 /* FMDatabase.m */; };
@@ -148,6 +149,7 @@
 		A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FerryServices_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E758783495CB24FC9D7FDCC4 /* Pods-FerryServices_2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FerryServices_2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2.debug.xcconfig"; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		FD1464F41D97BE090087262D /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
 		FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceMapDelegate.swift; sourceTree = "<group>"; };
 		FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		FD3CF98E1D972A3100B6CC99 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 				FDF9807A1B50818000672393 /* Utility.swift */,
 				FDC34B5B1D97362200A12758 /* String+extensions.swift */,
 				FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */,
+				FD1464F41D97BE090087262D /* UIImage+extensions.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -909,6 +912,7 @@
 				FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */,
 				FDA0ECE81A69E3FE00EDF5DA /* UIColor_extensions.swift in Sources */,
 				FD9C66191A16D2390050D99F /* NSDate_extensions.swift in Sources */,
+				FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */,
 				FDC7760E19844C3500B3782F /* Location.swift in Sources */,
 				FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */,
 				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,

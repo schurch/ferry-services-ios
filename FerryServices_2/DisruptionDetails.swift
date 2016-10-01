@@ -25,25 +25,7 @@ class DisruptionDetails: ServiceStatus {
     
     var lastUpdated: String? {
         if let updatedDate = self.disruptionUpdatedDate  {
-            let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-            let components = (calendar as NSCalendar).components([NSCalendar.Unit.day, NSCalendar.Unit.hour, NSCalendar.Unit.minute], from: updatedDate, to: Date(), options: [])
-            
-            var updated: String
-            
-            if components.day! > 0 {
-                let dayText = components.day == 1 ? "day" : "days"
-                updated = "\(components.day) \(dayText) ago"
-            }
-            else if components.hour! > 0 {
-                let hourText = components.hour == 1 ? "hour" : "hours"
-                updated = "\(components.hour) \(hourText) ago"
-            }
-            else {
-                let minuteText = components.minute == 1 ? "minute" : "minutes"
-                updated = "\(components.minute) \(minuteText) ago"
-            }
-            
-            return "Last updated \(updated)"
+            return "Last updated \(updatedDate.relativeTimeSinceNowText())"
         }
         
         return nil

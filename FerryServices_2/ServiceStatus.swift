@@ -12,7 +12,6 @@ class ServiceStatus: Equatable {
     
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        //"2015-04-18T23:08:00+00:00"
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss 'UTC'"
         formatter.timeZone = TimeZone(abbreviation: "UTC")
         return formatter

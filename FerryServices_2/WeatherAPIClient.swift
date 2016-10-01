@@ -15,6 +15,8 @@ class WeatherAPIClient {
     static let cacheTimeoutSeconds = 600.0 // 10 minutes
     static let clientErrorDomain = "WeatherAPICientErrorDomain"
     
+    private static let error = NSError(domain: WeatherAPIClient.clientErrorDomain, code: 1, userInfo: [NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."])
+    
     // MARK: - properties
     fileprivate var lastFetchTime: [String: (Date, LocationWeather)] = [String: (Date, LocationWeather)]()
     
@@ -34,25 +36,39 @@ class WeatherAPIClient {
             
             let url = URL(string: requestURL, relativeTo: WeatherAPIClient.baseURL)
             JSONRequester().requestWithURL(url!) { json, error in
-                if error == nil {
-                    if let json = json {
-                        let weather = LocationWeather(data: json)
-                        self.lastFetchTime[requestURL] = (Date(), weather) // cache result
-                        DispatchQueue.main.async(execute: {
-                            completion(weather, nil)
-                        })
-                    }
-                }
-                else {
+                guard error == nil else {
                     DispatchQueue.main.async(execute: {
                         completion(nil, error)
                     })
+                    
+                    return
                 }
+                
+                guard let json = json else {
+                    DispatchQueue.main.async(execute: {
+                        completion(nil, WeatherAPIClient.error)
+                    })
+                    
+                    return
+                }
+                
+                guard json["cod"].int == 200 else {
+                    DispatchQueue.main.async(execute: {
+                        completion(nil, WeatherAPIClient.error)
+                    })
+                    
+                    return
+                }
+                
+                let weather = LocationWeather(data: json)
+                self.lastFetchTime[requestURL] = (Date(), weather) // cache result
+                DispatchQueue.main.async(execute: {
+                    completion(weather, nil)
+                })
             }
         
         default:
-            let error = NSError(domain: WeatherAPIClient.clientErrorDomain, code: 2, userInfo: [NSLocalizedDescriptionKey: "There was an error fetching the data. Please try again."])
-            completion(nil, error)
+            completion(nil, WeatherAPIClient.error)
         }
     }
 }

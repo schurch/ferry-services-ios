@@ -12,20 +12,64 @@ import SwiftyJSON
 struct Vessel {
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        //"2016-02-06 00:49:32 +0000"
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss +0000"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss 'UTC'"
         formatter.timeZone = TimeZone(abbreviation: "UTC")
         return formatter
     }()
     
+    enum Status: Int {
+        case underwayUsingEngine = 0
+        case atAnchor = 1
+        case notUnderCommand = 2
+        case restrictedManeuverability = 3
+        case constrainedByHerDraught = 4
+        case moored = 5
+        case aground = 6
+        case engagedInFishing = 7
+        case underWaySailing = 8
+        case reserved1 = 9
+        case reserved2 = 10
+        case powerDrivenVesselTowingAstern = 11
+        case powerDrivenVesselPushingAhead = 12
+        case reserved3 = 13
+        case aisSart = 14
+        case undefined = 15
+        
+        var description: String {
+            switch self {
+            case .underwayUsingEngine:
+                return "Underway"
+            case .atAnchor:
+                return "Anchored"
+            case .notUnderCommand:
+                return "Not under command"
+            case .restrictedManeuverability:
+                return "Restriced maneuverability"
+            case .constrainedByHerDraught:
+                return "Constrained by her draft"
+            case .moored:
+                return "Moored"
+            case .aground:
+                return "Aground"
+            case .engagedInFishing:
+                return "Engaged in fishing"
+            case .underWaySailing:
+                return "Underway"
+            default:
+                return "Unknown status"
+            }
+        }
+    }
+    
     var mmsi: Int
     var updated: Date?
+    var locationUpdated: Date?
     var name: String
     var latitude: Double
     var longitude: Double
     var course: Double?
     var speed: Double?
-    var status: Int?
+    var status: Status?
     
     init(data: [String: AnyObject]) {
         let json = JSON(data)
@@ -36,12 +80,27 @@ struct Vessel {
             updated = Vessel.dateFormatter.date(from: updatedDate)
         }
         
+        if let locationUpdatedDate = json["location_updated"].string {
+            locationUpdated = Vessel.dateFormatter.date(from: locationUpdatedDate)
+        }
+        
         name = json["name"].stringValue
         latitude = json["latitude"].doubleValue
         longitude = json["longitude"].doubleValue
         course = json["course"].double
         speed = json["speed"].double
-        status = json["status"].int
+        
+        if let rawStatus = json["status"].int {
+            status = Status(rawValue: rawStatus)
+        }
+    }
+}
+
+extension Vessel {
+    var statusDescription: String {
+        guard let status = status, let locationUpdated = locationUpdated else { return "Unknown status" }
+        
+        return "\(status.description) • \(locationUpdated.relativeTimeSinceNowText())"
     }
 }
 

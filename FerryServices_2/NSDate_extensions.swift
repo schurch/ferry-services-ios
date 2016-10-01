@@ -23,4 +23,26 @@ extension Date {
         
         return date!
     }
+    
+    func relativeTimeSinceNowText() -> String {
+        let calendar = Calendar(identifier: .gregorian)
+        let components = calendar.dateComponents([.day, .hour, .minute, .second], from: self, to: Date())
+        
+        if components.day! > 0 {
+            let dayText = components.day == 1 ? "day" : "days"
+            return "\(components.day!) \(dayText) ago"
+        }
+        else if components.hour! > 0 {
+            let hourText = components.hour == 1 ? "hour" : "hours"
+            return "\(components.hour!) \(hourText) ago"
+        }
+        else if components.minute! > 0 {
+            let minuteText = components.minute == 1 ? "minute" : "minutes"
+            return "\(components.minute!) \(minuteText) ago"
+        }
+        else {
+            let secondsText = components.second == 1 ? "second" : "seconds"
+            return "\(components.second!) \(secondsText) ago"
+        }
+    }
 }

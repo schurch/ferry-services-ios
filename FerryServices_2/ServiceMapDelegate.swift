@@ -12,7 +12,13 @@ import RxSwift
 
 class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     
-    private class FerryAnnotation: MKPointAnnotation { }
+    private class VesselAnnotation: MKPointAnnotation {
+        var vessel: Vessel
+        
+        init(vessel: Vessel) {
+            self.vessel = vessel
+        }
+    }
     
     private struct Constants {
         static let portAnnotationReuseIdentifier = "PortAnnotationReuseId"
@@ -23,12 +29,10 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     
     private var disposeBag: DisposeBag = DisposeBag()
     private var mapView: MKMapView
-    private var locations: [Location]
     private(set) var portAnnotations: [MKPointAnnotation]
     
     init(mapView: MKMapView, locations: [Location], showVessels: Bool) {
         self.mapView = mapView
-        self.locations = locations
         
         portAnnotations = locations.map { location in
             let annotation = MKPointAnnotation()
@@ -56,7 +60,7 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
             return nil
         }
         
-        if annotation.isKind(of: FerryAnnotation.self) {
+        if annotation.isKind(of: VesselAnnotation.self) {
             return createFerryAnnotationView(mapView: mapView, annotation: annotation)
         }
         else {
@@ -85,11 +89,21 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     
     //MARK: - Helpers
     private func createFerryAnnotationView(mapView: MKMapView, annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let vesselAnnotation = annotation as? VesselAnnotation else { return nil }
+        
         var ferryView = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.ferryAnnotationReuseId)
         
         if ferryView == nil {
-            ferryView = MKAnnotationView(annotation: annotation, reuseIdentifier: Constants.ferryAnnotationReuseId)
-            ferryView?.image = UIImage(named: "ferry")
+            ferryView = MKAnnotationView(annotation: vesselAnnotation, reuseIdentifier: Constants.ferryAnnotationReuseId)
+            
+            let ferryImage = UIImage(named: "ferry")!
+            if let course = vesselAnnotation.vessel.course {
+                ferryView?.image = ferryImage.rotated(by: course)
+            }
+            else {
+                ferryView?.image = ferryImage
+            }
+
             ferryView?.canShowCallout = true
         }
         else {
@@ -127,10 +141,10 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
         VesselsAPIClient.fetchVessels()
             .map { vessels in
                 return vessels.map { vessel in
-                    let annotation = FerryAnnotation()
+                    let annotation = VesselAnnotation(vessel: vessel)
                     annotation.coordinate = CLLocationCoordinate2D(latitude: vessel.latitude, longitude: vessel.longitude)
                     annotation.title = vessel.name
-                    annotation.subtitle = "Last updated 4 mins ago"
+                    annotation.subtitle = vessel.statusDescription
                     
                     return annotation
                 }

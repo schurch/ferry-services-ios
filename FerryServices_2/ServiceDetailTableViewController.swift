@@ -610,7 +610,7 @@ class ServiceDetailTableViewController: UIViewController {
         
         let topInset = navigationController.navigationBar.frame.size.height
         let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset
-        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset, 35, bottomInset + 5, 35))
+        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset + 10, 35, bottomInset + 20, 35))
         
         mapView.setVisibleMapRect(visibleRect, animated: false)
     }

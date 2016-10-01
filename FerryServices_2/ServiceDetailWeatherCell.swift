@@ -122,7 +122,7 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
                 if animate {
                     if let rotationAngle = self.rotationAngle {
                         UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                            self.imageViewWindDirection.transform = CGAffineTransform(rotationAngle: rotationAngle.degreesToRadians())
+                            self.imageViewWindDirection.transform = CGAffineTransform(rotationAngle: rotationAngle.toRadians())
                             }, completion: { finished in
                                 self.configuring = false
                         })
@@ -166,7 +166,7 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
             let animation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
             
             let values = [0, -7, 7, -5, 5, -3, 3, 0].map { angle in
-                return (startingAngle + angle).degreesToRadians()
+                return (startingAngle + angle).toRadians()
             }
             
             var keyTimes = [Double]()
