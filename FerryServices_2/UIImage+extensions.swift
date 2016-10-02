@@ -22,7 +22,7 @@ extension UIImage {
             renderContext.cgContext.rotate(by: degrees.toRadians())
             renderContext.cgContext.scaleBy(x: 1.0, y: -1.0)
             
-            let drawRect = CGRect(origin: CGPoint(x: -rect.midX, y: -rect.midY), size: self.size)
+            let drawRect = CGRect(origin: CGPoint(x: -self.size.width/2, y: -self.size.height/2), size: self.size)
             renderContext.cgContext.draw(cgImage, in: drawRect)
         }
     }

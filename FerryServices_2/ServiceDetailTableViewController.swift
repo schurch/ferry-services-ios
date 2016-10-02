@@ -843,7 +843,8 @@ extension ServiceDetailTableViewController: UIViewControllerPreviewingDelegate {
 
 extension ServiceDetailTableViewController: ServiceDetailWeatherCellDelegate{
     func didTouchReloadForWeatherCell(_ cell: ServiceDetailWeatherCell) {
-        let indexPath = tableView.indexPath(for: cell)!
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
         let row = dataSource[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
         
         switch row {
