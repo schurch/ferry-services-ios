@@ -67,6 +67,7 @@
 		FDA0ECE81A69E3FE00EDF5DA /* UIColor_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */; };
 		FDA1220E1B58E03500813EF6 /* JSONRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1220D1B58E03500813EF6 /* JSONRequester.swift */; };
 		FDAC1B671B3FDFE8000353EA /* Double_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */; };
+		FDB7695B1DA0AF33009F0CC1 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC0A5C91C1956FB003407A1 /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC0A5CB1C19576E003407A1 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC0A5CA1C19576E003407A1 /* Service.swift */; };
@@ -222,6 +223,7 @@
 		FDA0ECE71A69E3FE00EDF5DA /* UIColor_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor_extensions.swift; sourceTree = "<group>"; };
 		FDA1220D1B58E03500813EF6 /* JSONRequester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRequester.swift; sourceTree = "<group>"; };
 		FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double_extensions.swift; sourceTree = "<group>"; };
+		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FDC0A5CA1C19576E003407A1 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		FDC336341D97440C00730481 /* VesselsAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VesselsAPIClient.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */,
 				FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */,
 				FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */,
+				FDB7695B1DA0AF33009F0CC1 /* Fabric.framework in Frameworks */,
 				4D8B44F3B3BF85FB0D076106 /* Pods_FerryServices_2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,6 +324,7 @@
 				FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */,
 				FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */,
 				FD8DDDB119B094B0008479DC /* Crashlytics.framework */,
+				FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */,
 				FDE0814E1983B9F600760870 /* MapKit.framework */,
 				02D9493F193C4A87EAD799AC /* Pods.framework */,
 				A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */,
@@ -1102,8 +1106,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Church (N8V73QMGL4)";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1132,8 +1135,8 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefan Church (L832SX5MC4)";
-				ENABLE_BITCODE = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stefan Church (L832SX5MC4)";
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

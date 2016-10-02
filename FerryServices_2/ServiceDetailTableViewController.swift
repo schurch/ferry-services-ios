@@ -258,6 +258,8 @@ class ServiceDetailTableViewController: UIViewController {
             
             UIApplication.shared.shortcutItems = shortcutItems
         }
+        
+        self.mapViewDelegate?.refresh()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -556,7 +558,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
 
     fileprivate func winterPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2015/Winter/\(serviceStatus.serviceId!).pdf")
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2016/Winter/\(serviceStatus.serviceId!).pdf")
     }
     
     fileprivate func summerPath() -> String {
@@ -843,7 +845,8 @@ extension ServiceDetailTableViewController: UIViewControllerPreviewingDelegate {
 
 extension ServiceDetailTableViewController: ServiceDetailWeatherCellDelegate{
     func didTouchReloadForWeatherCell(_ cell: ServiceDetailWeatherCell) {
-        let indexPath = tableView.indexPath(for: cell)!
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
         let row = dataSource[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
         
         switch row {

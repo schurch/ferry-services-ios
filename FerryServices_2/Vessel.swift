@@ -88,7 +88,10 @@ struct Vessel {
         latitude = json["latitude"].doubleValue
         longitude = json["longitude"].doubleValue
         course = json["course"].double
-        speed = json["speed"].double
+        
+        if let speedValue = json["speed"].double {
+            speed = speedValue / 100.0
+        }
         
         if let rawStatus = json["status"].int {
             status = Status(rawValue: rawStatus)
@@ -99,6 +102,10 @@ struct Vessel {
 extension Vessel {
     var statusDescription: String {
         guard let status = status, let locationUpdated = locationUpdated else { return "Unknown status" }
+        
+        if let speed = speed, speed <= 1.0, status == .underWaySailing {
+            return "Stopped • \(locationUpdated.relativeTimeSinceNowText())"
+        }
         
         return "\(status.description) • \(locationUpdated.relativeTimeSinceNowText())"
     }

@@ -30,9 +30,11 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     private var disposeBag: DisposeBag = DisposeBag()
     private var mapView: MKMapView
     private(set) var portAnnotations: [MKPointAnnotation]
+    private var showVessels: Bool
     
     init(mapView: MKMapView, locations: [Location], showVessels: Bool) {
         self.mapView = mapView
+        self.showVessels = showVessels
         
         portAnnotations = locations.map { location in
             let annotation = MKPointAnnotation()
@@ -45,13 +47,29 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
         
         super.init()
         
-        if showVessels {
+        if self.showVessels {
             fetchVessels()
+            NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
         }
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+    }
+    
+    //MARK: Public
     func showPorts() {
         mapView.showAnnotations(portAnnotations, animated: false)
+    }
+    
+    func applicationDidBecomeActive() {
+        refresh()
+    }
+    
+    func refresh() {
+        if self.showVessels {
+            fetchVessels()
+        }
     }
     
     //MARK: MKMapViewDelegate
