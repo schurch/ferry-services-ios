@@ -113,19 +113,18 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
         
         if ferryView == nil {
             ferryView = MKAnnotationView(annotation: vesselAnnotation, reuseIdentifier: Constants.ferryAnnotationReuseId)
-            
-            let ferryImage = UIImage(named: "ferry")!
-            if let course = vesselAnnotation.vessel.course {
-                ferryView?.image = ferryImage.rotated(by: course)
-            }
-            else {
-                ferryView?.image = ferryImage
-            }
-
             ferryView?.canShowCallout = true
         }
         else {
             ferryView?.annotation = annotation
+        }
+        
+        let ferryImage = UIImage(named: "ferry")!
+        if let course = vesselAnnotation.vessel.course {
+            ferryView?.image = ferryImage.rotated(by: course)
+        }
+        else {
+            ferryView?.image = ferryImage
         }
         
         return ferryView
