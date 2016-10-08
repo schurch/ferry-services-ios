@@ -26,7 +26,7 @@ struct Vessel {
         case moored = 5
         case aground = 6
         case engagedInFishing = 7
-        case underWaySailing = 8
+        case underwaySailing = 8
         case reserved1 = 9
         case reserved2 = 10
         case powerDrivenVesselTowingAstern = 11
@@ -53,7 +53,7 @@ struct Vessel {
                 return "Aground"
             case .engagedInFishing:
                 return "Engaged in fishing"
-            case .underWaySailing:
+            case .underwaySailing:
                 return "Underway"
             default:
                 return "Unknown status"
@@ -70,6 +70,10 @@ struct Vessel {
     var course: Double?
     var speed: Double?
     var status: Status?
+    
+    var isUnderway: Bool {
+        return status == .underwayUsingEngine || status == .underwaySailing
+    }
     
     init(data: [String: AnyObject]) {
         let json = JSON(data)
@@ -90,7 +94,7 @@ struct Vessel {
         course = json["course"].double
         
         if let speedValue = json["speed"].double {
-            speed = speedValue / 100.0
+            speed = speedValue / 10.0
         }
         
         if let rawStatus = json["status"].int {
@@ -103,11 +107,17 @@ extension Vessel {
     var statusDescription: String {
         guard let status = status, let locationUpdated = locationUpdated else { return "Unknown status" }
         
-        if let speed = speed, speed <= 1.0, status == .underWaySailing {
+        if let speed = speed, speed <= 1.0 && isUnderway {
             return "Stopped • \(locationUpdated.relativeTimeSinceNowText())"
         }
         
         return "\(status.description) • \(locationUpdated.relativeTimeSinceNowText())"
+    }
+}
+
+extension Vessel: Hashable {
+    var hashValue: Int {
+        return mmsi
     }
 }
 

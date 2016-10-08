@@ -157,7 +157,7 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     private func fetchVessels() {
         VesselsAPIClient.fetchVessels()
             .map { vessels in
-                return vessels.map { vessel in
+                return vessels.map { vessel -> VesselAnnotation in
                     let annotation = VesselAnnotation(vessel: vessel)
                     annotation.coordinate = CLLocationCoordinate2D(latitude: vessel.latitude, longitude: vessel.longitude)
                     annotation.title = vessel.name
@@ -168,6 +168,8 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
             }
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { annotations in
+                let vesselAnnotations = self.mapView.annotations.filter { $0.isKind(of: VesselAnnotation.self) }
+                self.mapView.removeAnnotations(vesselAnnotations)
                 self.mapView.addAnnotations(annotations)
             })
             .addDisposableTo(disposeBag)
