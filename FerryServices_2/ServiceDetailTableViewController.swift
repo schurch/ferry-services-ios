@@ -109,6 +109,8 @@ class ServiceDetailTableViewController: UIViewController {
         
         self.title = self.serviceStatus.area
         
+        LastViewedServices.register(self.serviceStatus)
+        
         self.labelArea.text = self.serviceStatus.area
         self.labelRoute.text = self.serviceStatus.route
         
@@ -183,6 +185,8 @@ class ServiceDetailTableViewController: UIViewController {
                 mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: locations, showVessels: true)
                 mapViewDelegate?.shouldAllowAnnotationSelection = false
                 mapView.delegate = mapViewDelegate
+                
+                LastViewedServices.registerMapSnapshot(mapViewDelegate!.portAnnotations)
             }
         }
         else {
@@ -226,38 +230,6 @@ class ServiceDetailTableViewController: UIViewController {
         // don't clip bounds as map extends past top allowing blur view to be pushed up and not
         // have nasty effect as it gets near top
         self.view.clipsToBounds = false
-        
-        // Update dynamic shortcuts
-        if let area = self.serviceStatus.area, let route = self.serviceStatus.route, let serviceId = self.serviceStatus.serviceId {
-            var shortcutItems = UIApplication.shared.shortcutItems ?? []
-            
-            let exitingShortcutItem = shortcutItems.filter { shortcut in
-                if let shortcutServiceId = shortcut.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
-                    return shortcutServiceId == serviceId
-                }
-                
-                return false
-            }.first
-            
-            if let shortcut = exitingShortcutItem {
-                shortcutItems.remove(at: shortcutItems.index(of: shortcut)!)
-                shortcutItems.insert(shortcut, at: 0)
-            }
-            else {
-                let shortcut = UIMutableApplicationShortcutItem(type: AppDelegate.applicationShortcutTypeRecentService, localizedTitle: area, localizedSubtitle: route, icon: nil, userInfo: [
-                    AppDelegate.applicationShortcutUserInfoKeyServiceId : serviceId
-                    ]
-                )
-                
-                shortcutItems.insert(shortcut, at: 0)
-                
-                if shortcutItems.count > 4 {
-                    shortcutItems.removeSubrange(4...(shortcutItems.count - 1))
-                }
-            }
-            
-            UIApplication.shared.shortcutItems = shortcutItems
-        }
         
         self.mapViewDelegate?.refresh()
     }

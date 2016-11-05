@@ -18,6 +18,8 @@ struct ErrorMessages {
     static let errorFetchingSubscribedServiceIds = "There was an error fetching your subscribed services"
 }
 
+let sharedDefaults = UserDefaults(suiteName: "group.stefanchurch.ferryservices")
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     

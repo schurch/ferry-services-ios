@@ -123,7 +123,7 @@ class ServicesViewController: UITableViewController {
             }
         }
         
-        self.loadDefaultFerryServices()
+        arrayServiceStatuses = ServiceStatus.defaultServices
         
         // custom pull to refresh
         propellerView = PropellerView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
@@ -287,42 +287,6 @@ class ServicesViewController: UITableViewController {
         }
         
         return nil
-    }
-
-    fileprivate func loadDefaultFerryServices() {
-        if let defaultServicesFilePath = Bundle.main.path(forResource: "services", ofType: "json") {
-            var fileReadError: NSError?
-            do {
-                let serviceData = try Data(contentsOf: URL(fileURLWithPath: defaultServicesFilePath), options: .mappedIfSafe)
-                if fileReadError != nil {
-                    NSLog("Error loading default services data: %@", fileReadError!)
-                    return
-                }
-                
-                var jsonParseError: NSError?
-                
-                let serviceStatusData: Any?
-                do {
-                    serviceStatusData = try JSONSerialization.jsonObject(with: serviceData, options: [])
-                } catch let error as NSError {
-                    jsonParseError = error
-                    serviceStatusData = nil
-                }
-                if jsonParseError != nil {
-                    NSLog("Error parsing service data json: %@", jsonParseError!)
-                    return
-                }
-                
-                let json = JSON(serviceStatusData!)
-                
-                if let serviceStatuses = json.array?.map({ json in ServiceStatus(data: json) }) {
-                    let sortedServiceStatuses = serviceStatuses.sorted { $0.sortOrder < $1.sortOrder }
-                    self.arrayServiceStatuses = sortedServiceStatuses
-                }
-            } catch let error as NSError {
-                fileReadError = error
-            }            
-        }
     }
     
     fileprivate func serviceStatusForTableView(_ tableView: UITableView, indexPath: IndexPath) -> ServiceStatus {

@@ -10,8 +10,12 @@
 		4D8B44F3B3BF85FB0D076106 /* Pods_FerryServices_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1464F41D97BE090087262D /* UIImage+extensions.swift */; };
+		FD16D95E1DCD4FE7007F4548 /* LastViewedServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD16D95D1DCD4FE7007F4548 /* LastViewedServices.swift */; };
+		FD16D9601DCD6B75007F4548 /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FD16D95F1DCD6B75007F4548 /* services.json */; };
 		FD1AA3691D978D1C003496B1 /* ServiceMapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */; };
 		FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */; };
+		FD393C391DB1A49D002C0A80 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD393C381DB1A49D002C0A80 /* Images.xcassets */; };
+		FD393C3A1DB1B36C002C0A80 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
 		FD3CF9991D972A3100B6CC99 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3CF98F1D972A3100B6CC99 /* FMDatabase.m */; };
 		FD3CF99A1D972A3100B6CC99 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3CF9911D972A3100B6CC99 /* FMDatabaseAdditions.m */; };
 		FD3CF99B1D972A3100B6CC99 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3CF9931D972A3100B6CC99 /* FMDatabasePool.m */; };
@@ -58,6 +62,8 @@
 		FD8819FD1A998D76002A976A /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FC1A998D76002A976A /* Accounts.framework */; };
 		FD8819FF1A998DAA002A976A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FE1A998DAA002A976A /* Social.framework */; };
 		FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */; };
+		FD8A235C1DBD45E100AD8EFC /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A235A1DBD45E100AD8EFC /* Port.swift */; };
+		FD8A235D1DBD45E100AD8EFC /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A235B1DBD45E100AD8EFC /* Service.swift */; };
 		FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8DDDB119B094B0008479DC /* Crashlytics.framework */; };
 		FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */; };
 		FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */; };
@@ -68,6 +74,10 @@
 		FDA1220E1B58E03500813EF6 /* JSONRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1220D1B58E03500813EF6 /* JSONRequester.swift */; };
 		FDAC1B671B3FDFE8000353EA /* Double_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */; };
 		FDB7695B1DA0AF33009F0CC1 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */; };
+		FDBD7DC11DB18FDD00698A70 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */; };
+		FDBD7DC41DB18FDD00698A70 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */; };
+		FDBD7DC71DB18FDD00698A70 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDBD7DC51DB18FDD00698A70 /* MainInterface.storyboard */; };
+		FDBD7DCB1DB18FDD00698A70 /* Today Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FDBD7DBF1DB18FDD00698A70 /* Today Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC0A5C91C1956FB003407A1 /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC0A5CB1C19576E003407A1 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC0A5CA1C19576E003407A1 /* Service.swift */; };
@@ -103,6 +113,13 @@
 			remoteGlobalIDString = FD753ECF197A256E00CC5DE3;
 			remoteInfo = FerryServices_2;
 		};
+		FDBD7DC91DB18FDD00698A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD753EC8197A256E00CC5DE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FDBD7DBE1DB18FDD00698A70;
+			remoteInfo = "Today Extension";
+		};
 		FDE391AD1C1561AD000EDE26 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FD753EC8197A256E00CC5DE3 /* Project object */;
@@ -120,6 +137,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		FDBD7DCF1DB18FDD00698A70 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FDBD7DCB1DB18FDD00698A70 /* Today Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FDE391C11C1561AE000EDE26 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -151,8 +179,11 @@
 		E758783495CB24FC9D7FDCC4 /* Pods-FerryServices_2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FerryServices_2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2.debug.xcconfig"; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1464F41D97BE090087262D /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
+		FD16D95D1DCD4FE7007F4548 /* LastViewedServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastViewedServices.swift; sourceTree = "<group>"; };
+		FD16D95F1DCD6B75007F4548 /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceMapDelegate.swift; sourceTree = "<group>"; };
 		FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		FD393C381DB1A49D002C0A80 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD3CF98E1D972A3100B6CC99 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		FD3CF98F1D972A3100B6CC99 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		FD3CF9901D972A3100B6CC99 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -210,6 +241,8 @@
 		FD8819FC1A998D76002A976A /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		FD8819FE1A998DAA002A976A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailWeatherCell.swift; sourceTree = "<group>"; };
+		FD8A235A1DBD45E100AD8EFC /* Port.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
+		FD8A235B1DBD45E100AD8EFC /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		FD8DDDB119B094B0008479DC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDisruptionsTableViewCell.swift; sourceTree = "<group>"; };
 		FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -224,6 +257,12 @@
 		FDA1220D1B58E03500813EF6 /* JSONRequester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRequester.swift; sourceTree = "<group>"; };
 		FDAC1B661B3FDFE8000353EA /* Double_extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double_extensions.swift; sourceTree = "<group>"; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		FDBD7DBF1DB18FDD00698A70 /* Today Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Today Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		FDBD7DC61DB18FDD00698A70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		FDBD7DC81DB18FDD00698A70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDBD7DD01DB1970800698A70 /* Today Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Today Extension.entitlements"; sourceTree = "<group>"; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FDC0A5CA1C19576E003407A1 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		FDC336341D97440C00730481 /* VesselsAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VesselsAPIClient.swift; sourceTree = "<group>"; };
@@ -293,6 +332,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FDBD7DBC1DB18FDD00698A70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD393C3A1DB1B36C002C0A80 /* MapKit.framework in Frameworks */,
+				FDBD7DC11DB18FDD00698A70 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FDE391A81C1561AD000EDE26 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -328,6 +376,7 @@
 				FDE0814E1983B9F600760870 /* MapKit.framework */,
 				02D9493F193C4A87EAD799AC /* Pods.framework */,
 				A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */,
+				FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -436,6 +485,7 @@
 				FD753EE5197A256E00CC5DE3 /* FerryServices_2Tests */,
 				FDE391A01C1561AD000EDE26 /* Watch App */,
 				FDE391AF1C1561AD000EDE26 /* Watch App Extension */,
+				FDBD7DC21DB18FDD00698A70 /* Today Extension */,
 				FD753ED1197A256E00CC5DE3 /* Products */,
 				6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */,
 				99EB27A6CFCB8775D37D41A7 /* Pods */,
@@ -449,6 +499,7 @@
 				FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */,
 				FDE3919F1C1561AD000EDE26 /* Watch App.app */,
 				FDE391AB1C1561AD000EDE26 /* Watch App Extension.appex */,
+				FDBD7DBF1DB18FDD00698A70 /* Today Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -541,6 +592,21 @@
 			name = "Timetable Preview";
 			sourceTree = "<group>";
 		};
+		FDBD7DC21DB18FDD00698A70 /* Today Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FD16D95F1DCD6B75007F4548 /* services.json */,
+				FDBD7DD01DB1970800698A70 /* Today Extension.entitlements */,
+				FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */,
+				FD8A235B1DBD45E100AD8EFC /* Service.swift */,
+				FD8A235A1DBD45E100AD8EFC /* Port.swift */,
+				FDBD7DC51DB18FDD00698A70 /* MainInterface.storyboard */,
+				FDBD7DC81DB18FDD00698A70 /* Info.plist */,
+				FD393C381DB1A49D002C0A80 /* Images.xcassets */,
+			);
+			path = "Today Extension";
+			sourceTree = "<group>";
+		};
 		FDC336381D97443100730481 /* Vessels Client */ = {
 			isa = PBXGroup;
 			children = (
@@ -579,6 +645,7 @@
 				FDC34B5B1D97362200A12758 /* String+extensions.swift */,
 				FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */,
 				FD1464F41D97BE090087262D /* UIImage+extensions.swift */,
+				FD16D95D1DCD4FE7007F4548 /* LastViewedServices.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -655,11 +722,13 @@
 				FDE391C51C1561AE000EDE26 /* Embed Watch Content */,
 				E72CFCEE066BA48ACA1EC23F /* [CP] Embed Pods Frameworks */,
 				9A6B0E495291D9E939FE8CE6 /* [CP] Copy Pods Resources */,
+				FDBD7DCF1DB18FDD00698A70 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				FDE391BC1C1561AD000EDE26 /* PBXTargetDependency */,
+				FDBD7DCA1DB18FDD00698A70 /* PBXTargetDependency */,
 			);
 			name = FerryServices_2;
 			productName = FerryServices_2;
@@ -683,6 +752,23 @@
 			productName = FerryServices_2Tests;
 			productReference = FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FDBD7DBE1DB18FDD00698A70 /* Today Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDBD7DCE1DB18FDD00698A70 /* Build configuration list for PBXNativeTarget "Today Extension" */;
+			buildPhases = (
+				FDBD7DBB1DB18FDD00698A70 /* Sources */,
+				FDBD7DBC1DB18FDD00698A70 /* Frameworks */,
+				FDBD7DBD1DB18FDD00698A70 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Today Extension";
+			productName = "Today Extension";
+			productReference = FDBD7DBF1DB18FDD00698A70 /* Today Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		FDE3919E1C1561AD000EDE26 /* Watch App */ = {
 			isa = PBXNativeTarget;
@@ -726,7 +812,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0710;
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Stefan Church";
 				TargetAttributes = {
@@ -735,6 +821,9 @@
 						DevelopmentTeam = L832SX5MC4;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 0;
 							};
@@ -753,6 +842,16 @@
 						CreatedOnToolsVersion = 6.0;
 						LastSwiftMigration = 0800;
 						TestTargetID = FD753ECF197A256E00CC5DE3;
+					};
+					FDBD7DBE1DB18FDD00698A70 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = L832SX5MC4;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					FDE3919E1C1561AD000EDE26 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -783,6 +882,7 @@
 				FD753EE1197A256E00CC5DE3 /* FerryServices_2Tests */,
 				FDE3919E1C1561AD000EDE26 /* Watch App */,
 				FDE391AA1C1561AD000EDE26 /* Watch App Extension */,
+				FDBD7DBE1DB18FDD00698A70 /* Today Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -811,6 +911,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FDBD7DBD1DB18FDD00698A70 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDBD7DC71DB18FDD00698A70 /* MainInterface.storyboard in Resources */,
+				FD16D9601DCD6B75007F4548 /* services.json in Resources */,
+				FD393C391DB1A49D002C0A80 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -930,6 +1040,7 @@
 				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
 				FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */,
 				FD3CF99A1D972A3100B6CC99 /* FMDatabaseAdditions.m in Sources */,
+				FD16D95E1DCD4FE7007F4548 /* LastViewedServices.swift in Sources */,
 				FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */,
 				FDA1220E1B58E03500813EF6 /* JSONRequester.swift in Sources */,
 				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
@@ -956,6 +1067,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FDBD7DBB1DB18FDD00698A70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD8A235C1DBD45E100AD8EFC /* Port.swift in Sources */,
+				FDBD7DC41DB18FDD00698A70 /* TodayViewController.swift in Sources */,
+				FD8A235D1DBD45E100AD8EFC /* Service.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FDE391A71C1561AD000EDE26 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -977,6 +1098,11 @@
 			target = FD753ECF197A256E00CC5DE3 /* FerryServices_2 */;
 			targetProxy = FD753EE3197A256E00CC5DE3 /* PBXContainerItemProxy */;
 		};
+		FDBD7DCA1DB18FDD00698A70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FDBD7DBE1DB18FDD00698A70 /* Today Extension */;
+			targetProxy = FDBD7DC91DB18FDD00698A70 /* PBXContainerItemProxy */;
+		};
 		FDE391AE1C1561AD000EDE26 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FDE391AA1C1561AD000EDE26 /* Watch App Extension */;
@@ -996,6 +1122,14 @@
 				FD753EDA197A256E00CC5DE3 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FDBD7DC51DB18FDD00698A70 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDBD7DC61DB18FDD00698A70 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		FDE391A11C1561AD000EDE26 /* Interface.storyboard */ = {
@@ -1106,6 +1240,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
+				DEVELOPMENT_TEAM = L832SX5MC4;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1117,7 +1252,8 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d624217a-aa70-4026-8fa9-04ca80f5e5f5";
+				PROVISIONING_PROFILE = "9f742e90-d21b-4601-baa5-48ddba57995d";
+				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1136,6 +1272,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stefan Church (L832SX5MC4)";
+				DEVELOPMENT_TEAM = L832SX5MC4;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1146,7 +1283,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b3da40ac-547e-429e-a2e8-772d80c03456";
+				PROVISIONING_PROFILE = "18c1c3fc-e9fc-4bd4-b4cd-48ec11121d6d";
+				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Distribution Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
@@ -1192,6 +1330,50 @@
 			};
 			name = Release;
 		};
+		FDBD7DCC1DB18FDD00698A70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Today Extension/Today Extension.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = L832SX5MC4;
+				INFOPLIST_FILE = "Today Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.todayextension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6c5e5d38-6abc-461f-844e-20609d8060fa";
+				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev Today Extension";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		FDBD7DCD1DB18FDD00698A70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Today Extension/Today Extension.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = L832SX5MC4;
+				INFOPLIST_FILE = "Today Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.todayextension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d61691df-1724-4690-8b07-a3e1360343c0";
+				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Today Extension Distribution";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		FDE391BF1C1561AE000EDE26 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1203,7 +1385,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "e4669a21-1a65-4241-8e6a-479b5ebd9793";
 				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev WatchKit Extension";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1219,12 +1400,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefan Church (L832SX5MC4)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = L832SX5MC4;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Watch App Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "894c94be-a5a3-403e-8235-321989b7b39d";
+				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Watch Extension Dist Profile";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -1246,7 +1429,6 @@
 				INFOPLIST_FILE = "Watch App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1d75d14d-8b7f-4b34-b45c-9d33cfa058cb";
 				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev WatchKit";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1264,12 +1446,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefan Church (L832SX5MC4)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = L832SX5MC4;
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = Watch_App_Extension;
 				INFOPLIST_FILE = "Watch App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "4e01c37f-f1ff-4847-bd22-ac97e1002745";
+				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Watch Distribution Profile";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -1304,6 +1488,15 @@
 			buildConfigurations = (
 				FD753EF0197A256E00CC5DE3 /* Debug */,
 				FD753EF1197A256E00CC5DE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDBD7DCE1DB18FDD00698A70 /* Build configuration list for PBXNativeTarget "Today Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDBD7DCC1DB18FDD00698A70 /* Debug */,
+				FDBD7DCD1DB18FDD00698A70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

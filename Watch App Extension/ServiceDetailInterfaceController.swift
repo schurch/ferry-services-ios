@@ -12,7 +12,7 @@ import Foundation
 class ServiceDetailInterfaceController: WKInterfaceController {
     
     static let cacheTimeoutSeconds = 600.0 // 10 minutes
-    static let connectionErrorMessage = "There was problem with the connection. Force touch the screen to refresh."
+    static let connectionErrorMessage = "There was problem with the connection. Please try again later."
     
     @IBOutlet var labelArea: WKInterfaceLabel!
     @IBOutlet var labelDisruptionInformation: WKInterfaceLabel!
