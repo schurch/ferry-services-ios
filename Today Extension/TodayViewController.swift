@@ -81,6 +81,8 @@ class TodayViewController: UIViewController {
             mapImage.isHidden = true
         }
         
+        disruptionReason.text = service.disruptionReason
+        
         messageLabel.isHidden = true
         routeLabel.isHidden = false
         serviceDetailView.isHidden = false

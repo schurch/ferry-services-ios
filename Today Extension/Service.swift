@@ -38,6 +38,8 @@ class Service: Equatable {
     var isDefault: Bool // Set if should be default service on startup
     var route: String
     var status: DisriptionStatus
+    
+    var disruptionReason: String?
 
     var ports: [Port]?
     var disruptionDetails: String?
@@ -78,6 +80,10 @@ class Service: Equatable {
                     
                     self.ports = ports.flatMap { $0 }
                 }
+            
+            if let disruptionReason = json["disruption_reason"] as? String {
+                self.disruptionReason = disruptionReason
+            }
         }
         else {
             return nil
