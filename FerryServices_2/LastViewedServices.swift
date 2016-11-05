@@ -11,14 +11,20 @@ import MapKit
 
 struct LastViewedServices {
     
+    private static let maxRecentItems = 5
     static func register(_ service: ServiceStatus) {
         guard let serviceId = service.serviceId else { return }
         
         var lastViewedServices = sharedDefaults?.array(forKey: "lastViewedServiceIds") as? [Int] ?? [Int]()
+        
+        if let existingIndex = lastViewedServices.index(of: serviceId) {
+            lastViewedServices.remove(at: existingIndex)
+        }
+        
         lastViewedServices.insert(serviceId, at: 0)
         
-        if lastViewedServices.count > 5 {
-            lastViewedServices = Array(lastViewedServices[0..<5])
+        if lastViewedServices.count > maxRecentItems {
+            lastViewedServices = Array(lastViewedServices[0..<maxRecentItems])
         }
         
         sharedDefaults?.set(lastViewedServices, forKey: "lastViewedServiceIds")
