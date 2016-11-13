@@ -25,6 +25,14 @@ class TodayViewController: UIViewController {
     
     var dataTask: URLSessionDataTask?
     
+    var serviceId: Int? {
+        if let serviceId = sharedDefaults?.array(forKey: "lastViewedServiceIds")?.first as? Int, serviceId > 0 {
+            return serviceId
+        }
+        
+        return nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +44,7 @@ class TodayViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard let serviceId = sharedDefaults?.array(forKey: "lastViewedServiceIds")?.first as? Int, serviceId > 0 else {
+        guard let serviceId = serviceId else {
             show(message: "Your most recently viewed service will show here")
             return
         }
@@ -45,6 +53,14 @@ class TodayViewController: UIViewController {
         configure(withService: service)
         
         fetchService(forServiceId: serviceId)
+    }
+    
+    @IBAction func touchedButtonOpenApp(_ sender: UIButton) {
+        guard let serviceId = serviceId else {
+            return
+        }
+        
+        extensionContext?.open(URL(string: "scottishferryapp://www.scottishferryapp.com/services/\(serviceId)")!, completionHandler: nil)
     }
     
     //MARK: - View configuration

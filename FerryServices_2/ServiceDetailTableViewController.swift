@@ -109,8 +109,6 @@ class ServiceDetailTableViewController: UIViewController {
         
         self.title = self.serviceStatus.area
         
-        LastViewedServices.register(self.serviceStatus)
-        
         self.labelArea.text = self.serviceStatus.area
         self.labelRoute.text = self.serviceStatus.route
         
@@ -125,6 +123,8 @@ class ServiceDetailTableViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailTableViewController.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
         if viewConfiguration == .full {
+            LastViewedServices.register(self.serviceStatus)
+            
             // if the visualeffect view goes past the top of the screen we want to keep showing mapview blur
             self.constraintMapViewTop.constant = -self.headerHeight
             

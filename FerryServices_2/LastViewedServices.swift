@@ -67,12 +67,35 @@ struct LastViewedServices {
                 return
             }
             
-            guard let image = snapshot?.image else {
+            guard let snapshot = snapshot else {
                 sharedDefaults?.set(nil, forKey: "mapImage")
                 return
             }
             
-            let imageData = UIImagePNGRepresentation(image)
+            let pin = MKPinAnnotationView(annotation: nil, reuseIdentifier: nil)
+            
+            UIGraphicsBeginImageContextWithOptions(snapshot.image.size, true, snapshot.image.scale)
+            snapshot.image.draw(at: CGPoint.zero)
+            
+            for annotation in annotations {
+                var point = snapshot.point(for: annotation.coordinate)
+                
+                let pinScale = CGFloat(0.5)
+                let newSize = CGSize(width: pin.image!.size.width * pinScale, height: pin.image!.size.height * pinScale)
+                
+                point.x = point.x + pin.centerOffset.x * pinScale - (newSize.width / 2)
+                point.y = point.y + pin.centerOffset.y * pinScale - (newSize.height / 2)
+                
+                let pinImage = pin.image!.scale(to: newSize)
+                
+                pinImage.draw(at: point)
+            }
+            
+            let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
+            
+            UIGraphicsEndImageContext()
+            
+            let imageData = UIImagePNGRepresentation(compositeImage!)
             sharedDefaults?.set(imageData, forKey: "mapImage")
         }
     }

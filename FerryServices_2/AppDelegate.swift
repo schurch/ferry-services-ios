@@ -84,6 +84,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.sendWatchAppContext()
     }
     
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        guard url.scheme == "scottishferryapp" else {
+            return false
+        }
+        guard let pathComponents = NSURLComponents(string: url.absoluteString)?.path?.components(separatedBy: "/") else {
+            return false
+        }
+        
+        guard pathComponents.count > 1 else {
+            return false
+        }
+        
+        let lastElements = Array(pathComponents.suffix(2))
+        guard lastElements[0] == "services" else {
+            return false
+        }
+        
+        guard let serviceId = Int(lastElements[1]) else {
+            return false
+        }
+        
+        showDetailsForServiceId(serviceId)
+        
+        return true
+    }
+    
     // MARK: - Push notifications
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Store the deviceToken in the current installation and save it to Parse.

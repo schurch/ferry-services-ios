@@ -102,15 +102,25 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PwZ-L4-wSr">
+                                <rect key="frame" x="0.0" y="0.0" width="350" height="110"/>
+                                <connections>
+                                    <action selector="touchedButtonOpenApp:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="nbv-dx-9dn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="FWm-ET-sz1" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leadingMargin" constant="50" id="2R6-Bq-Aum"/>
+                            <constraint firstItem="PwZ-L4-wSr" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" id="6rV-Jn-Z5n"/>
                             <constraint firstItem="WGU-mj-mC1" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leadingMargin" constant="4" id="9Bd-Mf-T7P"/>
                             <constraint firstItem="WGU-mj-mC1" firstAttribute="top" secondItem="S3S-Oj-5AN" secondAttribute="topMargin" id="I3f-io-uvj"/>
                             <constraint firstItem="FWm-ET-sz1" firstAttribute="centerY" secondItem="S3S-Oj-5AN" secondAttribute="centerY" id="Jjw-Ii-oQe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FWm-ET-sz1" secondAttribute="trailing" constant="50" id="KCa-aG-9EI"/>
+                            <constraint firstAttribute="trailing" secondItem="PwZ-L4-wSr" secondAttribute="trailing" id="Ogd-nY-ewp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WGU-mj-mC1" secondAttribute="trailing" id="Tm6-dd-I8r"/>
+                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="PwZ-L4-wSr" secondAttribute="bottom" id="aij-eq-0F2"/>
                             <constraint firstAttribute="bottomMargin" secondItem="WGU-mj-mC1" secondAttribute="bottom" id="leg-cP-619"/>
+                            <constraint firstItem="PwZ-L4-wSr" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="zRJ-az-pPy"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
