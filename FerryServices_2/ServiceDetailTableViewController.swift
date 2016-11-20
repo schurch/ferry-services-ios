@@ -186,7 +186,9 @@ class ServiceDetailTableViewController: UIViewController {
                 mapViewDelegate?.shouldAllowAnnotationSelection = false
                 mapView.delegate = mapViewDelegate
                 
-                LastViewedServices.registerMapSnapshot(mapViewDelegate!.portAnnotations)
+                if let portAnnotations = mapViewDelegate?.portAnnotations {
+                    LastViewedServices.registerMapSnapshot(portAnnotations)
+                }
             }
         }
         else {
@@ -462,22 +464,22 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func fetchLatestWeatherData() {
-        if let locations = self.locations {
-            for location in locations {
-                WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] weather, error in
-                    if self == nil {
-                        return
-                    }
-                    
-                    if error != nil {
-                        NSLog("Error loading weather: \(error)")
-                    }
-                    
-                    location.weather = weather
-                    location.weatherFetchError = error
-                    
-                    self!.reloadWeatherForLocation(location)
+        guard let locations = self.locations else { return }
+
+        for location in locations {
+            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] weather, error in
+                if self == nil {
+                    return
                 }
+                
+                if error != nil {
+                    NSLog("Error loading weather: \(error)")
+                }
+                
+                location.weather = weather
+                location.weatherFetchError = error
+                
+                self!.reloadWeatherForLocation(location)
             }
         }
     }

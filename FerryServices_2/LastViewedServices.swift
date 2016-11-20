@@ -42,7 +42,7 @@ struct LastViewedServices {
     }
     
     private static let mapZoomOutScale = 3.0
-    static func registerMapSnapshot(_ annotations: [MKPointAnnotation]) {
+    static func registerMapSnapshot(_ annotations: [MKPointAnnotation], completion: (() -> Void)? = nil) {
         let snapshotterOptions = MKMapSnapshotOptions()
         snapshotterOptions.size = CGSize(width: 70, height: 70)
         
@@ -57,6 +57,8 @@ struct LastViewedServices {
         mapRect.size.width = newWidth
         mapRect.origin.x = mapRect.origin.x - ((newWidth - originalWidth) / 2.0)
         mapRect.origin.y = mapRect.origin.y - ((newHeight - originalHeight) / 2.0)
+        // Offset y slightly so annotations look more centered
+        mapRect.origin.y = mapRect.origin.y - (mapRect.size.height * 0.1)
         
         snapshotterOptions.mapRect = mapRect
         
@@ -97,6 +99,8 @@ struct LastViewedServices {
             
             let imageData = UIImagePNGRepresentation(compositeImage!)
             sharedDefaults?.set(imageData, forKey: "mapImage")
+            
+            completion?()
         }
     }
 }

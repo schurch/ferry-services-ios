@@ -14,9 +14,6 @@ class TodayViewController: UIViewController {
     private let sharedDefaults = UserDefaults(suiteName: "group.stefanchurch.ferryservices")
         
     @IBOutlet weak var areaLabel: UILabel!
-    @IBOutlet weak var disruptionReason: UILabel!
-    @IBOutlet weak var disruptionView: UIStackView!
-    @IBOutlet weak var lastUpdatedLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var mapImage: UIImageView!
     @IBOutlet weak var routeLabel: UILabel!
@@ -77,16 +74,12 @@ class TodayViewController: UIViewController {
         switch service.status {
         case .unknown:
             statusImageView.image = UIImage(named: "grey")
-            disruptionView.isHidden = true
         case .normal:
             statusImageView.image = UIImage(named: "green")
-            disruptionView.isHidden = true
         case .sailingsAffected:
             statusImageView.image = UIImage(named: "amber")
-            disruptionView.isHidden = false
         case .sailingsCancelled:
             statusImageView.image = UIImage(named: "red")
-            disruptionView.isHidden = false
         }
         
         if let mapImageData = sharedDefaults?.data(forKey: "mapImage") {
@@ -96,8 +89,6 @@ class TodayViewController: UIViewController {
         else {
             mapImage.isHidden = true
         }
-        
-        disruptionReason.text = service.disruptionReason
         
         messageLabel.isHidden = true
         routeLabel.isHidden = false
