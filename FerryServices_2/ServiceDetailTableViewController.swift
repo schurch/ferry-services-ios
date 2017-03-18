@@ -536,7 +536,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func summerPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2016/Summer/\(serviceStatus.serviceId!).pdf")
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2017/Summer/\(serviceStatus.serviceId!).pdf")
     }
     
     fileprivate func pdfTimeTableViewController(_ path: String, title: String) -> UIViewController {
