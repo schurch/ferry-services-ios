@@ -1252,7 +1252,6 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9f742e90-d21b-4601-baa5-48ddba57995d";
 				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1283,7 +1282,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "18c1c3fc-e9fc-4bd4-b4cd-48ec11121d6d";
 				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Distribution Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1344,7 +1342,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.todayextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6c5e5d38-6abc-461f-844e-20609d8060fa";
 				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev Today Extension";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1367,7 +1364,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.todayextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d61691df-1724-4690-8b07-a3e1360343c0";
 				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Today Extension Distribution";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -1406,7 +1402,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "894c94be-a5a3-403e-8235-321989b7b39d";
 				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Watch Extension Dist Profile";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1452,7 +1447,6 @@
 				INFOPLIST_FILE = "Watch App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4e01c37f-f1ff-4847-bd22-ac97e1002745";
 				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Watch Distribution Profile";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
