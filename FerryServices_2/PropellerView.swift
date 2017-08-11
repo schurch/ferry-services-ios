@@ -78,7 +78,7 @@ class PropellerView: UIView {
         animating = true
         
         let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotationAnimation.toValue = M_PI * 2
+        rotationAnimation.toValue = Double.pi * 2
         rotationAnimation.duration = 0.5
         rotationAnimation.isCumulative = true
         rotationAnimation.repeatCount = HUGE

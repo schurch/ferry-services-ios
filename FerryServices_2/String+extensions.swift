@@ -20,4 +20,8 @@ extension String {
         self = self.capitalizingFirstLetter()
     }
     
+    var digits: String {
+        return components(separatedBy: CharacterSet.decimalDigits.inverted)
+            .joined()
+    }
 }

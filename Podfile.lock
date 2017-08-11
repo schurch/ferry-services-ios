@@ -1,28 +1,33 @@
 PODS:
-  - Alamofire (4.0.0)
+  - Alamofire (4.5.0)
   - Bolts/Tasks (1.8.4)
-  - Parse (1.14.2):
+  - Parse (1.15.1):
     - Bolts/Tasks (~> 1.8)
-  - RxCocoa (3.0.0-beta.1):
-    - RxSwift (~> 3.0.0-beta.1)
-  - RxSwift (3.0.0-beta.1)
-  - SwiftyJSON (3.0.0)
+  - RxCocoa (3.6.1):
+    - RxSwift (~> 3.6)
+  - RxDataSources (1.0.4):
+    - RxCocoa (~> 3.0)
+    - RxSwift (~> 3.0)
+  - RxSwift (3.6.1)
+  - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
+  - Alamofire (~> 4.4)
   - Parse
-  - RxCocoa (~> 3.0.0-beta.1)
-  - RxSwift (~> 3.0.0-beta.1)
+  - RxCocoa (~> 3.0)
+  - RxDataSources (~> 1.0)
+  - RxSwift (~> 3.0)
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
-  RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
-  RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
-  SwiftyJSON: f57b2b44bc166617372d1c70773591fe9f0f5fd4
+  Parse: b7a77b20b8a6dede8058da1e2b339593578ce158
+  RxCocoa: 84a08739ab186248c7f31ce4ee92d6f8a947d690
+  RxDataSources: b3389acc5fe2eefb8fcd81a2b76a876ad08bc82a
+  RxSwift: f9de85ea20cd2f7716ee5409fc13523dc638e4e4
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 3b7b3e16255e246373ad88032f47d8bbce7cf450
+PODFILE CHECKSUM: 935869b8800d93f2ad9c7124c529a9c478e425a1
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.2.0

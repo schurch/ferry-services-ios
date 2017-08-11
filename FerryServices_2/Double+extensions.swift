@@ -10,6 +10,6 @@ import UIKit
 
 extension Double {
     func toRadians() -> CGFloat {
-        return CGFloat(M_PI / 180.0) * CGFloat(self)
+        return CGFloat(.pi / 180.0) * CGFloat(self)
     }
 }

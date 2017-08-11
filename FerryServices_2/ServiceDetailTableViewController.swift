@@ -373,14 +373,14 @@ class ServiceDetailTableViewController: UIViewController {
             var timetableRows = [Row]()
             
             // depatures if available
-            if let routeId = self.serviceStatus.serviceId {
-                if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: Date()) {
+//            if let routeId = self.serviceStatus.serviceId {
+//                if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: Date()) {
                     let departuresRow: Row = Row.basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
                         return self.departuresViewController()
                         })
                     timetableRows.append(departuresRow)
-                }
-            }
+//                }
+//            }
             
             // winter timetable
             if isWinterTimetableAvailable() {
@@ -567,7 +567,7 @@ class ServiceDetailTableViewController: UIViewController {
         guard let routeId = self.serviceStatus.serviceId else { return nil }
         
         let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "timetableViewController") as! TimetableViewController
-        timetableViewController.routeId = routeId
+//        timetableViewController.routeId = routeId
         return timetableViewController
     }
     
