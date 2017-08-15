@@ -16,7 +16,7 @@ struct Departure {
     var departureMinute: Int
     var runTime: Int
     
-    var depatureTime: String {
+    var departureTime: String {
         return "\(departureHour.padWithZero()):\(departureMinute.padWithZero())"
     }
     
