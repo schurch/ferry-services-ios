@@ -460,7 +460,7 @@
                                             <outlet property="labelTimeCounterpart" destination="rby-Gg-Mld" id="LOD-JM-zW6"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerCell" rowHeight="216" id="Y56-vq-JKv" userLabel="datePickerCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerCell" rowHeight="216" id="Y56-vq-JKv" userLabel="datePickerCell" customClass="TimeTableDatePickerCell" customModule="FerryServices_2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="187.5" width="375" height="216"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y56-vq-JKv" id="qw8-g7-rpv">
@@ -484,6 +484,9 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="HVR-Iw-3kt" secondAttribute="trailing" id="tTe-EW-ZXB"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="datePicker" destination="HVR-Iw-3kt" id="HgR-em-521"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

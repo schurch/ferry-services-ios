@@ -373,14 +373,13 @@ class ServiceDetailTableViewController: UIViewController {
             var timetableRows = [Row]()
             
             // depatures if available
-//            if let routeId = self.serviceStatus.serviceId {
-//                if Trip.areTripsAvailableForRouteId(routeId, onOrAfterDate: Date()) {
-                    let departuresRow: Row = Row.basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
-                        return self.departuresViewController()
-                        })
-                    timetableRows.append(departuresRow)
-//                }
-//            }
+            // hardcoded to ardrossan - brodick just now
+            if serviceStatus.serviceId == 5 {
+                let departuresRow: Row = Row.basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
+                    return self.departuresViewController()
+                })
+                timetableRows.append(departuresRow)
+            }
             
             // winter timetable
             if isWinterTimetableAvailable() {
