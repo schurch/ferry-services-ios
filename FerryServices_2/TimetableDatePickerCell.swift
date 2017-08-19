@@ -20,4 +20,9 @@ class TimeTableDatePickerCell: UITableViewCell {
         disposeBag = DisposeBag()
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        datePicker.timeZone = Departures.timeZone
+    }
 }

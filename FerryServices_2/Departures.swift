@@ -15,6 +15,8 @@ protocol DBResultInitializable {
 
 class Departures {
     
+    static let timeZone = TimeZone(identifier: "UTC")
+    
     enum QueryType: String {
         case standard = "standard_departures"
         case multi = "multi_journey_departures"
@@ -23,6 +25,7 @@ class Departures {
     private static var dayOfWeekFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
+        dateFormatter.timeZone = Departures.timeZone
         return dateFormatter
     }
     
