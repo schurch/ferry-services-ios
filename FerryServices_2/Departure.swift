@@ -15,6 +15,7 @@ struct Departure {
     var departureHour: Int
     var departureMinute: Int
     var runTime: Int
+    var order: Int?
     
     var departureTime: String {
         return "\(departureHour.padWithZero()):\(departureMinute.padWithZero())"
@@ -56,31 +57,7 @@ extension Departure: DBResultInitializable {
         let depatureHour = result.int(forColumn: "Hour")
         let depatureMinute = result.int(forColumn: "Minute")
         
-        self = Departure(from: from, to: to, departureHour: Int(depatureHour), departureMinute: Int(depatureMinute), runTime: runTimeValue)
-    }
-    
-}
-
-extension Departure: Comparable {
-    
-    static func == (lhs: Departure, rhs: Departure) -> Bool {
-        return lhs.from == rhs.from
-            && lhs.to == rhs.to
-            && lhs.departureHour == rhs.departureHour
-            && lhs.departureMinute == rhs.departureMinute
-            && lhs.runTime == rhs.runTime
-    }
-    
-    static func < (lhs: Departure, rhs: Departure) -> Bool {
-        if lhs.departureHour < rhs.departureHour {
-            return true
-        }
-        
-        if lhs.departureHour == rhs.departureHour && lhs.departureMinute < rhs.departureMinute {
-            return true
-        }
-        
-        return false
+        self = Departure(from: from, to: to, departureHour: Int(depatureHour), departureMinute: Int(depatureMinute), runTime: runTimeValue, order: nil)
     }
     
 }

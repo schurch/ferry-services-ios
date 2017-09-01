@@ -80,7 +80,6 @@
 		FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */; };
 		FDB7695B1DA0AF33009F0CC1 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */; };
 		FDB848EF1F457AAB001A7D71 /* TimetableDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB848EE1F457AAB001A7D71 /* TimetableDatePickerCell.swift */; };
-		FDB848F11F457D41001A7D71 /* departures.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDB848F01F457D41001A7D71 /* departures.sqlite */; };
 		FDBD7DC11DB18FDD00698A70 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */; };
 		FDBD7DC41DB18FDD00698A70 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */; };
 		FDBD7DC71DB18FDD00698A70 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDBD7DC51DB18FDD00698A70 /* MainInterface.storyboard */; };
@@ -109,6 +108,9 @@
 		FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */; };
 		FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */; };
 		FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */; };
+		FDF75D601F550BF4002B3B12 /* departure_ports.sql in Resources */ = {isa = PBXBuildFile; fileRef = FDF75D5F1F550BF4002B3B12 /* departure_ports.sql */; };
+		FDF75D621F550DFC002B3B12 /* JourneyPorts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF75D611F550DFC002B3B12 /* JourneyPorts.swift */; };
+		FDF75D641F5510EF002B3B12 /* departures.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDF75D631F5510EF002B3B12 /* departures.sqlite */; };
 		FDF9807B1B50818000672393 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF9807A1B50818000672393 /* Utility.swift */; };
 /* End PBXBuildFile section */
 
@@ -270,7 +272,6 @@
 		FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		FDB848EE1F457AAB001A7D71 /* TimetableDatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableDatePickerCell.swift; sourceTree = "<group>"; };
-		FDB848F01F457D41001A7D71 /* departures.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = departures.sqlite; sourceTree = "<group>"; };
 		FDBD7DBF1DB18FDD00698A70 /* Today Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Today Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -304,6 +305,9 @@
 		FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ServiceStatus.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTextOnlyCell.swift; sourceTree = "<group>"; };
 		FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DisruptionDetails.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FDF75D5F1F550BF4002B3B12 /* departure_ports.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = departure_ports.sql; sourceTree = "<group>"; };
+		FDF75D611F550DFC002B3B12 /* JourneyPorts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyPorts.swift; sourceTree = "<group>"; };
+		FDF75D631F5510EF002B3B12 /* departures.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = departures.sqlite; sourceTree = "<group>"; };
 		FDF9807A1B50818000672393 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -523,7 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */,
-				FDB848F01F457D41001A7D71 /* departures.sqlite */,
+				FDF75D631F5510EF002B3B12 /* departures.sqlite */,
 				FDC77612198450AC00B3782F /* timetables.sqlite */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
@@ -554,6 +558,7 @@
 				FDC03DE819DFDD8D000CE1FA /* services.json */,
 				FD307D771F36C6D8006FB53F /* multi_journey_departures.sql */,
 				FD307D741F36B28F006FB53F /* standard_departures.sql */,
+				FDF75D5F1F550BF4002B3B12 /* departure_ports.sql */,
 				FD753ED4197A256E00CC5DE3 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -639,6 +644,7 @@
 			children = (
 				FD307D6B1F3539B3006FB53F /* Departures.swift */,
 				FD307D791F36CC39006FB53F /* Departure.swift */,
+				FDF75D611F550DFC002B3B12 /* JourneyPorts.swift */,
 				FD307D7B1F36CC67006FB53F /* MultiJourneyDeparture.swift */,
 				FDC7760B19844C2B00B3782F /* Route.swift */,
 				FDC7760D19844C3500B3782F /* Location.swift */,
@@ -913,12 +919,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDF75D641F5510EF002B3B12 /* departures.sqlite in Resources */,
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
 				FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */,
 				FD307D761F36B28F006FB53F /* standard_departures.sql in Resources */,
+				FDF75D601F550BF4002B3B12 /* departure_ports.sql in Resources */,
 				FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */,
-				FDB848F11F457D41001A7D71 /* departures.sqlite in Resources */,
 				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
 				FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */,
 				FD74D0A61A9020E200013095 /* TextOnlyCell.xib in Resources */,
@@ -1060,6 +1067,7 @@
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
 				FDC336371D97442900730481 /* Vessel.swift in Sources */,
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
+				FDF75D621F550DFC002B3B12 /* JourneyPorts.swift in Sources */,
 				FD307D7A1F36CC39006FB53F /* Departure.swift in Sources */,
 				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
 				FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */,

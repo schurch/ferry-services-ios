@@ -29,6 +29,43 @@ class Departures {
         return dateFormatter
     }
     
+    // MARK: - Public
+    static func arePortAvailable(serviceId: Int) -> Bool {
+        let file = Bundle.main.path(forResource: "departure_ports", ofType:"sql")!
+        let query = try! String.init(contentsOfFile: file)
+        
+        let results: [JourneyPorts] = fetchResults(query: query, values: [serviceId])
+        
+        return results.count > 0
+    }
+    
+    static func fetchPorts(serviceId: Int) -> [JourneyPorts] {
+        let file = Bundle.main.path(forResource: "departure_ports", ofType:"sql")!
+        let query = try! String.init(contentsOfFile: file)
+        
+        return fetchResults(query: query, values: [serviceId])
+    }
+    
+    static func fetchDepartures(date: Date, from: String, to: String, serviceId: Int) -> [Departure] {
+        let singleJourneyDepartures = fetchSingleJourneyDepartures(date: date, from: from, to: to, serviceId: serviceId)
+        let multiJourneyDepartures = fetchMultiJourneyDepartures(date: date, from: from, to: to)
+        
+        let allDepatures = (singleJourneyDepartures + multiJourneyDepartures).sorted(by: { lhs, rhs in
+            if lhs.departureHour < rhs.departureHour {
+                return true
+            }
+            
+            if lhs.departureHour == rhs.departureHour && lhs.departureMinute < rhs.departureMinute {
+                return true
+            }
+            
+            return false
+        })
+        
+        return allDepatures
+    }
+    
+    // MARK: - Private
     private static func departureSql(forDate date: Date, queryType: QueryType) -> String {
         let file = Bundle.main.path(forResource: queryType.rawValue, ofType:"sql")!
         let query = try! String.init(contentsOfFile: file)
@@ -37,21 +74,14 @@ class Departures {
         return query.replacingOccurrences(of: "{{dayOfWeek}}", with: dayOfWeekString)
     }
     
-    func fetchDepartures(date: Date, from: String, to: String) -> [Departure] {
-        let singleJourneyDepartures = fetchSingleJourneyDepartures(date: date, from: from, to: to)
-        let multiJourneyDepartures = fetchMultiJourneyDepartures(date: date, from: from, to: to)
-        let allDepatures = (singleJourneyDepartures + multiJourneyDepartures).sorted()
-        return allDepatures
-    }
-    
-    func fetchSingleJourneyDepartures(date: Date, from: String, to: String) -> [Departure] {
+    private static func fetchSingleJourneyDepartures(date: Date, from: String, to: String, serviceId: Int) -> [Departure] {
         let query = Departures.departureSql(forDate: date, queryType: .standard)
-        let departures: [Departure] = fetchResults(query: query, values: [date, date, date, date, from, to, from, to, date, date])
+        let departures: [Departure] = fetchResults(query: query, values: [date, date, date, date, from, to, serviceId, from, to, date, date])
         
         return departures
     }
     
-    private func fetchMultiJourneyDepartures(date: Date, from: String, to: String) -> [Departure] {
+    private static func fetchMultiJourneyDepartures(date: Date, from: String, to: String) -> [Departure] {
         let query = Departures.departureSql(forDate: date, queryType: .multi)
         let multiJourneys: [MultiJourneyDeparture] = fetchResults(query: query, values: [from, to, date, date, date, date, date, date])
         
@@ -82,11 +112,11 @@ class Departures {
             let actualJourneyDeparture = Calendar.current.date(byAdding: addition, to: departureDate)!
             let departureComponents = Calendar.current.dateComponents([.hour, .minute], from: actualJourneyDeparture)
             
-            return Departure(from: actualJourney.from, to: actualJourney.to, departureHour: departureComponents.hour!, departureMinute: departureComponents.minute!, runTime: actualJourney.runTime)
+            return Departure(from: actualJourney.from, to: actualJourney.to, departureHour: departureComponents.hour!, departureMinute: departureComponents.minute!, runTime: actualJourney.runTime, order: actualJourney.order)
         }
     }
     
-    private func fetchResults<T: DBResultInitializable>(query: String, values: [Any]) -> [T] {
+    static private func fetchResults<T: DBResultInitializable>(query: String, values: [Any]) -> [T] {
         let dbPath = Bundle.main.path(forResource: "departures", ofType:"sqlite")!
         guard let database = FMDatabase(path: dbPath) else { return [] }
         guard database.open() else { return [] }

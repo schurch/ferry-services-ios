@@ -22,6 +22,8 @@ class TimetableViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var serviceId: Int!
+    
     private var disposeBag = DisposeBag()
     private var expanded = Variable(false)
     private var date = Variable(Date())
@@ -75,11 +77,19 @@ class TimetableViewController: UIViewController {
             
         }
         
-        let departures = date.asObservable().map { date -> (values: [[Departure]], date: (Date)) in
-            let ardrossanToBrodick = Departures().fetchDepartures(date: date, from: "9300ARD", to: "9300BRB")
-            let brodickToArdrossan = Departures().fetchDepartures(date: date, from: "9300BRB", to: "9300ARD")
+        let journeyPorts = Observable.just(serviceId).map { return Departures.fetchPorts(serviceId: $0) }
+        
+        let departures = Observable.combineLatest(date.asObservable(), journeyPorts) { date, journeyPorts -> (values: [[Departure]], date: (Date)) in
             
-            return (values: [ardrossanToBrodick, brodickToArdrossan], date: date)
+            let departures = journeyPorts.map({ journeyPort in
+                return Departures.fetchDepartures(date: date, from: journeyPort.from, to: journeyPort.to, serviceId: self.serviceId)
+            }).sorted(by: { lhs, rhs in
+                guard let orderLhs = lhs.first?.order else { return false }
+                guard let orderRhs = rhs.first?.order else { return false }
+                return orderLhs < orderRhs
+            })
+            
+            return (values: departures, date: date)
         }
         
         let sectionData: Observable<[Section]> = Observable.combineLatest(expanded.asObservable(), departures) {

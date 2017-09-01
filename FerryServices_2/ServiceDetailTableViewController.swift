@@ -372,11 +372,9 @@ class ServiceDetailTableViewController: UIViewController {
         if viewConfiguration == .full {
             var timetableRows = [Row]()
             
-            // depatures if available
-            // hardcoded to ardrossan - brodick just now
-            if serviceStatus.serviceId == 5 {
+            if let serviceId = serviceStatus.serviceId, Departures.arePortAvailable(serviceId: serviceId) {
                 let departuresRow: Row = Row.basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
-                    return self.departuresViewController()
+                    return self.departuresViewController(serviceId: serviceId)
                 })
                 timetableRows.append(departuresRow)
             }
@@ -562,11 +560,9 @@ class ServiceDetailTableViewController: UIViewController {
         return mapViewController
     }
     
-    fileprivate func departuresViewController() -> UIViewController? {
-        guard let routeId = self.serviceStatus.serviceId else { return nil }
-        
+    fileprivate func departuresViewController(serviceId: Int) -> UIViewController? {
         let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "timetableViewController") as! TimetableViewController
-//        timetableViewController.routeId = routeId
+        timetableViewController.serviceId = serviceId
         return timetableViewController
     }
     

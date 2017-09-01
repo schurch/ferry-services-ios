@@ -374,7 +374,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ardrossan Harbour to Brodick Harbour" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dp0-X6-goy">
-                                                    <rect key="frame" x="50" y="12.5" width="266.5" height="17"/>
+                                                    <rect key="frame" x="50" y="13.5" width="266.5" height="17"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <nil key="highlightedColor"/>
@@ -391,7 +391,7 @@
                                                 <constraint firstItem="eii-Wt-p24" firstAttribute="leading" secondItem="TbW-hp-7Gx" secondAttribute="leadingMargin" id="LI2-e3-kf8"/>
                                                 <constraint firstItem="Dp0-X6-goy" firstAttribute="leading" secondItem="eii-Wt-p24" secondAttribute="trailing" constant="10" id="bba-h6-78F"/>
                                                 <constraint firstItem="eii-Wt-p24" firstAttribute="centerY" secondItem="TbW-hp-7Gx" secondAttribute="centerY" id="mCd-Bo-oqr"/>
-                                                <constraint firstItem="Dp0-X6-goy" firstAttribute="centerY" secondItem="eii-Wt-p24" secondAttribute="centerY" constant="-1" id="yKl-fe-mGC"/>
+                                                <constraint firstItem="Dp0-X6-goy" firstAttribute="centerY" secondItem="eii-Wt-p24" secondAttribute="centerY" id="yKl-fe-mGC"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

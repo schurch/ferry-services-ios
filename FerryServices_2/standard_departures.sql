@@ -52,6 +52,7 @@ INNER JOIN RouteLink RL ON RL.RouteLinkId = JPTL.RouteLinkRef
 INNER JOIN FromStopPointRef FSPR ON FSPR.StopPointRef = JPTL.JourneyPatternFromStopPointRef
 INNER JOIN ToStopPointRef TSPR ON TSPR.StopPointRef = JPTL.JourneyPatternToStopPointsRef
 WHERE VJ.{{dayOfWeek}} = 1
+AND S.CalMacServiceId = ?
 AND JPTL.JourneyPatternFromStopPointRef = ?
 AND JPTL.JourneyPatternToStopPointsRef = ?
 AND 
