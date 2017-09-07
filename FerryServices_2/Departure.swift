@@ -16,6 +16,7 @@ struct Departure {
     var departureMinute: Int
     var runTime: Int
     var order: Int?
+    var note: String?
     
     var departureTime: String {
         return "\(departureHour.padWithZero()):\(departureMinute.padWithZero())"
@@ -56,8 +57,9 @@ extension Departure: DBResultInitializable {
         
         let depatureHour = result.int(forColumn: "Hour")
         let depatureMinute = result.int(forColumn: "Minute")
+        let note = result.string(forColumn: "Note")
         
-        self = Departure(from: from, to: to, departureHour: Int(depatureHour), departureMinute: Int(depatureMinute), runTime: runTimeValue, order: nil)
+        self = Departure(from: from, to: to, departureHour: Int(depatureHour), departureMinute: Int(depatureMinute), runTime: runTimeValue, order: nil, note: note)
     }
     
 }

@@ -8,17 +8,15 @@
 
 import UIKit
 
-protocol TimetableTimeTableViewCellDelegate: class {
-    func didTouchTimetableInfoButtonForCell(_ cell :TimetableTimeTableViewCell)
-}
-
 class TimetableTimeTableViewCell: UITableViewCell {
 
+    typealias TouchedInfoButtonAction = () -> ()
+    
     @IBOutlet var buttonInfo: UIButton!
     @IBOutlet var labelTime: UILabel!
     @IBOutlet var labelTimeCounterpart: UILabel!
     
-    weak var delegate: TimetableTimeTableViewCellDelegate?
+    var touchedInfoButtonAction: TouchedInfoButtonAction?
     
     override func awakeFromNib() {
         self.buttonInfo.isHidden = true
@@ -27,7 +25,7 @@ class TimetableTimeTableViewCell: UITableViewCell {
     }
     
     @IBAction func touchedButtonInfo(_ sender: UIButton) {
-        self.delegate?.didTouchTimetableInfoButtonForCell(self)
+        touchedInfoButtonAction?()
     }
     
     override func prepareForReuse() {

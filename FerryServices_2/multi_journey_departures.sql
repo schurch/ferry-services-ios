@@ -40,7 +40,7 @@ ToStopPointRef AS
     FROM AnnotatedStopPointRef ASPR
 )
 
-SELECT RL.RouteSectionId as RouteSectionId, FSPR.StopPointRef as FromCode, FSPR.CommonName AS `From`, TSPR.StopPointRef AS ToCode, TSPR.CommonName AS `To`, VJ.DepatureHour AS Hour, VJ.DepatureMinute AS Minute, JPTL.RunTime AS RunTime, JPTL.WaitTime AS WaitTime, RL.`Order` as `Order`
+SELECT RL.RouteSectionId as RouteSectionId, FSPR.StopPointRef as FromCode, FSPR.CommonName AS `From`, TSPR.StopPointRef AS ToCode, TSPR.CommonName AS `To`, VJ.DepatureHour AS Hour, VJ.DepatureMinute AS Minute, JPTL.RunTime AS RunTime, JPTL.WaitTime AS WaitTime, RL.`Order` as `Order`, VJ.Note AS Note
 FROM RouteLink RL 
 INNER JOIN MultiLinkSections MLS ON RL.RouteSectionId = MLS.RouteSectionId
 INNER JOIN JourneyPatternTimingLink JPTL ON JPTL.RouteLinkRef = RL.RouteLinkId

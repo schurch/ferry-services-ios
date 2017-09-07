@@ -20,6 +20,7 @@ struct MultiJourneyDeparture {
     var runTime: Int
     var waitTime: Int?
     var order: Int
+    var note: String?
     
 }
 
@@ -46,7 +47,9 @@ extension MultiJourneyDeparture: DBResultInitializable {
             waitTimeValue = nil
         }
         
-        self = MultiJourneyDeparture(routeSectionId: routeSectionId, fromCode: fromCode, from: from, toCode: toCode, to: to, departureHour: Int(depatureHour), departureMinute: Int(depatureMinute), runTime: runTimeValue, waitTime: waitTimeValue, order: Int(order))
+        let note = result.string(forColumn: "note")
+        
+        self = MultiJourneyDeparture(routeSectionId: routeSectionId, fromCode: fromCode, from: from, toCode: toCode, to: to, departureHour: Int(depatureHour), departureMinute: Int(depatureMinute), runTime: runTimeValue, waitTime: waitTimeValue, order: Int(order), note: note)
     }
     
 }

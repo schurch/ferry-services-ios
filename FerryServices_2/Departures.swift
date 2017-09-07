@@ -112,7 +112,7 @@ class Departures {
             let actualJourneyDeparture = Calendar.current.date(byAdding: addition, to: departureDate)!
             let departureComponents = Calendar.current.dateComponents([.hour, .minute], from: actualJourneyDeparture)
             
-            return Departure(from: actualJourney.from, to: actualJourney.to, departureHour: departureComponents.hour!, departureMinute: departureComponents.minute!, runTime: actualJourney.runTime, order: actualJourney.order)
+            return Departure(from: actualJourney.from, to: actualJourney.to, departureHour: departureComponents.hour!, departureMinute: departureComponents.minute!, runTime: actualJourney.runTime, order: actualJourney.order, note: actualJourney.note)
         }
     }
     

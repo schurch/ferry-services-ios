@@ -42,7 +42,7 @@ MultiJourneyDepatures AS
     )
 )
 
-SELECT FSPR.CommonName AS `From`, TSPR.CommonName AS `To`, VJ.DepatureHour AS Hour, VJ.DepatureMinute AS Minute, JPTL.RunTime AS RunTime
+SELECT FSPR.CommonName AS `From`, TSPR.CommonName AS `To`, VJ.DepatureHour AS Hour, VJ.DepatureMinute AS Minute, JPTL.RunTime AS RunTime, VJ.Note AS Note
 FROM VehicleJourney VJ
 INNER JOIN JourneyPattern JP ON JP.JourneyPatternId = VJ.JourneyPatternRef
 INNER JOIN JourneyPatternSection JPS ON JPS.JourneyPatternSectionId = JP.JourneyPatternSectionRef

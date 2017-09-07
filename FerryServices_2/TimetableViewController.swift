@@ -32,7 +32,7 @@ class TimetableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Depatures"
+        title = "Departures"
         
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -47,10 +47,16 @@ class TimetableViewController: UIViewController {
                 
                 return cell
                 
-            case let .time(depatureTime, arrivalTime):
+            case let .time(depatureTime, arrivalTime, note):
                 let cell = tableView.dequeueReusableCell(withIdentifier: "timeCell", for: indexPath) as! TimetableTimeTableViewCell
                 cell.labelTime.text = depatureTime
                 cell.labelTimeCounterpart.text = "arriving at \(arrivalTime)"
+                cell.buttonInfo.isHidden = (note ?? "").isEmpty
+                cell.touchedInfoButtonAction = { [unowned self] in
+                    let alert = UIAlertController(title: note, message: nil, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
                 
                 return cell
             case let .date(date):
@@ -78,7 +84,7 @@ class TimetableViewController: UIViewController {
         }
         
         let journeyPorts = Observable.just(serviceId).map { return Departures.fetchPorts(serviceId: $0) }
-        
+
         let departures = Observable.combineLatest(date.asObservable(), journeyPorts) { date, journeyPorts -> (values: [[Departure]], date: (Date)) in
             
             let departures = journeyPorts.map({ journeyPort in
@@ -131,7 +137,7 @@ fileprivate struct Section: SectionModelType {
         case date(date: Date)
         case datePicker(date: Date)
         case header(from: String, to: String)
-        case time(departureTime: String, arrivalTime: String)
+        case time(departureTime: String, arrivalTime: String, note: String?)
         case noSailings
     }
     
@@ -150,7 +156,7 @@ fileprivate struct Section: SectionModelType {
                 
                 let header = Row.header(from: from, to: to)
                 let times = departures.map {
-                    Row.time(departureTime: $0.departureTime, arrivalTime: $0.arrivalTime(withDate: date))
+                    Row.time(departureTime: $0.departureTime, arrivalTime: $0.arrivalTime(withDate: date), note: $0.note)
                 }
                 
                 return [header] + times

@@ -95,6 +95,7 @@
 		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
 		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
+		FDCB3E5B1F61F35C00EEAD85 /* departures.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDCB3E5A1F61F35C00EEAD85 /* departures.sqlite */; };
 		FDD3ED681C49C681003444A2 /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD3ED671C49C681003444A2 /* Port.swift */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
@@ -110,7 +111,6 @@
 		FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */; };
 		FDF75D601F550BF4002B3B12 /* departure_ports.sql in Resources */ = {isa = PBXBuildFile; fileRef = FDF75D5F1F550BF4002B3B12 /* departure_ports.sql */; };
 		FDF75D621F550DFC002B3B12 /* JourneyPorts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF75D611F550DFC002B3B12 /* JourneyPorts.swift */; };
-		FDF75D641F5510EF002B3B12 /* departures.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDF75D631F5510EF002B3B12 /* departures.sqlite */; };
 		FDF9807B1B50818000672393 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF9807A1B50818000672393 /* Utility.swift */; };
 /* End PBXBuildFile section */
 
@@ -289,6 +289,7 @@
 		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Trip.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC77612198450AC00B3782F /* timetables.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = timetables.sqlite; sourceTree = "<group>"; };
 		FDCB33441A4BD6D1000033BC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		FDCB3E5A1F61F35C00EEAD85 /* departures.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = departures.sqlite; sourceTree = "<group>"; };
 		FDD3ED671C49C681003444A2 /* Port.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
 		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -307,7 +308,6 @@
 		FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DisruptionDetails.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDF75D5F1F550BF4002B3B12 /* departure_ports.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = departure_ports.sql; sourceTree = "<group>"; };
 		FDF75D611F550DFC002B3B12 /* JourneyPorts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyPorts.swift; sourceTree = "<group>"; };
-		FDF75D631F5510EF002B3B12 /* departures.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = departures.sqlite; sourceTree = "<group>"; };
 		FDF9807A1B50818000672393 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -527,7 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */,
-				FDF75D631F5510EF002B3B12 /* departures.sqlite */,
+				FDCB3E5A1F61F35C00EEAD85 /* departures.sqlite */,
 				FDC77612198450AC00B3782F /* timetables.sqlite */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
@@ -919,7 +919,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDF75D641F5510EF002B3B12 /* departures.sqlite in Resources */,
+				FDCB3E5B1F61F35C00EEAD85 /* departures.sqlite in Resources */,
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
 				FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */,
