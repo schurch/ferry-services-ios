@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -33,7 +34,7 @@
         <!--Search Results View Controller-->
         <scene sceneID="ao6-mH-kUg">
             <objects>
-                <viewController storyboardIdentifier="SearchResultsController" id="SvL-w8-QSF" customClass="SearchResultsViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchResultsController" automaticallyAdjustsScrollViewInsets="NO" id="SvL-w8-QSF" customClass="SearchResultsViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BI8-79-J1n"/>
                         <viewControllerLayoutGuide type="bottom" id="hQR-3V-iM6"/>
@@ -43,13 +44,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRk-bw-9yD">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <connections>
                                     <outlet property="delegate" destination="SvL-w8-QSF" id="ZKi-pF-rvg"/>
                                 </connections>
                             </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="40f-Ts-kFH">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="SvL-w8-QSF" id="MMx-hv-aaM"/>
@@ -59,16 +60,17 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="QRk-bw-9yD" firstAttribute="top" secondItem="BI8-79-J1n" secondAttribute="bottom" constant="88" id="69R-t5-e0G"/>
+                            <constraint firstItem="QRk-bw-9yD" firstAttribute="topMargin" secondItem="BI8-79-J1n" secondAttribute="bottom" id="69R-t5-e0G"/>
                             <constraint firstItem="hQR-3V-iM6" firstAttribute="top" secondItem="40f-Ts-kFH" secondAttribute="bottom" id="7t1-iC-LuD"/>
                             <constraint firstItem="40f-Ts-kFH" firstAttribute="leading" secondItem="0Di-8t-had" secondAttribute="leading" id="K2M-4l-0K9"/>
                             <constraint firstAttribute="trailing" secondItem="40f-Ts-kFH" secondAttribute="trailing" id="Z9f-us-cWZ"/>
                             <constraint firstItem="QRk-bw-9yD" firstAttribute="leading" secondItem="0Di-8t-had" secondAttribute="leading" id="dsZ-oL-DY3"/>
                             <constraint firstAttribute="trailing" secondItem="QRk-bw-9yD" secondAttribute="trailing" id="r5r-EP-oUi"/>
-                            <constraint firstItem="40f-Ts-kFH" firstAttribute="top" secondItem="BI8-79-J1n" secondAttribute="bottom" constant="88" id="xKP-nd-gwE"/>
+                            <constraint firstItem="40f-Ts-kFH" firstAttribute="top" secondItem="BI8-79-J1n" secondAttribute="bottom" id="xKP-nd-gwE"/>
                             <constraint firstItem="hQR-3V-iM6" firstAttribute="top" secondItem="QRk-bw-9yD" secondAttribute="bottom" id="yRz-XG-To4"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="mapView" destination="QRk-bw-9yD" id="Tyu-gz-U0r"/>
                         <outlet property="tableView" destination="40f-Ts-kFH" id="ZE4-1V-REc"/>

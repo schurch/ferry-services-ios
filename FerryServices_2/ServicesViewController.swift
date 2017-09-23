@@ -107,7 +107,7 @@ class ServicesViewController: UITableViewController {
         self.searchController.searchBar.delegate = self
         self.searchController.searchBar.sizeToFit()
         self.searchController.searchBar.barTintColor = UIColor.tealBackgroundColor()
-        self.searchController.searchBar.scopeButtonTitles = ["Services", "Ferry Terminals"]
+//        self.searchController.searchBar.scopeButtonTitles = ["Services", "Ferry Terminals"]
         self.searchController.delegate = self
         self.tableView.tableHeaderView = self.searchController.searchBar
         

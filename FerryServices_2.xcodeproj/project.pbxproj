@@ -1288,7 +1288,8 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev Profile";
+				PROVISIONING_PROFILE = "14d22b85-a79a-414d-8e08-3ddab9f7a4fa";
+				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1460,6 +1461,7 @@
 				INFOPLIST_FILE = "Watch App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "39cd13f4-c0b9-40c1-a3af-8d310362352d";
 				PROVISIONING_PROFILE_SPECIFIER = "Ferry Services Dev WatchKit";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
