@@ -77,7 +77,7 @@ class ServiceDetailTableViewController: UIViewController {
     var mapViewDelegate: ServiceMapDelegate?
     var dataSource: [Section] = []
     var disruptionDetails: DisruptionDetails?
-    var headerHeight: CGFloat!
+    var headerHeight: CGFloat?
     var mapMotionEffect: UIMotionEffectGroup!
     var mapRectSet = false
     var refreshingDisruptionInfo: Bool = true // show table as refreshing initially
@@ -112,21 +112,10 @@ class ServiceDetailTableViewController: UIViewController {
         self.labelArea.text = self.serviceStatus.area
         self.labelRoute.text = self.serviceStatus.route
         
-        self.labelArea.preferredMaxLayoutWidth = self.view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
-        self.labelRoute.preferredMaxLayoutWidth = self.view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
-        
-        self.tableView.tableHeaderView!.setNeedsLayout()
-        self.tableView.tableHeaderView!.layoutIfNeeded()
-        self.headerHeight = self.tableView.tableHeaderView!.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-        self.tableView.tableHeaderView!.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.headerHeight)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailTableViewController.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
         if viewConfiguration == .full {
             LastViewedServices.register(self.serviceStatus)
-            
-            // if the visualeffect view goes past the top of the screen we want to keep showing mapview blur
-            self.constraintMapViewTop.constant = -self.headerHeight
             
             // configure tableview
             self.tableView.contentInset = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
@@ -159,10 +148,9 @@ class ServiceDetailTableViewController: UIViewController {
             }
             
             // map button
-            let mapButton = UIButton(frame: CGRect(x: 0, y: -MainStoryBoard.Constants.contentInset, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            let mapButton = UIButton(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
             mapButton.addTarget(self, action: #selector(ServiceDetailTableViewController.touchedButtonShowMap(_:)), for: UIControlEvents.touchUpInside)
-            self.tableView.addSubview(mapButton)
-            self.tableView.sendSubview(toBack: mapButton)
+            view.insertSubview(mapButton, aboveSubview: mapView)
             
             // map motion effect
             let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: UIInterpolatingMotionEffectType.tiltAlongHorizontalAxis)
@@ -195,11 +183,13 @@ class ServiceDetailTableViewController: UIViewController {
             mapView.removeFromSuperview()
         }
         
-        let backgroundViewFrame = CGRect(x: 0, y: self.headerHeight ?? 0, width: view.bounds.width, height: view.bounds.height)
-        self.viewBackground = UIView(frame: backgroundViewFrame)
-        self.viewBackground.backgroundColor = UIColor.tealBackgroundColor()
-        self.tableView.addSubview(self.viewBackground)
-        self.tableView.sendSubview(toBack: self.viewBackground)
+        let backgroundViewFrame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        
+        viewBackground = UIView(frame: backgroundViewFrame)
+        viewBackground.backgroundColor = UIColor.tealBackgroundColor()
+        view.insertSubview(viewBackground, aboveSubview: mapView)
+        
+        self.tableView.backgroundView = nil;
         self.tableView.backgroundColor = UIColor.clear
         
         self.tableView.register(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
@@ -253,6 +243,33 @@ class ServiceDetailTableViewController: UIViewController {
             setMapVisibleRect()
             mapRectSet = true
         }
+        
+        if self.headerHeight == nil {
+            // Configure the headerview once we know we know the size of the view
+            self.labelArea.preferredMaxLayoutWidth = self.view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
+            self.labelRoute.preferredMaxLayoutWidth = self.view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
+            
+            self.tableView.tableHeaderView!.setNeedsLayout()
+            self.tableView.tableHeaderView!.layoutIfNeeded()
+            let headerHeight = self.tableView.tableHeaderView!.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            self.tableView.tableHeaderView!.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: headerHeight)
+            
+            var frame = viewBackground.frame
+            frame.origin.y = -tableView.contentOffset.y + headerHeight
+            viewBackground.frame = frame
+            
+            self.headerHeight = headerHeight
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // Scroll the viewBackground with the tableview as it's transparent
+        guard let viewBackground = viewBackground else { return }
+        guard let headerHeight = headerHeight else { return }
+        let y = -scrollView.contentOffset.y
+        var frame = viewBackground.frame
+        frame.origin.y = y + headerHeight
+        viewBackground.frame = frame
     }
     
     func applicationDidBecomeActive(_ notification: Notification) {
