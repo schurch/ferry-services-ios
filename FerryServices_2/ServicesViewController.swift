@@ -108,8 +108,7 @@ class ServicesViewController: UITableViewController {
         self.searchController.searchBar.sizeToFit()
         self.searchController.searchBar.barTintColor = UIColor.tealBackgroundColor()
 //        self.searchController.searchBar.scopeButtonTitles = ["Services", "Ferry Terminals"]
-        self.searchController.delegate = self
-        self.tableView.tableHeaderView = self.searchController.searchBar
+        tableView.tableHeaderView = searchController.searchBar
         
         self.definesPresentationContext = true
         
@@ -337,18 +336,6 @@ extension ServicesViewController: UISearchBarDelegate {
         default:
             print("Unknown scope selection")
         }
-    }
-}
-
-extension ServicesViewController: UISearchControllerDelegate {
-    // Hack to stop searchbar disappearing off screen when it becomes active
-    
-    func willPresentSearchController(_ searchController: UISearchController) {
-        self.navigationController?.navigationBar.isTranslucent = true
-    }
-    
-    func willDismissSearchController(_ searchController: UISearchController) {
-        self.navigationController?.navigationBar.isTranslucent = false
     }
 }
 

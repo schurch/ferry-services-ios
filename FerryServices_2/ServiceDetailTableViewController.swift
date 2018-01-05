@@ -147,11 +147,6 @@ class ServiceDetailTableViewController: UIViewController {
                 }
             }
             
-            // map button
-            let mapButton = UIButton(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-            mapButton.addTarget(self, action: #selector(ServiceDetailTableViewController.touchedButtonShowMap(_:)), for: UIControlEvents.touchUpInside)
-            view.insertSubview(mapButton, aboveSubview: mapView)
-            
             // map motion effect
             let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: UIInterpolatingMotionEffectType.tiltAlongHorizontalAxis)
             horizontalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
@@ -168,6 +163,7 @@ class ServiceDetailTableViewController: UIViewController {
             // extend edges of map as motion effect will move them
             self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
             self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
+            self.constraintMapViewTop.constant = -20
             
             if let locations = self.locations {
                 mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: locations, showVessels: true)
@@ -178,6 +174,10 @@ class ServiceDetailTableViewController: UIViewController {
                     LastViewedServices.registerMapSnapshot(portAnnotations)
                 }
             }
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(touchedButtonShowMap(_:)))
+            self.tableView.backgroundView = UIView()
+            self.tableView.backgroundView?.addGestureRecognizer(tap)
         }
         else {
             mapView.removeFromSuperview()
@@ -187,9 +187,8 @@ class ServiceDetailTableViewController: UIViewController {
         
         viewBackground = UIView(frame: backgroundViewFrame)
         viewBackground.backgroundColor = UIColor.tealBackgroundColor()
-        view.insertSubview(viewBackground, aboveSubview: mapView)
+        view.insertSubview(viewBackground, belowSubview: tableView)
         
-        self.tableView.backgroundView = nil;
         self.tableView.backgroundColor = UIColor.clear
         
         self.tableView.register(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
@@ -598,7 +597,7 @@ class ServiceDetailTableViewController: UIViewController {
         
         let topInset = navigationController.navigationBar.frame.size.height
         let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset
-        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset + 10, 35, bottomInset + 20, 35))
+        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset + 20, 30, bottomInset - 20, 30))
         
         mapView.setVisibleMapRect(visibleRect, animated: false)
     }
