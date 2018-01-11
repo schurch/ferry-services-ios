@@ -165,7 +165,7 @@ class ServicesViewController: UITableViewController {
     }
     
     // MARK: - Notifications
-    func applicationDidBecomeActive(_ notification: Notification) {
+    @objc func applicationDidBecomeActive(_ notification: Notification) {
         self.refreshWithContentInsetReset(false)
     }
     

@@ -95,7 +95,7 @@ class ServiceDetailInterfaceController: WKInterfaceController {
         if let disruptionDetailsHtml = service.disruptionDetails {
             if let data = disruptionDetailsHtml.data(using: .utf8) {
                 do {
-                    let attributeText = try NSAttributedString(data: data, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: String.Encoding.utf8.rawValue], documentAttributes: nil)
+                    let attributeText = try NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html, NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
                     self.labelDisruptionInformation.setAttributedText(attributeText)
                 } catch let error as NSError {
                     print(error.localizedDescription)

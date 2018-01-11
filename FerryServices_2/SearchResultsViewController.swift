@@ -92,7 +92,7 @@ class SearchResultsViewController: UIViewController {
     }
     
     // MARK: - Public
-    func keyboardShownNotification(_ notification: Notification) {
+    @objc func keyboardShownNotification(_ notification: Notification) {
         if let height = ((notification as NSNotification).userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size.height {
             let inset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: height, right: 0.0)
             self.tableView.contentInset = inset
@@ -104,7 +104,7 @@ class SearchResultsViewController: UIViewController {
         }
     }
     
-    func keyboardWillBeHiddenNotification(_ notification: Notification) {
+    @objc func keyboardWillBeHiddenNotification(_ notification: Notification) {
         self.tableView.contentInset = UIEdgeInsets.zero
         self.tableView.scrollIndicatorInsets = UIEdgeInsets.zero
         

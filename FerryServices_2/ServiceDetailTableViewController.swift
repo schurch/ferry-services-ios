@@ -271,7 +271,7 @@ class ServiceDetailTableViewController: UIViewController {
         viewBackground.frame = frame
     }
     
-    func applicationDidBecomeActive(_ notification: Notification) {
+    @objc func applicationDidBecomeActive(_ notification: Notification) {
         self.refresh()
     }
 
@@ -280,7 +280,7 @@ class ServiceDetailTableViewController: UIViewController {
         show(mapViewController(), sender: self)
     }
     
-    func alertSwitchChanged(_ switchState: UISwitch) {
+    @objc func alertSwitchChanged(_ switchState: UISwitch) {
         let currentInstallation = PFInstallation.current()
         let isSwitchOn = switchState.isOn
         
@@ -437,7 +437,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     // MARK: - Utility methods
-    func animateWindVanes() {
+    @objc func animateWindVanes() {
         for cell in self.tableView.visibleCells {
             if let weatherCell = cell as? ServiceDetailWeatherCell {
                 let randomDelay = Double(arc4random_uniform(4))

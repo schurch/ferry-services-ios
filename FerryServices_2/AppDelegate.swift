@@ -64,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if WCSession.isSupported() {
-            let session = WCSession.default()
+            let session = WCSession.default
             session.delegate = self;
             session.activate()
         }
@@ -179,7 +179,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        let session = WCSession.default()
+        let session = WCSession.default
         
         if session.isPaired && session.isWatchAppInstalled {
             do {

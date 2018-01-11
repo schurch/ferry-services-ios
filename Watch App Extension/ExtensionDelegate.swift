@@ -68,7 +68,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
             return
         }
         
-        let session = WCSession.default()
+        let session = WCSession.default
         session.delegate = self
         session.activate()
 

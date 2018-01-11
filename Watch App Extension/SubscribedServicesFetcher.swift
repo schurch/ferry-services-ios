@@ -26,7 +26,7 @@ internal class SubscribedServicesFetcher {
         
         state = .running
         
-        guard WCSession.default().isReachable else {
+        guard WCSession.default.isReachable else {
             let errorMessage = "Cannot communicate with your phone. Please check that bluetooth is enabled."
             let error = NSError(domain: "com.stefanchurch.ferryservices.watchkitapp.watchkitextension", code: 1, userInfo: [NSLocalizedDescriptionKey: errorMessage])
             
@@ -36,7 +36,7 @@ internal class SubscribedServicesFetcher {
             return
         }
         
-        WCSession.default().sendMessage(["action": "fetchSubscribedServices"], replyHandler: { response in
+        WCSession.default.sendMessage(["action": "fetchSubscribedServices"], replyHandler: { response in
             if let subscribedServiceIds = response["subscribedServiceIds"] as? [Int] {
                 DispatchQueue.main.async(execute: {
                     completion(RequestResult.result(result: subscribedServiceIds))

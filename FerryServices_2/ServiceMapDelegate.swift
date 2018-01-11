@@ -62,7 +62,7 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
         mapView.showAnnotations(portAnnotations, animated: false)
     }
     
-    func applicationDidBecomeActive() {
+    @objc func applicationDidBecomeActive() {
         refresh()
     }
     

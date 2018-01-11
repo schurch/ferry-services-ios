@@ -38,7 +38,7 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
     }
     
     //MARK: - Share action
-    func share() {
+    @objc func share() {
         var items = [AnyObject]()
         
         if let route = serviceStatus.route {
