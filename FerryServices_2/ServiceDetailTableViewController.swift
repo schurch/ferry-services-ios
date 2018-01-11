@@ -11,7 +11,7 @@ import MapKit
 import QuickLook
 import Parse
 
-typealias ViewControllerGenerator = (Void) -> UIViewController?
+typealias ViewControllerGenerator = () -> UIViewController?
 
 class ServiceDetailTableViewController: UIViewController {
     
@@ -300,7 +300,7 @@ class ServiceDetailTableViewController: UIViewController {
             
             guard error == nil else {
                 self.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
-                print("Error subscribing to services: \(error)")
+                print("Error subscribing to services: \(error!)")
                 return
             }
             
@@ -485,7 +485,7 @@ class ServiceDetailTableViewController: UIViewController {
                     return
                 }
                 
-                if error != nil {
+                if let error = error {
                     NSLog("Error loading weather: \(error)")
                 }
                 
@@ -841,7 +841,7 @@ extension ServiceDetailTableViewController: ServiceDetailWeatherCellDelegate{
                     return
                 }
                 
-                if (error != nil) {
+                if let error = error {
                     NSLog("Error loading weather: \(error)")
                 }
                 

@@ -21,7 +21,7 @@ class JSONRequester {
             PFNetworkActivityIndicatorManager.shared().decrementActivityCount()
             
             guard error == nil else {
-                completion(nil, error as? NSError)
+                completion(nil, error as NSError?)
                 return
             }
             

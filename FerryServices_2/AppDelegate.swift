@@ -117,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         installation?.deviceToken = "" // For some reason the installation isn't saving unless we do this before setting the token below.
         installation?.setDeviceTokenFrom(deviceToken)
         installation?.saveInBackground { (success, error) in
-            if error != nil {
+            if let error = error {
                 print("Error registering device token \(error)")
             }
         }

@@ -99,7 +99,10 @@ class Location : Hashable {
     var longitude: Double?
 
     var hashValue: Int {
-        return "\(self.name)\(self.latitude)\(self.longitude)".hashValue
+        let name = self.name ?? ""
+        let latitude = self.latitude ?? 0
+        let longitude = self.longitude ?? 0
+        return "\(name)\(latitude)\(longitude)".hashValue
     }
     
     var weather: LocationWeather?
