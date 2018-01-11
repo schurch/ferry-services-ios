@@ -172,6 +172,6 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
                 self.mapView.removeAnnotations(vesselAnnotations)
                 self.mapView.addAnnotations(annotations)
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }

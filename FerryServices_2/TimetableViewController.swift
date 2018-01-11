@@ -27,7 +27,7 @@ class TimetableViewController: UIViewController {
     private var disposeBag = DisposeBag()
     private var expanded = Variable(false)
     private var date = Variable(Date())
-    private var dataSource = RxTableViewSectionedReloadDataSource<Section>()
+    private var dataSource: RxTableViewSectionedReloadDataSource<Section>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +37,7 @@ class TimetableViewController: UIViewController {
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        dataSource.configureCell = { [unowned self] dataSource, tableView, indexPath, item in
+        dataSource = RxTableViewSectionedReloadDataSource<Section>(configureCell: { [unowned self] dataSource, tableView, indexPath, item in
             
             switch item {
             case let .header(from, to):
@@ -80,8 +80,7 @@ class TimetableViewController: UIViewController {
                 return tableView.dequeueReusableCell(withIdentifier: "noSailingsCell", for: indexPath)
                 
             }
-            
-        }
+        })
         
         let journeyPorts = Observable.just(serviceId).map { return Departures.fetchPorts(serviceId: $0) }
 
@@ -126,7 +125,7 @@ class TimetableViewController: UIViewController {
             if case .date = item {
                 self.expanded.value =  !self.expanded.value
             }
-        }).addDisposableTo(disposeBag)
+        }).disposed(by: disposeBag)
     }
     
 }
