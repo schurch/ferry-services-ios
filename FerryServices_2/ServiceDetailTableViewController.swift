@@ -163,7 +163,7 @@ class ServiceDetailTableViewController: UIViewController {
             // extend edges of map as motion effect will move them
             self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
             self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
-            self.constraintMapViewTop.constant = -20
+            self.constraintMapViewTop.constant = -MainStoryBoard.Constants.motionEffectAmount
             
             if let locations = self.locations {
                 mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: locations, showVessels: true)
@@ -237,12 +237,6 @@ class ServiceDetailTableViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if !mapRectSet {
-            // Need to do this at this point as we need to know the size of the view to calculate the rect that is shown
-            setMapVisibleRect()
-            mapRectSet = true
-        }
-        
         if self.headerHeight == nil {
             // Configure the headerview once we know we know the size of the view
             self.labelArea.preferredMaxLayoutWidth = self.view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
@@ -258,6 +252,12 @@ class ServiceDetailTableViewController: UIViewController {
             viewBackground.frame = frame
             
             self.headerHeight = headerHeight
+        }
+        
+        if !mapRectSet {
+            // Need to do this at this point as we need to know the size of the view to calculate the rect that is shown
+            setMapVisibleRect()
+            mapRectSet = true
         }
     }
     
@@ -591,13 +591,19 @@ class ServiceDetailTableViewController: UIViewController {
     
     fileprivate func setMapVisibleRect() {
         guard let mapViewDelegate = mapViewDelegate else { return }
-        guard let navigationController = navigationController else { return }
         
         let rect = calculateMapRectForAnnotations(mapViewDelegate.portAnnotations)
         
-        let topInset = navigationController.navigationBar.frame.size.height
-        let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset
-        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset + 20, 30, bottomInset - 20, 30))
+        // 40 padding from top to show annotation otherwise we just see the bottom of the annoation
+        let topInset = CGFloat(40) + MainStoryBoard.Constants.motionEffectAmount
+        
+        // 5 padding so the bottom of the annoation is padded from the top of the header
+        var bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset + 5
+        if #available(iOS 11.0, *) {
+            bottomInset = bottomInset - view.safeAreaInsets.bottom
+        }
+        
+        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset, 30, bottomInset, 30))
         
         mapView.setVisibleMapRect(visibleRect, animated: false)
     }
