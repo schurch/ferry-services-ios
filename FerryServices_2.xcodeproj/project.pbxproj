@@ -32,6 +32,7 @@
 		FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
 		FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */; };
+		FD58FF69208BFEF200F6744E /* departures.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FD58FF68208BFEF200F6744E /* departures.sqlite */; };
 		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
 		FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5BF4E01A539EC4009D799E /* PropellerView.swift */; };
 		FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */; };
@@ -95,7 +96,6 @@
 		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
 		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
-		FDCB3E5B1F61F35C00EEAD85 /* departures.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDCB3E5A1F61F35C00EEAD85 /* departures.sqlite */; };
 		FDD3ED681C49C681003444A2 /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD3ED671C49C681003444A2 /* Port.swift */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
@@ -215,6 +215,7 @@
 		FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
 		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
 		FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
+		FD58FF68208BFEF200F6744E /* departures.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = departures.sqlite; sourceTree = "<group>"; };
 		FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		FD5BF4E01A539EC4009D799E /* PropellerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropellerView.swift; sourceTree = "<group>"; };
 		FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusCell.swift; sourceTree = "<group>"; };
@@ -289,7 +290,6 @@
 		FDC7760F19844C4000B3782F /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Trip.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDC77612198450AC00B3782F /* timetables.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = timetables.sqlite; sourceTree = "<group>"; };
 		FDCB33441A4BD6D1000033BC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		FDCB3E5A1F61F35C00EEAD85 /* departures.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = departures.sqlite; sourceTree = "<group>"; };
 		FDD3ED671C49C681003444A2 /* Port.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
 		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -527,7 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */,
-				FDCB3E5A1F61F35C00EEAD85 /* departures.sqlite */,
+				FD58FF68208BFEF200F6744E /* departures.sqlite */,
 				FDC77612198450AC00B3782F /* timetables.sqlite */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
@@ -920,7 +920,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDCB3E5B1F61F35C00EEAD85 /* departures.sqlite in Resources */,
+				FD58FF69208BFEF200F6744E /* departures.sqlite in Resources */,
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
 				FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */,

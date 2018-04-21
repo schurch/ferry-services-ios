@@ -37,6 +37,8 @@ class TimetableViewController: UIViewController {
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        tableView.backgroundColor = UIColor.tealBackgroundColor()
+        
         dataSource = RxTableViewSectionedReloadDataSource<Section>(configureCell: { [unowned self] dataSource, tableView, indexPath, item in
             
             switch item {
