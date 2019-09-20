@@ -388,12 +388,12 @@ class ServiceDetailTableViewController: UIViewController {
         if viewConfiguration == .full {
             var timetableRows = [Row]()
             
-            if let serviceId = serviceStatus.serviceId, Departures.arePortAvailable(serviceId: serviceId) {
-                let departuresRow: Row = Row.basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
-                    return self.departuresViewController(serviceId: serviceId)
-                })
-                timetableRows.append(departuresRow)
-            }
+//            if let serviceId = serviceStatus.serviceId, Departures.arePortAvailable(serviceId: serviceId) {
+//                let departuresRow: Row = Row.basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
+//                    return self.departuresViewController(serviceId: serviceId)
+//                })
+//                timetableRows.append(departuresRow)
+//            }
             
             // winter timetable
             if isWinterTimetableAvailable() {
@@ -545,7 +545,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
 
     fileprivate func winterPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2018/Winter/\(serviceStatus.serviceId!).pdf")
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Winter/\(serviceStatus.serviceId!).pdf")
     }
     
     fileprivate func summerPath() -> String {
