@@ -385,37 +385,37 @@ class ServiceDetailTableViewController: UIViewController {
         }
         sections.append(disruptionSection)
         
-        if viewConfiguration == .full {
-            var timetableRows = [Row]()
-            
+//        if viewConfiguration == .full {
+//            var timetableRows = [Row]()
+//
 //            if let serviceId = serviceStatus.serviceId, Departures.arePortAvailable(serviceId: serviceId) {
 //                let departuresRow: Row = Row.basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
 //                    return self.departuresViewController(serviceId: serviceId)
 //                })
 //                timetableRows.append(departuresRow)
 //            }
-            
+//
             // winter timetable
-            if isWinterTimetableAvailable() {
-                let winterTimetableRow: Row = Row.basic(title: "Winter timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
-                    return self.pdfTimeTableViewController(self.winterPath(), title: "Winter timetable")
-                    })
-                timetableRows.append(winterTimetableRow)
-            }
+//            if isWinterTimetableAvailable() {
+//                let winterTimetableRow: Row = Row.basic(title: "Winter timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
+//                    return self.pdfTimeTableViewController(self.winterPath(), title: "Winter timetable")
+//                    })
+//                timetableRows.append(winterTimetableRow)
+//            }
             
             // summer timetable
-            if isSummerTimetableAvailable() {
-                let summerTimetableRow: Row = Row.basic(title: "Summer timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
-                    self.pdfTimeTableViewController(self.summerPath(), title: "Summer timetable")
-                    })
-                timetableRows.append(summerTimetableRow)
-            }
-            
-            if timetableRows.count > 0 {
-                let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
-                sections.append(timetableSection)
-            }
-        }
+//            if isSummerTimetableAvailable() {
+//                let summerTimetableRow: Row = Row.basic(title: "Summer timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
+//                    self.pdfTimeTableViewController(self.summerPath(), title: "Summer timetable")
+//                    })
+//                timetableRows.append(summerTimetableRow)
+//            }
+//
+//            if timetableRows.count > 0 {
+//                let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
+//                sections.append(timetableSection)
+//            }
+//        }
         
         // weather sections
         if let locations = self.locations {
