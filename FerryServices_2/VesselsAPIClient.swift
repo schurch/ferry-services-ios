@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import Alamofire
 
 struct VesselsAPIClient {
     #if DEBUG
@@ -17,34 +16,34 @@ struct VesselsAPIClient {
     static let baseURL = URL(string: "http://www.scottishferryapp.com")
     #endif
     
-    static func fetchVessels() -> Observable<[Vessel]> {
-        let url = URL(string: "/vessels/", relativeTo: VesselsAPIClient.baseURL)!
-        
-        return Observable.create { observer in
-            let request = Alamofire.request(url.absoluteString).responseJSON { response in
-                switch response.result {
-                case .success(let value):
-                    if let vesselsData = value as? [[String: AnyObject]] {
-                        let vessels = vesselsData
-                            .map( { Vessel(data: $0) } )
-                            .flatMap( {$0} )
-                        
-                        observer.onNext(vessels)
-                        observer.onCompleted()
-                    }
-                    else {
-                        let error = NSError(domain: "com.stefanchurch.ferryservices.vesselsclient", code: 1, userInfo: nil)
-                        observer.onError(error)
-                    }
-                case .failure(let error):
-                    observer.onError(error)
-                }
-
-            }
-            
-            return Disposables.create {
-                request.cancel()
-            }
-        }
-    }
+//    static func fetchVessels() -> Observable<[Vessel]> {
+//        let url = URL(string: "/vessels/", relativeTo: VesselsAPIClient.baseURL)!
+//
+//        return Observable.create { observer in
+//            let request = Alamofire.request(url.absoluteString).responseJSON { response in
+//                switch response.result {
+//                case .success(let value):
+//                    if let vesselsData = value as? [[String: AnyObject]] {
+//                        let vessels = vesselsData
+//                            .map( { Vessel(data: $0) } )
+//                            .flatMap( {$0} )
+//
+//                        observer.onNext(vessels)
+//                        observer.onCompleted()
+//                    }
+//                    else {
+//                        let error = NSError(domain: "com.stefanchurch.ferryservices.vesselsclient", code: 1, userInfo: nil)
+//                        observer.onError(error)
+//                    }
+//                case .failure(let error):
+//                    observer.onError(error)
+//                }
+//
+//            }
+//
+//            return Disposables.create {
+//                request.cancel()
+//            }
+//        }
+//    }
 }

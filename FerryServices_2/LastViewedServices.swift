@@ -30,12 +30,11 @@ struct LastViewedServices {
         sharedDefaults?.set(lastViewedServices, forKey: "lastViewedServiceIds")
         
         let services = ServiceStatus.defaultServices
-        let shortcutItems: [UIApplicationShortcutItem] = lastViewedServices.dropFirst().flatMap { serviceId in
-            guard let service = services.filter({ $0.serviceId == serviceId }).first else { return nil }
-            guard let area = service.area, let route = service.route else { return nil }
+        let shortcutItems: [UIApplicationShortcutItem] = lastViewedServices.dropFirst().compactMap { serviceId in
+            guard let service = services.filter({ $0.id == serviceId }).first else { return nil }
             
             let userInfo = [AppDelegate.applicationShortcutUserInfoKeyServiceId : serviceId]
-            return UIMutableApplicationShortcutItem(type: AppDelegate.applicationShortcutTypeRecentService, localizedTitle: area, localizedSubtitle: route, icon: nil, userInfo: userInfo)
+            return UIMutableApplicationShortcutItem(type: AppDelegate.applicationShortcutTypeRecentService, localizedTitle: service.area, localizedSubtitle: service.route, icon: nil, userInfo: userInfo)
         }
         
         UIApplication.shared.shortcutItems = shortcutItems

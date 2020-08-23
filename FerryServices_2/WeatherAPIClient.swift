@@ -24,7 +24,7 @@ class WeatherAPIClient {
     func fetchWeatherForLocation(_ location: Location, completion: @escaping (_ weather: LocationWeather?, _ error: NSError?) -> ()) {
         switch (location.latitude, location.longitude) {
         case let (.some(lat), .some(lng)):
-            let requestURL = "data/2.5/weather?lat=\(lat)&lon=\(lng)&APPID=\(APIKeys.OpenWeatherMapAPIKey)"
+            let requestURL = "data/2.5/weather?lat=\(lat)&lon=\(lng)&APPID=\(APIKeys.openWeatherMapAPIKey)"
             
             // check if we have made a request in the last 10 minutes
             if let lastFetchForURL = self.lastFetchTime[requestURL] {

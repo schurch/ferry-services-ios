@@ -9,7 +9,6 @@
 import UIKit
 import MapKit
 import QuickLook
-import Parse
 
 typealias ViewControllerGenerator = () -> UIViewController?
 
@@ -86,10 +85,6 @@ class ServiceDetailTableViewController: UIViewController {
     var viewConfiguration: ViewConfiguration = .full
     var windAnimationTimer: Timer!
     
-    lazy var parseChannel: String = {
-        return "\(AppConstants.parseChannelPrefix)\(self.serviceStatus.serviceId!)"
-    }()
-    
     lazy var locations: [Location]? = {
         if let serviceId = self.serviceStatus.serviceId {
             return Location.fetchLocationsForSericeId(serviceId)
@@ -124,28 +119,28 @@ class ServiceDetailTableViewController: UIViewController {
             self.alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), for: UIControlEvents.valueChanged)
             self.alertCell.configureLoading()
             
-            PFPush.getSubscribedChannelsInBackground { [weak self] (channels, error) in
-                guard self != nil else {
-                    // self might be nil if we've popped the view controller when the completion block is called
-                    return
-                }
-                
-                guard let channels = channels else {
-                    self!.alertCell.configureLoadedWithSwitchOn(false)
-                    self?.removeServiceIdFromSubscribedList()
-                    return
-                }
-                
-                let subscribed = channels.contains(self!.parseChannel)
-                self!.alertCell.configureLoadedWithSwitchOn(subscribed)
-                
-                if subscribed {
-                    self?.addServiceIdToSubscribedList()
-                }
-                else {
-                    self?.removeServiceIdFromSubscribedList()
-                }
-            }
+//            PFPush.getSubscribedChannelsInBackground { [weak self] (channels, error) in
+//                guard self != nil else {
+//                    // self might be nil if we've popped the view controller when the completion block is called
+//                    return
+//                }
+//                
+//                guard let channels = channels else {
+//                    self!.alertCell.configureLoadedWithSwitchOn(false)
+//                    self?.removeServiceIdFromSubscribedList()
+//                    return
+//                }
+//                
+//                let subscribed = channels.contains(self!.parseChannel)
+//                self!.alertCell.configureLoadedWithSwitchOn(subscribed)
+//                
+//                if subscribed {
+//                    self?.addServiceIdToSubscribedList()
+//                }
+//                else {
+//                    self?.removeServiceIdFromSubscribedList()
+//                }
+//            }
             
             // map motion effect
             let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: UIInterpolatingMotionEffectType.tiltAlongHorizontalAxis)
@@ -281,39 +276,39 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     @objc func alertSwitchChanged(_ switchState: UISwitch) {
-        let currentInstallation = PFInstallation.current()
-        let isSwitchOn = switchState.isOn
-        
-        if isSwitchOn {
-            currentInstallation?.addUniqueObject(self.parseChannel, forKey: "channels")
-        } else {
-            currentInstallation?.remove(self.parseChannel, forKey: "channels")
-        }
-        
-        self.alertCell.configureLoading()
-        
-        currentInstallation?.saveInBackground { [weak self] (succeeded, error)  in
-            guard let `self` = self else {
-                // self might be nil if we've popped the view controller when the completion block is called
-                return
-            }
-            
-            guard error == nil else {
-                self.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
-                print("Error subscribing to services: \(error!)")
-                return
-            }
-            
-            let subscribed = succeeded && isSwitchOn
-            self.alertCell.configureLoadedWithSwitchOn(subscribed)
-            
-            if subscribed {
-                self.addServiceIdToSubscribedList()
-            }
-            else {
-                self.removeServiceIdFromSubscribedList()
-            }
-        }
+//        let currentInstallation = PFInstallation.current()
+//        let isSwitchOn = switchState.isOn
+//
+//        if isSwitchOn {
+//            currentInstallation?.addUniqueObject(self.parseChannel, forKey: "channels")
+//        } else {
+//            currentInstallation?.remove(self.parseChannel, forKey: "channels")
+//        }
+//
+//        self.alertCell.configureLoading()
+//
+//        currentInstallation?.saveInBackground { [weak self] (succeeded, error)  in
+//            guard let `self` = self else {
+//                // self might be nil if we've popped the view controller when the completion block is called
+//                return
+//            }
+//
+//            guard error == nil else {
+//                self.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
+//                print("Error subscribing to services: \(error!)")
+//                return
+//            }
+//
+//            let subscribed = succeeded && isSwitchOn
+//            self.alertCell.configureLoadedWithSwitchOn(subscribed)
+//
+//            if subscribed {
+//                self.addServiceIdToSubscribedList()
+//            }
+//            else {
+//                self.removeServiceIdFromSubscribedList()
+//            }
+//        }
     }
     
     // MARK: - refresh
@@ -466,10 +461,10 @@ class ServiceDetailTableViewController: UIViewController {
         }
         
         if let serviceId = self.serviceStatus.serviceId {
-            ServicesAPIClient.sharedInstance.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _ in
-                self.disruptionDetails = disruptionDetails
-                reloadServiceInfo()
-            }
+//            API.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _ in
+//                self.disruptionDetails = disruptionDetails
+//                reloadServiceInfo()
+//            }
         }
         else {
             reloadServiceInfo()

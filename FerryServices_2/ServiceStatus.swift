@@ -10,7 +10,7 @@ import SwiftyJSON
 
 class ServiceStatus: Equatable {
     
-    static let defaultServices: [ServiceStatus] = {
+    static let defaultServices: [Service] = {
         let defaultServicesFilePath = Bundle.main.path(forResource: "services", ofType: "json")!
         let serviceData = try! Data(contentsOf: URL(fileURLWithPath: defaultServicesFilePath), options: .mappedIfSafe)
         let serviceStatusData = try! JSONSerialization.jsonObject(with: serviceData, options: [])
@@ -19,7 +19,7 @@ class ServiceStatus: Equatable {
         let serviceStatuses: [ServiceStatus] = json.array!.map { ServiceStatus(data: $0) }
         let sortedServiceStatuses = serviceStatuses.sorted(by: { $0.sortOrder! < $1.sortOrder! })
         
-        return sortedServiceStatuses
+        return []
     }()
     
     static let dateFormatter: DateFormatter = {

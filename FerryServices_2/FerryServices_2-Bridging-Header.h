@@ -3,5 +3,4 @@
 //
 
 #import <Crashlytics/Crashlytics.h>
-#import <Parse/Parse.h>
 #import "FMDB.h"

@@ -47,8 +47,8 @@ class ServicesViewController: UITableViewController {
         }
     }
     
-    fileprivate var arrayServiceStatuses = [ServiceStatus]()
-    fileprivate var arraySubscribedServiceStatuses = [ServiceStatus]()
+    fileprivate var arrayServiceStatuses = [Service]()
+    fileprivate var arraySubscribedServiceStatuses = [Service]()
     fileprivate var previewingIndexPath: IndexPath?
     fileprivate var propellerView: PropellerView!
     fileprivate var refreshing = false
@@ -82,7 +82,7 @@ class ServicesViewController: UITableViewController {
                 let serviceStatus = self.arrayServiceStatuses[index]
                 
                 let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
-                serviceDetailViewController.serviceStatus = serviceStatus
+//                serviceDetailViewController.serviceStatus = serviceStatus
                 
                 self.navigationController?.pushViewController(serviceDetailViewController, animated: true)
             }
@@ -175,15 +175,15 @@ class ServicesViewController: UITableViewController {
         self.propellerView.percentComplete = 1.0
         self.propellerView.startRotating()
         
-        ServicesAPIClient.sharedInstance.fetchFerryServicesWithCompletion { serviceStatuses, error in
-            if let statuses = serviceStatuses {
-                self.arrayServiceStatuses = statuses
-                self.arraySubscribedServiceStatuses = self.generateArrayOfSubscribedServiceIds()
-                self.searchResultsController.arrayOfServices = self.arrayServiceStatuses
-            }
-            
+        API.fetchServices { result in
+            guard case let .success(services) = result else { return }
+
+            self.arrayServiceStatuses = services.sorted(by: { $0.sortOrder < $1.sortOrder })
+            self.arraySubscribedServiceStatuses = self.generateArrayOfSubscribedServiceIds()
+            self.searchResultsController.arrayOfServices = self.arrayServiceStatuses
+
             self.tableView.reloadData()
-            
+
             // reset pull to refresh on completion
             if resetContentInset {
                 UIView.animate(withDuration: 0.25, animations: {
@@ -242,10 +242,7 @@ class ServicesViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let serviceStatus = self.serviceStatusForTableView(tableView, indexPath: indexPath)
-        
-        if let serviceId = serviceStatus.serviceId {
-            self.showDetailsForServiceId(serviceId)
-        }
+        self.showDetailsForServiceId(serviceStatus.id)
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -279,16 +276,12 @@ class ServicesViewController: UITableViewController {
     }
     
     // MARK: - Helpers
-    fileprivate func indexOfServiceWithServiceId(_ serviceId :Int, services :[ServiceStatus]) -> Int? {
-        let filteredServices = services.filter { $0.serviceId == serviceId }
-        if let service = filteredServices.first {
-            return services.index(of: service)
-        }
-        
-        return nil
+    fileprivate func indexOfServiceWithServiceId(_ serviceId :Int, services :[Service]) -> Int? {
+        let filteredServices = services.filter { $0.id == serviceId }
+        return filteredServices.firstIndex(where: { $0.id == serviceId})
     }
     
-    fileprivate func serviceStatusForTableView(_ tableView: UITableView, indexPath: IndexPath) -> ServiceStatus {
+    fileprivate func serviceStatusForTableView(_ tableView: UITableView, indexPath: IndexPath) -> Service {
         if self.arraySubscribedServiceStatuses.isEmpty {
             return self.arrayServiceStatuses[(indexPath as NSIndexPath).row]
         }
@@ -301,24 +294,22 @@ class ServicesViewController: UITableViewController {
         }
     }
     
-    fileprivate func generateArrayOfSubscribedServiceIds() -> [ServiceStatus] {
+    fileprivate func generateArrayOfSubscribedServiceIds() -> [Service] {
         guard let subscribedServiceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] else {
-            return [ServiceStatus]()
+            return [Service]()
         }
         
         let subscribedServiceStatuses = subscribedServiceIds.map { serviceId in
-            return self.arrayServiceStatuses.filter { $0.serviceId == serviceId }.first
+            return self.arrayServiceStatuses.filter { $0.id == serviceId }.first
         }
         
-        return subscribedServiceStatuses.flatMap({ $0 }).sorted(by: { $0.sortOrder < $1.sortOrder })
+        return subscribedServiceStatuses.compactMap({ $0 }).sorted(by: { $0.sortOrder < $1.sortOrder })
     }
 }
 
 extension ServicesViewController: SearchResultsViewControllerDelegate {
-    func didSelectServiceStatus(_ serviceStatus: ServiceStatus) {
-        if let serviceId = serviceStatus.serviceId {
-            self.showDetailsForServiceId(serviceId)
-        }
+    func didSelectServiceStatus(_ serviceStatus: Service) {
+        self.showDetailsForServiceId(serviceStatus.id)
     }
 }
 
@@ -351,7 +342,7 @@ extension ServicesViewController: UIViewControllerPreviewingDelegate {
         serviceDetailViewController.viewConfiguration = .previewing
         
         let serviceStatus = serviceStatusForTableView(tableView, indexPath: indexPath)
-        serviceDetailViewController.serviceStatus = serviceStatus
+//        serviceDetailViewController.serviceStatus = serviceStatus
         
         return serviceDetailViewController
     }
@@ -363,7 +354,7 @@ extension ServicesViewController: UIViewControllerPreviewingDelegate {
         serviceDetailViewController.viewConfiguration = .full
         
         let serviceStatus = serviceStatusForTableView(tableView, indexPath: previewingIndexPath)
-        serviceDetailViewController.serviceStatus = serviceStatus
+//        serviceDetailViewController.serviceStatus = serviceStatus
         
         show(serviceDetailViewController, sender: self)
 

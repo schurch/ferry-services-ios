@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 protocol SearchResultsViewControllerDelegate: class {
-    func didSelectServiceStatus(_ serviceStatus: ServiceStatus)
+    func didSelectServiceStatus(_ serviceStatus: Service)
 }
 
 class SearchResultsViewController: UIViewController {
@@ -26,12 +26,12 @@ class SearchResultsViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
     
-    var arrayOfServices: [ServiceStatus] = []
+    var arrayOfServices: [Service] = []
     
     weak var delegate: SearchResultsViewControllerDelegate?
     
     fileprivate var arrayOfAnnotations: [MKPointAnnotation] = []
-    fileprivate var arrayOfFilteredServices: [ServiceStatus] = []
+    fileprivate var arrayOfFilteredServices: [Service] = []
     fileprivate var arrayOfLocations = Location.fetchLocations()
     fileprivate var bottomInset: CGFloat = 0.0
     fileprivate var previewingIndexPath: IndexPath?
@@ -133,14 +133,10 @@ class SearchResultsViewController: UIViewController {
         case .list:
             self.arrayOfFilteredServices = self.arrayOfServices.filter { service in
                 var containsArea = false
-                if let area = service.area?.lowercased() {
-                    containsArea = area.contains(filterText.lowercased())
-                }
+                containsArea = service.area.lowercased().contains(filterText.lowercased())
                 
                 var containsRoute = false
-                if let route = service.route?.lowercased() {
-                    containsRoute = route.contains(filterText.lowercased())
-                }
+                containsRoute = service.route.lowercased().contains(filterText.lowercased())
                 
                 return containsArea || containsRoute
             }
@@ -269,7 +265,7 @@ extension SearchResultsViewController: UIViewControllerPreviewingDelegate {
         serviceDetailViewController.viewConfiguration = .previewing
         
         let serviceStatus = self.arrayOfFilteredServices[(indexPath as NSIndexPath).row]
-        serviceDetailViewController.serviceStatus = serviceStatus
+//        serviceDetailViewController.serviceStatus = serviceStatus
         
         return serviceDetailViewController
     }

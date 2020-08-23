@@ -8,11 +8,7 @@
 
 import UIKit
 import WatchConnectivity
-import Parse
-
-struct AppConstants {
-    static let parseChannelPrefix = "S"
-}
+import Sentry
 
 struct ErrorMessages {
     static let errorFetchingSubscribedServiceIds = "There was an error fetching your subscribed services"
@@ -21,7 +17,7 @@ struct ErrorMessages {
 let sharedDefaults = UserDefaults(suiteName: "group.stefanchurch.ferryservices")
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     static let applicationShortcutTypeRecentService = "UIApplicationShortcutIconTypeRecentService"
     static let applicationShortcutUserInfoKeyServiceId = "ServiceId"
@@ -33,26 +29,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         var shouldPerformAdditionalDelegateHandling = true
         
-        Crashlytics.start(withAPIKey: APIKeys.CrashlyticsAPIKey)
-        
-        Parse.initialize(with: ParseClientConfiguration { configuration in
-            configuration.applicationId = APIKeys.ParseApplicationId
-            #if DEBUG
-                configuration.server = "http://test.scottishferryapp.com/parse"
-            #else
-                configuration.server = "http://www.scottishferryapp.com/parse"
-            #endif
-        })
+        // Sentry
+        SentrySDK.start { options in
+            options.dsn = APIKeys.sentryDSN
+        }
+
+        // Configure push notifications
+        UNUserNotificationCenter.current().delegate = self
+        application.registerForRemoteNotifications()
         
         // Global colors
         self.window?.tintColor = UIColor.tealTintColor()
-        
-        // Configure push notifications
-        let userNotificationTypes: UIUserNotificationType = [UIUserNotificationType.badge, UIUserNotificationType.alert, UIUserNotificationType.sound]
-        let notificationSettings = UIUserNotificationSettings(types: userNotificationTypes, categories: nil)
-        
-        application.registerUserNotificationSettings(notificationSettings)
-        application.registerForRemoteNotifications()
         
         if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
             self.launchedShortcutItem = shortcutItem
@@ -112,36 +99,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Push notifications
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        // Store the deviceToken in the current installation and save it to Parse.
-        let installation = PFInstallation.current()
-        installation?.deviceToken = "" // For some reason the installation isn't saving unless we do this before setting the token below.
-        installation?.setDeviceTokenFrom(deviceToken)
-        installation?.saveInBackground { (success, error) in
-            if let error = error {
-                print("Error registering device token \(error)")
-            }
-        }
+        let stringToken = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        print("Push token: \(stringToken)")
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // App in foreground
+        completionHandler([.alert])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // TODO: App became active, handle notification
+        completionHandler()
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-        guard let info = userInfo as? [String: AnyObject] else { return }
-        
-        if application.applicationState == .active {
-            guard let aps = info["aps"] as? [String: AnyObject] else { return }
-            guard let message = aps["alert"] as? String else { return }
-
-            let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
-                
-            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(cancelAction)
-            
-            self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-        }
-        else {
-            if let serviceId = info["service_id"] as? Int {
-                self.showDetailsForServiceId(serviceId)
-            }
-        }
+//        guard let info = userInfo as? [String: AnyObject] else { return }
+//
+//        if application.applicationState == .active {
+//            guard let aps = info["aps"] as? [String: AnyObject] else { return }
+//            guard let message = aps["alert"] as? String else { return }
+//
+//            let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+//
+//            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//            alertController.addAction(cancelAction)
+//
+//            self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+//        }
+//        else {
+//            if let serviceId = info["service_id"] as? Int {
+//                self.showDetailsForServiceId(serviceId)
+//            }
+//        }
     }
     
     // MARK: - Shortcut items
@@ -193,7 +183,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Utility methods
-    fileprivate func showDetailsForServiceId(_ serviceId: Int) {
+    private func showDetailsForServiceId(_ serviceId: Int) {
         if let navigationController = self.window?.rootViewController as? UINavigationController, let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {
             servicesViewController.showDetailsForServiceId(serviceId, shouldFindAndHighlightRow: true)
         }

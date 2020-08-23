@@ -36,7 +36,7 @@
 		FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5BF4E01A539EC4009D799E /* PropellerView.swift */; };
 		FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */; };
 		FD5E247F1C001BBE006B3E65 /* ServiceStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E247D1C001BBE006B3E65 /* ServiceStatusCell.xib */; };
-		FD5E7DBB197A316F00F438F6 /* ServicesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* ServicesAPIClient.swift */; };
+		FD5E7DBB197A316F00F438F6 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* API.swift */; };
 		FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */; };
 		FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD60D97E1AA173360054A131 /* AlertCell.xib */; };
 		FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */; };
@@ -70,7 +70,6 @@
 		FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */; };
 		FD8A235C1DBD45E100AD8EFC /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A235A1DBD45E100AD8EFC /* Port.swift */; };
 		FD8A235D1DBD45E100AD8EFC /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A235B1DBD45E100AD8EFC /* Service.swift */; };
-		FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8DDDB119B094B0008479DC /* Crashlytics.framework */; };
 		FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */; };
 		FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */; };
 		FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */; };
@@ -79,7 +78,6 @@
 		FDA0ECE81A69E3FE00EDF5DA /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */; };
 		FDA1220E1B58E03500813EF6 /* JSONRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1220D1B58E03500813EF6 /* JSONRequester.swift */; };
 		FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */; };
-		FDB7695B1DA0AF33009F0CC1 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */; };
 		FDB848EF1F457AAB001A7D71 /* TimetableDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB848EE1F457AAB001A7D71 /* TimetableDatePickerCell.swift */; };
 		FDBD7DC11DB18FDD00698A70 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */; };
 		FDBD7DC41DB18FDD00698A70 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */; };
@@ -220,7 +218,7 @@
 		FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusCell.swift; sourceTree = "<group>"; };
 		FD5E247D1C001BBE006B3E65 /* ServiceStatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceStatusCell.xib; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		FD5E7DBA197A316F00F438F6 /* ServicesAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ServicesAPIClient.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FD5E7DBA197A316F00F438F6 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = API.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailReceiveAlertCellTableViewCell.swift; sourceTree = "<group>"; };
 		FD60D97E1AA173360054A131 /* AlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
 		FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableHeaderViewCell.swift; sourceTree = "<group>"; };
@@ -337,8 +335,6 @@
 				FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */,
 				FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */,
 				FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */,
-				FD8DDDB219B094B0008479DC /* Crashlytics.framework in Frameworks */,
-				FDB7695B1DA0AF33009F0CC1 /* Fabric.framework in Frameworks */,
 				4D8B44F3B3BF85FB0D076106 /* Pods_FerryServices_2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,7 +437,7 @@
 		FD5177F61A565E9D00F4B6B0 /* Services Client */ = {
 			isa = PBXGroup;
 			children = (
-				FD5E7DBA197A316F00F438F6 /* ServicesAPIClient.swift */,
+				FD5E7DBA197A316F00F438F6 /* API.swift */,
 				FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */,
 				FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */,
 			);
@@ -748,7 +744,6 @@
 				FD8DDDB019B0947B008479DC /* Crashlytics */,
 				FDE391C51C1561AE000EDE26 /* Embed Watch Content */,
 				E72CFCEE066BA48ACA1EC23F /* [CP] Embed Pods Frameworks */,
-				9A6B0E495291D9E939FE8CE6 /* [CP] Copy Pods Resources */,
 				FDBD7DCF1DB18FDD00698A70 /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -999,51 +994,32 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9A6B0E495291D9E939FE8CE6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		E72CFCEE066BA48ACA1EC23F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD8DDDB019B0947B008479DC /* Crashlytics */ = {
@@ -1106,7 +1082,7 @@
 				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
 				FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,
 				FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */,
-				FD5E7DBB197A316F00F438F6 /* ServicesAPIClient.swift in Sources */,
+				FD5E7DBB197A316F00F438F6 /* API.swift in Sources */,
 				FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */,
 				FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */,
 				FDF9807B1B50818000672393 /* Utility.swift in Sources */,
@@ -1307,7 +1283,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E758783495CB24FC9D7FDCC4 /* Pods-FerryServices_2.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -1323,7 +1298,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.40;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
@@ -1342,7 +1317,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DC99AFE5B8108782BADCBC2 /* Pods-FerryServices_2.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -1358,7 +1332,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.40;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;

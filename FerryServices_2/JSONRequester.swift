@@ -8,18 +8,13 @@
 
 import UIKit
 import SwiftyJSON
-import Parse
 
 class JSONRequester {
     static let errorDomain = "JSONRequesterErrorDomain"
     
     func requestWithURL(_ url: URL, completion:@escaping (_ json: JSON?, _ error: NSError?) -> ()) {
-        PFNetworkActivityIndicatorManager.shared().incrementActivityCount()
-        
         let session = URLSession.shared
         let dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
-            PFNetworkActivityIndicatorManager.shared().decrementActivityCount()
-            
             guard error == nil else {
                 completion(nil, error as NSError?)
                 return
