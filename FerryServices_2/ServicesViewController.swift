@@ -7,20 +7,6 @@
 //
 
 import UIKit
-import Foundation
-import SwiftyJSON
-
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
 
 class ServicesViewController: UITableViewController {
     
@@ -47,8 +33,8 @@ class ServicesViewController: UITableViewController {
         }
     }
     
-    fileprivate var arrayServiceStatuses = [Service]()
-    fileprivate var arraySubscribedServiceStatuses = [Service]()
+    fileprivate var arrayServices = [Service]()
+    fileprivate var arraySubscribedServices = [Service]()
     fileprivate var previewingIndexPath: IndexPath?
     fileprivate var propellerView: PropellerView!
     fileprivate var refreshing = false
@@ -64,25 +50,23 @@ class ServicesViewController: UITableViewController {
     }
     
     // MARK: - Public
-    func showDetailsForServiceId(_ serviceId: Int, shouldFindAndHighlightRow: Bool = false) {
-        if self.arrayServiceStatuses.count == 0 {
+    func showDetailsForServiceId(_ serviceID: Int, shouldFindAndHighlightRow: Bool = false) {
+        if self.arrayServices.count == 0 {
             // We haven't loaded yet so set the service ID to show when we do
-            self.serviceIdToShow = serviceId
+            self.serviceIdToShow = serviceID
         }
         else {
             let _ = self.navigationController?.popToRootViewController(animated: false)
             
-            if let index = self.indexOfServiceWithServiceId(serviceId, services: self.arrayServiceStatuses) {
+            if let index = arrayServices.firstIndex(where: { $0.id == serviceID }) {
                 if shouldFindAndHighlightRow {
-                    let section = !self.arraySubscribedServiceStatuses.isEmpty ? 1 : 0
+                    let section = !self.arraySubscribedServices.isEmpty ? 1 : 0
                     let indexPath = IndexPath(row: index, section: section)
                     self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
                 }
-                
-                let serviceStatus = self.arrayServiceStatuses[index]
-                
+                                
                 let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
-//                serviceDetailViewController.serviceStatus = serviceStatus
+                serviceDetailViewController.service = self.arrayServices[index]
                 
                 self.navigationController?.pushViewController(serviceDetailViewController, animated: true)
             }
@@ -107,7 +91,6 @@ class ServicesViewController: UITableViewController {
         self.searchController.searchBar.delegate = self
         self.searchController.searchBar.sizeToFit()
         self.searchController.searchBar.barTintColor = UIColor.tealBackgroundColor()
-//        self.searchController.searchBar.scopeButtonTitles = ["Services", "Ferry Terminals"]
         tableView.tableHeaderView = searchController.searchBar
         
         self.definesPresentationContext = true
@@ -122,7 +105,7 @@ class ServicesViewController: UITableViewController {
             }
         }
         
-        arrayServiceStatuses = ServiceStatus.defaultServices
+        arrayServices = Service.defaultServices
         
         // custom pull to refresh
         propellerView = PropellerView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
@@ -138,7 +121,7 @@ class ServicesViewController: UITableViewController {
             self.serviceIdToShow = nil
         }
         
-        self.searchResultsController.arrayOfServices = self.arrayServiceStatuses
+        self.searchResultsController.arrayOfServices = self.arrayServices
         
         self.refreshWithContentInsetReset(false)
         
@@ -152,7 +135,7 @@ class ServicesViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
         }
         
-        self.arraySubscribedServiceStatuses = self.generateArrayOfSubscribedServiceIds()
+        self.arraySubscribedServices = self.generateArrayOfSubscribedServiceIds()
         self.tableView.reloadData()
     }
     
@@ -178,9 +161,9 @@ class ServicesViewController: UITableViewController {
         API.fetchServices { result in
             guard case let .success(services) = result else { return }
 
-            self.arrayServiceStatuses = services.sorted(by: { $0.sortOrder < $1.sortOrder })
-            self.arraySubscribedServiceStatuses = self.generateArrayOfSubscribedServiceIds()
-            self.searchResultsController.arrayOfServices = self.arrayServiceStatuses
+            self.arrayServices = services.sorted(by: { $0.sortOrder < $1.sortOrder })
+            self.arraySubscribedServices = self.generateArrayOfSubscribedServiceIds()
+            self.searchResultsController.arrayOfServices = self.arrayServices
 
             self.tableView.reloadData()
 
@@ -202,11 +185,11 @@ class ServicesViewController: UITableViewController {
     
     // MARK: - UITableViewDataSource
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return self.arraySubscribedServiceStatuses.isEmpty ? 1 : 2
+        return self.arraySubscribedServices.isEmpty ? 1 : 2
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if self.arraySubscribedServiceStatuses.isEmpty {
+        if self.arraySubscribedServices.isEmpty {
             return nil
         }
         
@@ -219,15 +202,15 @@ class ServicesViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.arraySubscribedServiceStatuses.isEmpty {
-            return self.arrayServiceStatuses.count
+        if self.arraySubscribedServices.isEmpty {
+            return self.arrayServices.count
         }
         
         switch (section) {
         case Constants.TableViewSections.subscribed:
-            return self.arraySubscribedServiceStatuses.count
+            return self.arraySubscribedServices.count
         default:
-            return self.arrayServiceStatuses.count
+            return self.arrayServices.count
         }
     }
     
@@ -241,8 +224,8 @@ class ServicesViewController: UITableViewController {
     
     // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let serviceStatus = self.serviceStatusForTableView(tableView, indexPath: indexPath)
-        self.showDetailsForServiceId(serviceStatus.id)
+        let service = self.serviceStatusForTableView(tableView, indexPath: indexPath)
+        self.showDetailsForServiceId(service.id)
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -276,21 +259,16 @@ class ServicesViewController: UITableViewController {
     }
     
     // MARK: - Helpers
-    fileprivate func indexOfServiceWithServiceId(_ serviceId :Int, services :[Service]) -> Int? {
-        let filteredServices = services.filter { $0.id == serviceId }
-        return filteredServices.firstIndex(where: { $0.id == serviceId})
-    }
-    
     fileprivate func serviceStatusForTableView(_ tableView: UITableView, indexPath: IndexPath) -> Service {
-        if self.arraySubscribedServiceStatuses.isEmpty {
-            return self.arrayServiceStatuses[(indexPath as NSIndexPath).row]
+        if self.arraySubscribedServices.isEmpty {
+            return self.arrayServices[(indexPath as NSIndexPath).row]
         }
         
         switch((indexPath as NSIndexPath).section) {
         case Constants.TableViewSections.subscribed:
-            return self.arraySubscribedServiceStatuses[(indexPath as NSIndexPath).row]
+            return self.arraySubscribedServices[(indexPath as NSIndexPath).row]
         default:
-            return self.arrayServiceStatuses[(indexPath as NSIndexPath).row]
+            return self.arrayServices[(indexPath as NSIndexPath).row]
         }
     }
     
@@ -300,7 +278,7 @@ class ServicesViewController: UITableViewController {
         }
         
         let subscribedServiceStatuses = subscribedServiceIds.map { serviceId in
-            return self.arrayServiceStatuses.filter { $0.id == serviceId }.first
+            return self.arrayServices.filter { $0.id == serviceId }.first
         }
         
         return subscribedServiceStatuses.compactMap({ $0 }).sorted(by: { $0.sortOrder < $1.sortOrder })
@@ -317,17 +295,6 @@ extension ServicesViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-    
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        switch selectedScope {
-        case 0:
-            self.searchResultsController.showList()
-        case 1:
-            self.searchResultsController.showMap()
-        default:
-            print("Unknown scope selection")
-        }
-    }
 }
 
 extension ServicesViewController: UIViewControllerPreviewingDelegate {
@@ -342,7 +309,7 @@ extension ServicesViewController: UIViewControllerPreviewingDelegate {
         serviceDetailViewController.viewConfiguration = .previewing
         
         let serviceStatus = serviceStatusForTableView(tableView, indexPath: indexPath)
-//        serviceDetailViewController.serviceStatus = serviceStatus
+        serviceDetailViewController.service = serviceStatus
         
         return serviceDetailViewController
     }
@@ -354,7 +321,7 @@ extension ServicesViewController: UIViewControllerPreviewingDelegate {
         serviceDetailViewController.viewConfiguration = .full
         
         let serviceStatus = serviceStatusForTableView(tableView, indexPath: previewingIndexPath)
-//        serviceDetailViewController.serviceStatus = serviceStatus
+        serviceDetailViewController.service = serviceStatus
         
         show(serviceDetailViewController, sender: self)
 

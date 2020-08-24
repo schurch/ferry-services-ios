@@ -12,7 +12,7 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
 
     @IBOutlet var webview: UIWebView!
     
-    var serviceStatus: ServiceStatus!
+    var service: Service!
     var url: URL!
     
     // MARK: -
@@ -41,9 +41,7 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
     @objc func share() {
         var items = [AnyObject]()
         
-        if let route = serviceStatus.route {
-            items.append(route as AnyObject)
-        }
+        items.append(service.route as AnyObject)
         
         let pdfData = try? Data(contentsOf: URL(fileURLWithPath: url.absoluteString))
         items.append(pdfData! as AnyObject)

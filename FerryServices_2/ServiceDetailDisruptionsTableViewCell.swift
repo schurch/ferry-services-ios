@@ -20,10 +20,10 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
             .instantiate(withOwner: nil, options: nil).first as! ServiceDetailDisruptionsTableViewCell
     }
     
-    class func heightWithDisruptionDetails(_ disruptionDetails: DisruptionDetails, tableView: UITableView) -> CGFloat {
+    class func heightWithService(_ service: Service, tableView: UITableView) -> CGFloat {
         let cell = self.SizingCell.instance
         
-        cell.configureWithDisruptionDetails(disruptionDetails)
+        cell.configureWithService(service)
         cell.bounds = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: cell.bounds.size.height)
         
         cell.setNeedsLayout()
@@ -48,27 +48,23 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     }
     
     // MARK: - Configure
-    func configureWithDisruptionDetails(_ disruptionDetails: DisruptionDetails) {
-        if let status = disruptionDetails.disruptionStatus {
-            if status == .sailingsCancelled {
-                self.labelDisruptionDetails.text = "Sailings have been cancelled for this service"
-            }
-            else {
-                self.labelDisruptionDetails.text = "There are disruptions with this service"
-            }
+    func configureWithService(_ service: Service) {
+        if service.status == .cancelled {
+            self.labelDisruptionDetails.text = "Sailings have been cancelled for this service"
+        }
+        else {
+            self.labelDisruptionDetails.text = "There are disruptions with this service"
         }
         
-        if let disruptionStatus = disruptionDetails.disruptionStatus {
-            switch disruptionStatus {
-            case .sailingsAffected:
-                self.imageViewDisruption.image = UIImage(named: "amber")
-            case .sailingsCancelled:
-                self.imageViewDisruption.image = UIImage(named: "red")
-            default:
-                self.imageViewDisruption.image = nil
-            }
+        switch service.status {
+        case .disrupted:
+            self.imageViewDisruption.image = UIImage(named: "amber")
+        case .cancelled:
+            self.imageViewDisruption.image = UIImage(named: "red")
+        default:
+            self.imageViewDisruption.image = nil
         }
         
-        self.labelReason.text = disruptionDetails.reason?.capitalized
+        self.labelReason.text = service.disruptionReason?.capitalized
     }
 }

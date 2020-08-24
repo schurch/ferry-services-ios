@@ -19,10 +19,10 @@ class ServiceDetailNoDisruptionTableViewCell: UITableViewCell {
             .instantiate(withOwner: nil, options: nil).first as! ServiceDetailNoDisruptionTableViewCell
     }
     
-    class func heightWithDisruptionDetails(_ disruptionDetails: DisruptionDetails?, tableView: UITableView) -> CGFloat {
+    class func heightWithService(_ service: Service, tableView: UITableView) -> CGFloat {
         let cell = self.SizingCell.instance
         
-        cell.configureWithDisruptionDetails(disruptionDetails)
+        cell.configureWithService(service)
         cell.bounds = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: cell.bounds.size.height)
         
         cell.setNeedsLayout()
@@ -46,11 +46,10 @@ class ServiceDetailNoDisruptionTableViewCell: UITableViewCell {
         super.layoutSubviews()
     }
     
-    func configureWithDisruptionDetails(_ disruptionDetails: DisruptionDetails?) {
-        if disruptionDetails != nil && disruptionDetails!.hasAdditionalInfo {
+    func configureWithService(_ service: Service?) {
+        if service?.additionalInfo != nil {
             showInfoButton()
-        }
-        else {
+        } else {
             hideInfoButton()
         }
     }

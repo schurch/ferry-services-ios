@@ -38,8 +38,8 @@ class ServiceDetailTableViewController: UIViewController {
     
     enum Row {
         case basic(title: String, subtitle: String?, viewControllerGenerator: ViewControllerGenerator)
-        case disruption(disruptionDetails: DisruptionDetails, viewControllerGenerator: ViewControllerGenerator)
-        case noDisruption(disruptionDetails: DisruptionDetails?, viewControllerGenerator: ViewControllerGenerator)
+        case disruption(service: Service, viewControllerGenerator: ViewControllerGenerator)
+        case noDisruption(service: Service, viewControllerGenerator: ViewControllerGenerator)
         case loading
         case textOnly(text: String)
         case weather(location: Location)
@@ -75,22 +75,17 @@ class ServiceDetailTableViewController: UIViewController {
     
     var mapViewDelegate: ServiceMapDelegate?
     var dataSource: [Section] = []
-    var disruptionDetails: DisruptionDetails?
     var headerHeight: CGFloat?
     var mapMotionEffect: UIMotionEffectGroup!
     var mapRectSet = false
     var refreshingDisruptionInfo: Bool = true // show table as refreshing initially
-    var serviceStatus: ServiceStatus!
+    var service: Service!
     var viewBackground: UIView!
     var viewConfiguration: ViewConfiguration = .full
     var windAnimationTimer: Timer!
     
     lazy var locations: [Location]? = {
-        if let serviceId = self.serviceStatus.serviceId {
-            return Location.fetchLocationsForSericeId(serviceId)
-        }
-        
-        return nil
+        return Location.fetchLocationsForSericeId(service.id)
     }()
     
     // MARK: -
@@ -102,15 +97,15 @@ class ServiceDetailTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = self.serviceStatus.area
+        self.title = self.service.area
         
-        self.labelArea.text = self.serviceStatus.area
-        self.labelRoute.text = self.serviceStatus.route
+        self.labelArea.text = self.service.area
+        self.labelRoute.text = self.service.route
         
         NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailTableViewController.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
         if viewConfiguration == .full {
-            LastViewedServices.register(self.serviceStatus)
+            LastViewedServices.register(service)
             
             // configure tableview
             self.tableView.contentInset = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
@@ -119,28 +114,29 @@ class ServiceDetailTableViewController: UIViewController {
             self.alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), for: UIControlEvents.valueChanged)
             self.alertCell.configureLoading()
             
-//            PFPush.getSubscribedChannelsInBackground { [weak self] (channels, error) in
-//                guard self != nil else {
-//                    // self might be nil if we've popped the view controller when the completion block is called
-//                    return
-//                }
-//                
-//                guard let channels = channels else {
-//                    self!.alertCell.configureLoadedWithSwitchOn(false)
-//                    self?.removeServiceIdFromSubscribedList()
-//                    return
-//                }
-//                
-//                let subscribed = channels.contains(self!.parseChannel)
-//                self!.alertCell.configureLoadedWithSwitchOn(subscribed)
-//                
-//                if subscribed {
-//                    self?.addServiceIdToSubscribedList()
-//                }
-//                else {
-//                    self?.removeServiceIdFromSubscribedList()
-//                }
-//            }
+            API.getInstallationServices(installationID: UUID()) { [weak self] result in
+                guard let self = self else {
+                    // self might be nil if we've popped the view controller when the completion block is called
+                    return
+                }
+                
+                switch result {
+                case .failure:
+                    self.alertCell.configureLoadedWithSwitchOn(false)
+                    self.removeServiceIdFromSubscribedList()
+
+                case .success(let subscribedServices):
+                    let subscribed = subscribedServices.map { $0.id }.contains(self.service.id)
+                    self.alertCell.configureLoadedWithSwitchOn(subscribed)
+                    
+                    if subscribed {
+                        self.addServiceIdToSubscribedList()
+                    }
+                    else {
+                        self.removeServiceIdFromSubscribedList()
+                    }
+                }
+            }
             
             // map motion effect
             let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: UIInterpolatingMotionEffectType.tiltAlongHorizontalAxis)
@@ -269,46 +265,46 @@ class ServiceDetailTableViewController: UIViewController {
     @objc func applicationDidBecomeActive(_ notification: Notification) {
         self.refresh()
     }
-
+    
     // MARK: - ui actions
     @IBAction func touchedButtonShowMap(_ sender: UIButton) {
         show(mapViewController(), sender: self)
     }
     
     @objc func alertSwitchChanged(_ switchState: UISwitch) {
-//        let currentInstallation = PFInstallation.current()
-//        let isSwitchOn = switchState.isOn
-//
-//        if isSwitchOn {
-//            currentInstallation?.addUniqueObject(self.parseChannel, forKey: "channels")
-//        } else {
-//            currentInstallation?.remove(self.parseChannel, forKey: "channels")
-//        }
-//
-//        self.alertCell.configureLoading()
-//
-//        currentInstallation?.saveInBackground { [weak self] (succeeded, error)  in
-//            guard let `self` = self else {
-//                // self might be nil if we've popped the view controller when the completion block is called
-//                return
-//            }
-//
-//            guard error == nil else {
-//                self.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
-//                print("Error subscribing to services: \(error!)")
-//                return
-//            }
-//
-//            let subscribed = succeeded && isSwitchOn
-//            self.alertCell.configureLoadedWithSwitchOn(subscribed)
-//
-//            if subscribed {
-//                self.addServiceIdToSubscribedList()
-//            }
-//            else {
-//                self.removeServiceIdFromSubscribedList()
-//            }
-//        }
+        //        let currentInstallation = PFInstallation.current()
+        //        let isSwitchOn = switchState.isOn
+        //
+        //        if isSwitchOn {
+        //            currentInstallation?.addUniqueObject(self.parseChannel, forKey: "channels")
+        //        } else {
+        //            currentInstallation?.remove(self.parseChannel, forKey: "channels")
+        //        }
+        //
+        //        self.alertCell.configureLoading()
+        //
+        //        currentInstallation?.saveInBackground { [weak self] (succeeded, error)  in
+        //            guard let `self` = self else {
+        //                // self might be nil if we've popped the view controller when the completion block is called
+        //                return
+        //            }
+        //
+        //            guard error == nil else {
+        //                self.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
+        //                print("Error subscribing to services: \(error!)")
+        //                return
+        //            }
+        //
+        //            let subscribed = succeeded && isSwitchOn
+        //            self.alertCell.configureLoadedWithSwitchOn(subscribed)
+        //
+        //            if subscribed {
+        //                self.addServiceIdToSubscribedList()
+        //            }
+        //            else {
+        //                self.removeServiceIdFromSubscribedList()
+        //            }
+        //        }
     }
     
     // MARK: - refresh
@@ -325,50 +321,32 @@ class ServiceDetailTableViewController: UIViewController {
         let disruptionRow: Row
         var footer: String?
         
-        if self.refreshingDisruptionInfo {
+        if refreshingDisruptionInfo {
             disruptionRow = Row.loading
-        }
-        else if self.disruptionDetails == nil {
-            disruptionRow = Row.textOnly(text: "Unable to fetch the disruption status for this service.")
-        }
-        else {
-            if let disruptionStatus = self.disruptionDetails?.disruptionStatus {
-                switch disruptionStatus {
-                case .normal:
-                    if self.disruptionDetails!.hasAdditionalInfo {
-                        disruptionRow = Row.noDisruption(disruptionDetails: disruptionDetails!, viewControllerGenerator: { [unowned self] in
-                                return self.webInfoViewController("Additional info", content: self.disruptionDetails!.additionalInfo!)
-                            })
-                    }
-                    else {
-                        disruptionRow = Row.noDisruption(disruptionDetails: disruptionDetails!, viewControllerGenerator: { return nil })
-                    }
-                case .sailingsAffected, .sailingsCancelled:
-                    if let disruptionInfo = disruptionDetails {
-                        footer = disruptionInfo.lastUpdated
-                        
-                        disruptionRow = Row.disruption(disruptionDetails: disruptionInfo, viewControllerGenerator: { [unowned self] in
-                            
-                            var disruptionInformation = disruptionInfo.details ?? ""
-                            if self.disruptionDetails!.hasAdditionalInfo {
-                                disruptionInformation += "</p>"
-                                disruptionInformation += self.disruptionDetails!.additionalInfo!
-                            }
-                            
-                            return self.webInfoViewController("Disruption information", content:disruptionInformation)
-                            })
-                    }
-                    else {
-                        disruptionRow = Row.textOnly(text: "Unable to fetch the disruption status for this service.")
-                    }
-                case .unknown:
-                    disruptionRow = Row.textOnly(text: "Unable to fetch the disruption status for this service.")
+        } else {
+            switch service.status {
+            case .normal:
+                if let additionalInfo = service.additionalInfo {
+                    disruptionRow = Row.noDisruption(service: service, viewControllerGenerator: { [unowned self] in
+                        return self.webInfoViewController("Additional info", content: additionalInfo)
+                    })
                 }
+                else {
+                    disruptionRow = Row.noDisruption(service: service, viewControllerGenerator: { return nil })
+                }
+            case .disrupted, .cancelled:
+                footer = service.lastUpdated
+                disruptionRow = Row.disruption(service: service, viewControllerGenerator: { [unowned self] in
+                    if let additionalInfo = self.service.additionalInfo {
+                        return self.webInfoViewController("Disruption information", content:additionalInfo)
+                    } else {
+                        return nil
+                    }
+                })
+            case .unknown:
+                disruptionRow = Row.textOnly(text: "Unable to fetch the disruption status for this service.")
             }
-            else {
-                // no disruptionStatus
-                disruptionRow = Row.noDisruption(disruptionDetails: nil, viewControllerGenerator: { return nil })
-            }
+            
         }
         
         let disruptionSection: Section
@@ -380,37 +358,37 @@ class ServiceDetailTableViewController: UIViewController {
         }
         sections.append(disruptionSection)
         
-//        if viewConfiguration == .full {
-//            var timetableRows = [Row]()
-//
-//            if let serviceId = serviceStatus.serviceId, Departures.arePortAvailable(serviceId: serviceId) {
-//                let departuresRow: Row = Row.basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
-//                    return self.departuresViewController(serviceId: serviceId)
-//                })
-//                timetableRows.append(departuresRow)
-//            }
-//
-            // winter timetable
-//            if isWinterTimetableAvailable() {
-//                let winterTimetableRow: Row = Row.basic(title: "Winter timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
-//                    return self.pdfTimeTableViewController(self.winterPath(), title: "Winter timetable")
-//                    })
-//                timetableRows.append(winterTimetableRow)
-//            }
-            
-            // summer timetable
-//            if isSummerTimetableAvailable() {
-//                let summerTimetableRow: Row = Row.basic(title: "Summer timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
-//                    self.pdfTimeTableViewController(self.summerPath(), title: "Summer timetable")
-//                    })
-//                timetableRows.append(summerTimetableRow)
-//            }
-//
-//            if timetableRows.count > 0 {
-//                let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
-//                sections.append(timetableSection)
-//            }
-//        }
+        //        if viewConfiguration == .full {
+        //            var timetableRows = [Row]()
+        //
+        //            if let serviceId = serviceStatus.serviceId, Departures.arePortAvailable(serviceId: serviceId) {
+        //                let departuresRow: Row = Row.basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
+        //                    return self.departuresViewController(serviceId: serviceId)
+        //                })
+        //                timetableRows.append(departuresRow)
+        //            }
+        //
+        // winter timetable
+        //            if isWinterTimetableAvailable() {
+        //                let winterTimetableRow: Row = Row.basic(title: "Winter timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
+        //                    return self.pdfTimeTableViewController(self.winterPath(), title: "Winter timetable")
+        //                    })
+        //                timetableRows.append(winterTimetableRow)
+        //            }
+        
+        // summer timetable
+        //            if isSummerTimetableAvailable() {
+        //                let summerTimetableRow: Row = Row.basic(title: "Summer timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
+        //                    self.pdfTimeTableViewController(self.summerPath(), title: "Summer timetable")
+        //                    })
+        //                timetableRows.append(summerTimetableRow)
+        //            }
+        //
+        //            if timetableRows.count > 0 {
+        //                let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
+        //                sections.append(timetableSection)
+        //            }
+        //        }
         
         // weather sections
         if let locations = self.locations {
@@ -453,27 +431,18 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func fetchLatestDisruptionData() {
-        let reloadServiceInfo: () -> () = {
+        API.fetchService(serviceID: service.id) { result in
+            guard case let .success(service) = result else { return }
+            self.service = service
             self.refreshingDisruptionInfo = false
             self.generateDatasource()
-            
             self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-        }
-        
-        if let serviceId = self.serviceStatus.serviceId {
-//            API.fetchDisruptionDetailsForFerryServiceId(serviceId) { disruptionDetails, _ in
-//                self.disruptionDetails = disruptionDetails
-//                reloadServiceInfo()
-//            }
-        }
-        else {
-            reloadServiceInfo()
         }
     }
     
     fileprivate func fetchLatestWeatherData() {
         guard let locations = self.locations else { return }
-
+        
         for location in locations {
             WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] weather, error in
                 if self == nil {
@@ -524,32 +493,24 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func isWinterTimetableAvailable() -> Bool {
-        if serviceStatus.serviceId == nil {
-            return false
-        }
-        
         return FileManager.default.fileExists(atPath: winterPath())
     }
     
     fileprivate func isSummerTimetableAvailable() -> Bool {
-        if serviceStatus.serviceId == nil {
-            return false
-        }
-        
         return FileManager.default.fileExists(atPath: summerPath())
     }
-
+    
     fileprivate func winterPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Winter/\(serviceStatus.serviceId!).pdf")
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Winter/\(service.id).pdf")
     }
     
     fileprivate func summerPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Summer/\(serviceStatus.serviceId!).pdf")
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Summer/\(service.id).pdf")
     }
     
     fileprivate func pdfTimeTableViewController(_ path: String, title: String) -> UIViewController {
         let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TimetablePreview") as! TimetablePreviewViewController
-        previewViewController.serviceStatus = self.serviceStatus
+        previewViewController.service = self.service
         previewViewController.url = URL(string: path)
         previewViewController.title = title
         
@@ -558,14 +519,7 @@ class ServiceDetailTableViewController: UIViewController {
     
     fileprivate func mapViewController() -> UIViewController {
         let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
-        
-        if let actualRoute = self.serviceStatus.route {
-            mapViewController.title = actualRoute
-        }
-        else {
-            mapViewController.title = "Map"
-        }
-        
+        mapViewController.title = self.service.route
         mapViewController.locations = self.locations
         
         return mapViewController
@@ -604,18 +558,14 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func addServiceIdToSubscribedList() {
-        guard let serviceId = self.serviceStatus.serviceId else {
-            return
-        }
-        
         var currentServiceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
         
-        if let existingServiceId = currentServiceIds.filter({ $0 == serviceId }).first {
+        if let existingServiceId = currentServiceIds.filter({ $0 == service.id }).first {
             currentServiceIds.remove(at: currentServiceIds.index(of: existingServiceId)!)
             currentServiceIds.append(existingServiceId)
         }
         else {
-            currentServiceIds.insert(serviceId, at: 0)
+            currentServiceIds.insert(service.id, at: 0)
         }
         
         UserDefaults.standard.setValue(currentServiceIds, forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey)
@@ -626,13 +576,9 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func removeServiceIdFromSubscribedList() {
-        guard let serviceId = self.serviceStatus.serviceId else {
-            return
-        }
-        
         var currentServiceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
         
-        if let existingServiceId = currentServiceIds.filter({ $0 == serviceId }).first {
+        if let existingServiceId = currentServiceIds.filter({ $0 == service.id }).first {
             currentServiceIds.remove(at: currentServiceIds.index(of: existingServiceId)!)
         }
         
@@ -681,15 +627,15 @@ extension ServiceDetailTableViewController: UITableViewDataSource {
             cell.accessoryType = shouldHideDisclosure ? .none : .disclosureIndicator
             
             return cell
-        case let .disruption(disruptionDetails, _):
+        case let .disruption(service, _):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.disruptionsCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailDisruptionsTableViewCell
-            cell.configureWithDisruptionDetails(disruptionDetails)
+            cell.configureWithService(service)
             return cell
-        case let .noDisruption(disruptionDetails, _):
+        case let .noDisruption(service, _):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailNoDisruptionTableViewCell
-            cell.configureWithDisruptionDetails(disruptionDetails)
+            cell.configureWithService(service)
             
             if viewConfiguration == .previewing {
                 cell.hideInfoButton()
@@ -726,11 +672,11 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
         switch row {
         case .basic:
             return 44.0
-        case let .disruption(disruptionDetails, _):
-            let height = ServiceDetailDisruptionsTableViewCell.heightWithDisruptionDetails(disruptionDetails, tableView: tableView)
+        case let .disruption(service, _):
+            let height = ServiceDetailDisruptionsTableViewCell.heightWithService(service, tableView: tableView)
             return height
-        case let .noDisruption(disruptionDetails, _):
-            let height = ServiceDetailNoDisruptionTableViewCell.heightWithDisruptionDetails(disruptionDetails, tableView: tableView)
+        case let .noDisruption(service, _):
+            let height = ServiceDetailNoDisruptionTableViewCell.heightWithService(service, tableView: tableView)
             return height
         case .loading:
             return 55.0
@@ -854,5 +800,11 @@ extension ServiceDetailTableViewController: ServiceDetailWeatherCellDelegate{
         default:
             break
         }
+    }
+}
+
+private extension Service {
+    var lastUpdated: String? {
+        return lastUpdatedDate.map { "Last updated \($0.relativeTimeSinceNowText())" }
     }
 }

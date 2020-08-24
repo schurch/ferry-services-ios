@@ -12,7 +12,7 @@ class ServiceStatus: Equatable {
     
     static let defaultServices: [Service] = {
         let defaultServicesFilePath = Bundle.main.path(forResource: "services", ofType: "json")!
-        let serviceData = try! Data(contentsOf: URL(fileURLWithPath: defaultServicesFilePath), options: .mappedIfSafe)
+        let serviceData = try! Data(contentsOf: URL(fileURLWithPath: defaultServicesFilePath))
         let serviceStatusData = try! JSONSerialization.jsonObject(with: serviceData, options: [])
         
         let json = JSON(serviceStatusData)
@@ -22,12 +22,12 @@ class ServiceStatus: Equatable {
         return []
     }()
     
-    static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss 'UTC'"
-        formatter.timeZone = TimeZone(abbreviation: "UTC")
-        return formatter
-    }()
+//    static let dateFormatter: DateFormatter = {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss 'UTC'"
+//        formatter.timeZone = TimeZone(abbreviation: "UTC")
+//        return formatter
+//    }()
     
     enum DisriptionStatus: Int {
         case unknown = -99
@@ -56,7 +56,7 @@ class ServiceStatus: Equatable {
         }
         
         if let updatedDate = data["updated"].string {
-            self.updated = DisruptionDetails.dateFormatter.date(from: updatedDate)
+//            self.updated = DisruptionDetails.dateFormatter.date(from: updatedDate)
         }
         
         self.route = data["route"].string

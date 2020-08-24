@@ -47,7 +47,7 @@ class DisruptionDetails: ServiceStatus {
         }
         
         if let disruptionDate = data["disruption_date"].string {
-            self.disruptionUpdatedDate = DisruptionDetails.dateFormatter.date(from: disruptionDate)
+//            self.disruptionUpdatedDate = DisruptionDetails.dateFormatter.date(from: disruptionDate)
         }
         
         self.reason = data["disruption_reason"].string
