@@ -114,7 +114,7 @@ class ServiceDetailTableViewController: UIViewController {
             self.alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), for: UIControlEvents.valueChanged)
             self.alertCell.configureLoading()
             
-            API.getInstallationServices(installationID: UUID()) { [weak self] result in
+            API.getInstallationServices(installationID: Installation.id) { [weak self] result in
                 guard let self = self else {
                     // self might be nil if we've popped the view controller when the completion block is called
                     return
@@ -272,39 +272,36 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     @objc func alertSwitchChanged(_ switchState: UISwitch) {
-        //        let currentInstallation = PFInstallation.current()
-        //        let isSwitchOn = switchState.isOn
-        //
-        //        if isSwitchOn {
-        //            currentInstallation?.addUniqueObject(self.parseChannel, forKey: "channels")
-        //        } else {
-        //            currentInstallation?.remove(self.parseChannel, forKey: "channels")
-        //        }
-        //
-        //        self.alertCell.configureLoading()
-        //
-        //        currentInstallation?.saveInBackground { [weak self] (succeeded, error)  in
-        //            guard let `self` = self else {
-        //                // self might be nil if we've popped the view controller when the completion block is called
-        //                return
-        //            }
-        //
-        //            guard error == nil else {
-        //                self.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
-        //                print("Error subscribing to services: \(error!)")
-        //                return
-        //            }
-        //
-        //            let subscribed = succeeded && isSwitchOn
-        //            self.alertCell.configureLoadedWithSwitchOn(subscribed)
-        //
-        //            if subscribed {
-        //                self.addServiceIdToSubscribedList()
-        //            }
-        //            else {
-        //                self.removeServiceIdFromSubscribedList()
-        //            }
-        //        }
+        let isSwitchOn = switchState.isOn
+        self.alertCell.configureLoading()
+        
+        API.addService(for: Installation.id, serviceID: service.id) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
+            switch result {
+            case .failure:
+                self.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
+                let alert = UIAlertController(
+                    title: "Error",
+                    message: "A problem occured. Please try again later.",
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                
+            case .success:
+                self.alertCell.configureLoadedWithSwitchOn(isSwitchOn)
+                
+                if isSwitchOn {
+                    self.addServiceIdToSubscribedList()
+                }
+                else {
+                    self.removeServiceIdFromSubscribedList()
+                }
+            }
+        }
     }
     
     // MARK: - refresh

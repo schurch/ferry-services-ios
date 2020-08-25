@@ -10,6 +10,20 @@ import UIKit
 import WatchConnectivity
 import Sentry
 
+struct Installation {
+    static let id: UUID = {
+        let key = "installationID"
+        
+        if let id = UserDefaults.standard.string(forKey: key) {
+            return UUID(uuidString: id)!
+        } else {
+            let id = UUID()
+            UserDefaults.standard.set(id.uuidString, forKey: key)
+            return id
+        }
+    }()
+}
+
 struct ErrorMessages {
     static let errorFetchingSubscribedServiceIds = "There was an error fetching your subscribed services"
 }
@@ -36,7 +50,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         // Configure push notifications
         UNUserNotificationCenter.current().delegate = self
-        application.registerForRemoteNotifications()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { granted, error in
+            DispatchQueue.main.async {
+                if (granted) {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }                
+            }
+        }
         
         // Global colors
         self.window?.tintColor = UIColor.tealTintColor()
@@ -99,8 +119,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     // MARK: - Push notifications
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let stringToken = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        print("Push token: \(stringToken)")
+        let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+        API.createInstallation(installationID: Installation.id, deviceToken: token, completion: { _ in })
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register for remote notifications: \(error)")
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
