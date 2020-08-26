@@ -66,8 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // This will block "performActionForShortcutItem:completionHandler" from being called.
             shouldPerformAdditionalDelegateHandling = false
         }
-        else if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
-            self.application(application, didReceiveRemoteNotification: remoteNotification)
+        else if let remoteNotificationUserInfo = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
+            handleNotification(userInfo: remoteNotificationUserInfo)
         }
         
         if WCSession.isSupported() {
@@ -133,29 +133,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        // TODO: App became active, handle notification
+        // App became active
+        handleNotification(userInfo: response.notification.request.content.userInfo)
         completionHandler()
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-//        guard let info = userInfo as? [String: AnyObject] else { return }
-//
-//        if application.applicationState == .active {
-//            guard let aps = info["aps"] as? [String: AnyObject] else { return }
-//            guard let message = aps["alert"] as? String else { return }
-//
-//            let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
-//
-//            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//            alertController.addAction(cancelAction)
-//
-//            self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-//        }
-//        else {
-//            if let serviceId = info["service_id"] as? Int {
-//                self.showDetailsForServiceId(serviceId)
-//            }
-//        }
+    private func handleNotification(userInfo: [AnyHashable: Any]) {
+        guard let info = userInfo as? [String: AnyObject] else { return }
+        if let serviceId = info["service_id"] as? Int {
+            self.showDetailsForServiceId(serviceId)
+        } else {
+            guard let aps = info["aps"] as? [String: AnyObject] else { return }
+            guard let message = aps["alert"] as? String else { return }
+            
+            let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            
+            self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+        }
     }
     
     // MARK: - Shortcut items

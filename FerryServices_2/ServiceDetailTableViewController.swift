@@ -272,9 +272,15 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     @objc func alertSwitchChanged(_ switchState: UISwitch) {
-        let isSwitchOn = switchState.isOn
         self.alertCell.configureLoading()
-        
+        if switchState.isOn {
+            subscribeToService()
+        } else {
+            unsubscribeFromService()
+        }
+    }
+    
+    private func subscribeToService() {
         API.addService(for: Installation.id, serviceID: service.id) { [weak self] result in
             guard let self = self else {
                 return
@@ -282,7 +288,7 @@ class ServiceDetailTableViewController: UIViewController {
             
             switch result {
             case .failure:
-                self.alertCell.configureLoadedWithSwitchOn(!isSwitchOn)
+                self.alertCell.configureLoadedWithSwitchOn(false)
                 let alert = UIAlertController(
                     title: "Error",
                     message: "A problem occured. Please try again later.",
@@ -292,14 +298,32 @@ class ServiceDetailTableViewController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
                 
             case .success:
-                self.alertCell.configureLoadedWithSwitchOn(isSwitchOn)
+                self.alertCell.configureLoadedWithSwitchOn(true)
+                self.addServiceIdToSubscribedList()
+            }
+        }
+    }
+    
+    private func unsubscribeFromService() {
+        API.removeService(for: Installation.id, serviceID: service.id) { [weak self]  result in
+            guard let self = self else {
+                return
+            }
+            
+            switch result {
+            case .failure:
+                self.alertCell.configureLoadedWithSwitchOn(true)
+                let alert = UIAlertController(
+                    title: "Error",
+                    message: "A problem occured. Please try again later.",
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
                 
-                if isSwitchOn {
-                    self.addServiceIdToSubscribedList()
-                }
-                else {
-                    self.removeServiceIdFromSubscribedList()
-                }
+            case .success:
+                self.alertCell.configureLoadedWithSwitchOn(false)
+                self.removeServiceIdFromSubscribedList()
             }
         }
     }

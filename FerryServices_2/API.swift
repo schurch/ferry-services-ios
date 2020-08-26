@@ -66,7 +66,8 @@ class API {
         let serviceID: Int
     }
     
-    static let baseURL = URL(string: "http://localhost:3000")
+//    static let baseURL = URL(string: "http://localhost:3000")
+    static let baseURL = URL(string: "http://scottishferryapp.com:3008")
     private static let root = "/api"
     
     static func fetchServices(completion: @escaping (Result<[Service], Error>) -> ()){
@@ -159,7 +160,7 @@ private let decoder: JSONDecoder = {
     decoder.dateDecodingStrategy = .custom { dateDecoder in
         let string = try dateDecoder.singleValueContainer().decode(String.self)
         let dateFormatter = ISO8601DateFormatter()
-        dateFormatter.formatOptions = [.withFractionalSeconds]
+        dateFormatter.formatOptions = [.withFractionalSeconds, .withInternetDateTime]
         return dateFormatter.date(from: string)!
     }
     return decoder
