@@ -103,7 +103,7 @@ class TimetableViewController: UIViewController {
             (expanded, departureGroups) in
             let dateSelectorSection = Section.SectionType.dateSelector(date: departureGroups.date, expanded: expanded)
             
-            let departureSections = departureGroups.values.flatMap { (departures: [Departure]) -> Section? in
+            let departureSections = departureGroups.values.compactMap { (departures: [Departure]) -> Section? in
                 guard !departures.isEmpty else { return nil }
                 
                 let sectionType = Section.SectionType.departures(departures: departures, date: departureGroups.date)

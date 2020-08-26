@@ -131,27 +131,27 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     }
     
     private func createPortAnnotationView(mapView: MKMapView, annotation: MKAnnotation) -> MKAnnotationView? {
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.portAnnotationReuseIdentifier) as! MKPinAnnotationView!
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.portAnnotationReuseIdentifier)
         
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.portAnnotationReuseIdentifier)
-            pinView?.pinTintColor = UIColor.red
-            pinView?.animatesDrop = false
-            pinView?.canShowCallout = true
-            
-            let directionsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 100))
-            directionsButton.backgroundColor = UIColor(red:0.13, green:0.75, blue:0.67, alpha:1)
-            directionsButton.setImage(UIImage(named: "directions_arrow"), for: UIControlState())
-            directionsButton.setImage(UIImage(named: "directions_arrow_highlighted"), for: UIControlState.highlighted)
-            directionsButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 56, right: 0)
-            
-            pinView?.rightCalloutAccessoryView = directionsButton
-        }
-        else {
-            pinView?.annotation = annotation
+        guard annotationView == nil else {
+            annotationView?.annotation = annotation
+            return annotationView
         }
         
-        return pinView
+        let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.portAnnotationReuseIdentifier)
+        pinAnnotationView.pinTintColor = UIColor.red
+        pinAnnotationView.animatesDrop = false
+        pinAnnotationView.canShowCallout = true
+        
+        let directionsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 100))
+        directionsButton.backgroundColor = UIColor(red:0.13, green:0.75, blue:0.67, alpha:1)
+        directionsButton.setImage(UIImage(named: "directions_arrow"), for: UIControlState())
+        directionsButton.setImage(UIImage(named: "directions_arrow_highlighted"), for: UIControlState.highlighted)
+        directionsButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 56, right: 0)
+        
+        pinAnnotationView.rightCalloutAccessoryView = directionsButton
+        
+        return pinAnnotationView
     }
     
     private func fetchVessels() {
