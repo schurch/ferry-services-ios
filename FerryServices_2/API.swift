@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Stefan Church. All rights reserved.
 //
 
+import Foundation
+
 struct Service: Decodable {
     static let defaultServices: [Service] = {
         do {

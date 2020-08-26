@@ -83,7 +83,7 @@ class ServicesViewController: UITableViewController {
         self.tableView.backgroundColor = UIColor.tealBackgroundColor()
         self.tableView.register(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: MainStoryboard.TableViewCellIdentifiers.serviceStatusCell)
         
-        self.searchResultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultsController") as! SearchResultsViewController
+        self.searchResultsController = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultsController") as! SearchResultsViewController)
         self.searchResultsController.delegate = self
             
         self.searchController = UISearchController(searchResultsController: self.searchResultsController)

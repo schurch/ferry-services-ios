@@ -27,7 +27,7 @@ struct LastViewedServices {
         
         sharedDefaults?.set(lastViewedServices, forKey: "lastViewedServiceIds")
         
-        let services = ServiceStatus.defaultServices
+        let services = Service.defaultServices
         let shortcutItems: [UIApplicationShortcutItem] = lastViewedServices.dropFirst().compactMap { serviceId in
             guard let service = services.filter({ $0.id == serviceId }).first else { return nil }
             

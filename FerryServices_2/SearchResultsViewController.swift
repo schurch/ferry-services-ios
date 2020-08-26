@@ -139,8 +139,8 @@ extension SearchResultsViewController: UIViewControllerPreviewingDelegate {
         let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
         serviceDetailViewController.viewConfiguration = .previewing
         
-        let serviceStatus = self.arrayOfFilteredServices[(indexPath as NSIndexPath).row]
-//        serviceDetailViewController.serviceStatus = serviceStatus
+        let service = self.arrayOfFilteredServices[(indexPath as NSIndexPath).row]
+        serviceDetailViewController.service = service
         
         return serviceDetailViewController
     }

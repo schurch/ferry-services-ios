@@ -6,7 +6,6 @@
 //  Copyright © 2016 Stefan Church. All rights reserved.
 //
 
-import UIKit
 import NotificationCenter
 
 class TodayViewController: UIViewController {
@@ -20,14 +19,8 @@ class TodayViewController: UIViewController {
     @IBOutlet weak var serviceDetailView: UIStackView!
     @IBOutlet weak var statusImageView: UIImageView!
     
-    var dataTask: URLSessionDataTask?
-    
     var serviceId: Int? {
-        if let serviceId = sharedDefaults?.array(forKey: "lastViewedServiceIds")?.first as? Int, serviceId > 0 {
-            return serviceId
-        }
-        
-        return nil
+        return sharedDefaults?.array(forKey: "lastViewedServiceIds")?.first as? Int
     }
     
     override func viewDidLoad() {
@@ -46,7 +39,7 @@ class TodayViewController: UIViewController {
             return
         }
         
-        let service = Service.defaultServices.filter({ $0.serviceId == serviceId }).first!
+        let service = Service.defaultServices.first(where: { $0.id == serviceId})!
         configure(withService: service)
         
         fetchService(forServiceId: serviceId)
@@ -76,9 +69,9 @@ class TodayViewController: UIViewController {
             statusImageView.image = UIImage(named: "grey")
         case .normal:
             statusImageView.image = UIImage(named: "green")
-        case .sailingsAffected:
+        case .disrupted:
             statusImageView.image = UIImage(named: "amber")
-        case .sailingsCancelled:
+        case .cancelled:
             statusImageView.image = UIImage(named: "red")
         }
         
@@ -97,47 +90,14 @@ class TodayViewController: UIViewController {
     
     //MARK: - Utility 
     private func fetchService(forServiceId serviceId: Int) {
-        let url = URL(string: "http://www.scottishferryapp.com/services/\(serviceId)")!
-        
-        dataTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let `self` = self else {
-                return
-            }
-            
-            guard error == nil else {
-                DispatchQueue.main.async {
-                    print("Error fetching service: \(error!.localizedDescription)")
-                    self.show(message: "There was a problem with the server response.")
-                }
-                
-                return
-            }
-            
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                if let jsonDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: AnyObject] {
-                    DispatchQueue.main.async {
-                        guard let service = Service(json: jsonDictionary) else {
-                            self.show(message: "There was a problem with the server response.")
-                            return
-                        }
-
-                        self.configure(withService: service)
-                    }
-                }
-                
-            } catch let error as NSError {
-                DispatchQueue.main.async {
-                    print("Error parsing json: \(error.localizedDescription)")
-                    self.show(message: "There was a problem with the server response.")
-                }
+        API.fetchService(serviceID: serviceId) { result in
+            switch result {
+            case .success(let service):
+                self.configure(withService: service)
+            case .failure:
+                self.show(message: "There was a problem with the server response.")
             }
         }
-        
-        dataTask?.resume()
     }
 }
 

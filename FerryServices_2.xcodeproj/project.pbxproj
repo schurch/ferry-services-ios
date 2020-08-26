@@ -11,7 +11,6 @@
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1464F41D97BE090087262D /* UIImage+extensions.swift */; };
 		FD16D95E1DCD4FE7007F4548 /* LastViewedServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD16D95D1DCD4FE7007F4548 /* LastViewedServices.swift */; };
-		FD16D9601DCD6B75007F4548 /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FD16D95F1DCD6B75007F4548 /* services.json */; };
 		FD1AA3691D978D1C003496B1 /* ServiceMapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */; };
 		FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */; };
 		FD307D6C1F3539B3006FB53F /* Departures.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD307D6B1F3539B3006FB53F /* Departures.swift */; };
@@ -68,8 +67,6 @@
 		FD8819FD1A998D76002A976A /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FC1A998D76002A976A /* Accounts.framework */; };
 		FD8819FF1A998DAA002A976A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FE1A998DAA002A976A /* Social.framework */; };
 		FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */; };
-		FD8A235C1DBD45E100AD8EFC /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A235A1DBD45E100AD8EFC /* Port.swift */; };
-		FD8A235D1DBD45E100AD8EFC /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8A235B1DBD45E100AD8EFC /* Service.swift */; };
 		FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */; };
 		FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */; };
 		FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */; };
@@ -95,6 +92,8 @@
 		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
 		FDD3ED681C49C681003444A2 /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD3ED671C49C681003444A2 /* Port.swift */; };
+		FDDFCA0524F6497B0094A69D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* API.swift */; };
+		FDDFCA0624F649CE0094A69D /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
 		FDE391A31C1561AD000EDE26 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDE391A11C1561AD000EDE26 /* Interface.storyboard */; };
@@ -104,9 +103,7 @@
 		FDE391B51C1561AD000EDE26 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE391B41C1561AD000EDE26 /* ExtensionDelegate.swift */; };
 		FDE391B91C1561AD000EDE26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDE391B81C1561AD000EDE26 /* Assets.xcassets */; };
 		FDE391BD1C1561AD000EDE26 /* Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FDE3919F1C1561AD000EDE26 /* Watch App.app */; };
-		FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */; };
 		FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */; };
-		FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */; };
 		FDF75D601F550BF4002B3B12 /* departure_ports.sql in Resources */ = {isa = PBXBuildFile; fileRef = FDF75D5F1F550BF4002B3B12 /* departure_ports.sql */; };
 		FDF75D621F550DFC002B3B12 /* JourneyPorts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF75D611F550DFC002B3B12 /* JourneyPorts.swift */; };
 		FDF9807B1B50818000672393 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF9807A1B50818000672393 /* Utility.swift */; };
@@ -187,7 +184,6 @@
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1464F41D97BE090087262D /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
 		FD16D95D1DCD4FE7007F4548 /* LastViewedServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastViewedServices.swift; sourceTree = "<group>"; };
-		FD16D95F1DCD6B75007F4548 /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceMapDelegate.swift; sourceTree = "<group>"; };
 		FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		FD307D6B1F3539B3006FB53F /* Departures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Departures.swift; sourceTree = "<group>"; };
@@ -254,8 +250,6 @@
 		FD8819FC1A998D76002A976A /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		FD8819FE1A998DAA002A976A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailWeatherCell.swift; sourceTree = "<group>"; };
-		FD8A235A1DBD45E100AD8EFC /* Port.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
-		FD8A235B1DBD45E100AD8EFC /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		FD8DDDB119B094B0008479DC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDisruptionsTableViewCell.swift; sourceTree = "<group>"; };
 		FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -301,9 +295,7 @@
 		FDE391B41C1561AD000EDE26 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		FDE391B81C1561AD000EDE26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDE391BA1C1561AD000EDE26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ServiceStatus.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTextOnlyCell.swift; sourceTree = "<group>"; };
-		FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DisruptionDetails.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FDF75D5F1F550BF4002B3B12 /* departure_ports.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = departure_ports.sql; sourceTree = "<group>"; };
 		FDF75D611F550DFC002B3B12 /* JourneyPorts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyPorts.swift; sourceTree = "<group>"; };
 		FDF9807A1B50818000672393 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
@@ -438,8 +430,6 @@
 			isa = PBXGroup;
 			children = (
 				FD5E7DBA197A316F00F438F6 /* API.swift */,
-				FDE66DCC197A598F008EA4EE /* ServiceStatus.swift */,
-				FDEA4B22198C72CD0023A5A7 /* DisruptionDetails.swift */,
 			);
 			name = "Services Client";
 			sourceTree = "<group>";
@@ -614,11 +604,8 @@
 		FDBD7DC21DB18FDD00698A70 /* Today Extension */ = {
 			isa = PBXGroup;
 			children = (
-				FD16D95F1DCD6B75007F4548 /* services.json */,
 				FDBD7DD01DB1970800698A70 /* Today Extension.entitlements */,
 				FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */,
-				FD8A235B1DBD45E100AD8EFC /* Service.swift */,
-				FD8A235A1DBD45E100AD8EFC /* Port.swift */,
 				FDBD7DC51DB18FDD00698A70 /* MainInterface.storyboard */,
 				FDBD7DC81DB18FDD00698A70 /* Info.plist */,
 				FD393C381DB1A49D002C0A80 /* Images.xcassets */,
@@ -835,7 +822,7 @@
 			attributes = {
 				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Stefan Church";
 				TargetAttributes = {
 					FD753ECF197A256E00CC5DE3 = {
@@ -893,10 +880,9 @@
 			};
 			buildConfigurationList = FD753ECB197A256E00CC5DE3 /* Build configuration list for PBXProject "FerryServices_2" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -950,7 +936,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDBD7DC71DB18FDD00698A70 /* MainInterface.storyboard in Resources */,
-				FD16D9601DCD6B75007F4548 /* services.json in Resources */,
+				FDDFCA0624F649CE0094A69D /* services.json in Resources */,
 				FD393C391DB1A49D002C0A80 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1089,8 +1075,6 @@
 				FD307D7C1F36CC67006FB53F /* MultiJourneyDeparture.swift in Sources */,
 				FDC336351D97440C00730481 /* VesselsAPIClient.swift in Sources */,
 				FD5BF4E11A539EC4009D799E /* PropellerView.swift in Sources */,
-				FDE66DCD197A598F008EA4EE /* ServiceStatus.swift in Sources */,
-				FDEA4B23198C72CE0023A5A7 /* DisruptionDetails.swift in Sources */,
 				FD3CF99B1D972A3100B6CC99 /* FMDatabasePool.m in Sources */,
 				FDC34B5C1D97362200A12758 /* String+extensions.swift in Sources */,
 			);
@@ -1108,9 +1092,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD8A235C1DBD45E100AD8EFC /* Port.swift in Sources */,
 				FDBD7DC41DB18FDD00698A70 /* TodayViewController.swift in Sources */,
-				FD8A235D1DBD45E100AD8EFC /* Service.swift in Sources */,
+				FDDFCA0524F6497B0094A69D /* API.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1193,12 +1176,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1246,12 +1231,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1399,6 +1386,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = L832SX5MC4;
 				INFOPLIST_FILE = "Today Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 2.40;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.todayextension;
@@ -1425,6 +1413,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = L832SX5MC4;
 				INFOPLIST_FILE = "Today Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 2.40;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.todayextension;
