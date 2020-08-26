@@ -1,7 +1,0 @@
-{
-    "aps": {
-        "alert": "There is a disruption to the service Ardrossan - Brodick",
-        "category": "disruption"
-    },
-    "service_id": 5
-}
