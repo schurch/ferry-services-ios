@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 struct Vessel {
     static let dateFormatter: DateFormatter = {
@@ -76,30 +75,34 @@ struct Vessel {
     }
     
     init(data: [String: AnyObject]) {
-        let json = JSON(data)
-        
-        mmsi = json["mmsi"].intValue
-        
-        if let updatedDate = json["updated"].string {
-            updated = Vessel.dateFormatter.date(from: updatedDate)
-        }
-        
-        if let locationUpdatedDate = json["location_updated"].string {
-            locationUpdated = Vessel.dateFormatter.date(from: locationUpdatedDate)
-        }
-        
-        name = json["name"].stringValue
-        latitude = json["latitude"].doubleValue
-        longitude = json["longitude"].doubleValue
-        course = json["course"].double
-        
-        if let speedValue = json["speed"].double {
-            speed = speedValue / 10.0
-        }
-        
-        if let rawStatus = json["status"].int {
-            status = Status(rawValue: rawStatus)
-        }
+        mmsi = 0
+        name = ""
+        latitude = 0
+        longitude = 0
+//        let json = JSON(data)
+//
+//        mmsi = json["mmsi"].intValue
+//
+//        if let updatedDate = json["updated"].string {
+//            updated = Vessel.dateFormatter.date(from: updatedDate)
+//        }
+//
+//        if let locationUpdatedDate = json["location_updated"].string {
+//            locationUpdated = Vessel.dateFormatter.date(from: locationUpdatedDate)
+//        }
+//
+//        name = json["name"].stringValue
+//        latitude = json["latitude"].doubleValue
+//        longitude = json["longitude"].doubleValue
+//        course = json["course"].double
+//
+//        if let speedValue = json["speed"].double {
+//            speed = speedValue / 10.0
+//        }
+//
+//        if let rawStatus = json["status"].int {
+//            status = Status(rawValue: rawStatus)
+//        }
     }
 }
 

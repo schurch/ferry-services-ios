@@ -21,54 +21,48 @@ class WeatherAPIClient {
     fileprivate var lastFetchTime: [String: (Date, LocationWeather)] = [String: (Date, LocationWeather)]()
     
     // MARK: - methods
-    func fetchWeatherForLocation(_ location: Location, completion: @escaping (_ weather: LocationWeather?, _ error: NSError?) -> ()) {
-        switch (location.latitude, location.longitude) {
-        case let (.some(lat), .some(lng)):
-            let requestURL = "data/2.5/weather?lat=\(lat)&lon=\(lng)&APPID=\(APIKeys.openWeatherMapAPIKey)"
-            
-            // check if we have made a request in the last 10 minutes
-            if let lastFetchForURL = self.lastFetchTime[requestURL] {
-                if Date().timeIntervalSince(lastFetchForURL.0) < WeatherAPIClient.cacheTimeoutSeconds {
-                    completion(lastFetchForURL.1, nil)
-                    return
-                }
-            }
-            
-            let url = URL(string: requestURL, relativeTo: WeatherAPIClient.baseURL)
-            JSONRequester().requestWithURL(url!) { json, error in
-                guard error == nil else {
-                    DispatchQueue.main.async(execute: {
-                        completion(nil, error)
-                    })
-                    
-                    return
-                }
-                
-                guard let json = json else {
-                    DispatchQueue.main.async(execute: {
-                        completion(nil, WeatherAPIClient.error)
-                    })
-                    
-                    return
-                }
-                
-                guard json["cod"].int == 200 else {
-                    DispatchQueue.main.async(execute: {
-                        completion(nil, WeatherAPIClient.error)
-                    })
-                    
-                    return
-                }
-                
-                let weather = LocationWeather(data: json)
-                self.lastFetchTime[requestURL] = (Date(), weather) // cache result
-                DispatchQueue.main.async(execute: {
-                    completion(weather, nil)
-                })
-            }
+    func fetchWeatherForLocation(_ location: Service.Location, completion: @escaping (Result<LocationWeather, Error>) -> ()) {
+        let requestURL = "data/2.5/weather?lat=\(location.latitude)&lon=\(location.longitude)&APPID=\(APIKeys.openWeatherMapAPIKey)"
         
-        default:
-            completion(nil, WeatherAPIClient.error)
+        // check if we have made a request in the last 10 minutes
+        if let lastFetchForURL = self.lastFetchTime[requestURL] {
+            if Date().timeIntervalSince(lastFetchForURL.0) < WeatherAPIClient.cacheTimeoutSeconds {
+                completion(.success(lastFetchForURL.1))
+                return
+            }
         }
+        
+        let url = URL(string: requestURL, relativeTo: WeatherAPIClient.baseURL)!
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let response = response as? HTTPURLResponse else {
+                    completion(.failure(APIError.expectedHTTPResponse))
+                    return
+                }
+                
+                guard let data = data else {
+                    completion(.failure(APIError.missingResponseData))
+                    return
+                }
+                
+                switch response.statusCode {
+                case 200..<300:
+                    do {
+                        let result = try JSONDecoder().decode(LocationWeather.self, from: data)
+                        self.lastFetchTime[requestURL] = (Date(), result) // cache result
+                        completion(.success(result))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                default:
+                    completion(.failure(APIError.badResponseCode))
+                }
+            }
+        }.resume()
     }
 }

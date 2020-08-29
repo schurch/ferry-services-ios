@@ -1,8 +1,7 @@
-platform :ios, '10.0'
+platform :ios, '12.0'
 use_frameworks!
 
 target 'FerryServices_2' do
-  pod 'SwiftyJSON'
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxDataSources'

@@ -42,7 +42,7 @@ class ServiceDetailTableViewController: UIViewController {
         case noDisruption(service: Service, viewControllerGenerator: ViewControllerGenerator)
         case loading
         case textOnly(text: String)
-        case weather(location: Location)
+        case weather
         case alert
     }
     
@@ -84,9 +84,9 @@ class ServiceDetailTableViewController: UIViewController {
     var viewConfiguration: ViewConfiguration = .full
     var windAnimationTimer: Timer!
     
-    lazy var locations: [Location]? = {
-        return Location.fetchLocationsForSericeId(service.id)
-    }()
+//    lazy var locations: [Location]? = {
+//        return Location.fetchLocationsForSericeId(service.serviceId)
+//    }()
     
     // MARK: -
     deinit {
@@ -126,7 +126,7 @@ class ServiceDetailTableViewController: UIViewController {
                     self.removeServiceIdFromSubscribedList()
 
                 case .success(let subscribedServices):
-                    let subscribed = subscribedServices.map { $0.id }.contains(self.service.id)
+                    let subscribed = subscribedServices.map { $0.serviceId }.contains(self.service.serviceId)
                     self.alertCell.configureLoadedWithSwitchOn(subscribed)
                     
                     if subscribed {
@@ -156,14 +156,12 @@ class ServiceDetailTableViewController: UIViewController {
             self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
             self.constraintMapViewTop.constant = -MainStoryBoard.Constants.motionEffectAmount
             
-            if let locations = self.locations {
-                mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: locations, showVessels: true)
-                mapViewDelegate?.shouldAllowAnnotationSelection = false
-                mapView.delegate = mapViewDelegate
-                
-                if let portAnnotations = mapViewDelegate?.portAnnotations {
-                    LastViewedServices.registerMapSnapshot(portAnnotations)
-                }
+            mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: service.locations, showVessels: true)
+            mapViewDelegate?.shouldAllowAnnotationSelection = false
+            mapView.delegate = mapViewDelegate
+            
+            if let portAnnotations = mapViewDelegate?.portAnnotations {
+                LastViewedServices.registerMapSnapshot(portAnnotations)
             }
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(touchedButtonShowMap(_:)))
@@ -281,7 +279,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     private func subscribeToService() {
-        API.addService(for: Installation.id, serviceID: service.id) { [weak self] result in
+        API.addService(for: Installation.id, serviceID: service.serviceId) { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -305,7 +303,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     private func unsubscribeFromService() {
-        API.removeService(for: Installation.id, serviceID: service.id) { [weak self]  result in
+        API.removeService(for: Installation.id, serviceID: service.serviceId) { [weak self]  result in
             guard let self = self else {
                 return
             }
@@ -412,19 +410,8 @@ class ServiceDetailTableViewController: UIViewController {
         //        }
         
         // weather sections
-        if let locations = self.locations {
-            for location in locations {
-                var weatherRows = [Row]()
-                
-                switch (location.latitude, location.longitude) {
-                case (.some(_), .some(_)):
-                    let weatherRow = Row.weather(location: location)
-                    weatherRows.append(weatherRow)
-                    sections.append(Section(title: location.name, footer: nil, rows: weatherRows))
-                default:
-                    break
-                }
-            }
+        for location in service.locations {
+            sections.append(Section(title: location.name, footer: nil, rows: [.weather]))
         }
         
         self.dataSource = sections
@@ -452,7 +439,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func fetchLatestDisruptionData() {
-        API.fetchService(serviceID: service.id) { result in
+        API.fetchService(serviceID: service.serviceId) { result in
             guard case let .success(service) = result else { return }
             self.service = service
             self.refreshingDisruptionInfo = false
@@ -462,55 +449,44 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func fetchLatestWeatherData() {
-        guard let locations = self.locations else { return }
-        
-        for location in locations {
-            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] weather, error in
-                if self == nil {
-                    return
+        for (index, location) in service.locations.enumerated() {
+            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] result in
+                guard let self = self else { return }
+                
+                switch result {
+                case .failure(let error):
+                    self.service.locations[index].weatherFetchError = error
+                case .success(let weather):
+                    self.service.locations[index].weather = weather
                 }
                 
-                if let error = error {
-                    NSLog("Error loading weather: \(error)")
-                }
-                
-                location.weather = weather
-                location.weatherFetchError = error
-                
-                self!.reloadWeatherForLocation(location)
+                self.reloadWeatherForLocation(location)
             }
         }
     }
     
-    fileprivate func reloadWeatherForLocation(_ location: Location) {
+    fileprivate func reloadWeatherForLocation(_ location: Service.Location) {
         if let indexPath = self.indexPathForLocation(location) {
             self.tableView.reloadRows(at: [indexPath], with: .none)
         }
     }
     
-    fileprivate func indexPathForLocation(_ location: Location) -> IndexPath? {
-        var sectionCount = 0
-        
-        for section in self.dataSource {
-            
-            var rowCount = 0
-            for row in section.rows {
-                switch row {
-                case let .weather(rowLocation):
-                    if location == rowLocation {
-                        return IndexPath(row: rowCount, section: sectionCount)
-                    }
-                default:
-                    break
-                }
-                
-                rowCount += 1
-            }
-            
-            sectionCount += 1
+    fileprivate func indexPathForLocation(_ location: Service.Location) -> IndexPath? {
+        guard let locationIndex = service.locations.firstIndex(where: {
+            $0.name == location.name && $0.latitude == location.latitude && $0.longitude == location.longitude
+        }) else {
+            return nil
         }
         
-        return nil
+        guard let firstLocationSectionIndex = dataSource.firstIndex(where: {
+            if case Row.weather = $0.rows[0] {
+                return true
+            } else {
+                return false
+            }
+        }) else { return nil }
+        
+        return IndexPath(row: 0, section: firstLocationSectionIndex + locationIndex)
     }
     
     fileprivate func isWinterTimetableAvailable() -> Bool {
@@ -522,11 +498,11 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func winterPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Winter/\(service.id).pdf")
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Winter/\(service.serviceId).pdf")
     }
     
     fileprivate func summerPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Summer/\(service.id).pdf")
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Summer/\(service.serviceId).pdf")
     }
     
     fileprivate func pdfTimeTableViewController(_ path: String, title: String) -> UIViewController {
@@ -540,8 +516,8 @@ class ServiceDetailTableViewController: UIViewController {
     
     fileprivate func mapViewController() -> UIViewController {
         let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
-        mapViewController.title = self.service.route
-        mapViewController.locations = self.locations
+        mapViewController.title = service.route
+        mapViewController.locations = service.locations
         
         return mapViewController
     }
@@ -581,12 +557,12 @@ class ServiceDetailTableViewController: UIViewController {
     fileprivate func addServiceIdToSubscribedList() {
         var currentServiceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
         
-        if let existingServiceId = currentServiceIds.filter({ $0 == service.id }).first {
+        if let existingServiceId = currentServiceIds.filter({ $0 == service.serviceId }).first {
             currentServiceIds.remove(at: currentServiceIds.index(of: existingServiceId)!)
             currentServiceIds.append(existingServiceId)
         }
         else {
-            currentServiceIds.insert(service.id, at: 0)
+            currentServiceIds.insert(service.serviceId, at: 0)
         }
         
         UserDefaults.standard.setValue(currentServiceIds, forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey)
@@ -599,7 +575,7 @@ class ServiceDetailTableViewController: UIViewController {
     fileprivate func removeServiceIdFromSubscribedList() {
         var currentServiceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
         
-        if let existingServiceId = currentServiceIds.filter({ $0 == service.id }).first {
+        if let existingServiceId = currentServiceIds.filter({ $0 == service.serviceId }).first {
             currentServiceIds.remove(at: currentServiceIds.index(of: existingServiceId)!)
         }
         
@@ -629,7 +605,7 @@ extension ServiceDetailTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = dataSource[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
+        let row = dataSource[indexPath.section].rows[indexPath.row]
         
         switch row {
         case let .basic(title, subtitle, viewControllerGenerator):
@@ -673,11 +649,23 @@ extension ServiceDetailTableViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailTextOnlyCell
             cell.labelText.text = text
             return cell
-        case let .weather(location):
+        case .weather:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailWeatherCell
             cell.selectionStyle = .none
-            cell.configureWithLocation(location, animate: true)
+            
+            let firstLocationSectionIndex = dataSource.firstIndex(where: {
+                if case Row.weather = $0.rows[0] {
+                    return true
+                } else {
+                    return false
+                }
+            })!
+            
+            let index = indexPath.section - firstLocationSectionIndex
+            
+            cell.configureWithLocation(service.locations[index], animate: true)
+            
             cell.delegate = self
             return cell
         case .alert:
@@ -688,7 +676,7 @@ extension ServiceDetailTableViewController: UITableViewDataSource {
 
 extension ServiceDetailTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let row = dataSource[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
+        let row = dataSource[indexPath.section].rows[indexPath.row]
         
         switch row {
         case .basic:
@@ -704,8 +692,18 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
         case let .textOnly(text):
             let height = ServiceDetailTextOnlyCell.heightWithText(text, tableView: tableView)
             return height
-        case let .weather(location):
-            let height = ServiceDetailWeatherCell.heightWithLocation(location, tableView: tableView)
+        case .weather:
+            let firstLocationSectionIndex = dataSource.firstIndex(where: {
+                if case Row.weather = $0.rows[0] {
+                    return true
+                } else {
+                    return false
+                }
+            })!
+            
+            let index = indexPath.section - firstLocationSectionIndex
+            
+            let height = ServiceDetailWeatherCell.heightWithLocation(service.locations[index], tableView: tableView)
             return height
         case .alert:
             return 44.0
@@ -737,7 +735,7 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
         let row = dataSource[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
         
         switch row {
-        case .weather(_):
+        case .weather:
             if let weatherCell = cell as? ServiceDetailWeatherCell {
                 weatherCell.viewSeparator.backgroundColor = tableView.separatorColor
             }
@@ -796,27 +794,25 @@ extension ServiceDetailTableViewController: UIViewControllerPreviewingDelegate {
     }
 }
 
-extension ServiceDetailTableViewController: ServiceDetailWeatherCellDelegate{
+extension ServiceDetailTableViewController: ServiceDetailWeatherCellDelegate {
     func didTouchReloadForWeatherCell(_ cell: ServiceDetailWeatherCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
-        let row = dataSource[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
+        let row = dataSource[indexPath.section].rows[indexPath.row]
         
         switch row {
-        case let .weather(location):
-            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] weather, error in
-                if self == nil {
-                    return
+        case .weather:
+            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(self.service.locations[indexPath.row]) { [weak self] result in
+                guard let self = self else { return }
+                                
+                switch result {
+                case .failure(let error):
+                    self.service.locations[indexPath.row].weatherFetchError = error
+                case .success(let weather):
+                    self.service.locations[indexPath.row].weather = weather
                 }
                 
-                if let error = error {
-                    NSLog("Error loading weather: \(error)")
-                }
-                
-                location.weather = weather
-                location.weatherFetchError = error
-                
-                self!.reloadWeatherForLocation(location)
+                self.reloadWeatherForLocation(self.service.locations[indexPath.row])
             }
         default:
             break

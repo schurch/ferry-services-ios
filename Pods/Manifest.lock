@@ -10,14 +10,12 @@ PODS:
   - Sentry (5.2.0):
     - Sentry/Core (= 5.2.0)
   - Sentry/Core (5.2.0)
-  - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
   - RxCocoa
   - RxDataSources
   - RxSwift
   - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `5.2.0`)
-  - SwiftyJSON
 
 SPEC REPOS:
   trunk:
@@ -25,7 +23,6 @@ SPEC REPOS:
     - RxCocoa
     - RxDataSources
     - RxSwift
-    - SwiftyJSON
 
 EXTERNAL SOURCES:
   Sentry:
@@ -43,8 +40,7 @@ SPEC CHECKSUMS:
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxSwift: c6e3b1c7b325c7d121cd4327e9d98b7ed746b570
   Sentry: 6e04bc3e11bf771ca79140a112de64dcfbc7d8cb
-  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: ae650651e3c70e881738f049fb3f0602c1e59500
+PODFILE CHECKSUM: 100717091c5c15ace5c01f634104585016c7b791
 
 COCOAPODS: 1.9.3

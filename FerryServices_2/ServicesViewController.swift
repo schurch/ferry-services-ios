@@ -58,7 +58,7 @@ class ServicesViewController: UITableViewController {
         else {
             let _ = self.navigationController?.popToRootViewController(animated: false)
             
-            if let index = arrayServices.firstIndex(where: { $0.id == serviceID }) {
+            if let index = arrayServices.firstIndex(where: { $0.serviceId == serviceID }) {
                 if shouldFindAndHighlightRow {
                     let section = !self.arraySubscribedServices.isEmpty ? 1 : 0
                     let indexPath = IndexPath(row: index, section: section)
@@ -225,7 +225,7 @@ class ServicesViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let service = self.serviceStatusForTableView(tableView, indexPath: indexPath)
-        self.showDetailsForServiceId(service.id)
+        self.showDetailsForServiceId(service.serviceId)
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -278,7 +278,7 @@ class ServicesViewController: UITableViewController {
         }
         
         let subscribedServiceStatuses = subscribedServiceIds.map { serviceId in
-            return self.arrayServices.filter { $0.id == serviceId }.first
+            return self.arrayServices.filter { $0.serviceId == serviceId }.first
         }
         
         return subscribedServiceStatuses.compactMap({ $0 }).sorted(by: { $0.sortOrder < $1.sortOrder })
@@ -287,7 +287,7 @@ class ServicesViewController: UITableViewController {
 
 extension ServicesViewController: SearchResultsViewControllerDelegate {
     func didSelectServiceStatus(_ serviceStatus: Service) {
-        self.showDetailsForServiceId(serviceStatus.id)
+        self.showDetailsForServiceId(serviceStatus.serviceId)
     }
 }
 

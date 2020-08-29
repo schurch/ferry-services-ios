@@ -32,14 +32,14 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     private(set) var portAnnotations: [MKPointAnnotation]
     private var showVessels: Bool
     
-    init(mapView: MKMapView, locations: [Location], showVessels: Bool) {
+    init(mapView: MKMapView, locations: [Service.Location], showVessels: Bool) {
         self.mapView = mapView
         self.showVessels = showVessels
         
         portAnnotations = locations.map { location in
             let annotation = MKPointAnnotation()
             annotation.title = location.name
-            annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude!, longitude: location.longitude!)
+            annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             return annotation
         }
         

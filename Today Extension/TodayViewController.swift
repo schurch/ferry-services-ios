@@ -39,7 +39,7 @@ class TodayViewController: UIViewController {
             return
         }
         
-        let service = Service.defaultServices.first(where: { $0.id == serviceId})!
+        let service = Service.defaultServices.first(where: { $0.serviceId == serviceId})!
         configure(withService: service)
         
         fetchService(forServiceId: serviceId)

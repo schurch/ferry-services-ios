@@ -41,7 +41,20 @@ struct Service: Decodable {
         }
     }
     
-    let id: Int
+    struct Location: Decodable {
+        private enum CodingKeys: String, CodingKey {
+            case name, latitude, longitude
+        }
+        
+        let name: String
+        let latitude: Double
+        let longitude: Double
+        
+        var weather: LocationWeather?
+        var weatherFetchError: Error?
+    }
+    
+    let serviceId: Int
     let sortOrder: Int
     let status: Status
     let area: String
@@ -50,12 +63,7 @@ struct Service: Decodable {
     let lastUpdatedDate: Date? // Time updated by Calmac
     let updated: Date? // Time updated on server
     let additionalInfo: String?
-}
-
-enum APIError: Error, LocalizedError {
-    case missingResponseData
-    case expectedHTTPResponse
-    case badResponseCode
+    var locations: [Location]
 }
 
 class API {
@@ -69,7 +77,8 @@ class API {
     }
     
 //    static let baseURL = URL(string: "http://localhost:3000")
-    static let baseURL = URL(string: "http://scottishferryapp.com:3008")
+//    private static let baseURL = URL(string: "http://test.scottishferryapp.com")
+    private static let baseURL = URL(string: "http://scottishferryapp.com")
     private static let root = "/api"
     
     static func fetchServices(completion: @escaping (Result<[Service], Error>) -> ()){

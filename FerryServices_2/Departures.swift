@@ -86,7 +86,7 @@ class Departures {
         let multiJourneys: [MultiJourneyDeparture] = fetchResults(query: query, values: [from, to, date, date, date, date, date, date])
         
         let groupedJourneys = multiJourneys.group(by: { $0.routeSectionId })
-        return groupedJourneys.flatMap { journeys in
+        return groupedJourneys.compactMap { journeys in
             guard let actualJourney = journeys.first(where: { $0.fromCode == from && $0.toCode == to }) else { return nil }
             
             // Work out the total time for all the prior journeys to the one we're interested in on the route

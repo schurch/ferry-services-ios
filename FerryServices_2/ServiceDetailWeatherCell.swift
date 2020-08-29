@@ -30,11 +30,11 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
     @IBOutlet weak var viewRightContainer: UIView!
     @IBOutlet weak var viewSeparator: UIView!
     
-    var location: Location!
+    var location: Service.Location!
     var configuring = false
     
     lazy var rotationAngle: Double? = {
-        if let windDirection = self.location.weather?.windDirection {
+        if let windDirection = self.location.weather?.wind.deg {
             return windDirection + 180.0
         }
         
@@ -46,7 +46,7 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
             .instantiate(withOwner: nil, options: nil).first as! ServiceDetailWeatherCell
     }
     
-    class func heightWithLocation(_ location: Location, tableView: UITableView) -> CGFloat {
+    class func heightWithLocation(_ location: Service.Location, tableView: UITableView) -> CGFloat {
         let cell = self.SizingCell.instance
         
         cell.configureWithLocation(location, animate: false)
@@ -85,7 +85,7 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
     }
     
     // MARK: - Configure
-    func configureWithLocation(_ location: Location, animate: Bool) {
+    func configureWithLocation(_ location: Service.Location, animate: Bool) {
         self.configuring = true
         
         self.location = location
@@ -105,18 +105,9 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
             viewLeftContainer.isHidden = false
             
             if let locationWeather = self.location.weather {
-                if let temp = locationWeather.tempCelsius {
-                    self.labelTemperature.text = "\(Int(round(temp)))ºC"
-                }
-                
-                if let weatherDescription = locationWeather.combinedWeatherDescription {
-                    self.labelConditions.text = weatherDescription
-                }
-                
-                if let windDirectionCardinal = locationWeather.windDirectionCardinal {
-                    self.labelWindDirection.text = "\(windDirectionCardinal) Wind"
-                }
-                
+                self.labelTemperature.text = "\(Int(round(locationWeather.main.tempCelsius)))ºC"
+                self.labelConditions.text = locationWeather.combinedWeatherDescription
+                self.labelWindDirection.text = "\(locationWeather.wind.directionCardinal) Wind"
                 self.imageViewWindDirection.image = UIImage(named: "Wind")
                 
                 if animate {
@@ -129,11 +120,9 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
                     }
                 }
                 
-                if let windSpeed = locationWeather.windSpeedMph {
-                    self.labelWindSpeed.text = "\(Int(round(windSpeed))) MPH"
-                }
+                self.labelWindSpeed.text = "\(Int(round(locationWeather.wind.speedMPH))) MPH"
                 
-                if let icon = locationWeather.weather?[0].icon {
+                if let icon = locationWeather.weather[0].icon {
                     self.imageViewWeather.image = UIImage(named: "\(icon)")
                 }
             }

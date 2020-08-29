@@ -13,7 +13,7 @@ class MapViewController: UIViewController {
 
     @IBOutlet var mapView: MKMapView!
     
-    var locations: [Location]?
+    var locations: [Service.Location]?
     
     private var mapViewDelegate: ServiceMapDelegate!
     private var didShowAnnotations = false
