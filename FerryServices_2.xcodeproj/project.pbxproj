@@ -605,7 +605,6 @@
 				FD753ECC197A256E00CC5DE3 /* Sources */,
 				FD753ECD197A256E00CC5DE3 /* Frameworks */,
 				FD753ECE197A256E00CC5DE3 /* Resources */,
-				FD8DDDB019B0947B008479DC /* Crashlytics */,
 				FDE391C51C1561AE000EDE26 /* Embed Watch Content */,
 				E72CFCEE066BA48ACA1EC23F /* [CP] Embed Pods Frameworks */,
 				FDBD7DCF1DB18FDD00698A70 /* Embed App Extensions */,
@@ -814,20 +813,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		FD8DDDB019B0947B008479DC /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Crashlytics;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run 9aad7798d2e2d712649ba35bd1747beeac29b07f 59f26225e66fa943ef71e6e0a2c1cbe1dfc08ad50e216fa932a46ef121328378";
 		};
 /* End PBXShellScriptBuildPhase section */
 

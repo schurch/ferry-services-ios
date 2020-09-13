@@ -76,6 +76,7 @@ class API {
         let serviceID: Int
     }
     
+//    static let baseURL = URL(string: "http://192.168.86.249:3000")
 //    static let baseURL = URL(string: "http://localhost:3000")
 //    private static let baseURL = URL(string: "http://test.scottishferryapp.com")
     private static let baseURL = URL(string: "http://scottishferryapp.com")

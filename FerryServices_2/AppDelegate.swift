@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import WatchConnectivity
 import Sentry
 
 struct Installation {
@@ -70,12 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             handleNotification(userInfo: remoteNotificationUserInfo)
         }
         
-        if WCSession.isSupported() {
-            let session = WCSession.default
-            session.delegate = self;
-            session.activate()
-        }
-        
         return shouldPerformAdditionalDelegateHandling
     }
     
@@ -86,9 +79,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let _ = self.handleShortCutItem(shortcut)
             self.launchedShortcutItem = nil
         }
-        
-        
-        self.sendWatchAppContext()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -181,26 +171,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return false
     }
     
-    // MARK: - Watch context updates
-    func sendWatchAppContext() {
-        guard WCSession.isSupported() else {
-            print("Watch sessions not supported")
-            return
-        }
-        
-        let session = WCSession.default
-        
-        if session.isPaired && session.isWatchAppInstalled {
-            do {
-                let serviceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
-                try session.updateApplicationContext(["subscribedServiceIds": serviceIds])
-            }
-            catch let error as NSError {
-                print("Error sending context to watch: \(error)")
-            }
-        }
-    }
-    
     // MARK: - Utility methods
     private func showDetailsForServiceId(_ serviceId: Int) {
         if let navigationController = self.window?.rootViewController as? UINavigationController, let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {
@@ -208,47 +178,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     
-}
-
-extension AppDelegate: WCSessionDelegate {
-    
-    @available(iOS 9.3, *)
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) { }
-    
-    @available(iOS 9.3, *)
-    func sessionDidBecomeInactive(_ session: WCSession) { }
-    
-    @available(iOS 9.3, *)
-    func sessionDidDeactivate(_ session: WCSession) { }
-    
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        var identifier = UIBackgroundTaskInvalid
-        
-        identifier = UIApplication.shared.beginBackgroundTask (expirationHandler: {
-            replyHandler(["error": ErrorMessages.errorFetchingSubscribedServiceIds])
-            
-            if identifier != UIBackgroundTaskInvalid {
-                UIApplication.shared.endBackgroundTask(identifier)
-            }
-        })
-        
-        if let action = message["action"] as? String {
-            switch action {
-            case "fetchSubscribedServices":
-                let serviceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] ?? [Int]()
-                replyHandler(["subscribedServiceIds": serviceIds])
-            default:
-                replyHandler(["error": ErrorMessages.errorFetchingSubscribedServiceIds])
-                print("Unrecognized action from watch")
-            }
-        }
-        else {
-            replyHandler(["error": ErrorMessages.errorFetchingSubscribedServiceIds])
-        }
-        
-        if identifier != UIBackgroundTaskInvalid {
-            UIApplication.shared.endBackgroundTask(identifier)
-        }
-    }
 }
 

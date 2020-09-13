@@ -567,9 +567,6 @@ class ServiceDetailTableViewController: UIViewController {
         
         UserDefaults.standard.setValue(currentServiceIds, forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey)
         UserDefaults.standard.synchronize()
-        
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        appDelegate?.sendWatchAppContext()
     }
     
     fileprivate func removeServiceIdFromSubscribedList() {
@@ -581,9 +578,6 @@ class ServiceDetailTableViewController: UIViewController {
         
         UserDefaults.standard.setValue(currentServiceIds, forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey)
         UserDefaults.standard.synchronize()
-        
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        appDelegate?.sendWatchAppContext()
     }
 }
 
