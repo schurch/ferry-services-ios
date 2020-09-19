@@ -522,12 +522,6 @@ class ServiceDetailTableViewController: UIViewController {
         return mapViewController
     }
     
-    fileprivate func departuresViewController(serviceId: Int) -> UIViewController? {
-        let timetableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "timetableViewController") as! TimetableViewController
-        timetableViewController.serviceId = serviceId
-        return timetableViewController
-    }
-    
     fileprivate func webInfoViewController(_ title: String, content: String) -> UIViewController {
         let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebInformation") as! WebInformationViewController
         disruptionViewController.title = title

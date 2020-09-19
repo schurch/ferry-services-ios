@@ -8,33 +8,66 @@
 
 import UIKit
 import SafariServices
+import WebKit
 
 class WebInformationViewController: UIViewController {
     
-    @IBOutlet var webView: UIWebView!
+    @IBOutlet var webView: WKWebView!
     
     var html: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        webView.delegate = self
+        webView.navigationDelegate = self
+        loadHtml()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
         
+        if previousTraitCollection?.preferredContentSizeCategory != traitCollection.preferredContentSizeCategory {
+            loadHtml()
+        }
+    }
+    
+    private func loadHtml() {
         if let html = self.html {
-            let styledHtml = "<style type='text/css'>body {font: normal 14px HelveticaNeue; color: #555555;}</style>" + html
+            let styledHtml = """
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <meta name='viewport' content='width=device-width, initial-scale=1'>
+                    <style type='text/css'>
+                        body { font: -apple-system-body; }
+                        a { color: #21BFAA; }
+                    </style>
+                </head>
+                <body>
+                    \(html)
+                </body>
+            </html>
+            """
             webView.loadHTMLString(styledHtml, baseURL: nil)
         }
     }
 }
 
-extension WebInformationViewController: UIWebViewDelegate {
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        guard navigationType == .linkClicked else { return true }
-        guard let url = request.url else { return true }
+extension WebInformationViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard navigationAction.navigationType == .linkActivated else {
+            decisionHandler(.allow)
+            return
+        }
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.allow)
+            return
+        }
         
         let safariViewController = SFSafariViewController(url: url)
         present(safariViewController, animated: true, completion: nil)
         
-        return false
+        decisionHandler(.cancel)
     }
 }

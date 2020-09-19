@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import RxSwift
+//import RxSwift
 
 protocol DBResultInitializable {
     init?(result: FMResultSet)

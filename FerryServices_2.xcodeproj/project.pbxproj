@@ -33,7 +33,6 @@
 		FD3CF99D1D972A3100B6CC99 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3CF9981D972A3100B6CC99 /* FMResultSet.m */; };
 		FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */; };
 		FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */; };
-		FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */; };
 		FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */; };
 		FD56684B197B6995001BA286 /* ServiceStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */; };
 		FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */; };
@@ -44,11 +43,8 @@
 		FD5E7DBB197A316F00F438F6 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* API.swift */; };
 		FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */; };
 		FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD60D97E1AA173360054A131 /* AlertCell.xib */; };
-		FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */; };
 		FD6962E7233585AC008C596F /* departures.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FD6962E6233585AB008C596F /* departures.sqlite */; };
 		FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD709DAB1A2082DB00DBD247 /* WebInformationViewController.swift */; };
-		FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD71167619B2F8E400A81ED5 /* TimetableDateTableViewCell.swift */; };
-		FD71167919B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD71167819B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift */; };
 		FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */; };
 		FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD74D0A11A90124300013095 /* DisruptionsCell.xib */; };
 		FD74D0A41A90125700013095 /* NoDisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */; };
@@ -78,7 +74,6 @@
 		FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate+extensions.swift */; };
 		FDA0ECE81A69E3FE00EDF5DA /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */; };
 		FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */; };
-		FDB848EF1F457AAB001A7D71 /* TimetableDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB848EE1F457AAB001A7D71 /* TimetableDatePickerCell.swift */; };
 		FDBD7DC11DB18FDD00698A70 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */; };
 		FDBD7DC41DB18FDD00698A70 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */; };
 		FDBD7DC71DB18FDD00698A70 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDBD7DC51DB18FDD00698A70 /* MainInterface.storyboard */; };
@@ -173,7 +168,6 @@
 		FD3CF9981D972A3100B6CC99 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
 		FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
-		FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableViewController.swift; sourceTree = "<group>"; };
 		FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
 		FD56684A197B6995001BA286 /* ServiceStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusTableViewCell.swift; sourceTree = "<group>"; };
 		FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
@@ -185,11 +179,8 @@
 		FD5E7DBA197A316F00F438F6 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = API.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailReceiveAlertCellTableViewCell.swift; sourceTree = "<group>"; };
 		FD60D97E1AA173360054A131 /* AlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
-		FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableHeaderViewCell.swift; sourceTree = "<group>"; };
 		FD6962E6233585AB008C596F /* departures.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = departures.sqlite; sourceTree = "<group>"; };
 		FD709DAB1A2082DB00DBD247 /* WebInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInformationViewController.swift; sourceTree = "<group>"; };
-		FD71167619B2F8E400A81ED5 /* TimetableDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableDateTableViewCell.swift; sourceTree = "<group>"; };
-		FD71167819B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableTimeTableViewCell.swift; sourceTree = "<group>"; };
 		FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailNoDisruptionTableViewCell.swift; sourceTree = "<group>"; };
 		FD74D0A11A90124300013095 /* DisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisruptionsCell.xib; sourceTree = "<group>"; };
 		FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoDisruptionsCell.xib; sourceTree = "<group>"; };
@@ -229,7 +220,6 @@
 		FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
 		FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		FDB848EE1F457AAB001A7D71 /* TimetableDatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetableDatePickerCell.swift; sourceTree = "<group>"; };
 		FDBD7DBF1DB18FDD00698A70 /* Today Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Today Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -353,18 +343,6 @@
 			name = FMDB;
 			sourceTree = "<group>";
 		};
-		FD4F6BD719B183B2007E88A1 /* Timetable */ = {
-			isa = PBXGroup;
-			children = (
-				FD4F6BD519B183AA007E88A1 /* TimetableViewController.swift */,
-				FD71167619B2F8E400A81ED5 /* TimetableDateTableViewCell.swift */,
-				FD71167819B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift */,
-				FD659CD419BBE2E100BC60EF /* TimetableHeaderViewCell.swift */,
-				FDB848EE1F457AAB001A7D71 /* TimetableDatePickerCell.swift */,
-			);
-			name = Timetable;
-			sourceTree = "<group>";
-		};
 		FD5177F61A565E9D00F4B6B0 /* Services Client */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,7 +373,6 @@
 			children = (
 				FDEA4B20198C72160023A5A7 /* Services */,
 				FDEA4B21198C721C0023A5A7 /* Service Details */,
-				FD4F6BD719B183B2007E88A1 /* Timetable */,
 				FD9432DA19CD1376003BBD23 /* Timetable Preview */,
 				FD6C45651A2ACEF6005E1FB8 /* Web Information */,
 				FDCB33461A4BD6D6000033BC /* Map */,
@@ -795,18 +772,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -825,16 +794,12 @@
 				FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				FD3CF9991D972A3100B6CC99 /* FMDatabase.m in Sources */,
-				FD71167919B2F8FD00A81ED5 /* TimetableTimeTableViewCell.swift in Sources */,
 				FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */,
-				FDB848EF1F457AAB001A7D71 /* TimetableDatePickerCell.swift in Sources */,
 				FD3CF99D1D972A3100B6CC99 /* FMResultSet.m in Sources */,
 				FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */,
 				FD1AA3691D978D1C003496B1 /* ServiceMapDelegate.swift in Sources */,
-				FD659CD519BBE2E100BC60EF /* TimetableHeaderViewCell.swift in Sources */,
 				FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */,
 				FD3CF99C1D972A3100B6CC99 /* FMDatabaseQueue.m in Sources */,
-				FD71167719B2F8E400A81ED5 /* TimetableDateTableViewCell.swift in Sources */,
 				FDA0ECE81A69E3FE00EDF5DA /* UIColor+extensions.swift in Sources */,
 				FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */,
 				FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */,
@@ -852,7 +817,6 @@
 				FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */,
 				FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */,
 				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
-				FD4F6BD619B183AA007E88A1 /* TimetableViewController.swift in Sources */,
 				FD3CF99A1D972A3100B6CC99 /* FMDatabaseAdditions.m in Sources */,
 				FD16D95E1DCD4FE7007F4548 /* LastViewedServices.swift in Sources */,
 				FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */,

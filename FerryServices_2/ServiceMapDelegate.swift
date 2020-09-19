@@ -8,7 +8,7 @@
 
 import UIKit
 import MapKit
-import RxSwift
+//import RxSwift
 
 class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     
@@ -27,7 +27,7 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     
     var shouldAllowAnnotationSelection = true
     
-    private var disposeBag: DisposeBag = DisposeBag()
+//    private var disposeBag: DisposeBag = DisposeBag()
     private var mapView: MKMapView
     private(set) var portAnnotations: [MKPointAnnotation]
     private var showVessels: Bool

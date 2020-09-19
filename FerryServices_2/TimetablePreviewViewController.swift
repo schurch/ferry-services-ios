@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import WebKit
 
 class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
 
-    @IBOutlet var webview: UIWebView!
+    @IBOutlet var webview: WKWebView!
     
     var service: Service!
     var url: URL!
@@ -22,7 +23,7 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
         self.navigationController?.navigationBar.isTranslucent = false
         
         let request = URLRequest(url: url)
-        webview.loadRequest(request)
+        webview.load(request)
         
         let shareItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(TimetablePreviewViewController.share))
         self.navigationItem.rightBarButtonItem = shareItem
