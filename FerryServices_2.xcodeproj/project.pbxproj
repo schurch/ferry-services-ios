@@ -8,12 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4D8B44F3B3BF85FB0D076106 /* Pods_FerryServices_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */; };
-		FD05CF3D24F91C7E001341E8 /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */; };
 		FD05CF3F24F9D2D3001341E8 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05CF3E24F9D2D3001341E8 /* APIError.swift */; };
-		FD05CF4024F9D2E8001341E8 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05CF3E24F9D2D3001341E8 /* APIError.swift */; };
-		FD05CF4124F9D308001341E8 /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */; };
-		FD05CF4224F9D331001341E8 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */; };
-		FD05CF4324F9D6D7001341E8 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC34B5B1D97362200A12758 /* String+extensions.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1464F41D97BE090087262D /* UIImage+extensions.swift */; };
 		FD16D95E1DCD4FE7007F4548 /* LastViewedServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD16D95D1DCD4FE7007F4548 /* LastViewedServices.swift */; };
@@ -24,8 +19,6 @@
 		FD307D781F36C6D8006FB53F /* multi_journey_departures.sql in Resources */ = {isa = PBXBuildFile; fileRef = FD307D771F36C6D8006FB53F /* multi_journey_departures.sql */; };
 		FD307D7A1F36CC39006FB53F /* Departure.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD307D791F36CC39006FB53F /* Departure.swift */; };
 		FD307D7C1F36CC67006FB53F /* MultiJourneyDeparture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD307D7B1F36CC67006FB53F /* MultiJourneyDeparture.swift */; };
-		FD393C391DB1A49D002C0A80 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD393C381DB1A49D002C0A80 /* Images.xcassets */; };
-		FD393C3A1DB1B36C002C0A80 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
 		FD3CF9991D972A3100B6CC99 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3CF98F1D972A3100B6CC99 /* FMDatabase.m */; };
 		FD3CF99A1D972A3100B6CC99 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3CF9911D972A3100B6CC99 /* FMDatabaseAdditions.m */; };
 		FD3CF99B1D972A3100B6CC99 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3CF9931D972A3100B6CC99 /* FMDatabasePool.m */; };
@@ -74,10 +67,6 @@
 		FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate+extensions.swift */; };
 		FDA0ECE81A69E3FE00EDF5DA /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */; };
 		FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */; };
-		FDBD7DC11DB18FDD00698A70 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */; };
-		FDBD7DC41DB18FDD00698A70 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */; };
-		FDBD7DC71DB18FDD00698A70 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDBD7DC51DB18FDD00698A70 /* MainInterface.storyboard */; };
-		FDBD7DCB1DB18FDD00698A70 /* Today Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FDBD7DBF1DB18FDD00698A70 /* Today Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC336351D97440C00730481 /* VesselsAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC336341D97440C00730481 /* VesselsAPIClient.swift */; };
 		FDC336371D97442900730481 /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC336361D97442900730481 /* Vessel.swift */; };
@@ -87,8 +76,6 @@
 		FDC7761019844C4000B3782F /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC7760F19844C4000B3782F /* Trip.swift */; };
 		FDC77613198450AC00B3782F /* timetables.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FDC77612198450AC00B3782F /* timetables.sqlite */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
-		FDDFCA0524F6497B0094A69D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* API.swift */; };
-		FDDFCA0624F649CE0094A69D /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
 		FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */; };
@@ -105,13 +92,6 @@
 			remoteGlobalIDString = FD753ECF197A256E00CC5DE3;
 			remoteInfo = FerryServices_2;
 		};
-		FDBD7DC91DB18FDD00698A70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FD753EC8197A256E00CC5DE3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FDBD7DBE1DB18FDD00698A70;
-			remoteInfo = "Today Extension";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -121,7 +101,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				FDBD7DCB1DB18FDD00698A70 /* Today Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,7 +133,6 @@
 		FD307D771F36C6D8006FB53F /* multi_journey_departures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = multi_journey_departures.sql; sourceTree = "<group>"; };
 		FD307D791F36CC39006FB53F /* Departure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Departure.swift; sourceTree = "<group>"; };
 		FD307D7B1F36CC67006FB53F /* MultiJourneyDeparture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiJourneyDeparture.swift; sourceTree = "<group>"; };
-		FD393C381DB1A49D002C0A80 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD3CF98E1D972A3100B6CC99 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		FD3CF98F1D972A3100B6CC99 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		FD3CF9901D972A3100B6CC99 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -220,12 +198,7 @@
 		FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
 		FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		FDBD7DBF1DB18FDD00698A70 /* Today Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Today Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
-		FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
-		FDBD7DC61DB18FDD00698A70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		FDBD7DC81DB18FDD00698A70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FDBD7DD01DB1970800698A70 /* Today Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Today Extension.entitlements"; sourceTree = "<group>"; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
 		FDC336341D97440C00730481 /* VesselsAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VesselsAPIClient.swift; sourceTree = "<group>"; };
 		FDC336361D97442900730481 /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
@@ -271,15 +244,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FDBD7DBC1DB18FDD00698A70 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FD393C3A1DB1B36C002C0A80 /* MapKit.framework in Frameworks */,
-				FDBD7DC11DB18FDD00698A70 /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,7 +368,6 @@
 			children = (
 				FD753ED2197A256E00CC5DE3 /* FerryServices_2 */,
 				FD753EE5197A256E00CC5DE3 /* FerryServices_2Tests */,
-				FDBD7DC21DB18FDD00698A70 /* Today Extension */,
 				FD753ED1197A256E00CC5DE3 /* Products */,
 				6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */,
 				99EB27A6CFCB8775D37D41A7 /* Pods */,
@@ -416,7 +379,6 @@
 			children = (
 				FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */,
 				FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */,
-				FDBD7DBF1DB18FDD00698A70 /* Today Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -485,18 +447,6 @@
 				FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */,
 			);
 			name = "Timetable Preview";
-			sourceTree = "<group>";
-		};
-		FDBD7DC21DB18FDD00698A70 /* Today Extension */ = {
-			isa = PBXGroup;
-			children = (
-				FDBD7DD01DB1970800698A70 /* Today Extension.entitlements */,
-				FDBD7DC31DB18FDD00698A70 /* TodayViewController.swift */,
-				FDBD7DC51DB18FDD00698A70 /* MainInterface.storyboard */,
-				FDBD7DC81DB18FDD00698A70 /* Info.plist */,
-				FD393C381DB1A49D002C0A80 /* Images.xcassets */,
-			);
-			path = "Today Extension";
 			sourceTree = "<group>";
 		};
 		FDC336381D97443100730481 /* Vessels Client */ = {
@@ -589,7 +539,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				FDBD7DCA1DB18FDD00698A70 /* PBXTargetDependency */,
 			);
 			name = FerryServices_2;
 			productName = FerryServices_2;
@@ -613,23 +562,6 @@
 			productName = FerryServices_2Tests;
 			productReference = FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		FDBD7DBE1DB18FDD00698A70 /* Today Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FDBD7DCE1DB18FDD00698A70 /* Build configuration list for PBXNativeTarget "Today Extension" */;
-			buildPhases = (
-				FDBD7DBB1DB18FDD00698A70 /* Sources */,
-				FDBD7DBC1DB18FDD00698A70 /* Frameworks */,
-				FDBD7DBD1DB18FDD00698A70 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Today Extension";
-			productName = "Today Extension";
-			productReference = FDBD7DBF1DB18FDD00698A70 /* Today Extension.appex */;
-			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -670,17 +602,6 @@
 						LastSwiftMigration = 0920;
 						TestTargetID = FD753ECF197A256E00CC5DE3;
 					};
-					FDBD7DBE1DB18FDD00698A70 = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = L832SX5MC4;
-						LastSwiftMigration = 0920;
-						ProvisioningStyle = Automatic;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-						};
-					};
 				};
 			};
 			buildConfigurationList = FD753ECB197A256E00CC5DE3 /* Build configuration list for PBXProject "FerryServices_2" */;
@@ -698,7 +619,6 @@
 			targets = (
 				FD753ECF197A256E00CC5DE3 /* FerryServices_2 */,
 				FD753EE1197A256E00CC5DE3 /* FerryServices_2Tests */,
-				FDBD7DBE1DB18FDD00698A70 /* Today Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -731,16 +651,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FDBD7DBD1DB18FDD00698A70 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FDBD7DC71DB18FDD00698A70 /* MainInterface.storyboard in Resources */,
-				FDDFCA0624F649CE0094A69D /* services.json in Resources */,
-				FD393C391DB1A49D002C0A80 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -844,20 +754,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FDBD7DBB1DB18FDD00698A70 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FD05CF4224F9D331001341E8 /* APIKeys.swift in Sources */,
-				FD05CF4324F9D6D7001341E8 /* String+extensions.swift in Sources */,
-				FD05CF3D24F91C7E001341E8 /* LocationWeather.swift in Sources */,
-				FD05CF4024F9D2E8001341E8 /* APIError.swift in Sources */,
-				FDBD7DC41DB18FDD00698A70 /* TodayViewController.swift in Sources */,
-				FDDFCA0524F6497B0094A69D /* API.swift in Sources */,
-				FD05CF4124F9D308001341E8 /* WeatherAPIClient.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -865,11 +761,6 @@
 			isa = PBXTargetDependency;
 			target = FD753ECF197A256E00CC5DE3 /* FerryServices_2 */;
 			targetProxy = FD753EE3197A256E00CC5DE3 /* PBXContainerItemProxy */;
-		};
-		FDBD7DCA1DB18FDD00698A70 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FDBD7DBE1DB18FDD00698A70 /* Today Extension */;
-			targetProxy = FDBD7DC91DB18FDD00698A70 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -880,14 +771,6 @@
 				FD753EDA197A256E00CC5DE3 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		FDBD7DC51DB18FDD00698A70 /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FDBD7DC61DB18FDD00698A70 /* Base */,
-			);
-			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1007,7 +890,7 @@
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = L832SX5MC4;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1017,7 +900,7 @@
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.40;
+				MARKETING_VERSION = 2.41;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1041,7 +924,7 @@
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = L832SX5MC4;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1051,7 +934,7 @@
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.40;
+				MARKETING_VERSION = 2.41;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1103,58 +986,6 @@
 			};
 			name = Release;
 		};
-		FDBD7DCC1DB18FDD00698A70 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Today Extension/Today Extension.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = L832SX5MC4;
-				INFOPLIST_FILE = "Today Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.40;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.todayextension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		FDBD7DCD1DB18FDD00698A70 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Today Extension/Today Extension.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = L832SX5MC4;
-				INFOPLIST_FILE = "Today Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 2.40;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices.todayextension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1181,15 +1012,6 @@
 			buildConfigurations = (
 				FD753EF0197A256E00CC5DE3 /* Debug */,
 				FD753EF1197A256E00CC5DE3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FDBD7DCE1DB18FDD00698A70 /* Build configuration list for PBXNativeTarget "Today Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FDBD7DCC1DB18FDD00698A70 /* Debug */,
-				FDBD7DCD1DB18FDD00698A70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
