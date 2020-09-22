@@ -49,9 +49,6 @@ struct Service: Decodable {
         let name: String
         let latitude: Double
         let longitude: Double
-        
-        var weather: LocationWeather?
-        var weatherFetchError: Error?
     }
     
     let serviceId: Int
@@ -63,7 +60,7 @@ struct Service: Decodable {
     let lastUpdatedDate: Date? // Time updated by Calmac
     let updated: Date? // Time updated on server
     let additionalInfo: String?
-    var locations: [Location]
+    let locations: [Location]
 }
 
 class API {

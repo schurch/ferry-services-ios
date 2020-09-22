@@ -37,8 +37,6 @@ class SearchResultsViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(SearchResultsViewController.keyboardWillBeHiddenNotification(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         self.configureView()
-        
-        registerForPreviewing(with: self, sourceView: tableView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,30 +122,5 @@ extension SearchResultsViewController: UITableViewDataSource {
 extension SearchResultsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.delegate?.didSelectServiceStatus(self.arrayOfFilteredServices[(indexPath as NSIndexPath).row])
-    }
-}
-
-extension SearchResultsViewController: UIViewControllerPreviewingDelegate {
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        guard let indexPath = tableView.indexPathForRow(at: location),
-            let cell = tableView.cellForRow(at: indexPath) else { return nil }
-
-        previewingContext.sourceRect = cell.frame
-        
-        previewingIndexPath = indexPath
-        
-        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
-        serviceDetailViewController.viewConfiguration = .previewing
-        
-        let service = self.arrayOfFilteredServices[(indexPath as NSIndexPath).row]
-        serviceDetailViewController.service = service
-        
-        return serviceDetailViewController
-    }
-    
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        guard let previewingIndexPath = previewingIndexPath else { return }
-        
-        self.delegate?.didSelectServiceStatus(self.arrayOfFilteredServices[(previewingIndexPath as NSIndexPath).row])
     }
 }

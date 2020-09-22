@@ -11,8 +11,6 @@ import UIKit
 class ServicesViewController: UITableViewController {
     
     // MARK: - Variables & Constants
-    static let subscribedServiceIdsUserDefaultsKey = "com.ferryservices.userdefaultkeys.subscribedservices.v2"
-    
     fileprivate struct MainStoryboard {
         struct TableViewCellIdentifiers {
             static let serviceStatusCell = "serviceStatusCellReuseId"
@@ -124,8 +122,6 @@ class ServicesViewController: UITableViewController {
         self.searchResultsController.arrayOfServices = self.arrayServices
         
         self.refreshWithContentInsetReset(false)
-        
-        registerForPreviewing(with: self, sourceView: view)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -273,7 +269,7 @@ class ServicesViewController: UITableViewController {
     }
     
     fileprivate func generateArrayOfSubscribedServiceIds() -> [Service] {
-        guard let subscribedServiceIds = UserDefaults.standard.array(forKey: ServicesViewController.subscribedServiceIdsUserDefaultsKey) as? [Int] else {
+        guard let subscribedServiceIds = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] else {
             return [Service]()
         }
         
@@ -294,36 +290,5 @@ extension ServicesViewController: SearchResultsViewControllerDelegate {
 extension ServicesViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-    }
-}
-
-extension ServicesViewController: UIViewControllerPreviewingDelegate {
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        guard let indexPath = tableView.indexPathForRow(at: location),
-            let cell = tableView.cellForRow(at: indexPath) else { return nil }
-        
-        previewingContext.sourceRect = cell.frame
-        previewingIndexPath = indexPath
-        
-        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
-        serviceDetailViewController.viewConfiguration = .previewing
-        
-        let serviceStatus = serviceStatusForTableView(tableView, indexPath: indexPath)
-        serviceDetailViewController.service = serviceStatus
-        
-        return serviceDetailViewController
-    }
-    
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        guard let previewingIndexPath = previewingIndexPath else { return }
-        
-        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
-        serviceDetailViewController.viewConfiguration = .full
-        
-        let serviceStatus = serviceStatusForTableView(tableView, indexPath: previewingIndexPath)
-        serviceDetailViewController.service = serviceStatus
-        
-        show(serviceDetailViewController, sender: self)
-
     }
 }

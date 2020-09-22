@@ -11,7 +11,6 @@
 		FD05CF3F24F9D2D3001341E8 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05CF3E24F9D2D3001341E8 /* APIError.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1464F41D97BE090087262D /* UIImage+extensions.swift */; };
-		FD16D95E1DCD4FE7007F4548 /* LastViewedServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD16D95D1DCD4FE7007F4548 /* LastViewedServices.swift */; };
 		FD1AA3691D978D1C003496B1 /* ServiceMapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */; };
 		FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */; };
 		FD307D6C1F3539B3006FB53F /* Departures.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD307D6B1F3539B3006FB53F /* Departures.swift */; };
@@ -34,6 +33,7 @@
 		FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */; };
 		FD5E247F1C001BBE006B3E65 /* ServiceStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E247D1C001BBE006B3E65 /* ServiceStatusCell.xib */; };
 		FD5E7DBB197A316F00F438F6 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* API.swift */; };
+		FD5FBF112519DD85004AB38A /* LastViewedServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5FBF102519DD85004AB38A /* LastViewedServices.swift */; };
 		FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */; };
 		FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD60D97E1AA173360054A131 /* AlertCell.xib */; };
 		FD6962E7233585AC008C596F /* departures.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FD6962E6233585AB008C596F /* departures.sqlite */; };
@@ -125,7 +125,6 @@
 		FD05CF3E24F9D2D3001341E8 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1464F41D97BE090087262D /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
-		FD16D95D1DCD4FE7007F4548 /* LastViewedServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastViewedServices.swift; sourceTree = "<group>"; };
 		FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceMapDelegate.swift; sourceTree = "<group>"; };
 		FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		FD307D6B1F3539B3006FB53F /* Departures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Departures.swift; sourceTree = "<group>"; };
@@ -155,6 +154,7 @@
 		FD5E247D1C001BBE006B3E65 /* ServiceStatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceStatusCell.xib; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FD5E7DBA197A316F00F438F6 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = API.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		FD5FBF102519DD85004AB38A /* LastViewedServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastViewedServices.swift; sourceTree = "<group>"; };
 		FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailReceiveAlertCellTableViewCell.swift; sourceTree = "<group>"; };
 		FD60D97E1AA173360054A131 /* AlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
 		FD6962E6233585AB008C596F /* departures.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = departures.sqlite; sourceTree = "<group>"; };
@@ -491,7 +491,7 @@
 				FDC34B5B1D97362200A12758 /* String+extensions.swift */,
 				FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */,
 				FD1464F41D97BE090087262D /* UIImage+extensions.swift */,
-				FD16D95D1DCD4FE7007F4548 /* LastViewedServices.swift */,
+				FD5FBF102519DD85004AB38A /* LastViewedServices.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -717,6 +717,7 @@
 				FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */,
 				FD307D6C1F3539B3006FB53F /* Departures.swift in Sources */,
 				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
+				FD5FBF112519DD85004AB38A /* LastViewedServices.swift in Sources */,
 				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
 				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
 				FDC336371D97442900730481 /* Vessel.swift in Sources */,
@@ -728,7 +729,6 @@
 				FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */,
 				FDC7761019844C4000B3782F /* Trip.swift in Sources */,
 				FD3CF99A1D972A3100B6CC99 /* FMDatabaseAdditions.m in Sources */,
-				FD16D95E1DCD4FE7007F4548 /* LastViewedServices.swift in Sources */,
 				FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */,
 				FDC7760C19844C2B00B3782F /* Route.swift in Sources */,
 				FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,

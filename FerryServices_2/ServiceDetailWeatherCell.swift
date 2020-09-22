@@ -8,17 +8,10 @@
 
 import UIKit
 
-protocol ServiceDetailWeatherCellDelegate: class {
-    func didTouchReloadForWeatherCell(_ cell: ServiceDetailWeatherCell)
-}
-
 class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
     
     let animationDuration = 6.0
-    
-    weak var delegate: ServiceDetailWeatherCellDelegate?
-    
-    @IBOutlet weak var buttonReload: UIButton!
+
     @IBOutlet weak var constraintViewSeparatorWidth: NSLayoutConstraint!
     @IBOutlet weak var imageViewWeather: UIImageView!
     @IBOutlet weak var imageViewWindDirection: UIImageView!
@@ -30,11 +23,11 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
     @IBOutlet weak var viewRightContainer: UIView!
     @IBOutlet weak var viewSeparator: UIView!
     
-    var location: Service.Location!
+    var weather: LocationWeather?
     var configuring = false
     
     lazy var rotationAngle: Double? = {
-        if let windDirection = self.location.weather?.wind.deg {
+        if let windDirection = weather?.wind.deg {
             return windDirection + 180.0
         }
         
@@ -46,10 +39,10 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
             .instantiate(withOwner: nil, options: nil).first as! ServiceDetailWeatherCell
     }
     
-    class func heightWithLocation(_ location: Service.Location, tableView: UITableView) -> CGFloat {
+    class func height(for weather: LocationWeather?, tableView: UITableView) -> CGFloat {
         let cell = self.SizingCell.instance
         
-        cell.configureWithLocation(location, animate: false)
+        cell.configure(with: weather, animate: false)
         cell.bounds = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: cell.bounds.size.height)
         
         cell.setNeedsLayout()
@@ -80,59 +73,46 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
         self.constraintViewSeparatorWidth.constant = 1 / UIScreen.main.scale
     }
     
-    @IBAction func touchedButtonReload(_ sender: UIButton) {
-        delegate?.didTouchReloadForWeatherCell(self)
-    }
-    
     // MARK: - Configure
-    func configureWithLocation(_ location: Service.Location, animate: Bool) {
+    func configure(with weather: LocationWeather?, animate: Bool) {
         self.configuring = true
         
-        self.location = location
+        self.weather = weather
         
         self.imageViewWindDirection.layer.removeAllAnimations()
         
-        if location.weatherFetchError != nil {
-            buttonReload.isHidden = false
-            viewSeparator.isHidden = true
-            viewRightContainer.isHidden = true
-            viewLeftContainer.isHidden = true
+        viewSeparator.isHidden = false
+        viewRightContainer.isHidden = false
+        viewLeftContainer.isHidden = false
+        
+        if let locationWeather = weather {
+            self.labelTemperature.text = "\(Int(round(locationWeather.main.tempCelsius)))ºC"
+            self.labelConditions.text = locationWeather.combinedWeatherDescription
+            self.labelWindDirection.text = "\(locationWeather.wind.directionCardinal) Wind"
+            self.imageViewWindDirection.image = UIImage(named: "Wind")
+            
+            if animate {
+                if let rotationAngle = self.rotationAngle {
+                    UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                        self.imageViewWindDirection.transform = CGAffineTransform(rotationAngle: rotationAngle.toRadians())
+                    }, completion: { finished in
+                        self.configuring = false
+                    })
+                }
+            }
+            
+            self.labelWindSpeed.text = "\(Int(round(locationWeather.wind.speedMPH))) MPH"
+            
+            if let icon = locationWeather.weather[0].icon {
+                self.imageViewWeather.image = UIImage(named: "\(icon)")
+            }
         }
         else {
-            buttonReload.isHidden = true
-            viewSeparator.isHidden = false
-            viewRightContainer.isHidden = false
-            viewLeftContainer.isHidden = false
-            
-            if let locationWeather = self.location.weather {
-                self.labelTemperature.text = "\(Int(round(locationWeather.main.tempCelsius)))ºC"
-                self.labelConditions.text = locationWeather.combinedWeatherDescription
-                self.labelWindDirection.text = "\(locationWeather.wind.directionCardinal) Wind"
-                self.imageViewWindDirection.image = UIImage(named: "Wind")
-                
-                if animate {
-                    if let rotationAngle = self.rotationAngle {
-                        UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                            self.imageViewWindDirection.transform = CGAffineTransform(rotationAngle: rotationAngle.toRadians())
-                            }, completion: { finished in
-                                self.configuring = false
-                        })
-                    }
-                }
-                
-                self.labelWindSpeed.text = "\(Int(round(locationWeather.wind.speedMPH))) MPH"
-                
-                if let icon = locationWeather.weather[0].icon {
-                    self.imageViewWeather.image = UIImage(named: "\(icon)")
-                }
-            }
-            else {
-                self.labelTemperature.text = "-"
-                self.labelConditions.text = "–"
-                self.labelWindDirection.text = "– Wind"
-                self.labelWindSpeed.text = "– MPH"
-                self.imageViewWeather.image = nil
-            }
+            self.labelTemperature.text = "-"
+            self.labelConditions.text = "–"
+            self.labelWindDirection.text = "– Wind"
+            self.labelWindSpeed.text = "– MPH"
+            self.imageViewWeather.image = nil
         }
         
         if !animate {

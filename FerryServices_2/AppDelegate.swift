@@ -9,6 +9,11 @@
 import UIKit
 import Sentry
 
+enum UserDefaultsKeys {
+    static let subscribedService = "com.ferryservices.userdefaultkeys.subscribedservices.v2"
+    static let registeredForNotifications = "com.ferryservices.userdefaultkeys.registeredForNotifications"
+}
+
 struct Installation {
     static let id: UUID = {
         let key = "installationID"
@@ -21,10 +26,6 @@ struct Installation {
             return id
         }
     }()
-}
-
-struct ErrorMessages {
-    static let errorFetchingSubscribedServiceIds = "There was an error fetching your subscribed services"
 }
 
 let sharedDefaults = UserDefaults(suiteName: "group.stefanchurch.ferryservices")
@@ -46,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         SentrySDK.start { options in
             options.dsn = APIKeys.sentryDSN
         }
+        
+        UserDefaults.standard.register(defaults: [UserDefaultsKeys.registeredForNotifications: false])
 
         // Configure push notifications
         UNUserNotificationCenter.current().delegate = self
@@ -110,7 +113,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // MARK: - Push notifications
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        API.createInstallation(installationID: Installation.id, deviceToken: token, completion: { _ in })
+        API.createInstallation(installationID: Installation.id, deviceToken: token, completion: { result in
+            if case .success = result {
+                UserDefaults.standard.set(true, forKey: UserDefaultsKeys.registeredForNotifications)
+            }
+        })
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
