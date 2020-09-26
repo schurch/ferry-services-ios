@@ -68,6 +68,7 @@ class ServiceDetailTableViewController: UIViewController {
     
     var alertCell: ServiceDetailReceiveAlertCellTableViewCell = UINib(nibName: "AlertCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
     
+    let isRegisteredForNotifications = UserDefaults.standard.bool(forKey: UserDefaultsKeys.registeredForNotifications)
     var mapViewDelegate: ServiceMapDelegate?
     var dataSource: [Section] = []
     var headerHeight: CGFloat?
@@ -108,7 +109,6 @@ class ServiceDetailTableViewController: UIViewController {
         
         API.getInstallationServices(installationID: Installation.id) { [weak self] result in
             guard let self = self else {
-                // self might be nil if we've popped the view controller when the completion block is called
                 return
             }
             
@@ -350,9 +350,7 @@ class ServiceDetailTableViewController: UIViewController {
             
         }
         
-        let disruptionRows = UserDefaults.standard.bool(forKey: UserDefaultsKeys.registeredForNotifications)
-            ? [disruptionRow, Row.alert]
-            : [disruptionRow]
+        let disruptionRows = isRegisteredForNotifications ? [disruptionRow, Row.alert] : [disruptionRow]
         
         sections.append(Section(title: nil, footer: footer, rows: disruptionRows))
         
@@ -433,33 +431,17 @@ class ServiceDetailTableViewController: UIViewController {
                     self.weather[index] = weather
                 }
                 
-                self.reloadWeatherForLocation(location)
+                if let weatherSection = self.dataSource.firstIndex(where: {
+                    if case Row.weather = $0.rows[0] {
+                        return true
+                    } else {
+                        return false
+                    }
+                }) {
+                    self.tableView.reloadRows(at: [IndexPath(row: 0, section: weatherSection + index)], with: .none)
+                }
             }
         }
-    }
-    
-    fileprivate func reloadWeatherForLocation(_ location: Service.Location) {
-        if let indexPath = self.indexPathForLocation(location) {
-            self.tableView.reloadRows(at: [indexPath], with: .none)
-        }
-    }
-    
-    fileprivate func indexPathForLocation(_ location: Service.Location) -> IndexPath? {
-        guard let locationIndex = service.locations.firstIndex(where: {
-            $0.name == location.name && $0.latitude == location.latitude && $0.longitude == location.longitude
-        }) else {
-            return nil
-        }
-        
-        guard let firstLocationSectionIndex = dataSource.firstIndex(where: {
-            if case Row.weather = $0.rows[0] {
-                return true
-            } else {
-                return false
-            }
-        }) else { return nil }
-        
-        return IndexPath(row: 0, section: firstLocationSectionIndex + locationIndex)
     }
     
     fileprivate func isWinterTimetableAvailable() -> Bool {
