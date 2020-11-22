@@ -74,7 +74,7 @@ class API {
     }
     
 //    static let baseURL = URL(string: "http://192.168.86.249:3000")
-//    static let baseURL = URL(string: "http://localhost:3000")
+//    static let baseURL = URL(string: "http://localhost:3001")
 //    private static let baseURL = URL(string: "http://test.scottishferryapp.com")
     private static let baseURL = URL(string: "https://scottishferryapp.com")
     private static let root = "/api"
@@ -169,7 +169,13 @@ private let decoder: JSONDecoder = {
     decoder.dateDecodingStrategy = .custom { dateDecoder in
         let string = try dateDecoder.singleValueContainer().decode(String.self)
         let dateFormatter = ISO8601DateFormatter()
+        
         dateFormatter.formatOptions = [.withFractionalSeconds, .withInternetDateTime]
+        if let date = dateFormatter.date(from: string) {
+            return date
+        }
+        
+        dateFormatter.formatOptions = [.withInternetDateTime]
         return dateFormatter.date(from: string)!
     }
     return decoder
