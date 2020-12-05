@@ -29,16 +29,16 @@
                     <constraint firstAttribute="trailing" secondItem="f9k-xW-5Wp" secondAttribute="trailing" constant="13" id="tcx-EP-MSc"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
             <connections>
                 <outlet property="labelText" destination="f9k-xW-5Wp" id="aCW-pP-Dww"/>
             </connections>
-            <point key="canvasLocation" x="-26" y="-21"/>
+            <point key="canvasLocation" x="-26.086956521739133" y="-21.428571428571427"/>
         </tableViewCell>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
+        <systemColor name="secondarySystemGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>

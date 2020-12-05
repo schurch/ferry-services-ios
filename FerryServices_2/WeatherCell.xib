@@ -98,7 +98,7 @@
                     <constraint firstItem="IL6-GS-Wwi" firstAttribute="leading" secondItem="pc1-6H-ITr" secondAttribute="trailing" id="wyz-lx-6gH"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
             <connections>
                 <outlet property="constraintViewSeparatorWidth" destination="T5U-UW-YAk" id="mPn-EE-98T"/>
                 <outlet property="imageViewWeather" destination="s3X-H1-leF" id="tFb-d9-Tag"/>
@@ -120,7 +120,7 @@
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemBackgroundColor">
+        <systemColor name="secondarySystemGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">

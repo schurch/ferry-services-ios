@@ -39,7 +39,7 @@
                     <constraint firstItem="0o1-bs-n3f" firstAttribute="leading" secondItem="szw-fV-Hp3" secondAttribute="leading" constant="15" id="zv9-vo-gzJ"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
             <connections>
                 <outlet property="activityIndicatorViewLoading" destination="QlE-Hb-CI9" id="tVH-c1-FSx"/>
                 <outlet property="label" destination="0o1-bs-n3f" id="YmS-fP-RQt"/>
@@ -49,7 +49,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
+        <systemColor name="secondarySystemGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
