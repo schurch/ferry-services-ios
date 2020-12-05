@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D8B44F3B3BF85FB0D076106 /* Pods_FerryServices_2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */; };
 		FD05CF3F24F9D2D3001341E8 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05CF3E24F9D2D3001341E8 /* APIError.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1464F41D97BE090087262D /* UIImage+extensions.swift */; };
@@ -54,6 +53,7 @@
 		FD9C66171A16CADC0050D99F /* Timetables in Resources */ = {isa = PBXBuildFile; fileRef = FD9C66161A16CADC0050D99F /* Timetables */; };
 		FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate+extensions.swift */; };
 		FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */; };
+		FDB2A774257B2293000B0659 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = FDB2A773257B2293000B0659 /* Sentry */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC34B5C1D97362200A12758 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC34B5B1D97362200A12758 /* String+extensions.swift */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
@@ -98,9 +98,6 @@
 
 /* Begin PBXFileReference section */
 		02D9493F193C4A87EAD799AC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7DC99AFE5B8108782BADCBC2 /* Pods-FerryServices_2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FerryServices_2.release.xcconfig"; path = "Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2.release.xcconfig"; sourceTree = "<group>"; };
-		A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FerryServices_2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E758783495CB24FC9D7FDCC4 /* Pods-FerryServices_2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FerryServices_2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2.debug.xcconfig"; sourceTree = "<group>"; };
 		FD05CF3E24F9D2D3001341E8 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1464F41D97BE090087262D /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
@@ -179,6 +176,7 @@
 				FD8819F91A998C52002A976A /* libsqlite3.dylib in Frameworks */,
 				FD8819F71A998C43002A976A /* libz.dylib in Frameworks */,
 				FD8819F51A998C34002A976A /* SystemConfiguration.framework in Frameworks */,
+				FDB2A774257B2293000B0659 /* Sentry in Frameworks */,
 				FD8819F11A998C1C002A976A /* Security.framework in Frameworks */,
 				FD8819EF1A998C10002A976A /* QuartzCore.framework in Frameworks */,
 				FD8819EE1A998C05002A976A /* MobileCoreServices.framework in Frameworks */,
@@ -188,7 +186,6 @@
 				FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */,
 				FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */,
 				FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */,
-				4D8B44F3B3BF85FB0D076106 /* Pods_FerryServices_2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,19 +223,9 @@
 				FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */,
 				FDE0814E1983B9F600760870 /* MapKit.framework */,
 				02D9493F193C4A87EAD799AC /* Pods.framework */,
-				A0173F5D87995B6BE1E9700E /* Pods_FerryServices_2.framework */,
 				FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		99EB27A6CFCB8775D37D41A7 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				E758783495CB24FC9D7FDCC4 /* Pods-FerryServices_2.debug.xcconfig */,
-				7DC99AFE5B8108782BADCBC2 /* Pods-FerryServices_2.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		FD5177F61A565E9D00F4B6B0 /* Services Client */ = {
@@ -302,7 +289,6 @@
 				FD753EE5197A256E00CC5DE3 /* FerryServices_2Tests */,
 				FD753ED1197A256E00CC5DE3 /* Products */,
 				6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */,
-				99EB27A6CFCB8775D37D41A7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -429,12 +415,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD753EEC197A256E00CC5DE3 /* Build configuration list for PBXNativeTarget "FerryServices_2" */;
 			buildPhases = (
-				4E522F730E61BA292C8098AA /* [CP] Check Pods Manifest.lock */,
 				FD753ECC197A256E00CC5DE3 /* Sources */,
 				FD753ECD197A256E00CC5DE3 /* Frameworks */,
 				FD753ECE197A256E00CC5DE3 /* Resources */,
 				FDE391C51C1561AE000EDE26 /* Embed Watch Content */,
-				E72CFCEE066BA48ACA1EC23F /* [CP] Embed Pods Frameworks */,
 				FDBD7DCF1DB18FDD00698A70 /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -442,6 +426,9 @@
 			dependencies = (
 			);
 			name = FerryServices_2;
+			packageProductDependencies = (
+				FDB2A773257B2293000B0659 /* Sentry */,
+			);
 			productName = FerryServices_2;
 			productReference = FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */;
 			productType = "com.apple.product-type.application";
@@ -514,6 +501,9 @@
 				Base,
 			);
 			mainGroup = FD753EC7197A256E00CC5DE3;
+			packageReferences = (
+				FDB2A772257B2293000B0659 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+			);
 			productRefGroup = FD753ED1197A256E00CC5DE3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -552,45 +542,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		4E522F730E61BA292C8098AA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FerryServices_2-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E72CFCEE066BA48ACA1EC23F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FerryServices_2/Pods-FerryServices_2-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FD753ECC197A256E00CC5DE3 /* Sources */ = {
@@ -754,14 +705,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		FD753EED197A256E00CC5DE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E758783495CB24FC9D7FDCC4 /* Pods-FerryServices_2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -779,7 +730,10 @@
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 2.44;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
@@ -795,7 +749,6 @@
 		};
 		FD753EEE197A256E00CC5DE3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DC99AFE5B8108782BADCBC2 /* Pods-FerryServices_2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -813,13 +766,17 @@
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 2.44;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -839,7 +796,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = FerryServices_2Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "stefanchurch.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -857,7 +818,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = FerryServices_2Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "stefanchurch.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -897,6 +862,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FDB2A772257B2293000B0659 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.10;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FDB2A773257B2293000B0659 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDB2A772257B2293000B0659 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FD753EC8197A256E00CC5DE3 /* Project object */;
 }
