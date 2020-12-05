@@ -54,6 +54,7 @@
 		FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */; };
 		FDB2A774257B2293000B0659 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = FDB2A773257B2293000B0659 /* Sentry */; };
 		FDB2A77E257B25E0000B0659 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2A77D257B25E0000B0659 /* CoreServices.framework */; };
+		FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDB2A789257B2716000B0659 /* Launch Screen.storyboard */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC34B5C1D97362200A12758 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC34B5B1D97362200A12758 /* String+extensions.swift */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
@@ -155,6 +156,7 @@
 		FD9C66181A16D2380050D99F /* NSDate+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+extensions.swift"; sourceTree = "<group>"; };
 		FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		FDB2A77D257B25E0000B0659 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		FDB2A789257B2716000B0659 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
+				FDB2A789257B2716000B0659 /* Launch Screen.storyboard */,
 				FD74D0A11A90124300013095 /* DisruptionsCell.xib */,
 				FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */,
 				FD74D0A51A9020E200013095 /* TextOnlyCell.xib */,
@@ -525,6 +528,7 @@
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
 				FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */,
 				FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */,
+				FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */,
 				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
 				FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */,
 				FD74D0A61A9020E200013095 /* TextOnlyCell.xib in Resources */,
@@ -719,7 +723,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
@@ -754,7 +757,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
