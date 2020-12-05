@@ -23,7 +23,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         if let locations = self.locations {
-            mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: locations, showVessels: true)
+            mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: locations)
             mapView.delegate = mapViewDelegate            
         }
     }

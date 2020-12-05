@@ -1,31 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="M6G-w3-Rgm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="i66-8G-Nwo">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Ferries-->
-        <scene sceneID="CfR-48-wwL">
+        <!--Services-->
+        <scene sceneID="jsE-Lv-Auc">
             <objects>
-                <tableViewController id="uiG-sM-ILp" customClass="ServicesViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="PzK-zD-OtV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                <tableViewController id="AJM-zh-PWT" customClass="ServicesViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="BN2-QZ-qgx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
-                            <outlet property="dataSource" destination="uiG-sM-ILp" id="Ml7-J2-JPi"/>
-                            <outlet property="delegate" destination="uiG-sM-ILp" id="9Me-sz-A7N"/>
+                            <outlet property="dataSource" destination="AJM-zh-PWT" id="OyM-vv-ZTV"/>
+                            <outlet property="delegate" destination="AJM-zh-PWT" id="FkM-CZ-L3s"/>
                         </connections>
                     </tableView>
-                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="Ferries" id="ndA-Xd-ojl"/>
+                    <navigationItem key="navigationItem" title="Services" id="yHG-Ce-35f"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="YrD-yy-g6f">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="t8E-hL-GNH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ya0-De-3xJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="508.1521739130435" y="114.64062499999999"/>
+            <point key="canvasLocation" x="-98" y="636"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dl7-uD-QXd">
+            <objects>
+                <navigationController id="i66-8G-Nwo" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="4Fb-wX-eE7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="AJM-zh-PWT" kind="relationship" relationship="rootViewController" id="MWa-bP-xfV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qJ9-SM-b2F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-993" y="630"/>
         </scene>
         <!--Search Results View Controller-->
         <scene sceneID="ao6-mH-kUg">
@@ -63,7 +80,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="get-Zt-KmS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="508.1521739130435" y="631.26785714285711"/>
+            <point key="canvasLocation" x="526" y="831"/>
         </scene>
         <!--Web Information View Controller-->
         <scene sceneID="T5f-hj-VZk">
@@ -102,26 +119,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6hO-O6-P8F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1169.3840579710145" y="616.37946428571422"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="2b3-kD-Hbs">
-            <objects>
-                <navigationController id="M6G-w3-Rgm" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="tJe-9Z-iYr">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.28976777195930481" green="0.52933627367019653" blue="0.5250852108001709" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="uiG-sM-ILp" kind="relationship" relationship="rootViewController" id="eBE-4R-Bci"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pea-YI-F9l" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-125.90579710144928" y="115.38504464285712"/>
         </scene>
         <!--Service Detail Table View Controller-->
         <scene sceneID="t16-wn-hjG">
@@ -271,7 +268,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lCj-9o-T0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="983.33333333333337" y="-449.66517857142856"/>
+            <point key="canvasLocation" x="1190" y="-456"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="UGc-19-rqN">

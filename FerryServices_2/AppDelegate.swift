@@ -166,18 +166,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return handled
     }
     
-    // MARK: - Handoff
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        if userActivity.activityType == "com.stefanchurch.ferryservices.viewservice" {
-            if let serviceId = userActivity.userInfo?["serviceId"] as? Int {
-                self.showDetailsForServiceId(serviceId)
-                return true
-            }
-        }
-        
-        return false
-    }
-    
     // MARK: - Utility methods
     private func showDetailsForServiceId(_ serviceId: Int) {
         if let navigationController = self.window?.rootViewController as? UINavigationController, let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {

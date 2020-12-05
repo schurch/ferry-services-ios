@@ -91,6 +91,8 @@ class ServiceDetailTableViewController: UIViewController {
         
         self.title = self.service.area
         
+        navigationItem.largeTitleDisplayMode = .never
+        
         weather = service.locations.map { _ in nil }
         
         self.labelArea.text = self.service.area
@@ -148,7 +150,7 @@ class ServiceDetailTableViewController: UIViewController {
         self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
         self.constraintMapViewTop.constant = -MainStoryBoard.Constants.motionEffectAmount
         
-        mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: service.locations, showVessels: true)
+        mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: service.locations)
         mapViewDelegate?.shouldAllowAnnotationSelection = false
         mapView.delegate = mapViewDelegate
         
@@ -192,8 +194,6 @@ class ServiceDetailTableViewController: UIViewController {
         // don't clip bounds as map extends past top allowing blur view to be pushed up and not
         // have nasty effect as it gets near top
         self.view.clipsToBounds = false
-        
-        self.mapViewDelegate?.refresh()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -489,16 +489,9 @@ class ServiceDetailTableViewController: UIViewController {
         
         let rect = calculateMapRectForAnnotations(mapViewDelegate.portAnnotations)
         
-        // 40 padding from top to show annotation otherwise we just see the bottom of the annoation
-        let topInset = CGFloat(40) + MainStoryBoard.Constants.motionEffectAmount
+        let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset - view.safeAreaInsets.bottom - navigationController!.navigationBar.bounds.height - UIApplication.shared.statusBarFrame.height
         
-        // 5 padding so the bottom of the annoation is padded from the top of the header
-        var bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset + 5
-        if #available(iOS 11.0, *) {
-            bottomInset = bottomInset - view.safeAreaInsets.bottom
-        }
-        
-        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(topInset, 30, bottomInset, 30))
+        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(60, 00, bottomInset + 5, 0))
         
         mapView.setVisibleMapRect(visibleRect, animated: false)
     }

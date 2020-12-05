@@ -11,7 +11,7 @@ import MapKit
 
 struct LastViewedServices {
     
-    private static let maxRecentItems = 5
+    private static let maxRecentItems = 4
     static func register(_ service: Service) {
         var lastViewedServices = sharedDefaults?.array(forKey: "lastViewedServiceIds") as? [Int] ?? [Int]()
         
@@ -28,7 +28,7 @@ struct LastViewedServices {
         sharedDefaults?.set(lastViewedServices, forKey: "lastViewedServiceIds")
         
         let services = Service.defaultServices
-        let shortcutItems: [UIApplicationShortcutItem] = lastViewedServices.dropFirst().compactMap { serviceId in
+        let shortcutItems: [UIApplicationShortcutItem] = lastViewedServices.compactMap { serviceId in
             guard let service = services.filter({ $0.serviceId == serviceId }).first else { return nil }
             
             let userInfo = [AppDelegate.applicationShortcutUserInfoKeyServiceId : serviceId]
