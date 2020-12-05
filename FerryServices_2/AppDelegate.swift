@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         // Global colors
-        self.window?.tintColor = UIColor.tealTintColor()
+        self.window?.tintColor = UIColor(named: "Tint")
         
         if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
             self.launchedShortcutItem = shortcutItem

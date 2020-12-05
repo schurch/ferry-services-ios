@@ -34,6 +34,7 @@
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
 		FD753EE9197A256E00CC5DE3 /* FerryServices_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */; };
 		FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */; };
+		FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD839D6E257B112E00D12705 /* Colors.xcassets */; };
 		FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E51A998BDA002A976A /* AudioToolbox.framework */; };
 		FD8819E81A998BE4002A976A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E71A998BE4002A976A /* CFNetwork.framework */; };
 		FD8819EA1A998BEE002A976A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E91A998BEE002A976A /* CoreGraphics.framework */; };
@@ -52,7 +53,6 @@
 		FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */; };
 		FD9C66171A16CADC0050D99F /* Timetables in Resources */ = {isa = PBXBuildFile; fileRef = FD9C66161A16CADC0050D99F /* Timetables */; };
 		FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate+extensions.swift */; };
-		FDA0ECE81A69E3FE00EDF5DA /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */; };
 		FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC34B5C1D97362200A12758 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC34B5B1D97362200A12758 /* String+extensions.swift */; };
@@ -132,6 +132,7 @@
 		FD753EE7197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServices_2Tests.swift; sourceTree = "<group>"; };
 		FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
+		FD839D6E257B112E00D12705 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		FD8819E51A998BDA002A976A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FD8819E71A998BE4002A976A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		FD8819E91A998BEE002A976A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -155,7 +156,6 @@
 		FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
 		FD9C66161A16CADC0050D99F /* Timetables */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Timetables; sourceTree = SOURCE_ROOT; };
 		FD9C66181A16D2380050D99F /* NSDate+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+extensions.swift"; sourceTree = "<group>"; };
-		FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
 		FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -334,6 +334,7 @@
 				FDDEC68D198E3CFB0060B18F /* Library */,
 				FD753ED3197A256E00CC5DE3 /* Supporting Files */,
 				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
+				FD839D6E257B112E00D12705 /* Colors.xcassets */,
 				FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */,
 				FD075CE31A734FDF00C78250 /* Settings.bundle */,
 			);
@@ -387,7 +388,6 @@
 			isa = PBXGroup;
 			children = (
 				FD9C66181A16D2380050D99F /* NSDate+extensions.swift */,
-				FDA0ECE71A69E3FE00EDF5DA /* UIColor+extensions.swift */,
 				FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */,
 				FDF9807A1B50818000672393 /* Utility.swift */,
 				FDC34B5B1D97362200A12758 /* String+extensions.swift */,
@@ -538,6 +538,7 @@
 				FD74D0A61A9020E200013095 /* TextOnlyCell.xib in Resources */,
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				FDC03DE919DFDD8D000CE1FA /* services.json in Resources */,
+				FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */,
 				FD74D0A41A90125700013095 /* NoDisruptionsCell.xib in Resources */,
 				FD5E247F1C001BBE006B3E65 /* ServiceStatusCell.xib in Resources */,
 			);
@@ -603,7 +604,6 @@
 				FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */,
 				FD1AA3691D978D1C003496B1 /* ServiceMapDelegate.swift in Sources */,
 				FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */,
-				FDA0ECE81A69E3FE00EDF5DA /* UIColor+extensions.swift in Sources */,
 				FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */,
 				FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */,
 				FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */,

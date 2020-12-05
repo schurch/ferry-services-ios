@@ -183,7 +183,7 @@ class ServicesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel!.textColor = UIColor.tealTextColor()
+        header.textLabel!.textColor = UIColor(named: "Text")
     }
     
     // MARK: - Helpers

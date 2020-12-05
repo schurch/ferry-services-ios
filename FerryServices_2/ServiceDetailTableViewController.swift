@@ -161,7 +161,7 @@ class ServiceDetailTableViewController: UIViewController {
         let backgroundViewFrame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         
         viewBackground = UIView(frame: backgroundViewFrame)
-        viewBackground.backgroundColor = UIColor.tealBackgroundColor()
+        viewBackground.backgroundColor = UIColor(named: "Background")
         view.insertSubview(viewBackground, belowSubview: tableView)
         
         self.tableView.backgroundColor = UIColor.clear
@@ -652,7 +652,7 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel!.textColor = UIColor.tealTextColor()
+        header.textLabel!.textColor = UIColor(named: "Text")
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
