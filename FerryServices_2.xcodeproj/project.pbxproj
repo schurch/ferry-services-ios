@@ -38,7 +38,6 @@
 		FD8819E81A998BE4002A976A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E71A998BE4002A976A /* CFNetwork.framework */; };
 		FD8819EA1A998BEE002A976A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E91A998BEE002A976A /* CoreGraphics.framework */; };
 		FD8819EC1A998BFA002A976A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819EB1A998BFA002A976A /* CoreLocation.framework */; };
-		FD8819EE1A998C05002A976A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819ED1A998C05002A976A /* MobileCoreServices.framework */; };
 		FD8819EF1A998C10002A976A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */; };
 		FD8819F11A998C1C002A976A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819F01A998C1C002A976A /* Security.framework */; };
 		FD8819F51A998C34002A976A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819F41A998C34002A976A /* SystemConfiguration.framework */; };
@@ -54,6 +53,7 @@
 		FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate+extensions.swift */; };
 		FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */; };
 		FDB2A774257B2293000B0659 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = FDB2A773257B2293000B0659 /* Sentry */; };
+		FDB2A77E257B25E0000B0659 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2A77D257B25E0000B0659 /* CoreServices.framework */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
 		FDC34B5C1D97362200A12758 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC34B5B1D97362200A12758 /* String+extensions.swift */; };
 		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
@@ -154,6 +154,7 @@
 		FD9C66161A16CADC0050D99F /* Timetables */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Timetables; sourceTree = SOURCE_ROOT; };
 		FD9C66181A16D2380050D99F /* NSDate+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+extensions.swift"; sourceTree = "<group>"; };
 		FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
+		FDB2A77D257B25E0000B0659 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
@@ -179,13 +180,13 @@
 				FDB2A774257B2293000B0659 /* Sentry in Frameworks */,
 				FD8819F11A998C1C002A976A /* Security.framework in Frameworks */,
 				FD8819EF1A998C10002A976A /* QuartzCore.framework in Frameworks */,
-				FD8819EE1A998C05002A976A /* MobileCoreServices.framework in Frameworks */,
 				FD8819EC1A998BFA002A976A /* CoreLocation.framework in Frameworks */,
 				FD8819EA1A998BEE002A976A /* CoreGraphics.framework in Frameworks */,
 				FD8819E81A998BE4002A976A /* CFNetwork.framework in Frameworks */,
 				FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */,
 				FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */,
 				FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */,
+				FDB2A77E257B25E0000B0659 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +203,7 @@
 		6EDBA5D50D1A4FB6B0F250B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FDB2A77D257B25E0000B0659 /* CoreServices.framework */,
 				FD8819FE1A998DAA002A976A /* Social.framework */,
 				FD8819FC1A998D76002A976A /* Accounts.framework */,
 				FD8819FA1A998CFC002A976A /* Twitter.framework */,
@@ -743,7 +745,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -779,7 +780,6 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -805,7 +805,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "stefanchurch.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
@@ -827,7 +826,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "stefanchurch.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
