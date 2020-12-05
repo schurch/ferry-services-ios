@@ -15,7 +15,7 @@ struct LastViewedServices {
     static func register(_ service: Service) {
         var lastViewedServices = sharedDefaults?.array(forKey: "lastViewedServiceIds") as? [Int] ?? [Int]()
         
-        if let existingIndex = lastViewedServices.index(of: service.serviceId) {
+        if let existingIndex = lastViewedServices.firstIndex(of: service.serviceId) {
             lastViewedServices.remove(at: existingIndex)
         }
         
@@ -31,7 +31,7 @@ struct LastViewedServices {
         let shortcutItems: [UIApplicationShortcutItem] = lastViewedServices.compactMap { serviceId in
             guard let service = services.filter({ $0.serviceId == serviceId }).first else { return nil }
             
-            let userInfo = [AppDelegate.applicationShortcutUserInfoKeyServiceId : serviceId]
+            let userInfo = [AppDelegate.applicationShortcutUserInfoKeyServiceId: serviceId as NSSecureCoding]
             return UIMutableApplicationShortcutItem(type: AppDelegate.applicationShortcutTypeRecentService, localizedTitle: service.area, localizedSubtitle: service.route, icon: nil, userInfo: userInfo)
         }
         

@@ -48,7 +48,7 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         
-        let height = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        let height = cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         
         let separatorHeight = UIScreen.main.scale / 2.0
         
@@ -93,7 +93,7 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
             
             if animate {
                 if let rotationAngle = self.rotationAngle {
-                    UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                    UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
                         self.imageViewWindDirection.transform = CGAffineTransform(rotationAngle: rotationAngle.toRadians())
                     }, completion: { finished in
                         self.configuring = false

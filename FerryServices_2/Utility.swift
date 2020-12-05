@@ -15,10 +15,10 @@ func delay(_ delay: Double, closure: @escaping () -> ()) {
 }
 
 func calculateMapRectForAnnotations(_ annotations: [MKPointAnnotation]) -> MKMapRect {
-    var mapRect = MKMapRectNull
+    var mapRect = MKMapRect.null
     for annotation in annotations {
-        let point = MKMapPointForCoordinate(annotation.coordinate)
-        mapRect = MKMapRectUnion(mapRect, MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
+        let point = MKMapPoint.init(annotation.coordinate)
+        mapRect = mapRect.union(MKMapRect(origin: point, size: MKMapSize(width: 0.1, height: 0.1)))
     }
     return mapRect
 }

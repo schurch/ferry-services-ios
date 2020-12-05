@@ -98,15 +98,15 @@ class ServiceDetailTableViewController: UIViewController {
         self.labelArea.text = self.service.area
         self.labelRoute.text = self.service.route
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailTableViewController.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailTableViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         LastViewedServices.register(service)
         
         // configure tableview
-        self.tableView.contentInset = UIEdgeInsetsMake(MainStoryBoard.Constants.contentInset, 0, 0, 0)
+        self.tableView.contentInset = UIEdgeInsets.init(top: MainStoryBoard.Constants.contentInset, left: 0, bottom: 0, right: 0)
         
         // alert cell
-        self.alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), for: UIControlEvents.valueChanged)
+        self.alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), for: UIControl.Event.valueChanged)
         self.alertCell.configureLoading()
         
         API.getInstallationServices(installationID: Installation.id) { [weak self] result in
@@ -133,11 +133,11 @@ class ServiceDetailTableViewController: UIViewController {
         }
         
         // map motion effect
-        let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: UIInterpolatingMotionEffectType.tiltAlongHorizontalAxis)
+        let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: UIInterpolatingMotionEffect.EffectType.tiltAlongHorizontalAxis)
         horizontalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
         horizontalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
         
-        let vertiacalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: UIInterpolatingMotionEffectType.tiltAlongVerticalAxis)
+        let vertiacalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: UIInterpolatingMotionEffect.EffectType.tiltAlongVerticalAxis)
         vertiacalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
         vertiacalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
         
@@ -215,7 +215,7 @@ class ServiceDetailTableViewController: UIViewController {
             
             self.tableView.tableHeaderView!.setNeedsLayout()
             self.tableView.tableHeaderView!.layoutIfNeeded()
-            let headerHeight = self.tableView.tableHeaderView!.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            let headerHeight = self.tableView.tableHeaderView!.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             self.tableView.tableHeaderView!.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: headerHeight)
             
             var frame = viewBackground.frame
@@ -491,7 +491,7 @@ class ServiceDetailTableViewController: UIViewController {
         
         let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset - view.safeAreaInsets.bottom - navigationController!.navigationBar.bounds.height - UIApplication.shared.statusBarFrame.height
         
-        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsetsMake(60, 30, bottomInset + 5, 30))
+        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsets.init(top: 60, left: 30, bottom: bottomInset + 5, right: 30))
         
         mapView.setVisibleMapRect(visibleRect, animated: false)
     }
@@ -500,7 +500,7 @@ class ServiceDetailTableViewController: UIViewController {
         var currentServiceIds = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? [Int]()
         
         if let existingServiceId = currentServiceIds.filter({ $0 == service.serviceId }).first {
-            currentServiceIds.remove(at: currentServiceIds.index(of: existingServiceId)!)
+            currentServiceIds.remove(at: currentServiceIds.firstIndex(of: existingServiceId)!)
             currentServiceIds.append(existingServiceId)
         }
         else {
@@ -515,7 +515,7 @@ class ServiceDetailTableViewController: UIViewController {
         var currentServiceIds = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? [Int]()
         
         if let existingServiceId = currentServiceIds.filter({ $0 == service.serviceId }).first {
-            currentServiceIds.remove(at: currentServiceIds.index(of: existingServiceId)!)
+            currentServiceIds.remove(at: currentServiceIds.firstIndex(of: existingServiceId)!)
         }
         
         UserDefaults.standard.setValue(currentServiceIds, forKey: UserDefaultsKeys.subscribedService)
@@ -657,7 +657,7 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if dataSource[section].showHeader {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
         else {
             return CGFloat.leastNormalMagnitude
@@ -666,7 +666,7 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if dataSource[section].showFooter {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
         else {
             return CGFloat.leastNormalMagnitude

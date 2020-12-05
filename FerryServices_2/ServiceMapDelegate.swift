@@ -84,8 +84,8 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
         
         let directionsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 100))
         directionsButton.backgroundColor = UIColor(red:0.13, green:0.75, blue:0.67, alpha:1)
-        directionsButton.setImage(UIImage(named: "directions_arrow"), for: UIControlState())
-        directionsButton.setImage(UIImage(named: "directions_arrow_highlighted"), for: UIControlState.highlighted)
+        directionsButton.setImage(UIImage(named: "directions_arrow"), for: UIControl.State())
+        directionsButton.setImage(UIImage(named: "directions_arrow_highlighted"), for: UIControl.State.highlighted)
         directionsButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 56, right: 0)
         
         pinAnnotationView.rightCalloutAccessoryView = directionsButton

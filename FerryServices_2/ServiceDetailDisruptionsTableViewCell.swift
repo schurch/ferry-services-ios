@@ -29,7 +29,7 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         
-        let height = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        let height = cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         
         let separatorHeight = UIScreen.main.scale / 2.0
         
