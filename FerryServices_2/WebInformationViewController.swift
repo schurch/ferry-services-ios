@@ -39,6 +39,9 @@ class WebInformationViewController: UIViewController {
                 <head>
                     <meta name='viewport' content='width=device-width, initial-scale=1'>
                     <style type='text/css'>
+                        :root {
+                            color-scheme: light dark;
+                        }
                         body { font: -apple-system-body; }
                         a { color: #21BFAA; }
                     </style>
