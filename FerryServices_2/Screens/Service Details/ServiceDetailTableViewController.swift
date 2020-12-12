@@ -354,23 +354,16 @@ class ServiceDetailTableViewController: UIViewController {
         
         sections.append(Section(title: nil, footer: footer, rows: disruptionRows))
         
-//        var timetableRows = [Row]()
-//
-//        if let serviceId = serviceStatus.serviceId, Departures.arePortAvailable(serviceId: serviceId) {
-//            let departuresRow: Row = Row.basic(title: "Departures", subtitle: nil,  viewControllerGenerator: { [unowned self] in
-//                return self.departuresViewController(serviceId: serviceId)
-//            })
-//            timetableRows.append(departuresRow)
-//        }
-//
+        var timetableRows = [Row]()
+
 //        winter timetable
-//        if isWinterTimetableAvailable() {
-//            let winterTimetableRow: Row = Row.basic(title: "Winter timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
-//                return self.pdfTimeTableViewController(self.winterPath(), title: "Winter timetable")
-//            })
-//            timetableRows.append(winterTimetableRow)
-//        }
-//
+        if isWinterTimetableAvailable() {
+            let winterTimetableRow: Row = Row.basic(title: "Winter 2020–2021", subtitle: nil, viewControllerGenerator: { [unowned self] in
+                return self.pdfTimeTableViewController(self.winterPath(), title: "Winter timetable")
+            })
+            timetableRows.append(winterTimetableRow)
+        }
+
 //        summer timetable
 //        if isSummerTimetableAvailable() {
 //            let summerTimetableRow: Row = Row.basic(title: "Summer timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
@@ -378,11 +371,11 @@ class ServiceDetailTableViewController: UIViewController {
 //            })
 //            timetableRows.append(summerTimetableRow)
 //        }
-//
-//        if timetableRows.count > 0 {
-//            let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
-//            sections.append(timetableSection)
-//        }
+
+        if timetableRows.count > 0 {
+            let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
+            sections.append(timetableSection)
+        }
         
         // weather sections
         for (index, location) in service.locations.enumerated() {
@@ -453,7 +446,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func winterPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Winter/\(service.serviceId).pdf")
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2020/Winter/\(service.serviceId).pdf")
     }
     
     fileprivate func summerPath() -> String {
@@ -462,8 +455,8 @@ class ServiceDetailTableViewController: UIViewController {
     
     fileprivate func pdfTimeTableViewController(_ path: String, title: String) -> UIViewController {
         let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TimetablePreview") as! TimetablePreviewViewController
-        previewViewController.service = self.service
-        previewViewController.url = URL(string: path)
+        previewViewController.service = service
+        previewViewController.url = URL(fileURLWithPath: path)
         previewViewController.title = title
         
         return previewViewController

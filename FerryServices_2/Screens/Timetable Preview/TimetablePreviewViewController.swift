@@ -19,11 +19,8 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.isTranslucent = false
-        
-        let request = URLRequest(url: url)
-        webview.load(request)
+                
+        webview.loadFileURL(url, allowingReadAccessTo: url)
         
         let shareItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(TimetablePreviewViewController.share))
         navigationItem.rightBarButtonItem = shareItem
@@ -44,8 +41,8 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
         
         items.append(service.route as AnyObject)
         
-        let pdfData = try? Data(contentsOf: URL(fileURLWithPath: url.absoluteString))
-        items.append(pdfData! as AnyObject)
+        let pdfData = try! Data(contentsOf: url) as AnyObject
+        items.append(pdfData)
         
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         navigationController?.present(activityViewController, animated: true, completion: {})

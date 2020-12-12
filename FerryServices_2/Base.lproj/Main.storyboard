@@ -257,7 +257,7 @@
                             <constraint firstItem="pKD-PB-YuA" firstAttribute="top" secondItem="hen-jj-MOU" secondAttribute="top" id="cLb-TE-ZwU"/>
                             <constraint firstAttribute="trailing" secondItem="pKD-PB-YuA" secondAttribute="trailing" id="kBP-9b-8hX"/>
                             <constraint firstItem="Ify-K7-wFo" firstAttribute="top" secondItem="jnL-zy-irC" secondAttribute="bottom" id="nGw-0F-0R3"/>
-                            <constraint firstItem="Ify-K7-wFo" firstAttribute="top" secondItem="pKD-PB-YuA" secondAttribute="bottom" id="pMH-04-KYb"/>
+                            <constraint firstAttribute="bottom" secondItem="pKD-PB-YuA" secondAttribute="bottom" id="pMH-04-KYb"/>
                             <constraint firstItem="jnL-zy-irC" firstAttribute="leading" secondItem="hen-jj-MOU" secondAttribute="leading" id="wHH-wB-t4V"/>
                         </constraints>
                     </view>
@@ -322,7 +322,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uuz-xc-oOs">
-                                <rect key="frame" x="16" y="0.0" width="343" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -332,10 +332,10 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="wK6-sv-5TR" firstAttribute="top" secondItem="uuz-xc-oOs" secondAttribute="bottom" id="K9h-cL-GDA"/>
-                            <constraint firstItem="uuz-xc-oOs" firstAttribute="leading" secondItem="v1p-QK-vy3" secondAttribute="leadingMargin" id="f6m-iZ-9SU"/>
+                            <constraint firstAttribute="bottom" secondItem="uuz-xc-oOs" secondAttribute="bottom" id="K9h-cL-GDA"/>
+                            <constraint firstItem="uuz-xc-oOs" firstAttribute="leading" secondItem="v1p-QK-vy3" secondAttribute="leading" id="f6m-iZ-9SU"/>
                             <constraint firstItem="uuz-xc-oOs" firstAttribute="top" secondItem="eG4-a0-Mfh" secondAttribute="bottom" id="oGh-jJ-bdj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="uuz-xc-oOs" secondAttribute="trailing" id="yee-Yf-Vei"/>
+                            <constraint firstAttribute="trailing" secondItem="uuz-xc-oOs" secondAttribute="trailing" id="yee-Yf-Vei"/>
                         </constraints>
                     </view>
                     <connections>
