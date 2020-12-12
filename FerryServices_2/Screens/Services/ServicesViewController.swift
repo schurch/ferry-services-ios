@@ -33,14 +33,15 @@ class ServicesViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(ServicesViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
-        tableView.register(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: "serviceStatusCellReuseId")
-        tableView.rowHeight = 44
+        tableView.register(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: ServiceStatusCell.reuseID)
         
         refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         searchResultsController = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultsController") as! SearchResultsViewController)
         searchResultsController.arrayOfServices = Service.defaultServices
-        searchResultsController.delegate = self
+        searchResultsController.didSelectService = { [weak self] service in
+            self?.showDetails(for: service)
+        }
         
         searchController = UISearchController(searchResultsController: searchResultsController)
         searchController.searchResultsUpdater = searchResultsController
@@ -154,12 +155,6 @@ class ServicesViewController: UITableViewController {
         let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
         serviceDetailViewController.service = service
         self.navigationController?.pushViewController(serviceDetailViewController, animated: true)
-    }
-}
-
-extension ServicesViewController: SearchResultsViewControllerDelegate {
-    func didSelectServiceStatus(_ service: Service) {
-        showDetails(for: service)
     }
 }
 

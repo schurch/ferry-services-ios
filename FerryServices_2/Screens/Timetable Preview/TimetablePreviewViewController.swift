@@ -20,13 +20,13 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isTranslucent = false
         
         let request = URLRequest(url: url)
         webview.load(request)
         
         let shareItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(TimetablePreviewViewController.share))
-        self.navigationItem.rightBarButtonItem = shareItem
+        navigationItem.rightBarButtonItem = shareItem
     }
     
     // MARK: -
@@ -48,6 +48,6 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
         items.append(pdfData! as AnyObject)
         
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        self.navigationController?.present(activityViewController, animated: true, completion: {})
+        navigationController?.present(activityViewController, animated: true, completion: {})
     }
 }

@@ -10,6 +10,8 @@ import UIKit
 
 class ServiceStatusCell: UITableViewCell {
     
+    static let reuseID = "serviceStatusCellReuseId"
+    
     @IBOutlet weak var constraintTitleLeadingSpace: NSLayoutConstraint!
     @IBOutlet weak var imageViewStatus: UIImageView!
     @IBOutlet weak var labelSubtitle: UILabel!
