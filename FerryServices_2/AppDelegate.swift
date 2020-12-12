@@ -61,10 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         // Global colors
-        self.window?.tintColor = UIColor(named: "Tint")
+        window?.tintColor = UIColor(named: "Tint")
         
         if let shortcutItem = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
-            self.launchedShortcutItem = shortcutItem
+            launchedShortcutItem = shortcutItem
             // This will block "performActionForShortcutItem:completionHandler" from being called.
             shouldPerformAdditionalDelegateHandling = false
         }
@@ -78,9 +78,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationDidBecomeActive(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
         
-        if let shortcut = self.launchedShortcutItem {
-            let _ = self.handleShortCutItem(shortcut)
-            self.launchedShortcutItem = nil
+        if let shortcut = launchedShortcutItem {
+            let _ = handleShortCutItem(shortcut)
+            launchedShortcutItem = nil
         }
     }
     
@@ -105,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return false
         }
         
-        showDetailsForServiceId(serviceId)
+        showDetails(forServiceID: serviceId)
         
         return true
     }
@@ -137,8 +137,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     private func handleNotification(userInfo: [AnyHashable: Any]) {
         guard let info = userInfo as? [String: AnyObject] else { return }
-        if let serviceId = info["service_id"] as? Int {
-            self.showDetailsForServiceId(serviceId)
+        if let serviceID = info["service_id"] as? Int {
+            showDetails(forServiceID: serviceID)
         } else {
             guard let aps = info["aps"] as? [String: AnyObject] else { return }
             guard let message = aps["alert"] as? String else { return }
@@ -146,7 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             
-            self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+            window?.rootViewController?.present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -158,8 +158,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
         var handled = false
-        if let serviceId = shortcutItem.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
-            self.showDetailsForServiceId(serviceId)
+        if let serviceID = shortcutItem.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
+            showDetails(forServiceID: serviceID)
             handled = true
         }
         
@@ -167,10 +167,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     // MARK: - Utility methods
-    private func showDetailsForServiceId(_ serviceId: Int) {
-        if let navigationController = self.window?.rootViewController as? UINavigationController, let servicesViewController = navigationController.viewControllers.first as? ServicesViewController {
-            servicesViewController.showDetailsForServiceId(serviceId, shouldFindAndHighlightRow: true)
-        }
+    private func showDetails(forServiceID serviceId: Int) {
+        guard
+            let navigationController = window?.rootViewController as? UINavigationController,
+            let servicesViewController = navigationController.viewControllers.first as? ServicesViewController else { return }
+        
+        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
+        serviceDetailViewController.service = Service.defaultServices.first(where: { $0.serviceId == serviceId })
+        navigationController.setViewControllers([servicesViewController, serviceDetailViewController], animated: true)
     }
     
 }

@@ -10,59 +10,19 @@ import UIKit
 
 class ServicesViewController: UITableViewController {
     
-    // MARK: - Variables & Constants
-    private struct MainStoryboard {
-        struct TableViewCellIdentifiers {
-            static let serviceStatusCell = "serviceStatusCellReuseId"
-        }
+    private struct TableViewSections {
+        static let subscribed = 0
+        static let services = 1
     }
     
-    private struct Constants {
-        struct TableViewSections {
-            static let subscribed = 0
-            static let services = 1
-        }
-        struct TableViewSectionHeaders {
-            static let subscribed = "Subscribed"
-            static let services = "Services"
-        }
-    }
-    
-    private var arrayServices = [Service]()
+    private var arrayServices = Service.defaultServices
     private var arraySubscribedServices = [Service]()
     private var searchController: UISearchController!
     private var searchResultsController: SearchResultsViewController!
     
-    // Set if we should show a service when finished loading
-    private var serviceIdToShow: Int?
-    
     // MARK: -
     deinit {
         NotificationCenter.default.removeObserver(self)
-    }
-    
-    // MARK: - Public
-    func showDetailsForServiceId(_ serviceID: Int, shouldFindAndHighlightRow: Bool = false) {
-        if self.arrayServices.count == 0 {
-            // We haven't loaded yet so set the service ID to show when we do
-            self.serviceIdToShow = serviceID
-        }
-        else {
-            let _ = self.navigationController?.popToRootViewController(animated: false)
-            
-            if let index = arrayServices.firstIndex(where: { $0.serviceId == serviceID }) {
-                if shouldFindAndHighlightRow {
-                    let section = !self.arraySubscribedServices.isEmpty ? 1 : 0
-                    let indexPath = IndexPath(row: index, section: section)
-                    self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
-                }
-                                
-                let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
-                serviceDetailViewController.service = self.arrayServices[index]
-                
-                self.navigationController?.pushViewController(serviceDetailViewController, animated: true)
-            }
-        }
     }
     
     // MARK: - View lifecycle
@@ -73,34 +33,24 @@ class ServicesViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(ServicesViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
-        tableView.register(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: MainStoryboard.TableViewCellIdentifiers.serviceStatusCell)
+        tableView.register(UINib(nibName: "ServiceStatusCell", bundle: nil), forCellReuseIdentifier: "serviceStatusCellReuseId")
+        tableView.rowHeight = 44
         
         refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         searchResultsController = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultsController") as! SearchResultsViewController)
+        searchResultsController.arrayOfServices = Service.defaultServices
         searchResultsController.delegate = self
         
-        searchController = UISearchController(searchResultsController: self.searchResultsController)
-        searchController.searchResultsUpdater = self.searchResultsController
+        searchController = UISearchController(searchResultsController: searchResultsController)
+        searchController.searchResultsUpdater = searchResultsController
         searchController.searchBar.delegate = self
         
         navigationItem.searchController = searchController
         
         definesPresentationContext = true
         
-        arrayServices = Service.defaultServices
-        
-        self.tableView.rowHeight = 44
-        
-        if let serviceIdToShow = self.serviceIdToShow {
-            // If this is set, then there was a request to show a service before the view had loaded
-            self.showDetailsForServiceId(serviceIdToShow, shouldFindAndHighlightRow: true)
-            self.serviceIdToShow = nil
-        }
-        
-        self.searchResultsController.arrayOfServices = self.arrayServices
-        
-        self.refresh()
+        refresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,13 +60,13 @@ class ServicesViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
         }
         
-        self.arraySubscribedServices = self.generateArrayOfSubscribedServiceIds()
-        self.tableView.reloadData()
+        arraySubscribedServices = createSubscribedServices()
+        tableView.reloadData()
     }
     
     // MARK: - Notifications
     @objc func applicationDidBecomeActive(_ notification: Notification) {
-        self.refresh()
+        refresh()
     }
     
     // MARK: - Refresh
@@ -129,7 +79,7 @@ class ServicesViewController: UITableViewController {
             }
 
             self.arrayServices = services.sorted(by: { $0.sortOrder < $1.sortOrder })
-            self.arraySubscribedServices = self.generateArrayOfSubscribedServiceIds()
+            self.arraySubscribedServices = self.createSubscribedServices()
             self.searchResultsController.arrayOfServices = self.arrayServices
 
             self.tableView.reloadData()
@@ -138,84 +88,78 @@ class ServicesViewController: UITableViewController {
     
     // MARK: - UITableViewDataSource
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return self.arraySubscribedServices.isEmpty ? 1 : 2
+        return arraySubscribedServices.isEmpty ? 1 : 2
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if self.arraySubscribedServices.isEmpty {
+        if arraySubscribedServices.isEmpty {
             return nil
         }
         
-        switch(section) {
-        case Constants.TableViewSections.subscribed:
-            return Constants.TableViewSectionHeaders.subscribed
-        default:
-            return Constants.TableViewSectionHeaders.services
-        }
+        return section == TableViewSections.subscribed ? "Subscribed" : "Services"
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.arraySubscribedServices.isEmpty {
-            return self.arrayServices.count
+        if arraySubscribedServices.isEmpty {
+            return arrayServices.count
         }
         
-        switch (section) {
-        case Constants.TableViewSections.subscribed:
-            return self.arraySubscribedServices.count
-        default:
-            return self.arrayServices.count
-        }
+        return section == TableViewSections.subscribed ? arraySubscribedServices.count : arrayServices.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let serviceStatusCell = self.tableView.dequeueReusableCell(withIdentifier: MainStoryboard.TableViewCellIdentifiers.serviceStatusCell, for: indexPath) as! ServiceStatusCell
-        let serviceStatus = serviceStatusForTableView(tableView, indexPath: indexPath)
+        let serviceStatusCell = tableView.dequeueReusableCell(withIdentifier: "serviceStatusCellReuseId", for: indexPath) as! ServiceStatusCell
+        let serviceStatus = serviceForTableView(tableView, indexPath: indexPath)
         serviceStatusCell.configureCellWithServiceStatus(serviceStatus)
         
         return serviceStatusCell
     }
     
     // MARK: - UITableViewDelegate
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let service = self.serviceStatusForTableView(tableView, indexPath: indexPath)
-        self.showDetailsForServiceId(service.serviceId)
-    }
-    
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel!.textColor = UIColor(named: "Text")
     }
     
-    // MARK: - Helpers
-    fileprivate func serviceStatusForTableView(_ tableView: UITableView, indexPath: IndexPath) -> Service {
-        if self.arraySubscribedServices.isEmpty {
-            return self.arrayServices[(indexPath as NSIndexPath).row]
-        }
-        
-        switch((indexPath as NSIndexPath).section) {
-        case Constants.TableViewSections.subscribed:
-            return self.arraySubscribedServices[(indexPath as NSIndexPath).row]
-        default:
-            return self.arrayServices[(indexPath as NSIndexPath).row]
-        }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let service = serviceForTableView(tableView, indexPath: indexPath)
+        showDetails(for: service)
     }
     
-    fileprivate func generateArrayOfSubscribedServiceIds() -> [Service] {
-        guard let subscribedServiceIds = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] else {
-            return [Service]()
+    // MARK: - Helpers
+    private func serviceForTableView(_ tableView: UITableView, indexPath: IndexPath) -> Service {
+        if arraySubscribedServices.isEmpty {
+            return arrayServices[indexPath.row]
         }
         
-        let subscribedServiceStatuses = subscribedServiceIds.map { serviceId in
-            return self.arrayServices.filter { $0.serviceId == serviceId }.first
+        return indexPath.section == TableViewSections.subscribed
+            ? arraySubscribedServices[indexPath.row]
+            : arrayServices[indexPath.row]
+    }
+    
+    private func createSubscribedServices() -> [Service] {
+        guard let subscribedServiceIDs = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] else {
+            return []
         }
         
-        return subscribedServiceStatuses.compactMap({ $0 }).sorted(by: { $0.sortOrder < $1.sortOrder })
+        return subscribedServiceIDs
+            .map { serviceID in
+                self.arrayServices.first(where: { service in service.serviceId == serviceID })
+            }
+            .compactMap { $0 }
+            .sorted(by: { $0.sortOrder < $1.sortOrder })
+    }
+    
+    private func showDetails(for service: Service) {
+        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
+        serviceDetailViewController.service = service
+        self.navigationController?.pushViewController(serviceDetailViewController, animated: true)
     }
 }
 
 extension ServicesViewController: SearchResultsViewControllerDelegate {
-    func didSelectServiceStatus(_ serviceStatus: Service) {
-        self.showDetailsForServiceId(serviceStatus.serviceId)
+    func didSelectServiceStatus(_ service: Service) {
+        showDetails(for: service)
     }
 }
 
