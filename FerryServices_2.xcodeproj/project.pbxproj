@@ -7,32 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FD05CF3F24F9D2D3001341E8 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05CF3E24F9D2D3001341E8 /* APIError.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
-		FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1464F41D97BE090087262D /* UIImage+extensions.swift */; };
-		FD1AA3691D978D1C003496B1 /* ServiceMapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */; };
-		FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */; };
-		FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */; };
+		FD1B5FAC258479150098B96B /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F84258479150098B96B /* LocationWeather.swift */; };
+		FD1B5FAD258479150098B96B /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F85258479150098B96B /* Vessel.swift */; };
+		FD1B5FAE258479150098B96B /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F87258479150098B96B /* WeatherAPIClient.swift */; };
+		FD1B5FAF258479150098B96B /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F88258479150098B96B /* APIError.swift */; };
+		FD1B5FB0258479150098B96B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F89258479150098B96B /* API.swift */; };
+		FD1B5FB1258479150098B96B /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8C258479150098B96B /* ServiceDetailDisruptionsTableViewCell.swift */; };
+		FD1B5FB2258479150098B96B /* ServiceDetailWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8D258479150098B96B /* ServiceDetailWeatherCell.swift */; };
+		FD1B5FB3258479150098B96B /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8E258479150098B96B /* ServiceDetailTableViewController.swift */; };
+		FD1B5FB4258479150098B96B /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F8F258479150098B96B /* WeatherCell.xib */; };
+		FD1B5FB5258479150098B96B /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F90258479150098B96B /* ServiceDetailLoadingTableViewCell.swift */; };
+		FD1B5FB6258479150098B96B /* DisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F91258479150098B96B /* DisruptionsCell.xib */; };
+		FD1B5FB7258479150098B96B /* ServiceDetailTextOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F92258479150098B96B /* ServiceDetailTextOnlyCell.swift */; };
+		FD1B5FB8258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F93258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift */; };
+		FD1B5FB9258479150098B96B /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F94258479150098B96B /* ServiceDetailNoDisruptionTableViewCell.swift */; };
+		FD1B5FBA258479150098B96B /* NoDisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F95258479150098B96B /* NoDisruptionsCell.xib */; };
+		FD1B5FBB258479150098B96B /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F96258479150098B96B /* AlertCell.xib */; };
+		FD1B5FBC258479150098B96B /* TextOnlyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F97258479150098B96B /* TextOnlyCell.xib */; };
+		FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F99258479150098B96B /* MapViewController.swift */; };
+		FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9B258479150098B96B /* WebInformationViewController.swift */; };
+		FD1B5FBF258479150098B96B /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */; };
+		FD1B5FC0258479150098B96B /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9F258479150098B96B /* SearchResultsViewController.swift */; };
+		FD1B5FC1258479150098B96B /* ServiceStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5FA0258479150098B96B /* ServiceStatusCell.xib */; };
+		FD1B5FC2258479150098B96B /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA1258479150098B96B /* ServicesViewController.swift */; };
+		FD1B5FC3258479150098B96B /* ServiceStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA2258479150098B96B /* ServiceStatusCell.swift */; };
+		FD1B5FC4258479150098B96B /* NSDate+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA5258479150098B96B /* NSDate+extensions.swift */; };
+		FD1B5FC5258479150098B96B /* ServiceMapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA6258479150098B96B /* ServiceMapDelegate.swift */; };
+		FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA7258479150098B96B /* String+extensions.swift */; };
+		FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA8258479150098B96B /* UIImage+extensions.swift */; };
+		FD1B5FC8258479150098B96B /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA9258479150098B96B /* Utility.swift */; };
+		FD1B5FC9258479150098B96B /* LastViewedServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FAA258479150098B96B /* LastViewedServices.swift */; };
+		FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FAB258479150098B96B /* Double+extensions.swift */; };
+		FD1B5FCE2584794E0098B96B /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FCD2584794E0098B96B /* Service.swift */; };
+		FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FD3258479E10098B96B /* Decoder.swift */; };
 		FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */; };
-		FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */; };
-		FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */; };
-		FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */; };
-		FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */; };
-		FD5E247F1C001BBE006B3E65 /* ServiceStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E247D1C001BBE006B3E65 /* ServiceStatusCell.xib */; };
-		FD5E7DBB197A316F00F438F6 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E7DBA197A316F00F438F6 /* API.swift */; };
-		FD5FBF112519DD85004AB38A /* LastViewedServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5FBF102519DD85004AB38A /* LastViewedServices.swift */; };
-		FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */; };
-		FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD60D97E1AA173360054A131 /* AlertCell.xib */; };
-		FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD709DAB1A2082DB00DBD247 /* WebInformationViewController.swift */; };
-		FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */; };
-		FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD74D0A11A90124300013095 /* DisruptionsCell.xib */; };
-		FD74D0A41A90125700013095 /* NoDisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */; };
-		FD74D0A61A9020E200013095 /* TextOnlyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD74D0A51A9020E200013095 /* TextOnlyCell.xib */; };
 		FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */; };
 		FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD753ED9197A256E00CC5DE3 /* Main.storyboard */; };
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
 		FD753EE9197A256E00CC5DE3 /* FerryServices_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */; };
-		FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */; };
 		FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD839D6E257B112E00D12705 /* Colors.xcassets */; };
 		FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E51A998BDA002A976A /* AudioToolbox.framework */; };
 		FD8819E81A998BE4002A976A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E71A998BE4002A976A /* CFNetwork.framework */; };
@@ -45,23 +58,13 @@
 		FD8819F91A998C52002A976A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819F81A998C52002A976A /* libsqlite3.dylib */; };
 		FD8819FD1A998D76002A976A /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FC1A998D76002A976A /* Accounts.framework */; };
 		FD8819FF1A998DAA002A976A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FE1A998DAA002A976A /* Social.framework */; };
-		FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */; };
-		FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */; };
 		FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */; };
-		FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */; };
 		FD9C66171A16CADC0050D99F /* Timetables in Resources */ = {isa = PBXBuildFile; fileRef = FD9C66161A16CADC0050D99F /* Timetables */; };
-		FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9C66181A16D2380050D99F /* NSDate+extensions.swift */; };
-		FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */; };
 		FDB2A774257B2293000B0659 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = FDB2A773257B2293000B0659 /* Sentry */; };
 		FDB2A77E257B25E0000B0659 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2A77D257B25E0000B0659 /* CoreServices.framework */; };
 		FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDB2A789257B2716000B0659 /* Launch Screen.storyboard */; };
 		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
-		FDC34B5C1D97362200A12758 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC34B5B1D97362200A12758 /* String+extensions.swift */; };
-		FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCB33441A4BD6D1000033BC /* MapViewController.swift */; };
-		FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
-		FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */; };
-		FDF9807B1B50818000672393 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF9807A1B50818000672393 /* Utility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,28 +102,42 @@
 
 /* Begin PBXFileReference section */
 		02D9493F193C4A87EAD799AC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FD05CF3E24F9D2D3001341E8 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		FD1464F41D97BE090087262D /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
-		FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceMapDelegate.swift; sourceTree = "<group>"; };
-		FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
-		FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
+		FD1B5F84258479150098B96B /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
+		FD1B5F85258479150098B96B /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
+		FD1B5F87258479150098B96B /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
+		FD1B5F88258479150098B96B /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		FD1B5F89258479150098B96B /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		FD1B5F8C258479150098B96B /* ServiceDetailDisruptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDisruptionsTableViewCell.swift; sourceTree = "<group>"; };
+		FD1B5F8D258479150098B96B /* ServiceDetailWeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailWeatherCell.swift; sourceTree = "<group>"; };
+		FD1B5F8E258479150098B96B /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
+		FD1B5F8F258479150098B96B /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
+		FD1B5F90258479150098B96B /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
+		FD1B5F91258479150098B96B /* DisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisruptionsCell.xib; sourceTree = "<group>"; };
+		FD1B5F92258479150098B96B /* ServiceDetailTextOnlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTextOnlyCell.swift; sourceTree = "<group>"; };
+		FD1B5F93258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailReceiveAlertCellTableViewCell.swift; sourceTree = "<group>"; };
+		FD1B5F94258479150098B96B /* ServiceDetailNoDisruptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailNoDisruptionTableViewCell.swift; sourceTree = "<group>"; };
+		FD1B5F95258479150098B96B /* NoDisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoDisruptionsCell.xib; sourceTree = "<group>"; };
+		FD1B5F96258479150098B96B /* AlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
+		FD1B5F97258479150098B96B /* TextOnlyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextOnlyCell.xib; sourceTree = "<group>"; };
+		FD1B5F99258479150098B96B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		FD1B5F9B258479150098B96B /* WebInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInformationViewController.swift; sourceTree = "<group>"; };
+		FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
+		FD1B5F9F258479150098B96B /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		FD1B5FA0258479150098B96B /* ServiceStatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceStatusCell.xib; sourceTree = "<group>"; };
+		FD1B5FA1258479150098B96B /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
+		FD1B5FA2258479150098B96B /* ServiceStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusCell.swift; sourceTree = "<group>"; };
+		FD1B5FA5258479150098B96B /* NSDate+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+extensions.swift"; sourceTree = "<group>"; };
+		FD1B5FA6258479150098B96B /* ServiceMapDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceMapDelegate.swift; sourceTree = "<group>"; };
+		FD1B5FA7258479150098B96B /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
+		FD1B5FA8258479150098B96B /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
+		FD1B5FA9258479150098B96B /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		FD1B5FAA258479150098B96B /* LastViewedServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastViewedServices.swift; sourceTree = "<group>"; };
+		FD1B5FAB258479150098B96B /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
+		FD1B5FCD2584794E0098B96B /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		FD1B5FD3258479E10098B96B /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
 		FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
-		FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
-		FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
-		FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
-		FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusCell.swift; sourceTree = "<group>"; };
-		FD5E247D1C001BBE006B3E65 /* ServiceStatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceStatusCell.xib; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		FD5E7DBA197A316F00F438F6 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = API.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FD5FBF102519DD85004AB38A /* LastViewedServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastViewedServices.swift; sourceTree = "<group>"; };
-		FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailReceiveAlertCellTableViewCell.swift; sourceTree = "<group>"; };
-		FD60D97E1AA173360054A131 /* AlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
-		FD709DAB1A2082DB00DBD247 /* WebInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInformationViewController.swift; sourceTree = "<group>"; };
-		FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailNoDisruptionTableViewCell.swift; sourceTree = "<group>"; };
-		FD74D0A11A90124300013095 /* DisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisruptionsCell.xib; sourceTree = "<group>"; };
-		FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoDisruptionsCell.xib; sourceTree = "<group>"; };
-		FD74D0A51A9020E200013095 /* TextOnlyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextOnlyCell.xib; sourceTree = "<group>"; };
 		FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FerryServices_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753ED4197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,7 +146,6 @@
 		FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FerryServices_2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753EE7197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServices_2Tests.swift; sourceTree = "<group>"; };
-		FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		FD839D6E257B112E00D12705 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		FD8819E51A998BDA002A976A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FD8819E71A998BE4002A976A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -143,30 +159,20 @@
 		FD8819FA1A998CFC002A976A /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		FD8819FC1A998D76002A976A /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		FD8819FE1A998DAA002A976A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailWeatherCell.swift; sourceTree = "<group>"; };
 		FD8DDDB119B094B0008479DC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDisruptionsTableViewCell.swift; sourceTree = "<group>"; };
 		FD90CF2D19C40EA7009E1D74 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		FD9432D219CD0DAC003BBD23 /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
 		FD9432D319CD0DAC003BBD23 /* libPods-FMDB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FMDB.a"; path = "Pods/build/Debug-iphoneos/libPods-FMDB.a"; sourceTree = "<group>"; };
 		FD9432D619CD0EA4003BBD23 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
 		FD9C66161A16CADC0050D99F /* Timetables */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Timetables; sourceTree = SOURCE_ROOT; };
-		FD9C66181A16D2380050D99F /* NSDate+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+extensions.swift"; sourceTree = "<group>"; };
-		FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		FDB2A77D257B25E0000B0659 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		FDB2A789257B2716000B0659 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
-		FDC34B5B1D97362200A12758 /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FerryServices_2.entitlements; sourceTree = "<group>"; };
-		FDCB33441A4BD6D1000033BC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTextOnlyCell.swift; sourceTree = "<group>"; };
-		FDF9807A1B50818000672393 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,58 +238,105 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FD5177F61A565E9D00F4B6B0 /* Services Client */ = {
+		FD1B5F83258479150098B96B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FD5E7DBA197A316F00F438F6 /* API.swift */,
+				FD1B5F84258479150098B96B /* LocationWeather.swift */,
+				FD1B5FCD2584794E0098B96B /* Service.swift */,
+				FD1B5F85258479150098B96B /* Vessel.swift */,
 			);
-			name = "Services Client";
+			path = Model;
 			sourceTree = "<group>";
 		};
-		FD5177F91A565EDA00F4B6B0 /* Weather Client */ = {
+		FD1B5F86258479150098B96B /* API Client */ = {
 			isa = PBXGroup;
 			children = (
-				FD5177F71A565ED500F4B6B0 /* WeatherAPIClient.swift */,
-				FD4B7C681A589C4000CCD5C5 /* LocationWeather.swift */,
+				FD1B5F89258479150098B96B /* API.swift */,
+				FD1B5F88258479150098B96B /* APIError.swift */,
+				FD1B5F87258479150098B96B /* WeatherAPIClient.swift */,
+				FD1B5FD3258479E10098B96B /* Decoder.swift */,
 			);
-			name = "Weather Client";
+			path = "API Client";
 			sourceTree = "<group>";
 		};
-		FD5BF4E21A539ED1009D799E /* Views */ = {
+		FD1B5F8A258479150098B96B /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				FD1B5F9E258479150098B96B /* Services */,
+				FD1B5F8B258479150098B96B /* Service Details */,
+				FD1B5F98258479150098B96B /* Map */,
+				FD1B5F9A258479150098B96B /* Web Information */,
+				FD1B5F9C258479150098B96B /* Timetable Preview */,
 			);
-			name = Views;
+			path = Screens;
 			sourceTree = "<group>";
 		};
-		FD5E7DB9197A310600F438F6 /* View Controllers */ = {
+		FD1B5F8B258479150098B96B /* Service Details */ = {
 			isa = PBXGroup;
 			children = (
-				FDEA4B20198C72160023A5A7 /* Services */,
-				FDEA4B21198C721C0023A5A7 /* Service Details */,
-				FD9432DA19CD1376003BBD23 /* Timetable Preview */,
-				FD6C45651A2ACEF6005E1FB8 /* Web Information */,
-				FDCB33461A4BD6D6000033BC /* Map */,
+				FD1B5F8E258479150098B96B /* ServiceDetailTableViewController.swift */,
+				FD1B5F8C258479150098B96B /* ServiceDetailDisruptionsTableViewCell.swift */,
+				FD1B5F8D258479150098B96B /* ServiceDetailWeatherCell.swift */,
+				FD1B5F90258479150098B96B /* ServiceDetailLoadingTableViewCell.swift */,
+				FD1B5F93258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift */,
+				FD1B5F94258479150098B96B /* ServiceDetailNoDisruptionTableViewCell.swift */,
+				FD1B5F92258479150098B96B /* ServiceDetailTextOnlyCell.swift */,
+				FD1B5F8F258479150098B96B /* WeatherCell.xib */,
+				FD1B5F91258479150098B96B /* DisruptionsCell.xib */,
+				FD1B5F95258479150098B96B /* NoDisruptionsCell.xib */,
+				FD1B5F96258479150098B96B /* AlertCell.xib */,
+				FD1B5F97258479150098B96B /* TextOnlyCell.xib */,
 			);
-			name = "View Controllers";
+			path = "Service Details";
 			sourceTree = "<group>";
 		};
-		FD5E7DBC197A317800F438F6 /* API Client */ = {
+		FD1B5F98258479150098B96B /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				FD5177F61A565E9D00F4B6B0 /* Services Client */,
-				FD5177F91A565EDA00F4B6B0 /* Weather Client */,
-				FD05CF3E24F9D2D3001341E8 /* APIError.swift */,
+				FD1B5F99258479150098B96B /* MapViewController.swift */,
 			);
-			name = "API Client";
+			path = Map;
 			sourceTree = "<group>";
 		};
-		FD6C45651A2ACEF6005E1FB8 /* Web Information */ = {
+		FD1B5F9A258479150098B96B /* Web Information */ = {
 			isa = PBXGroup;
 			children = (
-				FD709DAB1A2082DB00DBD247 /* WebInformationViewController.swift */,
+				FD1B5F9B258479150098B96B /* WebInformationViewController.swift */,
 			);
-			name = "Web Information";
+			path = "Web Information";
+			sourceTree = "<group>";
+		};
+		FD1B5F9C258479150098B96B /* Timetable Preview */ = {
+			isa = PBXGroup;
+			children = (
+				FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */,
+			);
+			path = "Timetable Preview";
+			sourceTree = "<group>";
+		};
+		FD1B5F9E258479150098B96B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FD1B5FA1258479150098B96B /* ServicesViewController.swift */,
+				FD1B5F9F258479150098B96B /* SearchResultsViewController.swift */,
+				FD1B5FA2258479150098B96B /* ServiceStatusCell.swift */,
+				FD1B5FA0258479150098B96B /* ServiceStatusCell.xib */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		FD1B5FA4258479150098B96B /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				FD1B5FA5258479150098B96B /* NSDate+extensions.swift */,
+				FD1B5FA6258479150098B96B /* ServiceMapDelegate.swift */,
+				FD1B5FA7258479150098B96B /* String+extensions.swift */,
+				FD1B5FA8258479150098B96B /* UIImage+extensions.swift */,
+				FD1B5FA9258479150098B96B /* Utility.swift */,
+				FD1B5FAA258479150098B96B /* LastViewedServices.swift */,
+				FD1B5FAB258479150098B96B /* Double+extensions.swift */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 		FD753EC7197A256E00CC5DE3 = {
@@ -308,21 +361,15 @@
 		FD753ED2197A256E00CC5DE3 /* FerryServices_2 */ = {
 			isa = PBXGroup;
 			children = (
-				FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
 				FDB2A789257B2716000B0659 /* Launch Screen.storyboard */,
-				FD74D0A11A90124300013095 /* DisruptionsCell.xib */,
-				FD74D0A31A90125700013095 /* NoDisruptionsCell.xib */,
-				FD74D0A51A9020E200013095 /* TextOnlyCell.xib */,
-				FD60D97E1AA173360054A131 /* AlertCell.xib */,
-				FD56B2C71B3E310A00951ED8 /* WeatherCell.xib */,
-				FD5E247D1C001BBE006B3E65 /* ServiceStatusCell.xib */,
-				FD5E7DB9197A310600F438F6 /* View Controllers */,
-				FD5BF4E21A539ED1009D799E /* Views */,
-				FD5E7DBC197A317800F438F6 /* API Client */,
-				FDDEC68D198E3CFB0060B18F /* Library */,
+				FD1B5F8A258479150098B96B /* Screens */,
+				FD1B5F86258479150098B96B /* API Client */,
+				FD1B5F83258479150098B96B /* Model */,
+				FD1B5FA4258479150098B96B /* Library */,
+				FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */,
 				FD753ED3197A256E00CC5DE3 /* Supporting Files */,
 				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
 				FD839D6E257B112E00D12705 /* Colors.xcassets */,
@@ -357,60 +404,6 @@
 				FD753EE7197A256E00CC5DE3 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		FD9432DA19CD1376003BBD23 /* Timetable Preview */ = {
-			isa = PBXGroup;
-			children = (
-				FD9432D819CD136F003BBD23 /* TimetablePreviewViewController.swift */,
-			);
-			name = "Timetable Preview";
-			sourceTree = "<group>";
-		};
-		FDCB33461A4BD6D6000033BC /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				FDCB33441A4BD6D1000033BC /* MapViewController.swift */,
-			);
-			name = Map;
-			sourceTree = "<group>";
-		};
-		FDDEC68D198E3CFB0060B18F /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				FD9C66181A16D2380050D99F /* NSDate+extensions.swift */,
-				FDAC1B661B3FDFE8000353EA /* Double+extensions.swift */,
-				FDF9807A1B50818000672393 /* Utility.swift */,
-				FDC34B5B1D97362200A12758 /* String+extensions.swift */,
-				FD1AA3681D978D1C003496B1 /* ServiceMapDelegate.swift */,
-				FD1464F41D97BE090087262D /* UIImage+extensions.swift */,
-				FD5FBF102519DD85004AB38A /* LastViewedServices.swift */,
-			);
-			name = Library;
-			sourceTree = "<group>";
-		};
-		FDEA4B20198C72160023A5A7 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				FD753EF2197A289800CC5DE3 /* ServicesViewController.swift */,
-				FD28D1601BFFF41500C6A075 /* SearchResultsViewController.swift */,
-				FD5E247C1C001BBE006B3E65 /* ServiceStatusCell.swift */,
-			);
-			name = Services;
-			sourceTree = "<group>";
-		};
-		FDEA4B21198C721C0023A5A7 /* Service Details */ = {
-			isa = PBXGroup;
-			children = (
-				FDE0814C1983B85800760870 /* ServiceDetailTableViewController.swift */,
-				FD90CEF619C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift */,
-				FD73E9B41A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift */,
-				FD59A3401A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift */,
-				FDE7F4651A205592002C12ED /* ServiceDetailTextOnlyCell.swift */,
-				FD88609B1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift */,
-				FD60D97C1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift */,
-			);
-			name = "Service Details";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -524,19 +517,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD1B5FB4258479150098B96B /* WeatherCell.xib in Resources */,
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
-				FD56B2C81B3E310A00951ED8 /* WeatherCell.xib in Resources */,
-				FD74D0A21A90124300013095 /* DisruptionsCell.xib in Resources */,
+				FD1B5FB6258479150098B96B /* DisruptionsCell.xib in Resources */,
+				FD1B5FBC258479150098B96B /* TextOnlyCell.xib in Resources */,
 				FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */,
+				FD1B5FBA258479150098B96B /* NoDisruptionsCell.xib in Resources */,
 				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
-				FD60D97F1AA173370054A131 /* AlertCell.xib in Resources */,
-				FD74D0A61A9020E200013095 /* TextOnlyCell.xib in Resources */,
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				FDC03DE919DFDD8D000CE1FA /* services.json in Resources */,
+				FD1B5FC1258479150098B96B /* ServiceStatusCell.xib in Resources */,
+				FD1B5FBB258479150098B96B /* AlertCell.xib in Resources */,
 				FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */,
-				FD74D0A41A90125700013095 /* NoDisruptionsCell.xib in Resources */,
-				FD5E247F1C001BBE006B3E65 /* ServiceStatusCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,32 +547,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD753EF3197A289800CC5DE3 /* ServicesViewController.swift in Sources */,
-				FD60D97D1AA16B330054A131 /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */,
+				FD1B5FC4258479150098B96B /* NSDate+extensions.swift in Sources */,
+				FD1B5FCE2584794E0098B96B /* Service.swift in Sources */,
+				FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */,
+				FD1B5FB8258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */,
+				FD1B5FC2258479150098B96B /* ServicesViewController.swift in Sources */,
+				FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */,
+				FD1B5FAC258479150098B96B /* LocationWeather.swift in Sources */,
+				FD1B5FC5258479150098B96B /* ServiceMapDelegate.swift in Sources */,
+				FD1B5FB7258479150098B96B /* ServiceDetailTextOnlyCell.swift in Sources */,
+				FD1B5FB2258479150098B96B /* ServiceDetailWeatherCell.swift in Sources */,
+				FD1B5FB5258479150098B96B /* ServiceDetailLoadingTableViewCell.swift in Sources */,
+				FD1B5FC8258479150098B96B /* Utility.swift in Sources */,
+				FD1B5FB3258479150098B96B /* ServiceDetailTableViewController.swift in Sources */,
+				FD1B5FC0258479150098B96B /* SearchResultsViewController.swift in Sources */,
+				FD1B5FB1258479150098B96B /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,
+				FD1B5FAD258479150098B96B /* Vessel.swift in Sources */,
+				FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */,
+				FD1B5FC3258479150098B96B /* ServiceStatusCell.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
-				FD5177F81A565ED500F4B6B0 /* WeatherAPIClient.swift in Sources */,
-				FD9432D919CD136F003BBD23 /* TimetablePreviewViewController.swift in Sources */,
-				FD1AA3691D978D1C003496B1 /* ServiceMapDelegate.swift in Sources */,
-				FD5E247E1C001BBE006B3E65 /* ServiceStatusCell.swift in Sources */,
-				FD9C66191A16D2390050D99F /* NSDate+extensions.swift in Sources */,
-				FD1464F51D97BE090087262D /* UIImage+extensions.swift in Sources */,
-				FD88609C1A6CDAFB0073D4D6 /* ServiceDetailWeatherCell.swift in Sources */,
-				FD73E9B51A55034600D617F5 /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
-				FD5FBF112519DD85004AB38A /* LastViewedServices.swift in Sources */,
-				FDCB33451A4BD6D1000033BC /* MapViewController.swift in Sources */,
-				FDE7F4661A205592002C12ED /* ServiceDetailTextOnlyCell.swift in Sources */,
+				FD1B5FC9258479150098B96B /* LastViewedServices.swift in Sources */,
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
-				FDE0814D1983B85800760870 /* ServiceDetailTableViewController.swift in Sources */,
-				FD709DAC1A2082DB00DBD247 /* WebInformationViewController.swift in Sources */,
-				FD59A3411A46989300AD276D /* ServiceDetailLoadingTableViewCell.swift in Sources */,
-				FD4B7C691A589C4000CCD5C5 /* LocationWeather.swift in Sources */,
-				FD90CEF719C3DEE1009E1D74 /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,
-				FD28D1611BFFF41500C6A075 /* SearchResultsViewController.swift in Sources */,
-				FD5E7DBB197A316F00F438F6 /* API.swift in Sources */,
-				FDAC1B671B3FDFE8000353EA /* Double+extensions.swift in Sources */,
-				FDF9807B1B50818000672393 /* Utility.swift in Sources */,
-				FDC34B5C1D97362200A12758 /* String+extensions.swift in Sources */,
-				FD05CF3F24F9D2D3001341E8 /* APIError.swift in Sources */,
+				FD1B5FAE258479150098B96B /* WeatherAPIClient.swift in Sources */,
+				FD1B5FAF258479150098B96B /* APIError.swift in Sources */,
+				FD1B5FB9258479150098B96B /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
+				FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */,
+				FD1B5FB0258479150098B96B /* API.swift in Sources */,
+				FD1B5FBF258479150098B96B /* TimetablePreviewViewController.swift in Sources */,
+				FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */,
+				FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

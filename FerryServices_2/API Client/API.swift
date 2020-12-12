@@ -8,61 +8,6 @@
 
 import Foundation
 
-struct Service: Decodable {
-    static let defaultServices: [Service] = {
-        do {
-            let defaultServicesFilePath = Bundle.main.path(forResource: "services", ofType: "json")!
-            let data = try Data(contentsOf: URL(fileURLWithPath: defaultServicesFilePath))
-            let services = try decoder.decode([Service].self, from: data)
-            return services.sorted(by: { $0.sortOrder < $1.sortOrder })
-        } catch let error {
-            fatalError("Unable to load default services: \(error)")
-        }
-    }()
-    
-    enum Status: Decodable {
-        case normal
-        case disrupted
-        case cancelled
-        case unknown
-        
-        init(from decoder: Decoder) throws {
-            let intValue = try decoder.singleValueContainer().decode(Int.self)
-            switch intValue {
-            case 0:
-                self = .normal
-            case 1:
-                self = .disrupted
-            case 2:
-                self = .cancelled
-            default:
-                self = .unknown
-            }
-        }
-    }
-    
-    struct Location: Decodable {
-        private enum CodingKeys: String, CodingKey {
-            case name, latitude, longitude
-        }
-        
-        let name: String
-        let latitude: Double
-        let longitude: Double
-    }
-    
-    let serviceId: Int
-    let sortOrder: Int
-    let status: Status
-    let area: String
-    let route: String
-    let disruptionReason: String?
-    let lastUpdatedDate: Date? // Time updated by Calmac
-    let updated: Date? // Time updated on server
-    let additionalInfo: String?
-    let locations: [Location]
-}
-
 class API {
     private struct CreateInstallationBody: Encodable {
         let deviceToken: String
@@ -150,7 +95,7 @@ class API {
                 switch response.statusCode {
                 case 200..<300:
                     do {
-                        let result = try decoder.decode(T.self, from: data)
+                        let result = try APIDecoder.shared.decode(T.self, from: data)
                         completion(.success(result))
                     } catch {
                         completion(.failure(error))
@@ -162,21 +107,3 @@ class API {
         }.resume()
     }
 }
-
-private let decoder: JSONDecoder = {
-    let decoder = JSONDecoder()
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
-    decoder.dateDecodingStrategy = .custom { dateDecoder in
-        let string = try dateDecoder.singleValueContainer().decode(String.self)
-        let dateFormatter = ISO8601DateFormatter()
-        
-        dateFormatter.formatOptions = [.withFractionalSeconds, .withInternetDateTime]
-        if let date = dateFormatter.date(from: string) {
-            return date
-        }
-        
-        dateFormatter.formatOptions = [.withInternetDateTime]
-        return dateFormatter.date(from: string)!
-    }
-    return decoder
-}()
