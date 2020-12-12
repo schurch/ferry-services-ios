@@ -118,12 +118,6 @@ extension Vessel {
     }
 }
 
-extension Vessel: Hashable {
-    var hashValue: Int {
-        return mmsi
-    }
-}
-
 func == (lhs: Vessel, rhs: Vessel) -> Bool {
     return lhs.mmsi == rhs.mmsi
 }
