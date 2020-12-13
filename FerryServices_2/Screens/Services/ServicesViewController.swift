@@ -10,13 +10,13 @@ import UIKit
 
 class ServicesViewController: UITableViewController {
     
-    private struct TableViewSections {
-        static let subscribed = 0
-        static let services = 1
+    struct Section {
+        let header: String?
+        let rows: [Service]
     }
     
-    private var arrayServices = Service.defaultServices
-    private var arraySubscribedServices = [Service]()
+    private var tableData: [Section] = ServicesViewController.generateTableData(from: Service.defaultServices)
+    private var services: [Service] = Service.defaultServices
     private var searchController: UISearchController!
     private var searchResultsController: SearchResultsViewController!
     
@@ -38,7 +38,7 @@ class ServicesViewController: UITableViewController {
         refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         searchResultsController = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultsController") as! SearchResultsViewController)
-        searchResultsController.arrayOfServices = Service.defaultServices
+        searchResultsController.arrayOfServices = services
         searchResultsController.didSelectService = { [weak self] service in
             self?.showDetails(for: service)
         }
@@ -61,7 +61,7 @@ class ServicesViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
         }
         
-        arraySubscribedServices = createSubscribedServices()
+        tableData = ServicesViewController.generateTableData(from: services)
         tableView.reloadData()
     }
     
@@ -79,41 +79,32 @@ class ServicesViewController: UITableViewController {
                 return
             }
 
-            self.arrayServices = services.sorted(by: { $0.sortOrder < $1.sortOrder })
-            self.arraySubscribedServices = self.createSubscribedServices()
-            self.searchResultsController.arrayOfServices = self.arrayServices
-
+            self.services = services.sorted(by: { $0.sortOrder < $1.sortOrder })
+            self.searchResultsController.arrayOfServices = self.services
+            self.tableData = ServicesViewController.generateTableData(from: self.services)
             self.tableView.reloadData()
         }
     }
     
     // MARK: - UITableViewDataSource
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return arraySubscribedServices.isEmpty ? 1 : 2
+        return tableData.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if arraySubscribedServices.isEmpty {
-            return nil
-        }
-        
-        return section == TableViewSections.subscribed ? "Subscribed" : "Services"
+        return tableData[section].header
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if arraySubscribedServices.isEmpty {
-            return arrayServices.count
-        }
-        
-        return section == TableViewSections.subscribed ? arraySubscribedServices.count : arrayServices.count
+        tableData[section].rows.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let serviceStatusCell = tableView.dequeueReusableCell(withIdentifier: "serviceStatusCellReuseId", for: indexPath) as! ServiceStatusCell
-        let serviceStatus = serviceForTableView(tableView, indexPath: indexPath)
-        serviceStatusCell.configureCellWithServiceStatus(serviceStatus)
+        let serviceCell = tableView.dequeueReusableCell(withIdentifier: "serviceStatusCellReuseId", for: indexPath) as! ServiceStatusCell
+        let service = tableData[indexPath.section].rows[indexPath.row]
+        serviceCell.configureCellWithServiceStatus(service)
         
-        return serviceStatusCell
+        return serviceCell
     }
     
     // MARK: - UITableViewDelegate
@@ -123,29 +114,28 @@ class ServicesViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let service = serviceForTableView(tableView, indexPath: indexPath)
+        let service = tableData[indexPath.section].rows[indexPath.row]
         showDetails(for: service)
     }
     
     // MARK: - Helpers
-    private func serviceForTableView(_ tableView: UITableView, indexPath: IndexPath) -> Service {
-        if arraySubscribedServices.isEmpty {
-            return arrayServices[indexPath.row]
+    private static func generateTableData(from services: [Service], userDefaults: UserDefaults = UserDefaults.standard) -> [Section] {
+        let subscribedServices = ServicesViewController.createSubscribedServices(from: services, userDefaults: userDefaults)
+        if subscribedServices.count > 0 {
+            return [Section(header: "Subscribed", rows: subscribedServices), Section(header: "Services", rows: services)]
+        } else {
+            return [Section(header: nil, rows: services)]
         }
-        
-        return indexPath.section == TableViewSections.subscribed
-            ? arraySubscribedServices[indexPath.row]
-            : arrayServices[indexPath.row]
     }
     
-    private func createSubscribedServices() -> [Service] {
-        guard let subscribedServiceIDs = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] else {
+    private static func createSubscribedServices(from services: [Service], userDefaults: UserDefaults) -> [Service] {
+        guard let subscribedServiceIDs = userDefaults.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] else {
             return []
         }
         
         return subscribedServiceIDs
             .map { serviceID in
-                self.arrayServices.first(where: { service in service.serviceId == serviceID })
+                services.first(where: { service in service.serviceId == serviceID })
             }
             .compactMap { $0 }
             .sorted(by: { $0.sortOrder < $1.sortOrder })
