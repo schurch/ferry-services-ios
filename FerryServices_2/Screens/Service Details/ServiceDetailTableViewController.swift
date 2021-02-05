@@ -109,7 +109,7 @@ class ServiceDetailTableViewController: UIViewController {
         self.alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), for: UIControl.Event.valueChanged)
         self.alertCell.configureLoading()
         
-        API.getInstallationServices(installationID: Installation.id) { [weak self] result in
+        APIClient.getInstallationServices(installationID: Installation.id) { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -261,7 +261,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     private func subscribeToService() {
-        API.addService(for: Installation.id, serviceID: service.serviceId) { [weak self] result in
+        APIClient.addService(for: Installation.id, serviceID: service.serviceId) { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -285,7 +285,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     private func unsubscribeFromService() {
-        API.removeService(for: Installation.id, serviceID: service.serviceId) { [weak self]  result in
+        APIClient.removeService(for: Installation.id, serviceID: service.serviceId) { [weak self]  result in
             guard let self = self else {
                 return
             }
@@ -407,7 +407,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func fetchLatestDisruptionData() {
-        API.fetchService(serviceID: service.serviceId) { result in
+        APIClient.fetchService(serviceID: service.serviceId) { result in
             guard case let .success(service) = result else { return }
             self.service = service
             self.refreshingDisruptionInfo = false

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class API {
+class APIClient {
     private struct CreateInstallationBody: Encodable {
         let deviceToken: String
         let deviceType = "IOS"
@@ -25,34 +25,34 @@ class API {
     private static let root = "/api"
     
     static func fetchServices(completion: @escaping (Result<[Service], Error>) -> ()){
-        let url = URL(string: "\(API.root)/services/", relativeTo: API.baseURL)!
+        let url = URL(string: "\(APIClient.root)/services/", relativeTo: APIClient.baseURL)!
         send(request: URLRequest(url: url), completion: completion)
     }
     
     static func fetchService(serviceID: Int, completion: @escaping (Result<Service, Error>) -> ()) {
-        let url = URL(string: "\(API.root)/services/\(serviceID)", relativeTo: API.baseURL)!
+        let url = URL(string: "\(APIClient.root)/services/\(serviceID)", relativeTo: APIClient.baseURL)!
         send(request: URLRequest(url: url), completion: completion)
     }
     
     static func createInstallation(installationID: UUID, deviceToken: String, completion: @escaping (Result<[Service], Error>) -> ()) {
-        let url = URL(string: "\(API.root)/installations/\(installationID)", relativeTo: API.baseURL)!
+        let url = URL(string: "\(APIClient.root)/installations/\(installationID)", relativeTo: APIClient.baseURL)!
         let request = createRequest(with: url, body: CreateInstallationBody(deviceToken: deviceToken))
         send(request: request, completion: completion)
     }
     
     static func getInstallationServices(installationID: UUID, completion: @escaping (Result<[Service], Error>) -> ()) {
-        let url = URL(string: "\(API.root)/installations/\(installationID)/services", relativeTo: API.baseURL)!
+        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
         send(request: URLRequest(url: url), completion: completion)
     }
     
     static func addService(for installationID: UUID, serviceID: Int, completion: @escaping (Result<[Service], Error>) -> ()) {
-        let url = URL(string: "\(API.root)/installations/\(installationID)/services", relativeTo: API.baseURL)!
+        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
         let request = createRequest(with: url, body: CreateInstallationServiceBody(serviceID: serviceID))
         send(request: request, completion: completion)
     }
     
     static func removeService(for installationID: UUID, serviceID: Int, completion: @escaping (Result<[Service], Error>) -> ()) {
-        let url = URL(string: "\(API.root)/installations/\(installationID)/services/\(serviceID)", relativeTo: API.baseURL)!
+        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services/\(serviceID)", relativeTo: APIClient.baseURL)!
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
         

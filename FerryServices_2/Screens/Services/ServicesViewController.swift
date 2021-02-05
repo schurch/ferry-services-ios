@@ -72,7 +72,7 @@ class ServicesViewController: UITableViewController {
     
     // MARK: - Refresh
     @objc func refresh() {
-        API.fetchServices { result in
+        APIClient.fetchServices { result in
             self.refreshControl?.endRefreshing()
             
             guard case let .success(services) = result else {
