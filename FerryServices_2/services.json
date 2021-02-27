@@ -698,6 +698,17 @@
     "service_id": 39,
     "updated": "2020-08-28T02:11:48.341768Z",
     "sort_order": 29,
-    "locations": []
+    "locations": [
+        {
+            "latitude": 55.984704635223416,
+            "name": "Kilcreggan",
+            "longitude": -4.820426740646081
+        },
+        {
+            "latitude": 55.959938,
+            "name": "Gourock",
+            "longitude": -4.814372
+        }
+    ]
   }
 ]
