@@ -365,12 +365,12 @@ class ServiceDetailTableViewController: UIViewController {
         }
 
 //        summer timetable
-//        if isSummerTimetableAvailable() {
-//            let summerTimetableRow: Row = Row.basic(title: "Summer timetable", subtitle: nil, viewControllerGenerator: { [unowned self] in
-//                self.pdfTimeTableViewController(self.summerPath(), title: "Summer timetable")
-//            })
-//            timetableRows.append(summerTimetableRow)
-//        }
+        if isSummerTimetableAvailable() {
+            let summerTimetableRow: Row = Row.basic(title: "Summer 2021", subtitle: nil, viewControllerGenerator: { [unowned self] in
+                self.pdfTimeTableViewController(self.summerPath(), title: "Summer timetable")
+            })
+            timetableRows.append(summerTimetableRow)
+        }
 
         if timetableRows.count > 0 {
             let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
@@ -450,7 +450,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     fileprivate func summerPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2019/Summer/\(service.serviceId).pdf")
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2021/Summer/\(service.serviceId).pdf")
     }
     
     fileprivate func pdfTimeTableViewController(_ path: String, title: String) -> UIViewController {
@@ -645,7 +645,7 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel!.textColor = UIColor(named: "Text")
+        header.textLabel?.textColor = UIColor(named: "Text")
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
