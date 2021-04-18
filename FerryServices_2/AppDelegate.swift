@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         // Configure push notifications
         UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { granted, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
             DispatchQueue.main.async {
                 if (granted) {
                     UIApplication.shared.registerForRemoteNotifications()
