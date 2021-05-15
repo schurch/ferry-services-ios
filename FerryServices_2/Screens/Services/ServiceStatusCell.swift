@@ -12,32 +12,14 @@ class ServiceStatusCell: UITableViewCell {
     
     static let reuseID = "serviceStatusCellReuseId"
     
-    @IBOutlet weak var constraintTitleLeadingSpace: NSLayoutConstraint!
-    @IBOutlet weak var imageViewStatus: UIImageView!
+    @IBOutlet weak var circleView: CircleView!
     @IBOutlet weak var labelSubtitle: UILabel!
     @IBOutlet weak var labelTitle: UILabel!
     
-    func configureCellWithServiceStatus(_ serviceStatus: Service) {
-        self.labelTitle.text = serviceStatus.area
-        self.labelSubtitle.text = serviceStatus.route
-        
-        switch serviceStatus.status {
-        case .normal:
-            self.imageViewStatus.image = UIImage(named: "green")
-        case .disrupted:
-            self.imageViewStatus.image = UIImage(named: "amber")
-        case .cancelled:
-            self.imageViewStatus.image = UIImage(named: "red")
-        case .unknown:
-            self.imageViewStatus.image = UIImage(named: "grey")
-        }
-        
-        if self.imageViewStatus.image == nil {
-            self.constraintTitleLeadingSpace.constant = self.layoutMargins.left
-        }
-        else {
-            self.constraintTitleLeadingSpace.constant = 42
-        }
+    func configureCellWithService(_ service: Service) {
+        labelTitle.text = service.area
+        labelSubtitle.text = service.route
+        circleView.backgroundColor = service.status.color
     }
     
 }

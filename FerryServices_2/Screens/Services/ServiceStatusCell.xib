@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,44 +13,44 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="62"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kRQ-cY-7yZ" id="yc1-tZ-T8D">
-                <rect key="frame" x="0.0" y="0.0" width="569" height="62"/>
+                <rect key="frame" x="0.0" y="0.0" width="570.5" height="62"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wxr-cG-5E4">
-                        <rect key="frame" x="48" y="8" width="517" height="27"/>
+                        <rect key="frame" x="59" y="8" width="507.5" height="30.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ab-aS-38W">
-                        <rect key="frame" x="48" y="38" width="517" height="16"/>
+                        <rect key="frame" x="59" y="39.5" width="507.5" height="14.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xgm-qz-JM0">
-                        <rect key="frame" x="11" y="19" width="24" height="24"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpR-Mj-uER" customClass="CircleView" customModule="FerryServices_2" customModuleProvider="target">
+                        <rect key="frame" x="20" y="19" width="24" height="24"/>
+                        <color key="backgroundColor" systemColor="systemPinkColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="24" id="Usa-zm-zrF"/>
-                            <constraint firstAttribute="height" constant="24" id="oFv-qj-vwq"/>
+                            <constraint firstAttribute="height" constant="24" id="boF-HQ-uD2"/>
+                            <constraint firstAttribute="width" constant="24" id="kK6-AX-Ao5"/>
                         </constraints>
-                    </imageView>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="9ab-aS-38W" secondAttribute="trailing" constant="4" id="82n-sN-DYQ"/>
-                    <constraint firstItem="wxr-cG-5E4" firstAttribute="leading" secondItem="yc1-tZ-T8D" secondAttribute="leading" constant="48" id="EP0-Pa-ISz"/>
-                    <constraint firstItem="9ab-aS-38W" firstAttribute="firstBaseline" secondItem="wxr-cG-5E4" secondAttribute="baseline" constant="20" symbolType="layoutAnchor" id="FfM-sf-h3y"/>
+                    <constraint firstItem="9ab-aS-38W" firstAttribute="firstBaseline" secondItem="wxr-cG-5E4" secondAttribute="baseline" constant="16" symbolType="layoutAnchor" id="FfM-sf-h3y"/>
                     <constraint firstAttribute="bottom" secondItem="9ab-aS-38W" secondAttribute="bottom" constant="8" id="M5K-vx-x9F"/>
+                    <constraint firstItem="XpR-Mj-uER" firstAttribute="leading" secondItem="yc1-tZ-T8D" secondAttribute="leadingMargin" id="MaI-jF-peA"/>
                     <constraint firstItem="wxr-cG-5E4" firstAttribute="top" secondItem="yc1-tZ-T8D" secondAttribute="top" constant="8" id="YNo-Tf-9iI"/>
-                    <constraint firstAttribute="centerY" secondItem="xgm-qz-JM0" secondAttribute="centerY" id="c8O-Dh-9LC"/>
                     <constraint firstItem="wxr-cG-5E4" firstAttribute="leading" secondItem="9ab-aS-38W" secondAttribute="leading" id="ckq-ar-D3G"/>
-                    <constraint firstItem="xgm-qz-JM0" firstAttribute="leading" secondItem="yc1-tZ-T8D" secondAttribute="leading" constant="11" id="vBO-41-bcQ"/>
+                    <constraint firstItem="wxr-cG-5E4" firstAttribute="leading" secondItem="XpR-Mj-uER" secondAttribute="trailing" constant="15" id="rSd-Mk-XmL"/>
+                    <constraint firstItem="XpR-Mj-uER" firstAttribute="centerY" secondItem="yc1-tZ-T8D" secondAttribute="centerY" id="scR-Le-bKF"/>
                     <constraint firstAttribute="trailing" secondItem="wxr-cG-5E4" secondAttribute="trailing" constant="4" id="x1E-PL-vCX"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
             <connections>
-                <outlet property="constraintTitleLeadingSpace" destination="EP0-Pa-ISz" id="6YT-9d-UaW"/>
-                <outlet property="imageViewStatus" destination="xgm-qz-JM0" id="yWu-hf-RYk"/>
+                <outlet property="circleView" destination="XpR-Mj-uER" id="Fyc-MR-gdn"/>
                 <outlet property="labelSubtitle" destination="9ab-aS-38W" id="fdL-99-BLl"/>
                 <outlet property="labelTitle" destination="wxr-cG-5E4" id="yI9-gJ-t0F"/>
             </connections>
@@ -64,6 +64,9 @@
         </systemColor>
         <systemColor name="secondarySystemGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

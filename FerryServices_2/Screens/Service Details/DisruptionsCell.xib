@@ -16,15 +16,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="600" height="82"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YaS-9t-96x">
-                        <rect key="frame" x="13" y="17" width="24" height="24"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="24" id="1sJ-6f-iju"/>
-                            <constraint firstAttribute="width" constant="24" id="I6h-Ws-JJq"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="There is a disruption with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oUP-Fa-M1A" userLabel="Label - Disruption details">
-                        <rect key="frame" x="51" y="12" width="483" height="39"/>
+                        <rect key="frame" x="59" y="12" width="483" height="36"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="249" id="een-VY-Cj0"/>
                         </constraints>
@@ -37,17 +30,17 @@
                         </variation>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWy-Zc-Kln">
-                        <rect key="frame" x="51" y="53" width="52" height="17"/>
+                        <rect key="frame" x="59" y="53" width="52" height="17"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="adverse weather" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avP-up-Xz5">
-                        <rect key="frame" x="111" y="53.5" width="100.5" height="16"/>
+                        <rect key="frame" x="119" y="53" width="107" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="175" id="n1M-qL-REi"/>
                             <constraint firstAttribute="height" constant="21" id="tx0-NR-29I"/>
                         </constraints>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                         <variation key="default">
@@ -58,7 +51,7 @@
                         </variation>
                     </label>
                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQT-RL-17a">
-                        <rect key="frame" x="550" y="30" width="22" height="22"/>
+                        <rect key="frame" x="558" y="30" width="22" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="Fai-Xo-Xva"/>
                             <constraint firstAttribute="height" constant="22" id="rz1-S1-gaJ"/>
@@ -67,25 +60,33 @@
                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ru0-zE-33U" customClass="CircleView" customModule="FerryServices_2" customModuleProvider="target">
+                        <rect key="frame" x="20" y="17" width="24" height="24"/>
+                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="RqM-0w-YNb"/>
+                            <constraint firstAttribute="height" constant="24" id="YG4-Du-viq"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="oUP-Fa-M1A" firstAttribute="leading" secondItem="YaS-9t-96x" secondAttribute="trailing" constant="14" id="6AC-6d-ke1"/>
-                    <constraint firstItem="YaS-9t-96x" firstAttribute="leading" secondItem="fdL-5i-bb3" secondAttribute="leading" constant="13" id="I7A-AW-R8C"/>
+                    <constraint firstItem="rWy-Zc-Kln" firstAttribute="leading" secondItem="oUP-Fa-M1A" secondAttribute="leading" id="Iyd-5M-raa"/>
+                    <constraint firstItem="Ru0-zE-33U" firstAttribute="leading" secondItem="fdL-5i-bb3" secondAttribute="leadingMargin" id="Nlr-3m-LEo"/>
                     <constraint firstItem="avP-up-Xz5" firstAttribute="leading" secondItem="rWy-Zc-Kln" secondAttribute="trailing" constant="8" id="Np8-Q6-3vG"/>
                     <constraint firstItem="EQT-RL-17a" firstAttribute="leading" secondItem="oUP-Fa-M1A" secondAttribute="trailing" constant="16" id="R1h-0o-DkC"/>
                     <constraint firstItem="oUP-Fa-M1A" firstAttribute="top" secondItem="fdL-5i-bb3" secondAttribute="top" constant="12" id="WDV-nf-5pz"/>
                     <constraint firstAttribute="centerY" secondItem="EQT-RL-17a" secondAttribute="centerY" id="XSc-lq-rgm"/>
                     <constraint firstItem="avP-up-Xz5" firstAttribute="centerY" secondItem="rWy-Zc-Kln" secondAttribute="centerY" id="ZlG-8B-opf"/>
-                    <constraint firstItem="rWy-Zc-Kln" firstAttribute="leading" secondItem="fdL-5i-bb3" secondAttribute="leading" constant="51" id="bdy-36-4bR"/>
-                    <constraint firstItem="rWy-Zc-Kln" firstAttribute="top" secondItem="oUP-Fa-M1A" secondAttribute="bottom" constant="2" id="hl5-9u-oym"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="EQT-RL-17a" secondAttribute="trailing" constant="8" id="mM2-dr-TEE"/>
-                    <constraint firstItem="YaS-9t-96x" firstAttribute="top" secondItem="oUP-Fa-M1A" secondAttribute="top" constant="5" id="ogX-IE-w5P"/>
+                    <constraint firstItem="Ru0-zE-33U" firstAttribute="top" secondItem="oUP-Fa-M1A" secondAttribute="top" constant="5" id="bv6-eb-jJ1"/>
+                    <constraint firstItem="rWy-Zc-Kln" firstAttribute="top" secondItem="oUP-Fa-M1A" secondAttribute="bottom" constant="5" id="hl5-9u-oym"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="EQT-RL-17a" secondAttribute="trailing" id="mM2-dr-TEE"/>
+                    <constraint firstItem="oUP-Fa-M1A" firstAttribute="leading" secondItem="Ru0-zE-33U" secondAttribute="trailing" constant="15" id="rNc-lq-aiZ"/>
                     <constraint firstAttribute="bottom" secondItem="rWy-Zc-Kln" secondAttribute="bottom" constant="12" id="sTg-Ij-qdE"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
             <connections>
-                <outlet property="imageViewDisruption" destination="YaS-9t-96x" id="t54-j5-e60"/>
+                <outlet property="circleView" destination="Ru0-zE-33U" id="hKS-RG-TU9"/>
                 <outlet property="labelDisruptionDetails" destination="oUP-Fa-M1A" id="edI-Ss-CDv"/>
                 <outlet property="labelReason" destination="avP-up-Xz5" id="eKP-Ti-Igp"/>
                 <outlet property="labelReasonTitle" destination="rWy-Zc-Kln" id="kMd-pq-SMC"/>
@@ -100,6 +101,9 @@
         </systemColor>
         <systemColor name="secondarySystemGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

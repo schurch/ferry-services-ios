@@ -13,6 +13,13 @@ class ServiceDetailNoDisruptionTableViewCell: UITableViewCell {
     @IBOutlet weak var buttonInfo: UIButton!
     @IBOutlet weak var constraintButtonWidth: NSLayoutConstraint!
     @IBOutlet weak var labelNoDisruptions: UILabel!
+    @IBOutlet weak var circleView: CircleView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        circleView.backgroundColor = UIColor(named: "Green")
+    }
     
     func configureWithService(_ service: Service?) {
         if service?.additionalInfo != nil {

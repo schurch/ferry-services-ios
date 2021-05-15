@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */; };
 		F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3CB36264F841100D2E4AE /* CircleView.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1B5FAC258479150098B96B /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F84258479150098B96B /* LocationWeather.swift */; };
@@ -103,6 +104,7 @@
 
 /* Begin PBXFileReference section */
 		02D9493F193C4A87EAD799AC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+Extensions.swift"; sourceTree = "<group>"; };
 		F8A3CB36264F841100D2E4AE /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1B5F84258479150098B96B /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				FD1B5F98258479150098B96B /* Map */,
 				FD1B5F9A258479150098B96B /* Web Information */,
 				FD1B5F9C258479150098B96B /* Timetable Preview */,
+				F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				FD1B5FCE2584794E0098B96B /* Service.swift in Sources */,
 				FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */,
 				FD1B5FB8258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */,
+				F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */,
 				FD1B5FC2258479150098B96B /* ServicesViewController.swift in Sources */,
 				FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */,
 				F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */,

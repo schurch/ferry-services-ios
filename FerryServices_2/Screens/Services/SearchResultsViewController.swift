@@ -79,8 +79,8 @@ extension SearchResultsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let serviceStatusCell = tableView.dequeueReusableCell(withIdentifier: ServiceStatusCell.reuseID, for: indexPath) as! ServiceStatusCell
-        let serviceStatus = arrayOfFilteredServices[indexPath.row]
-        serviceStatusCell.configureCellWithServiceStatus(serviceStatus)
+        let service = arrayOfFilteredServices[indexPath.row]
+        serviceStatusCell.configureCellWithService(service)
         
         return serviceStatusCell
     }

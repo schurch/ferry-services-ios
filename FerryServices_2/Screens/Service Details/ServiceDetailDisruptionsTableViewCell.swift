@@ -10,7 +10,7 @@ import UIKit
 
 class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     
-    @IBOutlet var imageViewDisruption :UIImageView!
+    @IBOutlet var circleView: CircleView!
     @IBOutlet var labelDisruptionDetails: UILabel!
     @IBOutlet var labelReason: UILabel!
     @IBOutlet var labelReasonTitle: UILabel!
@@ -21,16 +21,8 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
         } else {
             labelDisruptionDetails.text = "There are disruptions with this service"
         }
-        
-        switch service.status {
-        case .disrupted:
-            imageViewDisruption.image = UIImage(named: "amber")
-        case .cancelled:
-            imageViewDisruption.image = UIImage(named: "red")
-        default:
-            imageViewDisruption.image = nil
-        }
-        
+
+        circleView.backgroundColor = service.status.color
         labelReason.text = service.disruptionReason?.capitalized
     }
 }

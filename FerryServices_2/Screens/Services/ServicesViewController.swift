@@ -102,7 +102,7 @@ class ServicesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let serviceCell = tableView.dequeueReusableCell(withIdentifier: "serviceStatusCellReuseId", for: indexPath) as! ServiceStatusCell
         let service = tableData[indexPath.section].rows[indexPath.row]
-        serviceCell.configureCellWithServiceStatus(service)
+        serviceCell.configureCellWithService(service)
         
         return serviceCell
     }
