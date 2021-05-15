@@ -8,9 +8,6 @@
 
 import UIKit
 import MapKit
-import QuickLook
-
-typealias ViewControllerGenerator = () -> UIViewController?
 
 class ServiceDetailTableViewController: UIViewController {
     
@@ -19,22 +16,18 @@ class ServiceDetailTableViewController: UIViewController {
         var footer: String?
         var rows: [Row]
         
-        var showHeader: Bool
-        var showFooter: Bool
-        
         init (title: String?, footer: String?, rows: [Row]) {
             self.title = title
             self.footer = footer
             self.rows = rows
-            self.showHeader = true
-            self.showFooter =  true
         }
     }
     
     enum Row {
-        case basic(title: String, subtitle: String?, viewControllerGenerator: ViewControllerGenerator)
-        case disruption(service: Service, viewControllerGenerator: ViewControllerGenerator)
-        case noDisruption(service: Service, viewControllerGenerator: ViewControllerGenerator)
+        case winterTimetable
+        case summerTimetable
+        case disruption
+        case noDisruption
         case loading
         case textOnly(text: String)
         case weather(index: Int)
@@ -68,7 +61,6 @@ class ServiceDetailTableViewController: UIViewController {
     
     var alertCell: ServiceDetailReceiveAlertCellTableViewCell = UINib(nibName: "AlertCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
     
-    let isRegisteredForNotifications = UserDefaults.standard.bool(forKey: UserDefaultsKeys.registeredForNotifications)
     var mapViewDelegate: ServiceMapDelegate?
     var dataSource: [Section] = []
     var headerHeight: CGFloat?
@@ -89,25 +81,23 @@ class ServiceDetailTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = self.service.area
+        title = service.area
         
         navigationItem.largeTitleDisplayMode = .never
         
         weather = service.locations.map { _ in nil }
         
-        self.labelArea.text = self.service.area
-        self.labelRoute.text = self.service.route
+        labelArea.text = service.area
+        labelRoute.text = service.route
         
         NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailTableViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         LastViewedServices.register(service)
         
-        // configure tableview
-        self.tableView.contentInset = UIEdgeInsets.init(top: MainStoryBoard.Constants.contentInset, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets.init(top: MainStoryBoard.Constants.contentInset, left: 0, bottom: 0, right: 0)
         
-        // alert cell
-        self.alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), for: UIControl.Event.valueChanged)
-        self.alertCell.configureLoading()
+        alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), for: UIControl.Event.valueChanged)
+        alertCell.configureLoading()
         
         APIClient.getInstallationServices(installationID: Installation.id) { [weak self] result in
             guard let self = self else {
@@ -141,22 +131,22 @@ class ServiceDetailTableViewController: UIViewController {
         vertiacalMotionEffect.minimumRelativeValue = -MainStoryBoard.Constants.motionEffectAmount
         vertiacalMotionEffect.maximumRelativeValue = MainStoryBoard.Constants.motionEffectAmount
         
-        self.mapMotionEffect = UIMotionEffectGroup()
-        self.mapMotionEffect.motionEffects = [horizontalMotionEffect, vertiacalMotionEffect]
-        self.mapView.addMotionEffect(self.mapMotionEffect)
+        mapMotionEffect = UIMotionEffectGroup()
+        mapMotionEffect.motionEffects = [horizontalMotionEffect, vertiacalMotionEffect]
+        mapView.addMotionEffect(mapMotionEffect)
         
         // extend edges of map as motion effect will move them
-        self.constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
-        self.constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
-        self.constraintMapViewTop.constant = -MainStoryBoard.Constants.motionEffectAmount
+        constraintMapViewLeading.constant = -MainStoryBoard.Constants.motionEffectAmount
+        constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
+        constraintMapViewTop.constant = -MainStoryBoard.Constants.motionEffectAmount
         
         mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: service.locations)
         mapViewDelegate?.shouldAllowAnnotationSelection = false
         mapView.delegate = mapViewDelegate
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(touchedButtonShowMap(_:)))
-        self.tableView.backgroundView = UIView()
-        self.tableView.backgroundView?.addGestureRecognizer(tap)
+        tableView.backgroundView = UIView()
+        tableView.backgroundView?.addGestureRecognizer(tap)
         
         let backgroundViewFrame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         
@@ -164,28 +154,31 @@ class ServiceDetailTableViewController: UIViewController {
         viewBackground.backgroundColor = UIColor(named: "Background")
         view.insertSubview(viewBackground, belowSubview: tableView)
         
-        self.tableView.backgroundColor = UIColor.clear
+        tableView.backgroundColor = UIColor.clear
         
-        self.tableView.register(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
-        self.tableView.register(UINib(nibName: "NoDisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
-        self.tableView.register(UINib(nibName: "TextOnlyCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell)
-        self.tableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.weatherCell)
+        tableView.register(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
+        tableView.register(UINib(nibName: "NoDisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell)
+        tableView.register(UINib(nibName: "TextOnlyCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.textOnlyCell)
+        tableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.weatherCell)
         
-        self.initializeTable()
-        self.refresh()
+        tableView.rowHeight = UITableView.automaticDimension;
+        tableView.estimatedRowHeight = 44.0;
+        
+        initializeTable()
+        refresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // clip bounds so map doesn't expand over the edges when we animated to/from view
-        self.view.clipsToBounds = true
+        view.clipsToBounds = true
         
-        if let selectedIndexPath = self.tableView.indexPathForSelectedRow {
-            self.tableView.deselectRow(at: selectedIndexPath, animated: true)
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedIndexPath, animated: true)
         }
         
-        self.windAnimationTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(ServiceDetailTableViewController.animateWindVanes), userInfo: nil, repeats: true)
+        windAnimationTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(ServiceDetailTableViewController.animateWindVanes), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -200,35 +193,30 @@ class ServiceDetailTableViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         // clip bounds so map doesn't expand over the edges when we animated to/from view
-        self.view.clipsToBounds = true
+        view.clipsToBounds = true
         
-        self.windAnimationTimer.invalidate()
+        windAnimationTimer.invalidate()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if self.headerHeight == nil {
-            // Configure the headerview once we know we know the size of the view
-            self.labelArea.preferredMaxLayoutWidth = self.view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
-            self.labelRoute.preferredMaxLayoutWidth = self.view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
-            
-            self.tableView.tableHeaderView!.setNeedsLayout()
-            self.tableView.tableHeaderView!.layoutIfNeeded()
-            let headerHeight = self.tableView.tableHeaderView!.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            self.tableView.tableHeaderView!.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: headerHeight)
-            
-            var frame = viewBackground.frame
-            frame.origin.y = -tableView.contentOffset.y + headerHeight
-            viewBackground.frame = frame
-            
-            self.headerHeight = headerHeight
+        if headerHeight == nil {
+            configureHeader()
         }
         
         if !mapRectSet {
             // Need to do this at this point as we need to know the size of the view to calculate the rect that is shown
             setMapVisibleRect()
             mapRectSet = true
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if previousTraitCollection?.preferredContentSizeCategory != traitCollection.preferredContentSizeCategory {
+            configureHeader()
         }
     }
     
@@ -243,21 +231,43 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     @objc func applicationDidBecomeActive(_ notification: Notification) {
-        self.refresh()
+        refresh()
     }
     
     // MARK: - ui actions
     @IBAction func touchedButtonShowMap(_ sender: UIButton) {
-        show(mapViewController(), sender: self)
+        let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
+        mapViewController.title = service.route
+        mapViewController.locations = service.locations
+        
+        show(mapViewController, sender: self)
     }
     
-    @objc func alertSwitchChanged(_ switchState: UISwitch) {
-        self.alertCell.configureLoading()
+    @objc private func alertSwitchChanged(_ switchState: UISwitch) {
+        alertCell.configureLoading()
         if switchState.isOn {
             subscribeToService()
         } else {
             unsubscribeFromService()
         }
+    }
+    
+    private func configureHeader() {
+        labelArea.preferredMaxLayoutWidth = view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
+        labelRoute.preferredMaxLayoutWidth = view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
+        
+        tableView.tableHeaderView!.setNeedsLayout()
+        tableView.tableHeaderView!.layoutIfNeeded()
+        let headerHeight = tableView.tableHeaderView!.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        tableView.tableHeaderView!.frame = CGRect(x: 0, y: 0, width: view.bounds.size.width, height: headerHeight)
+        
+        var frame = viewBackground.frame
+        frame.origin.y = -tableView.contentOffset.y + headerHeight
+        viewBackground.frame = frame
+        
+        self.headerHeight = headerHeight
+        
+        tableView.reloadData()
     }
     
     private func subscribeToService() {
@@ -309,68 +319,44 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     // MARK: - refresh
-    func refresh() {
-        self.fetchLatestWeatherData()
-        self.fetchLatestDisruptionData()
+    private func refresh() {
+        fetchLatestWeatherData()
+        fetchLatestDisruptionData()
     }
     
     // MARK: - Datasource generation
-    fileprivate func generateDatasource() {
+    private func generateDatasource() {
         var sections = [Section]()
         
-        //disruption section
-        let disruptionRow: Row
-        var footer: String?
-        
-        if refreshingDisruptionInfo {
-            disruptionRow = Row.loading
-        } else {
-            switch service.status {
-            case .normal:
-                if let additionalInfo = service.additionalInfo {
-                    disruptionRow = Row.noDisruption(service: service, viewControllerGenerator: { [unowned self] in
-                        return self.webInfoViewController("Additional info", content: additionalInfo)
-                    })
+        let disruptionRow: Row = {
+            if refreshingDisruptionInfo {
+                return Row.loading
+            } else {
+                switch service.status {
+                case .normal:
+                    return Row.noDisruption
+                case .disrupted, .cancelled:
+                    return Row.disruption
+                case .unknown:
+                    return Row.textOnly(text: "Unable to fetch the disruption status for this service.")
                 }
-                else {
-                    disruptionRow = Row.noDisruption(service: service, viewControllerGenerator: { return nil })
-                }
-            case .disrupted, .cancelled:
-                footer = service.lastUpdated
-                disruptionRow = Row.disruption(service: service, viewControllerGenerator: { [unowned self] in
-                    if let additionalInfo = self.service.additionalInfo {
-                        return self.webInfoViewController("Disruption information", content:additionalInfo)
-                    } else {
-                        return nil
-                    }
-                })
-            case .unknown:
-                disruptionRow = Row.textOnly(text: "Unable to fetch the disruption status for this service.")
             }
-            
-        }
+        }()
         
-        let disruptionRows = isRegisteredForNotifications ? [disruptionRow, Row.alert] : [disruptionRow]
+        sections.append(
+            Section(
+                title: nil,
+                footer: [.disrupted, .cancelled].contains(service.status) ? service.lastUpdated : nil,
+                rows: UserDefaults.standard.bool(forKey: UserDefaultsKeys.registeredForNotifications)
+                    ? [disruptionRow, Row.alert]
+                    : [disruptionRow]
+            )
+        )
         
-        sections.append(Section(title: nil, footer: footer, rows: disruptionRows))
-        
-        var timetableRows = [Row]()
-
-//        winter timetable
-        if isWinterTimetableAvailable() {
-            let winterTimetableRow: Row = Row.basic(title: "Winter 2020–2021", subtitle: nil, viewControllerGenerator: { [unowned self] in
-                return self.pdfTimeTableViewController(self.winterPath(), title: "Winter timetable")
-            })
-            timetableRows.append(winterTimetableRow)
-        }
-
-//        summer timetable
-        if isSummerTimetableAvailable() {
-            let summerTimetableRow: Row = Row.basic(title: "Summer 2021", subtitle: nil, viewControllerGenerator: { [unowned self] in
-                self.pdfTimeTableViewController(self.summerPath(), title: "Summer timetable")
-            })
-            timetableRows.append(summerTimetableRow)
-        }
+        let timetableRows = [
+            FileManager.default.fileExists(atPath: service.winterPath) ? Row.winterTimetable : nil,
+            FileManager.default.fileExists(atPath: service.summerPath) ? Row.summerTimetable : nil
+        ].compactMap({$0})
 
         if timetableRows.count > 0 {
             let timetableSection = Section(title: "Timetables", footer: nil, rows: timetableRows)
@@ -382,31 +368,30 @@ class ServiceDetailTableViewController: UIViewController {
             sections.append(Section(title: location.name, footer: nil, rows: [.weather(index: index)]))
         }
         
-        self.dataSource = sections
+        dataSource = sections
     }
     
     // MARK: - Utility methods
-    @objc func animateWindVanes() {
-        for cell in self.tableView.visibleCells {
-            if let weatherCell = cell as? ServiceDetailWeatherCell {
-                let randomDelay = Double(arc4random_uniform(4))
-                delay(randomDelay) {
-                    weatherCell.tryAnimateWindArrow()
-                }
+    @objc private func animateWindVanes() {
+        for cell in tableView.visibleCells {
+            guard let weatherCell = cell as? ServiceDetailWeatherCell else { continue }
+            let randomDelay = Double(arc4random_uniform(4))
+            delay(randomDelay) {
+                weatherCell.tryAnimateWindArrow()
             }
         }
     }
     
-    fileprivate func initializeTable() {
-        self.generateDatasource()
-        self.tableView.reloadData()
+    private func initializeTable() {
+        generateDatasource()
+        tableView.reloadData()
         
-        var backgroundViewFrame = self.viewBackground.frame
-        backgroundViewFrame.size.height = self.tableView.contentSize.height + (UIScreen.main.bounds.size.height)
-        self.viewBackground.frame = backgroundViewFrame
+        var backgroundViewFrame = viewBackground.frame
+        backgroundViewFrame.size.height = tableView.contentSize.height + (UIScreen.main.bounds.size.height)
+        viewBackground.frame = backgroundViewFrame
     }
     
-    fileprivate func fetchLatestDisruptionData() {
+    private func fetchLatestDisruptionData() {
         APIClient.fetchService(serviceID: service.serviceId) { result in
             guard case let .success(service) = result else { return }
             self.service = service
@@ -416,7 +401,7 @@ class ServiceDetailTableViewController: UIViewController {
         }
     }
     
-    fileprivate func fetchLatestWeatherData() {
+    private func fetchLatestWeatherData() {
         for (index, location) in service.locations.enumerated() {
             WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] result in
                 guard let self = self else { return }
@@ -437,23 +422,7 @@ class ServiceDetailTableViewController: UIViewController {
         }
     }
     
-    fileprivate func isWinterTimetableAvailable() -> Bool {
-        return FileManager.default.fileExists(atPath: winterPath())
-    }
-    
-    fileprivate func isSummerTimetableAvailable() -> Bool {
-        return FileManager.default.fileExists(atPath: summerPath())
-    }
-    
-    fileprivate func winterPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2020/Winter/\(service.serviceId).pdf")
-    }
-    
-    fileprivate func summerPath() -> String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2021/Summer/\(service.serviceId).pdf")
-    }
-    
-    fileprivate func pdfTimeTableViewController(_ path: String, title: String) -> UIViewController {
+    private func pdfTimeTableViewController(_ path: String, title: String) -> UIViewController {
         let previewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TimetablePreview") as! TimetablePreviewViewController
         previewViewController.service = service
         previewViewController.url = URL(fileURLWithPath: path)
@@ -462,22 +431,14 @@ class ServiceDetailTableViewController: UIViewController {
         return previewViewController
     }
     
-    fileprivate func mapViewController() -> UIViewController {
-        let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
-        mapViewController.title = service.route
-        mapViewController.locations = service.locations
-        
-        return mapViewController
-    }
-    
-    fileprivate func webInfoViewController(_ title: String, content: String) -> UIViewController {
+    private func webInfoViewController(_ title: String, content: String) -> UIViewController {
         let disruptionViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebInformation") as! WebInformationViewController
         disruptionViewController.title = title
         disruptionViewController.html = content
         return disruptionViewController
     }
     
-    fileprivate func setMapVisibleRect() {
+    private func setMapVisibleRect() {
         guard let mapViewDelegate = mapViewDelegate else { return }
         
         let rect = calculateMapRectForAnnotations(mapViewDelegate.portAnnotations)
@@ -489,7 +450,7 @@ class ServiceDetailTableViewController: UIViewController {
         mapView.setVisibleMapRect(visibleRect, animated: false)
     }
     
-    fileprivate func addServiceIdToSubscribedList() {
+    private func addServiceIdToSubscribedList() {
         var currentServiceIds = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? [Int]()
         
         if let existingServiceId = currentServiceIds.filter({ $0 == service.serviceId }).first {
@@ -504,7 +465,7 @@ class ServiceDetailTableViewController: UIViewController {
         UserDefaults.standard.synchronize()
     }
     
-    fileprivate func removeServiceIdFromSubscribedList() {
+    private func removeServiceIdFromSubscribedList() {
         var currentServiceIds = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? [Int]()
         
         if let existingServiceId = currentServiceIds.filter({ $0 == service.serviceId }).first {
@@ -537,96 +498,77 @@ extension ServiceDetailTableViewController: UITableViewDataSource {
         let row = dataSource[indexPath.section].rows[indexPath.row]
         
         switch row {
-        case let .basic(title, subtitle, viewControllerGenerator):
+        case .winterTimetable:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.basicCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-            cell.textLabel!.text = title
-            
-            if let subtitle = subtitle {
-                cell.detailTextLabel!.text = subtitle
-            }
-            else {
-                cell.detailTextLabel!.text = ""
-            }
-            
-            let shouldHideDisclosure = viewControllerGenerator() == nil
-            cell.accessoryType = shouldHideDisclosure ? .none : .disclosureIndicator
-            
+            cell.textLabel?.text = "Winter 2020–2021"
+            cell.accessoryType = .disclosureIndicator
             return cell
-        case let .disruption(service, _):
+        
+        case .summerTimetable:
+            let identifier = MainStoryBoard.TableViewCellIdentifiers.basicCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+            cell.textLabel?.text = "Summer 2021"
+            cell.accessoryType = .disclosureIndicator
+            return cell
+            
+        case .disruption:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.disruptionsCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailDisruptionsTableViewCell
             cell.configureWithService(service)
             return cell
-        case let .noDisruption(service, _):
+            
+        case .noDisruption:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailNoDisruptionTableViewCell
             cell.configureWithService(service)
-                        
             return cell
+            
         case .loading:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.loadingCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailLoadingTableViewCell
             cell.activityIndicatorView.startAnimating()
             return cell
+            
         case let .textOnly(text):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.textOnlyCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailTextOnlyCell
             cell.labelText.text = text
             return cell
+            
         case .weather(let index):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailWeatherCell
             cell.selectionStyle = .none
             cell.configure(with: weather[index], animate: true)
-            
             return cell
+            
         case .alert:
-            return self.alertCell
+            return alertCell
+            
         }
     }
 }
 
 extension ServiceDetailTableViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let row = dataSource[indexPath.section].rows[indexPath.row]
-        
-        switch row {
-        case .basic:
-            return 44.0
-        case let .disruption(service, _):
-            return ServiceDetailDisruptionsTableViewCell.heightWithService(service, tableView: tableView)
-        case let .noDisruption(service, _):
-            return ServiceDetailNoDisruptionTableViewCell.heightWithService(service, tableView: tableView)
-        case .loading:
-            return 55.0
-        case let .textOnly(text):
-            return ServiceDetailTextOnlyCell.heightWithText(text, tableView: tableView)
-        case .weather(let index):
-            return weather[index].map { ServiceDetailWeatherCell.height(for: $0, tableView: tableView) } ?? 0.0
-        case .alert:
-            return 44.0
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = dataSource[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
         
-        let viewController: UIViewController?
-        
         switch row {
-        case .basic(_, _, let viewControllerGenerator):
-            viewController = viewControllerGenerator()
-        case .disruption(_, let viewControllerGenerator):
-            viewController = viewControllerGenerator()
-        case .noDisruption(_, let viewControllerGenerator):
-            viewController = viewControllerGenerator()
+        case .summerTimetable:
+            show(pdfTimeTableViewController(service.summerPath, title: "Summer timetable"), sender: self)
+        case .winterTimetable:
+            show(pdfTimeTableViewController(service.winterPath, title: "Winter timetable"), sender: self)
+        case .disruption:
+            if let additionalInfo = service.additionalInfo {
+                show(webInfoViewController("Disruption information", content:additionalInfo), sender: self)
+            }
+        case .noDisruption:
+            if let additionalInfo = service.additionalInfo {
+                show(webInfoViewController("Additional info", content:additionalInfo), sender: self)
+            }
         default:
-            viewController = nil;
-        }
-        
-        if let viewController = viewController {
-            show(viewController, sender: self)
+            break
         }
     }
     
@@ -638,8 +580,7 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
             if let weatherCell = cell as? ServiceDetailWeatherCell {
                 weatherCell.viewSeparator.backgroundColor = tableView.separatorColor
             }
-        default:
-            break
+        default: break
         }
     }
     
@@ -647,28 +588,18 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = UIColor(named: "Text")
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if dataSource[section].showHeader {
-            return UITableView.automaticDimension
-        }
-        else {
-            return CGFloat.leastNormalMagnitude
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if dataSource[section].showFooter {
-            return UITableView.automaticDimension
-        }
-        else {
-            return CGFloat.leastNormalMagnitude
-        }
-    }
 }
 
 private extension Service {
     var lastUpdated: String? {
         return lastUpdatedDate.map { "Last updated \($0.relativeTimeSinceNowText())" }
+    }
+    
+    var winterPath: String {
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2020/Winter/\(serviceId).pdf")
+    }
+    
+    var summerPath: String {
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2021/Summer/\(serviceId).pdf")
     }
 }

@@ -15,18 +15,18 @@ class ServiceDetailReceiveAlertCellTableViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     
     func configureLoading() {
-        self.switchAlert.isHidden = true
+        switchAlert.isHidden = true
         
-        self.activityIndicatorViewLoading.startAnimating()
-        self.activityIndicatorViewLoading.isHidden = false
+        activityIndicatorViewLoading.startAnimating()
+        activityIndicatorViewLoading.isHidden = false
     }
     
     func configureLoadedWithSwitchOn(_ switchOn: Bool) {
-        self.activityIndicatorViewLoading.stopAnimating()
-        self.activityIndicatorViewLoading.isHidden = true
+        activityIndicatorViewLoading.stopAnimating()
+        activityIndicatorViewLoading.isHidden = true
         
-        self.switchAlert.isOn = switchOn
-        self.switchAlert.isHidden = false
+        switchAlert.isOn = switchOn
+        switchAlert.isHidden = false
     }
     
 }

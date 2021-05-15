@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3CB36264F841100D2E4AE /* CircleView.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1B5FAC258479150098B96B /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F84258479150098B96B /* LocationWeather.swift */; };
 		FD1B5FAD258479150098B96B /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F85258479150098B96B /* Vessel.swift */; };
@@ -102,6 +103,7 @@
 
 /* Begin PBXFileReference section */
 		02D9493F193C4A87EAD799AC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A3CB36264F841100D2E4AE /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1B5F84258479150098B96B /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
 		FD1B5F85258479150098B96B /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				FD1B5F95258479150098B96B /* NoDisruptionsCell.xib */,
 				FD1B5F96258479150098B96B /* AlertCell.xib */,
 				FD1B5F97258479150098B96B /* TextOnlyCell.xib */,
+				F8A3CB36264F841100D2E4AE /* CircleView.swift */,
 			);
 			path = "Service Details";
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				FD1B5FB8258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */,
 				FD1B5FC2258479150098B96B /* ServicesViewController.swift in Sources */,
 				FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */,
+				F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */,
 				FD1B5FAC258479150098B96B /* LocationWeather.swift in Sources */,
 				FD1B5FC5258479150098B96B /* ServiceMapDelegate.swift in Sources */,
 				FD1B5FB7258479150098B96B /* ServiceDetailTextOnlyCell.swift in Sources */,

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="noDisruptionsCell" rowHeight="50" id="xpR-d9-o1U" userLabel="Cell - no disruptions" customClass="ServiceDetailNoDisruptionTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="noDisruptionsCell" id="xpR-d9-o1U" userLabel="Cell - no disruptions" customClass="ServiceDetailNoDisruptionTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xpR-d9-o1U" id="AV8-Kk-OoI">
@@ -23,13 +23,13 @@
                             <constraint firstAttribute="height" constant="24" id="iPU-4G-rNZ"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="There are currently no disruptions with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwi-47-JFA">
-                        <rect key="frame" x="51" y="10" width="498" height="29"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are currently no disruptions with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwi-47-JFA">
+                        <rect key="frame" x="51" y="10" width="498" height="30"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AA-Kt-fjM">
-                        <rect key="frame" x="565" y="13" width="22" height="22"/>
+                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AA-Kt-fjM">
+                        <rect key="frame" x="565" y="14" width="22" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="5hZ-bi-QMa"/>
                             <constraint firstAttribute="height" constant="22" id="cKa-0u-9hd"/>
@@ -48,7 +48,6 @@
                     <constraint firstItem="3AA-Kt-fjM" firstAttribute="leading" secondItem="rwi-47-JFA" secondAttribute="trailing" constant="16" id="O3b-tE-HqB"/>
                     <constraint firstItem="rwi-47-JFA" firstAttribute="leading" secondItem="hWH-we-tLs" secondAttribute="trailing" constant="14" id="V3g-bp-MeI"/>
                     <constraint firstAttribute="bottom" secondItem="rwi-47-JFA" secondAttribute="bottom" constant="10" id="VOg-4D-e2S"/>
-                    <constraint firstAttribute="centerY" secondItem="rwi-47-JFA" secondAttribute="centerY" id="lIm-D2-BCZ"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>

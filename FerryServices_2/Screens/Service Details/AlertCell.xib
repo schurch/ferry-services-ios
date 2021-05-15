@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,9 +17,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" misplaced="YES" text="Subscribe to updates" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0o1-bs-n3f">
-                        <rect key="frame" x="15" y="12.5" width="156" height="19.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subscribe to updates" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0o1-bs-n3f">
+                        <rect key="frame" x="15" y="13.5" width="138" height="17"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="z36-mH-zV4">
@@ -31,10 +31,12 @@
                     </activityIndicatorView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0o1-bs-n3f" secondAttribute="trailing" constant="100" id="KNP-em-lzm"/>
+                    <constraint firstItem="0o1-bs-n3f" firstAttribute="top" secondItem="szw-fV-Hp3" secondAttribute="top" constant="13.5" id="OsZ-p8-s4p"/>
                     <constraint firstAttribute="trailing" secondItem="z36-mH-zV4" secondAttribute="trailing" constant="15" id="TzX-Nm-Fn1"/>
                     <constraint firstItem="z36-mH-zV4" firstAttribute="centerX" secondItem="QlE-Hb-CI9" secondAttribute="centerX" constant="-2.5" id="Xr1-XR-p53"/>
                     <constraint firstAttribute="centerY" secondItem="z36-mH-zV4" secondAttribute="centerY" id="Ydt-qu-hEC"/>
-                    <constraint firstAttribute="centerY" secondItem="0o1-bs-n3f" secondAttribute="centerY" id="dXp-cK-JG9"/>
+                    <constraint firstAttribute="bottom" secondItem="0o1-bs-n3f" secondAttribute="bottom" constant="13.5" id="fhJ-dx-xKA"/>
                     <constraint firstAttribute="centerY" secondItem="QlE-Hb-CI9" secondAttribute="centerY" id="lsH-DV-BuA"/>
                     <constraint firstItem="0o1-bs-n3f" firstAttribute="leading" secondItem="szw-fV-Hp3" secondAttribute="leading" constant="15" id="zv9-vo-gzJ"/>
                 </constraints>
