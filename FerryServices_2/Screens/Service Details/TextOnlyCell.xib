@@ -16,17 +16,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unable to fetch the disruption status for this service." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9k-xW-5Wp">
-                        <rect key="frame" x="13" y="12" width="574" height="20"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unable to fetch the disruption status for this service." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9k-xW-5Wp">
+                        <rect key="frame" x="20" y="12" width="560" height="20"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="f9k-xW-5Wp" firstAttribute="leading" secondItem="xf2-ZY-Gkr" secondAttribute="leading" constant="13" id="3vi-aY-0s7"/>
+                    <constraint firstItem="f9k-xW-5Wp" firstAttribute="leading" secondItem="xf2-ZY-Gkr" secondAttribute="leadingMargin" id="3vi-aY-0s7"/>
                     <constraint firstItem="f9k-xW-5Wp" firstAttribute="top" secondItem="xf2-ZY-Gkr" secondAttribute="top" constant="12" id="VXv-CX-ll6"/>
                     <constraint firstAttribute="bottom" secondItem="f9k-xW-5Wp" secondAttribute="bottom" constant="12" id="qQm-wj-yH7"/>
-                    <constraint firstAttribute="trailing" secondItem="f9k-xW-5Wp" secondAttribute="trailing" constant="13" id="tcx-EP-MSc"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="f9k-xW-5Wp" secondAttribute="trailing" id="tcx-EP-MSc"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>

@@ -82,15 +82,8 @@ class ServiceDetailTableViewController: UIViewController {
     // MARK: - view lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        title = service?.area
-        
+
         navigationItem.largeTitleDisplayMode = .never
-        
-        weather = service?.locations.map { _ in nil } ?? []
-        
-        labelArea.text = service?.area
-        labelRoute.text = service?.route
         
         NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailTableViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
@@ -146,20 +139,9 @@ class ServiceDetailTableViewController: UIViewController {
         constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
         constraintMapViewTop.constant = -MainStoryBoard.Constants.motionEffectAmount
         
-        mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: service?.locations ?? [])
-        mapViewDelegate?.shouldAllowAnnotationSelection = false
-        mapView.delegate = mapViewDelegate
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(touchedButtonShowMap(_:)))
         tableView.backgroundView = UIView()
         tableView.backgroundView?.addGestureRecognizer(tap)
-        
-        let backgroundViewFrame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
-        
-        viewBackground = UIView(frame: backgroundViewFrame)
-        viewBackground.backgroundColor = UIColor(named: "Background")
-        view.insertSubview(viewBackground, belowSubview: tableView)
-        
         tableView.backgroundColor = UIColor.clear
         
         tableView.register(UINib(nibName: "DisruptionsCell", bundle: nil), forCellReuseIdentifier: MainStoryBoard.TableViewCellIdentifiers.disruptionsCell)
@@ -170,8 +152,14 @@ class ServiceDetailTableViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension;
         tableView.estimatedRowHeight = 44.0;
         
-        initializeTable()
-        refresh()
+        configureView()
+        
+        let backgroundViewFrame = CGRect(x: 0, y: 0, width: view.bounds.width, height: tableView.contentSize.height + (UIScreen.main.bounds.size.height))
+        viewBackground = UIView(frame: backgroundViewFrame)
+        viewBackground.backgroundColor = UIColor(named: "Background")
+        view.insertSubview(viewBackground, belowSubview: tableView)
+                
+        fetchLatestDisruptionData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -222,7 +210,8 @@ class ServiceDetailTableViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         
         if previousTraitCollection?.preferredContentSizeCategory != traitCollection.preferredContentSizeCategory {
-            configureHeader()
+            headerHeight = nil
+            view.setNeedsLayout()
         }
     }
     
@@ -237,7 +226,27 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     @objc func applicationDidBecomeActive(_ notification: Notification) {
-        refresh()
+        fetchLatestDisruptionData()
+    }
+    
+    private func configureView() {
+        title = service?.area
+        
+        labelArea.text = service?.area
+        labelRoute.text = service?.route
+        
+        weather = service?.locations.map { _ in nil } ?? []
+        
+        mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: service?.locations ?? [])
+        mapViewDelegate?.shouldAllowAnnotationSelection = false
+        mapView.delegate = mapViewDelegate
+        
+        generateDatasource()
+        tableView.reloadData()
+        
+        mapRectSet = false
+        headerHeight = nil
+        view.setNeedsLayout()
     }
     
     // MARK: - ui actions
@@ -328,12 +337,6 @@ class ServiceDetailTableViewController: UIViewController {
         }
     }
     
-    // MARK: - refresh
-    private func refresh() {
-        fetchLatestWeatherData()
-        fetchLatestDisruptionData()
-    }
-    
     // MARK: - Datasource generation
     private func generateDatasource() {
         guard let service = service else {
@@ -397,23 +400,14 @@ class ServiceDetailTableViewController: UIViewController {
         }
     }
     
-    private func initializeTable() {
-        generateDatasource()
-        tableView.reloadData()
-        
-        var backgroundViewFrame = viewBackground.frame
-        backgroundViewFrame.size.height = tableView.contentSize.height + (UIScreen.main.bounds.size.height)
-        viewBackground.frame = backgroundViewFrame
-    }
-    
     private func fetchLatestDisruptionData() {
         APIClient.fetchService(serviceID: serviceID) { [weak self] result in
             guard case let .success(service) = result else { return }
             guard let self = self else { return }
             self.service = service
             self.refreshingDisruptionInfo = false
-            self.generateDatasource()
-            self.tableView.reloadData()
+            self.configureView()
+            self.fetchLatestWeatherData()
         }
     }
     
@@ -425,6 +419,7 @@ class ServiceDetailTableViewController: UIViewController {
                 guard case .success(let weather) = result else { return }
                 
                 self.weather[index] = weather
+                self.generateDatasource()
                 self.tableView.reloadData()
             }
         }
@@ -552,7 +547,13 @@ extension ServiceDetailTableViewController: UITableViewDataSource {
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailWeatherCell
             cell.selectionStyle = .none
-            cell.configure(with: weather[index], animate: true)
+            
+            if index < weather.count {
+                cell.configure(with: weather[index], animate: true)
+            } else {
+                cell.configure(with: nil, animate: true)
+            }
+            
             return cell
             
         case .alert:
