@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="noDisruptionsCell" id="xpR-d9-o1U" userLabel="Cell - no disruptions" customClass="ServiceDetailNoDisruptionTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="noDisruptionsCell" id="xpR-d9-o1U" userLabel="Cell - no disruptions" customClass="NoDisruptionCell" customModule="FerryServices_2" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xpR-d9-o1U" id="AV8-Kk-OoI">
@@ -17,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are currently no disruptions with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwi-47-JFA">
-                        <rect key="frame" x="58" y="10" width="491" height="30"/>
+                        <rect key="frame" x="54" y="10" width="495" height="30"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -32,7 +30,7 @@
                         </state>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fwv-1c-reI" customClass="CircleView" customModule="FerryServices_2" customModuleProvider="target">
-                        <rect key="frame" x="20" y="13" width="24" height="24"/>
+                        <rect key="frame" x="16" y="13" width="24" height="24"/>
                         <color key="backgroundColor" systemColor="systemPinkColor"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="2Ut-Gf-SHU"/>

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ServiceDetailReceiveAlertCellTableViewCell: UITableViewCell {
+class AlertCell: UITableViewCell {
 
     @IBOutlet weak var activityIndicatorViewLoading: UIActivityIndicatorView!
     @IBOutlet weak var switchAlert: UISwitch!

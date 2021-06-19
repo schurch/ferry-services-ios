@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ServiceDetailLoadingTableViewCell: UITableViewCell {
+class LoadingCell: UITableViewCell {
 
     @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
 

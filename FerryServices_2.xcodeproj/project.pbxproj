@@ -15,15 +15,15 @@
 		FD1B5FAE258479150098B96B /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F87258479150098B96B /* WeatherAPIClient.swift */; };
 		FD1B5FAF258479150098B96B /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F88258479150098B96B /* APIError.swift */; };
 		FD1B5FB0258479150098B96B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F89258479150098B96B /* APIClient.swift */; };
-		FD1B5FB1258479150098B96B /* ServiceDetailDisruptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8C258479150098B96B /* ServiceDetailDisruptionsTableViewCell.swift */; };
-		FD1B5FB2258479150098B96B /* ServiceDetailWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8D258479150098B96B /* ServiceDetailWeatherCell.swift */; };
-		FD1B5FB3258479150098B96B /* ServiceDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8E258479150098B96B /* ServiceDetailTableViewController.swift */; };
+		FD1B5FB1258479150098B96B /* DisruptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8C258479150098B96B /* DisruptionsCell.swift */; };
+		FD1B5FB2258479150098B96B /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8D258479150098B96B /* WeatherCell.swift */; };
+		FD1B5FB3258479150098B96B /* ServiceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8E258479150098B96B /* ServiceDetailViewController.swift */; };
 		FD1B5FB4258479150098B96B /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F8F258479150098B96B /* WeatherCell.xib */; };
-		FD1B5FB5258479150098B96B /* ServiceDetailLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F90258479150098B96B /* ServiceDetailLoadingTableViewCell.swift */; };
+		FD1B5FB5258479150098B96B /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F90258479150098B96B /* LoadingCell.swift */; };
 		FD1B5FB6258479150098B96B /* DisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F91258479150098B96B /* DisruptionsCell.xib */; };
-		FD1B5FB7258479150098B96B /* ServiceDetailTextOnlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F92258479150098B96B /* ServiceDetailTextOnlyCell.swift */; };
-		FD1B5FB8258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F93258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift */; };
-		FD1B5FB9258479150098B96B /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F94258479150098B96B /* ServiceDetailNoDisruptionTableViewCell.swift */; };
+		FD1B5FB7258479150098B96B /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F92258479150098B96B /* TextCell.swift */; };
+		FD1B5FB8258479150098B96B /* AlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F93258479150098B96B /* AlertCell.swift */; };
+		FD1B5FB9258479150098B96B /* NoDisruptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F94258479150098B96B /* NoDisruptionCell.swift */; };
 		FD1B5FBA258479150098B96B /* NoDisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F95258479150098B96B /* NoDisruptionsCell.xib */; };
 		FD1B5FBB258479150098B96B /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F96258479150098B96B /* AlertCell.xib */; };
 		FD1B5FBC258479150098B96B /* TextOnlyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F97258479150098B96B /* TextOnlyCell.xib */; };
@@ -112,15 +112,15 @@
 		FD1B5F87258479150098B96B /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
 		FD1B5F88258479150098B96B /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		FD1B5F89258479150098B96B /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		FD1B5F8C258479150098B96B /* ServiceDetailDisruptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailDisruptionsTableViewCell.swift; sourceTree = "<group>"; };
-		FD1B5F8D258479150098B96B /* ServiceDetailWeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailWeatherCell.swift; sourceTree = "<group>"; };
-		FD1B5F8E258479150098B96B /* ServiceDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTableViewController.swift; sourceTree = "<group>"; };
+		FD1B5F8C258479150098B96B /* DisruptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisruptionsCell.swift; sourceTree = "<group>"; };
+		FD1B5F8D258479150098B96B /* WeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
+		FD1B5F8E258479150098B96B /* ServiceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailViewController.swift; sourceTree = "<group>"; };
 		FD1B5F8F258479150098B96B /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
-		FD1B5F90258479150098B96B /* ServiceDetailLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailLoadingTableViewCell.swift; sourceTree = "<group>"; };
+		FD1B5F90258479150098B96B /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		FD1B5F91258479150098B96B /* DisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisruptionsCell.xib; sourceTree = "<group>"; };
-		FD1B5F92258479150098B96B /* ServiceDetailTextOnlyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailTextOnlyCell.swift; sourceTree = "<group>"; };
-		FD1B5F93258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailReceiveAlertCellTableViewCell.swift; sourceTree = "<group>"; };
-		FD1B5F94258479150098B96B /* ServiceDetailNoDisruptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailNoDisruptionTableViewCell.swift; sourceTree = "<group>"; };
+		FD1B5F92258479150098B96B /* TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
+		FD1B5F93258479150098B96B /* AlertCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertCell.swift; sourceTree = "<group>"; };
+		FD1B5F94258479150098B96B /* NoDisruptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoDisruptionCell.swift; sourceTree = "<group>"; };
 		FD1B5F95258479150098B96B /* NoDisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoDisruptionsCell.xib; sourceTree = "<group>"; };
 		FD1B5F96258479150098B96B /* AlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
 		FD1B5F97258479150098B96B /* TextOnlyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextOnlyCell.xib; sourceTree = "<group>"; };
@@ -279,13 +279,13 @@
 		FD1B5F8B258479150098B96B /* Service Details */ = {
 			isa = PBXGroup;
 			children = (
-				FD1B5F8E258479150098B96B /* ServiceDetailTableViewController.swift */,
-				FD1B5F8C258479150098B96B /* ServiceDetailDisruptionsTableViewCell.swift */,
-				FD1B5F8D258479150098B96B /* ServiceDetailWeatherCell.swift */,
-				FD1B5F90258479150098B96B /* ServiceDetailLoadingTableViewCell.swift */,
-				FD1B5F93258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift */,
-				FD1B5F94258479150098B96B /* ServiceDetailNoDisruptionTableViewCell.swift */,
-				FD1B5F92258479150098B96B /* ServiceDetailTextOnlyCell.swift */,
+				FD1B5F8E258479150098B96B /* ServiceDetailViewController.swift */,
+				FD1B5F8C258479150098B96B /* DisruptionsCell.swift */,
+				FD1B5F8D258479150098B96B /* WeatherCell.swift */,
+				FD1B5F90258479150098B96B /* LoadingCell.swift */,
+				FD1B5F93258479150098B96B /* AlertCell.swift */,
+				FD1B5F94258479150098B96B /* NoDisruptionCell.swift */,
+				FD1B5F92258479150098B96B /* TextCell.swift */,
 				FD1B5F8F258479150098B96B /* WeatherCell.xib */,
 				FD1B5F91258479150098B96B /* DisruptionsCell.xib */,
 				FD1B5F95258479150098B96B /* NoDisruptionsCell.xib */,
@@ -556,20 +556,20 @@
 				FD1B5FC4258479150098B96B /* NSDate+extensions.swift in Sources */,
 				FD1B5FCE2584794E0098B96B /* Service.swift in Sources */,
 				FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */,
-				FD1B5FB8258479150098B96B /* ServiceDetailReceiveAlertCellTableViewCell.swift in Sources */,
+				FD1B5FB8258479150098B96B /* AlertCell.swift in Sources */,
 				F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */,
 				FD1B5FC2258479150098B96B /* ServicesViewController.swift in Sources */,
 				FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */,
 				F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */,
 				FD1B5FAC258479150098B96B /* LocationWeather.swift in Sources */,
 				FD1B5FC5258479150098B96B /* ServiceMapDelegate.swift in Sources */,
-				FD1B5FB7258479150098B96B /* ServiceDetailTextOnlyCell.swift in Sources */,
-				FD1B5FB2258479150098B96B /* ServiceDetailWeatherCell.swift in Sources */,
-				FD1B5FB5258479150098B96B /* ServiceDetailLoadingTableViewCell.swift in Sources */,
+				FD1B5FB7258479150098B96B /* TextCell.swift in Sources */,
+				FD1B5FB2258479150098B96B /* WeatherCell.swift in Sources */,
+				FD1B5FB5258479150098B96B /* LoadingCell.swift in Sources */,
 				FD1B5FC8258479150098B96B /* Utility.swift in Sources */,
-				FD1B5FB3258479150098B96B /* ServiceDetailTableViewController.swift in Sources */,
+				FD1B5FB3258479150098B96B /* ServiceDetailViewController.swift in Sources */,
 				FD1B5FC0258479150098B96B /* SearchResultsViewController.swift in Sources */,
-				FD1B5FB1258479150098B96B /* ServiceDetailDisruptionsTableViewCell.swift in Sources */,
+				FD1B5FB1258479150098B96B /* DisruptionsCell.swift in Sources */,
 				FD1B5FAD258479150098B96B /* Vessel.swift in Sources */,
 				FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */,
 				FD1B5FC3258479150098B96B /* ServiceStatusCell.swift in Sources */,
@@ -578,7 +578,7 @@
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
 				FD1B5FAE258479150098B96B /* WeatherAPIClient.swift in Sources */,
 				FD1B5FAF258479150098B96B /* APIError.swift in Sources */,
-				FD1B5FB9258479150098B96B /* ServiceDetailNoDisruptionTableViewCell.swift in Sources */,
+				FD1B5FB9258479150098B96B /* NoDisruptionCell.swift in Sources */,
 				FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */,
 				FD1B5FB0258479150098B96B /* APIClient.swift in Sources */,
 				FD1B5FBF258479150098B96B /* TimetablePreviewViewController.swift in Sources */,

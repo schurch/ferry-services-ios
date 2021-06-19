@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ServiceDetailNoDisruptionTableViewCell: UITableViewCell {
+class NoDisruptionCell: UITableViewCell {
     
     @IBOutlet weak var buttonInfo: UIButton!
     @IBOutlet weak var constraintButtonWidth: NSLayoutConstraint!

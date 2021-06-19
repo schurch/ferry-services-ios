@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
+class WeatherCell: UITableViewCell, CAAnimationDelegate {
     
     @IBOutlet weak var constraintViewSeparatorWidth: NSLayoutConstraint!
     @IBOutlet weak var imageViewWeather: UIImageView!

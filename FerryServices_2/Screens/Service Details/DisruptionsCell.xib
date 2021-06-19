@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="disruptionsCell" rowHeight="82" id="4e5-8I-sLG" userLabel="Cell - disruptions" customClass="ServiceDetailDisruptionsTableViewCell" customModule="FerryServices_2" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="disruptionsCell" rowHeight="82" id="4e5-8I-sLG" userLabel="Cell - disruptions" customClass="DisruptionsCell" customModule="FerryServices_2" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="82"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4e5-8I-sLG" id="fdL-5i-bb3">
@@ -17,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="There is a disruption with this service" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oUP-Fa-M1A" userLabel="Label - Disruption details">
-                        <rect key="frame" x="59" y="12" width="483" height="36"/>
+                        <rect key="frame" x="55" y="12" width="491" height="36"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="249" id="een-VY-Cj0"/>
                         </constraints>
@@ -30,12 +28,12 @@
                         </variation>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reason:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWy-Zc-Kln">
-                        <rect key="frame" x="59" y="53" width="52" height="17"/>
+                        <rect key="frame" x="55" y="53" width="52" height="17"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="adverse weather" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avP-up-Xz5">
-                        <rect key="frame" x="119" y="53" width="107" height="17"/>
+                        <rect key="frame" x="115" y="53" width="107" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="175" id="n1M-qL-REi"/>
                             <constraint firstAttribute="height" constant="21" id="tx0-NR-29I"/>
@@ -51,7 +49,7 @@
                         </variation>
                     </label>
                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQT-RL-17a">
-                        <rect key="frame" x="558" y="30" width="22" height="22"/>
+                        <rect key="frame" x="562" y="30" width="22" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="Fai-Xo-Xva"/>
                             <constraint firstAttribute="height" constant="22" id="rz1-S1-gaJ"/>
@@ -61,7 +59,7 @@
                         </state>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ru0-zE-33U" customClass="CircleView" customModule="FerryServices_2" customModuleProvider="target">
-                        <rect key="frame" x="20" y="17" width="24" height="24"/>
+                        <rect key="frame" x="16" y="17" width="24" height="24"/>
                         <color key="backgroundColor" systemColor="systemRedColor"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="RqM-0w-YNb"/>

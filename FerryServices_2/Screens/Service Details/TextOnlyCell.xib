@@ -9,7 +9,7 @@
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="textOnlyCell" id="G62-dX-OxV" userLabel="Cell - text only cell" customClass="ServiceDetailTextOnlyCell" customModule="FerryServices_2" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="textOnlyCell" id="G62-dX-OxV" userLabel="Cell - text only cell" customClass="TextCell" customModule="FerryServices_2" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G62-dX-OxV" id="xf2-ZY-Gkr">

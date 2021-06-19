@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ServiceDetailTableViewController: UIViewController {
+class ServiceDetailViewController: UIViewController {
     
     class Section {
         var title: String?
@@ -59,7 +59,7 @@ class ServiceDetailTableViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
     
-    var alertCell: ServiceDetailReceiveAlertCellTableViewCell = UINib(nibName: "AlertCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
+    var alertCell: AlertCell = UINib(nibName: "AlertCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as! AlertCell
     
     var serviceID: Int!
     var service: Service?
@@ -85,7 +85,7 @@ class ServiceDetailTableViewController: UIViewController {
 
         navigationItem.largeTitleDisplayMode = .never
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailTableViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         if let service = service {
             LastViewedServices.register(service)
@@ -93,7 +93,7 @@ class ServiceDetailTableViewController: UIViewController {
         
         tableView.contentInset = UIEdgeInsets.init(top: MainStoryBoard.Constants.contentInset, left: 0, bottom: 0, right: 0)
         
-        alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailTableViewController.alertSwitchChanged(_:)), for: UIControl.Event.valueChanged)
+        alertCell.switchAlert.addTarget(self, action: #selector(ServiceDetailViewController.alertSwitchChanged(_:)), for: UIControl.Event.valueChanged)
         alertCell.configureLoading()
         
         APIClient.getInstallationServices(installationID: Installation.id) { [weak self] result in
@@ -172,7 +172,7 @@ class ServiceDetailTableViewController: UIViewController {
             tableView.deselectRow(at: selectedIndexPath, animated: true)
         }
         
-        windAnimationTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(ServiceDetailTableViewController.animateWindVanes), userInfo: nil, repeats: true)
+        windAnimationTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(ServiceDetailViewController.animateWindVanes), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -392,7 +392,7 @@ class ServiceDetailTableViewController: UIViewController {
     // MARK: - Utility methods
     @objc private func animateWindVanes() {
         for cell in tableView.visibleCells {
-            guard let weatherCell = cell as? ServiceDetailWeatherCell else { continue }
+            guard let weatherCell = cell as? WeatherCell else { continue }
             let randomDelay = Double(arc4random_uniform(4))
             delay(randomDelay) {
                 weatherCell.tryAnimateWindArrow()
@@ -484,7 +484,7 @@ class ServiceDetailTableViewController: UIViewController {
     }
 }
 
-extension ServiceDetailTableViewController: UITableViewDataSource {
+extension ServiceDetailViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.count
     }
@@ -521,31 +521,31 @@ extension ServiceDetailTableViewController: UITableViewDataSource {
             
         case .disruption:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.disruptionsCell
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailDisruptionsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! DisruptionsCell
             cell.configureWithService(service)
             return cell
             
         case .noDisruption:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.noDisruptionsCell
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailNoDisruptionTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! NoDisruptionCell
             cell.configureWithService(service)
             return cell
             
         case .loading:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.loadingCell
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailLoadingTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! LoadingCell
             cell.activityIndicatorView.startAnimating()
             return cell
             
         case let .textOnly(text):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.textOnlyCell
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailTextOnlyCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! TextCell
             cell.labelText.text = text
             return cell
             
         case .weather(let index):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ServiceDetailWeatherCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! WeatherCell
             cell.selectionStyle = .none
             
             if index < weather.count {
@@ -563,7 +563,7 @@ extension ServiceDetailTableViewController: UITableViewDataSource {
     }
 }
 
-extension ServiceDetailTableViewController: UITableViewDelegate {
+extension ServiceDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let service = service else { return }
         
@@ -592,7 +592,7 @@ extension ServiceDetailTableViewController: UITableViewDelegate {
         
         switch row {
         case .weather:
-            if let weatherCell = cell as? ServiceDetailWeatherCell {
+            if let weatherCell = cell as? WeatherCell {
                 weatherCell.viewSeparator.backgroundColor = tableView.separatorColor
             }
         default: break

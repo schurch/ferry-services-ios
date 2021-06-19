@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ServiceDetailTextOnlyCell: UITableViewCell {
+class TextCell: UITableViewCell {
     
     @IBOutlet var labelText: UILabel!
 
