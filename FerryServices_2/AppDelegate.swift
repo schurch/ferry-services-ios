@@ -173,7 +173,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let servicesViewController = navigationController.viewControllers.first as? ServicesViewController else { return }
         
         let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailTableViewController
+        
+        serviceDetailViewController.serviceID = serviceId
         serviceDetailViewController.service = Service.defaultServices.first(where: { $0.serviceId == serviceId })
+        
         navigationController.setViewControllers([servicesViewController, serviceDetailViewController], animated: true)
     }
     

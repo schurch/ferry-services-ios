@@ -61,16 +61,18 @@ class ServiceDetailTableViewController: UIViewController {
     
     var alertCell: ServiceDetailReceiveAlertCellTableViewCell = UINib(nibName: "AlertCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as! ServiceDetailReceiveAlertCellTableViewCell
     
+    var serviceID: Int!
+    var service: Service?
+
     var mapViewDelegate: ServiceMapDelegate?
     var dataSource: [Section] = []
     var headerHeight: CGFloat?
     var mapMotionEffect: UIMotionEffectGroup!
     var mapRectSet = false
     var refreshingDisruptionInfo: Bool = true // show table as refreshing initially
-    var service: Service!
     var viewBackground: UIView!
     var windAnimationTimer: Timer!
-    var weather: [LocationWeather?]!
+    var weather: [LocationWeather?] = []
         
     // MARK: -
     deinit {
@@ -81,18 +83,20 @@ class ServiceDetailTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = service.area
+        title = service?.area
         
         navigationItem.largeTitleDisplayMode = .never
         
-        weather = service.locations.map { _ in nil }
+        weather = service?.locations.map { _ in nil } ?? []
         
-        labelArea.text = service.area
-        labelRoute.text = service.route
+        labelArea.text = service?.area
+        labelRoute.text = service?.route
         
         NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailTableViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
-        LastViewedServices.register(service)
+        if let service = service {
+            LastViewedServices.register(service)
+        }
         
         tableView.contentInset = UIEdgeInsets.init(top: MainStoryBoard.Constants.contentInset, left: 0, bottom: 0, right: 0)
         
@@ -110,7 +114,9 @@ class ServiceDetailTableViewController: UIViewController {
                 self.removeServiceIdFromSubscribedList()
                 
             case .success(let subscribedServices):
-                let subscribed = subscribedServices.map { $0.serviceId }.contains(self.service.serviceId)
+                guard let service = self.service else { return }
+                
+                let subscribed = subscribedServices.map { $0.serviceId }.contains(service.serviceId)
                 self.alertCell.configureLoadedWithSwitchOn(subscribed)
                 
                 if subscribed {
@@ -140,7 +146,7 @@ class ServiceDetailTableViewController: UIViewController {
         constraintMapViewTrailing.constant = -MainStoryBoard.Constants.motionEffectAmount
         constraintMapViewTop.constant = -MainStoryBoard.Constants.motionEffectAmount
         
-        mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: service.locations)
+        mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: service?.locations ?? [])
         mapViewDelegate?.shouldAllowAnnotationSelection = false
         mapView.delegate = mapViewDelegate
         
@@ -237,8 +243,8 @@ class ServiceDetailTableViewController: UIViewController {
     // MARK: - ui actions
     @IBAction func touchedButtonShowMap(_ sender: UIButton) {
         let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
-        mapViewController.title = service.route
-        mapViewController.locations = service.locations
+        mapViewController.title = service?.route
+        mapViewController.locations = service?.locations
         
         show(mapViewController, sender: self)
     }
@@ -271,6 +277,8 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     private func subscribeToService() {
+        guard let service = service else { return }
+        
         APIClient.addService(for: Installation.id, serviceID: service.serviceId) { [weak self] result in
             guard let self = self else {
                 return
@@ -295,6 +303,8 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     private func unsubscribeFromService() {
+        guard let service = service else { return }
+        
         APIClient.removeService(for: Installation.id, serviceID: service.serviceId) { [weak self]  result in
             guard let self = self else {
                 return
@@ -326,6 +336,11 @@ class ServiceDetailTableViewController: UIViewController {
     
     // MARK: - Datasource generation
     private func generateDatasource() {
+        guard let service = service else {
+            dataSource = [Section(title: nil, footer: nil, rows: [.loading])]
+            return
+        }
+        
         var sections = [Section]()
         
         let disruptionRow: Row = {
@@ -392,32 +407,25 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     private func fetchLatestDisruptionData() {
-        APIClient.fetchService(serviceID: service.serviceId) { result in
+        APIClient.fetchService(serviceID: serviceID) { [weak self] result in
             guard case let .success(service) = result else { return }
+            guard let self = self else { return }
             self.service = service
             self.refreshingDisruptionInfo = false
             self.generateDatasource()
-            self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            self.tableView.reloadData()
         }
     }
     
     private func fetchLatestWeatherData() {
+        guard let service = service else { return }
         for (index, location) in service.locations.enumerated() {
             WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] result in
                 guard let self = self else { return }
-                if case .success(let weather) = result {
-                    self.weather[index] = weather
-                }
+                guard case .success(let weather) = result else { return }
                 
-                if let weatherSection = self.dataSource.firstIndex(where: {
-                    if case Row.weather = $0.rows[0] {
-                        return true
-                    } else {
-                        return false
-                    }
-                }) {
-                    self.tableView.reloadRows(at: [IndexPath(row: 0, section: weatherSection + index)], with: .none)
-                }
+                self.weather[index] = weather
+                self.tableView.reloadData()
             }
         }
     }
@@ -451,6 +459,8 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     private func addServiceIdToSubscribedList() {
+        guard let service = service else { return }
+        
         var currentServiceIds = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? [Int]()
         
         if let existingServiceId = currentServiceIds.filter({ $0 == service.serviceId }).first {
@@ -466,6 +476,8 @@ class ServiceDetailTableViewController: UIViewController {
     }
     
     private func removeServiceIdFromSubscribedList() {
+        guard let service = service else { return }
+        
         var currentServiceIds = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? [Int]()
         
         if let existingServiceId = currentServiceIds.filter({ $0 == service.serviceId }).first {
@@ -552,6 +564,8 @@ extension ServiceDetailTableViewController: UITableViewDataSource {
 
 extension ServiceDetailTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let service = service else { return }
+        
         let row = dataSource[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
         
         switch row {

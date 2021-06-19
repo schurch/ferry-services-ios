@@ -15,14 +15,19 @@ class ServiceDetailDisruptionsTableViewCell: UITableViewCell {
     @IBOutlet var labelReason: UILabel!
     @IBOutlet var labelReasonTitle: UILabel!
     
-    func configureWithService(_ service: Service) {
-        if service.status == .cancelled {
+    func configureWithService(_ service: Service?) {
+        switch service?.status {
+        case .cancelled:
             labelDisruptionDetails.text = "Sailings have been cancelled for this service"
-        } else {
+        case .disrupted:
             labelDisruptionDetails.text = "There are disruptions with this service"
+        case .normal:
+            labelDisruptionDetails.text = "There are currently no disruptions with this service"
+        case .unknown, nil:
+            labelDisruptionDetails.text = ""
         }
 
-        circleView.backgroundColor = service.status.color
-        labelReason.text = service.disruptionReason?.capitalized
+        circleView.backgroundColor = service?.status.color ?? .gray
+        labelReason.text = service?.disruptionReason?.capitalized
     }
 }
