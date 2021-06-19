@@ -95,7 +95,7 @@ class ServiceDetailWeatherCell: UITableViewCell, CAAnimationDelegate {
         
         let animation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
         let values = [0, -7, 7, -5, 5, -3, 3, 0].map { (startingAngle + $0).toRadians() }
-        let keyTimes = values.map { Double($0)/Double(values.count - 1) }
+        let keyTimes = Array(0..<values.count).map { Double($0)/Double(values.count - 1) }
         
         animation.values = values
         animation.keyTimes = keyTimes as [NSNumber]?
