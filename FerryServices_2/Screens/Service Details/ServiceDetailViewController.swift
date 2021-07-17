@@ -271,10 +271,10 @@ class ServiceDetailViewController: UIViewController {
         labelArea.preferredMaxLayoutWidth = view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
         labelRoute.preferredMaxLayoutWidth = view.bounds.size.width - (MainStoryBoard.Constants.headerMargin * 2)
         
-        tableView.tableHeaderView!.setNeedsLayout()
-        tableView.tableHeaderView!.layoutIfNeeded()
-        let headerHeight = tableView.tableHeaderView!.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        tableView.tableHeaderView!.frame = CGRect(x: 0, y: 0, width: view.bounds.size.width, height: headerHeight)
+        tableView.tableHeaderView?.setNeedsLayout()
+        tableView.tableHeaderView?.layoutIfNeeded()
+        let headerHeight = tableView.tableHeaderView?.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height ?? 0
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: view.bounds.size.width, height: headerHeight)
         
         var frame = viewBackground.frame
         frame.origin.y = -tableView.contentOffset.y + headerHeight
@@ -446,7 +446,7 @@ class ServiceDetailViewController: UIViewController {
         
         let rect = calculateMapRectForAnnotations(mapViewDelegate.portAnnotations)
         
-        let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset - view.safeAreaInsets.bottom - navigationController!.navigationBar.bounds.height - UIApplication.shared.statusBarFrame.height
+        let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset - view.safeAreaInsets.bottom - (navigationController?.navigationBar.bounds.height ?? 44) - UIApplication.shared.statusBarFrame.height
         
         let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsets.init(top: 60, left: 30, bottom: bottomInset + 5, right: 30))
         
@@ -600,7 +600,7 @@ extension ServiceDetailViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let header = view as! UITableViewHeaderFooterView
+        guard let header = view as? UITableViewHeaderFooterView else { return }
         header.textLabel?.textColor = UIColor(named: "Text")
     }
 }
