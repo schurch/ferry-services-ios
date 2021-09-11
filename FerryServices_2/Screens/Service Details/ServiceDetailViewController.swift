@@ -579,7 +579,7 @@ extension ServiceDetailViewController: UITableViewDelegate {
                 show(webInfoViewController("Disruption information", content:additionalInfo), sender: self)
             }
         case .noDisruption:
-            if let additionalInfo = service.additionalInfo {
+            if let additionalInfo = service.additionalInfo, additionalInfo.count > 0 {
                 show(webInfoViewController("Additional info", content:additionalInfo), sender: self)
             }
         default:

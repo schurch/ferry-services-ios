@@ -27,3 +27,12 @@ struct APIDecoder {
         return decoder
     }()
 }
+
+struct APIEncoder {
+    static let shared: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.dateEncodingStrategy = .iso8601
+        return encoder
+    }()
+}

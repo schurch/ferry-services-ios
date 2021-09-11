@@ -8,19 +8,32 @@
 
 import Foundation
 
-struct Service: Decodable {
+struct Service: Codable {
+    static let servicesCacheLocation: URL = {
+        let cacheDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        return cacheDirectory.appendingPathComponent("services.json")
+    }()
+    
     static let defaultServices: [Service] = {
         do {
-            let defaultServicesFilePath = Bundle.main.path(forResource: "services", ofType: "json")!
-            let data = try Data(contentsOf: URL(fileURLWithPath: defaultServicesFilePath))
+            let data: Data = try {
+                if FileManager.default.fileExists(atPath: servicesCacheLocation.path) {
+                    return try Data(contentsOf: servicesCacheLocation)
+                } else {
+                    let defaultServicesFilePath = Bundle.main.path(forResource: "services", ofType: "json")!
+                    return try Data(contentsOf: URL(fileURLWithPath: defaultServicesFilePath))
+                }
+            }()
+            
             let services = try APIDecoder.shared.decode([Service].self, from: data)
             return services.sorted(by: { $0.sortOrder < $1.sortOrder })
+            
         } catch let error {
             fatalError("Unable to load default services: \(error)")
         }
     }()
     
-    enum Status: Decodable {
+    enum Status: Codable {
         case normal
         case disrupted
         case cancelled
@@ -39,9 +52,19 @@ struct Service: Decodable {
                 self = .unknown
             }
         }
+        
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            switch self {
+            case .normal: try container.encode(0)
+            case .disrupted: try container.encode(1)
+            case .cancelled: try container.encode(2)
+            case .unknown: try container.encode(-99)
+            }
+        }
     }
     
-    struct Location: Decodable {
+    struct Location: Codable {
         private enum CodingKeys: String, CodingKey {
             case name, latitude, longitude
         }

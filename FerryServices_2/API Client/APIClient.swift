@@ -26,7 +26,7 @@ class APIClient {
     
     static func fetchServices(completion: @escaping (Result<[Service], Error>) -> ()){
         let url = URL(string: "\(APIClient.root)/services/", relativeTo: APIClient.baseURL)!
-        send(request: URLRequest(url: url), completion: completion)
+        sendAndCacheResult(request: URLRequest(url: url), completion: completion)
     }
     
     static func fetchService(serviceID: Int, completion: @escaping (Result<Service, Error>) -> ()) {
@@ -37,18 +37,18 @@ class APIClient {
     static func createInstallation(installationID: UUID, deviceToken: String, completion: @escaping (Result<[Service], Error>) -> ()) {
         let url = URL(string: "\(APIClient.root)/installations/\(installationID)", relativeTo: APIClient.baseURL)!
         let request = createRequest(with: url, body: CreateInstallationBody(deviceToken: deviceToken))
-        send(request: request, completion: completion)
+        sendAndCacheResult(request: request, completion: completion)
     }
     
     static func getInstallationServices(installationID: UUID, completion: @escaping (Result<[Service], Error>) -> ()) {
         let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
-        send(request: URLRequest(url: url), completion: completion)
+        sendAndCacheResult(request: URLRequest(url: url), completion: completion)
     }
     
     static func addService(for installationID: UUID, serviceID: Int, completion: @escaping (Result<[Service], Error>) -> ()) {
         let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
         let request = createRequest(with: url, body: CreateInstallationServiceBody(serviceID: serviceID))
-        send(request: request, completion: completion)
+        sendAndCacheResult(request: request, completion: completion)
     }
     
     static func removeService(for installationID: UUID, serviceID: Int, completion: @escaping (Result<[Service], Error>) -> ()) {
@@ -56,7 +56,7 @@ class APIClient {
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
         
-        send(request: request, completion: completion)
+        sendAndCacheResult(request: request, completion: completion)
     }
     
     private static func createRequest<T: Encodable>(with url: URL, body: T) -> URLRequest {
@@ -72,6 +72,34 @@ class APIClient {
         request.allHTTPHeaderFields = headers
         
         return request
+    }
+    
+    private static func sendAndCacheResult(request: URLRequest, completion: @escaping (Result<[Service], Error>) -> ()) {
+        send(request: request, completion: { (result: Result<[Service], Error>) in
+            switch result {
+            case .success(let services):
+                let servicesToCache = services.map {
+                    Service(
+                        serviceId: $0.serviceId,
+                        sortOrder: $0.sortOrder,
+                        status: .unknown,
+                        area: $0.area,
+                        route: $0.route,
+                        disruptionReason: nil,
+                        lastUpdatedDate: nil,
+                        updated: nil,
+                        additionalInfo: nil,
+                        locations: $0.locations
+                    )
+                }
+                if let data = try? APIEncoder.shared.encode(servicesToCache) {
+                    try? data.write(to: Service.servicesCacheLocation)
+                }
+                completion(result)
+            case .failure:
+                completion(result)
+            }
+        })
     }
     
     private static func send<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, Error>) -> ()) {

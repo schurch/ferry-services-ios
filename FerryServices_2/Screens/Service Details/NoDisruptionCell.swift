@@ -22,7 +22,7 @@ class NoDisruptionCell: UITableViewCell {
     }
     
     func configureWithService(_ service: Service?) {
-        if service?.additionalInfo != nil {
+        if (service?.additionalInfo ?? "").count > 0 {
             showInfoButton()
         } else {
             hideInfoButton()
