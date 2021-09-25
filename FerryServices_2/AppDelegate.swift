@@ -43,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         var shouldPerformAdditionalDelegateHandling = true
         
-        // Sentry
         SentrySDK.start { options in
             options.dsn = APIKeys.sentryDSN
         }
@@ -60,7 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
-        // Global colors
         window?.tintColor = UIColor(named: "Tint")
         
         if let shortcutItem = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {

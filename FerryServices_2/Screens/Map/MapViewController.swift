@@ -22,6 +22,10 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithDefaultBackground()
+        navigationItem.scrollEdgeAppearance = navBarAppearance
+        
         if let locations = self.locations {
             mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: locations)
             mapView.delegate = mapViewDelegate            

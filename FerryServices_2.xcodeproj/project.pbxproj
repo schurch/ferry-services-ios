@@ -740,7 +740,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -774,7 +774,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -875,7 +875,7 @@
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.10;
+				minimumVersion = 7.3.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

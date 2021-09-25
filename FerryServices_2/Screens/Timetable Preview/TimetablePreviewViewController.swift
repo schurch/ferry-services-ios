@@ -19,7 +19,11 @@ class TimetablePreviewViewController: UIViewController, UIWebViewDelegate {
     // MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithDefaultBackground()
+        navigationItem.scrollEdgeAppearance = navBarAppearance
+        
         webview.loadFileURL(url, allowingReadAccessTo: url)
         
         let shareItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(TimetablePreviewViewController.share))

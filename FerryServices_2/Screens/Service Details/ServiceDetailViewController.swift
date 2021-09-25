@@ -85,6 +85,10 @@ class ServiceDetailViewController: UIViewController {
 
         navigationItem.largeTitleDisplayMode = .never
         
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithDefaultBackground()
+        navigationItem.scrollEdgeAppearance = navBarAppearance
+        
         NotificationCenter.default.addObserver(self, selector: #selector(ServiceDetailViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         if let service = service {
@@ -446,7 +450,7 @@ class ServiceDetailViewController: UIViewController {
         
         let rect = calculateMapRectForAnnotations(mapViewDelegate.portAnnotations)
         
-        let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset - view.safeAreaInsets.bottom - (navigationController?.navigationBar.bounds.height ?? 44) - UIApplication.shared.statusBarFrame.height
+        let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset - view.safeAreaInsets.bottom - (navigationController?.navigationBar.bounds.height ?? 44) - (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
         
         let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsets.init(top: 60, left: 30, bottom: bottomInset + 5, right: 30))
         
