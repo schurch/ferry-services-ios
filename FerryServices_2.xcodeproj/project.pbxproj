@@ -10,9 +10,7 @@
 		F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */; };
 		F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3CB36264F841100D2E4AE /* CircleView.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
-		FD1B5FAC258479150098B96B /* LocationWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F84258479150098B96B /* LocationWeather.swift */; };
 		FD1B5FAD258479150098B96B /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F85258479150098B96B /* Vessel.swift */; };
-		FD1B5FAE258479150098B96B /* WeatherAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F87258479150098B96B /* WeatherAPIClient.swift */; };
 		FD1B5FAF258479150098B96B /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F88258479150098B96B /* APIError.swift */; };
 		FD1B5FB0258479150098B96B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F89258479150098B96B /* APIClient.swift */; };
 		FD1B5FB1258479150098B96B /* DisruptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8C258479150098B96B /* DisruptionsCell.swift */; };
@@ -107,9 +105,7 @@
 		F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+Extensions.swift"; sourceTree = "<group>"; };
 		F8A3CB36264F841100D2E4AE /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		FD1B5F84258479150098B96B /* LocationWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWeather.swift; sourceTree = "<group>"; };
 		FD1B5F85258479150098B96B /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
-		FD1B5F87258479150098B96B /* WeatherAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherAPIClient.swift; sourceTree = "<group>"; };
 		FD1B5F88258479150098B96B /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		FD1B5F89258479150098B96B /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		FD1B5F8C258479150098B96B /* DisruptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisruptionsCell.swift; sourceTree = "<group>"; };
@@ -245,7 +241,6 @@
 		FD1B5F83258479150098B96B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FD1B5F84258479150098B96B /* LocationWeather.swift */,
 				FD1B5FCD2584794E0098B96B /* Service.swift */,
 				FD1B5F85258479150098B96B /* Vessel.swift */,
 			);
@@ -257,7 +252,6 @@
 			children = (
 				FD1B5F89258479150098B96B /* APIClient.swift */,
 				FD1B5F88258479150098B96B /* APIError.swift */,
-				FD1B5F87258479150098B96B /* WeatherAPIClient.swift */,
 				FD1B5FD3258479E10098B96B /* Decoder.swift */,
 			);
 			path = "API Client";
@@ -561,7 +555,6 @@
 				FD1B5FC2258479150098B96B /* ServicesViewController.swift in Sources */,
 				FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */,
 				F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */,
-				FD1B5FAC258479150098B96B /* LocationWeather.swift in Sources */,
 				FD1B5FC5258479150098B96B /* ServiceMapDelegate.swift in Sources */,
 				FD1B5FB7258479150098B96B /* TextCell.swift in Sources */,
 				FD1B5FB2258479150098B96B /* WeatherCell.swift in Sources */,
@@ -576,7 +569,6 @@
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				FD1B5FC9258479150098B96B /* LastViewedServices.swift in Sources */,
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
-				FD1B5FAE258479150098B96B /* WeatherAPIClient.swift in Sources */,
 				FD1B5FAF258479150098B96B /* APIError.swift in Sources */,
 				FD1B5FB9258479150098B96B /* NoDisruptionCell.swift in Sources */,
 				FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */,

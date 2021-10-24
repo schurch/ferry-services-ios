@@ -30,7 +30,7 @@ class ServiceDetailViewController: UIViewController {
         case noDisruption
         case loading
         case textOnly(text: String)
-        case weather(index: Int)
+        case weather(weather: Service.Location.Weather)
         case alert
     }
     
@@ -72,7 +72,6 @@ class ServiceDetailViewController: UIViewController {
     var refreshingDisruptionInfo: Bool = true // show table as refreshing initially
     var viewBackground: UIView!
     var windAnimationTimer: Timer!
-    var weather: [LocationWeather?] = []
         
     // MARK: -
     deinit {
@@ -239,8 +238,6 @@ class ServiceDetailViewController: UIViewController {
         labelArea.text = service?.area
         labelRoute.text = service?.route
         
-        weather = service?.locations.map { _ in nil } ?? []
-        
         mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: service?.locations ?? [])
         mapViewDelegate?.shouldAllowAnnotationSelection = false
         mapView.delegate = mapViewDelegate
@@ -385,12 +382,16 @@ class ServiceDetailViewController: UIViewController {
             sections.append(timetableSection)
         }
         
-        // weather sections
-        for (index, location) in service.locations.enumerated() {
-            sections.append(Section(title: location.name, footer: nil, rows: [.weather(index: index)]))
-        }
+        let weatherSections = service.locations
+            .compactMap { location in
+                guard let weather = location.weather else { return nil }
+                return (location.name, weather)
+            }
+            .map { name, weather in
+                return Section(title: name, footer: nil, rows: [.weather(weather: weather)])
+            }
         
-        dataSource = sections
+        dataSource = sections + weatherSections
     }
     
     // MARK: - Utility methods
@@ -411,21 +412,6 @@ class ServiceDetailViewController: UIViewController {
             self.service = service
             self.refreshingDisruptionInfo = false
             self.configureView()
-            self.fetchLatestWeatherData()
-        }
-    }
-    
-    private func fetchLatestWeatherData() {
-        guard let service = service else { return }
-        for (index, location) in service.locations.enumerated() {
-            WeatherAPIClient.sharedInstance.fetchWeatherForLocation(location) { [weak self] result in
-                guard let self = self else { return }
-                guard case .success(let weather) = result else { return }
-                
-                self.weather[index] = weather
-                self.generateDatasource()
-                self.tableView.reloadData()
-            }
         }
     }
     
@@ -547,16 +533,11 @@ extension ServiceDetailViewController: UITableViewDataSource {
             cell.labelText.text = text
             return cell
             
-        case .weather(let index):
+        case .weather(let weather):
             let identifier = MainStoryBoard.TableViewCellIdentifiers.weatherCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! WeatherCell
             cell.selectionStyle = .none
-            
-            if index < weather.count {
-                cell.configure(with: weather[index], animate: true)
-            } else {
-                cell.configure(with: nil, animate: true)
-            }
+            cell.configure(with: weather, animate: true)
             
             return cell
             

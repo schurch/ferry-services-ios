@@ -21,12 +21,12 @@ class WeatherCell: UITableViewCell, CAAnimationDelegate {
     @IBOutlet weak var viewRightContainer: UIView!
     @IBOutlet weak var viewSeparator: UIView!
     
-    var weather: LocationWeather?
+    var weather: Service.Location.Weather?
     var configuring = false
     
     lazy var rotationAngle: Double? = {
-        guard let windDirection = weather?.wind.deg else { return 0 }
-        return windDirection + 180.0
+        guard let windDirection = weather?.windDirection else { return 0 }
+        return Double(windDirection + 180)
     }()
     
     override func awakeFromNib() {
@@ -36,7 +36,7 @@ class WeatherCell: UITableViewCell, CAAnimationDelegate {
     }
     
     // MARK: - Configure
-    func configure(with weather: LocationWeather?, animate: Bool) {
+    func configure(with weather: Service.Location.Weather, animate: Bool) {
         configuring = true
         
         self.weather = weather
@@ -47,33 +47,21 @@ class WeatherCell: UITableViewCell, CAAnimationDelegate {
         viewRightContainer.isHidden = false
         viewLeftContainer.isHidden = false
         
-        if let locationWeather = weather {
-            labelTemperature.text = "\(Int(round(locationWeather.main.tempCelsius)))ºC"
-            labelConditions.text = locationWeather.combinedWeatherDescription
-            labelWindDirection.text = "\(locationWeather.wind.directionCardinal) Wind"
-            imageViewWindDirection.image = UIImage(named: "Wind")
-            
-            if let rotationAngle = rotationAngle, animate {
-                UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
-                    self.imageViewWindDirection.transform = CGAffineTransform(rotationAngle: rotationAngle.toRadians())
-                }, completion: { finished in
-                    self.configuring = false
-                })
-            }
-            
-            labelWindSpeed.text = "\(Int(round(locationWeather.wind.speedMPH))) MPH"
-            
-            if let icon = locationWeather.weather[0].icon {
-                imageViewWeather.image = UIImage(named: "\(icon)")
-            }
+        labelTemperature.text = "\(weather.temperatureCelsius)ºC"
+        labelConditions.text = weather.description
+        labelWindDirection.text = "\(weather.windDirectionCardinal) Wind"
+        imageViewWindDirection.image = UIImage(named: "Wind")
+        
+        if let rotationAngle = rotationAngle, animate {
+            UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 5.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
+                self.imageViewWindDirection.transform = CGAffineTransform(rotationAngle: rotationAngle.toRadians())
+            }, completion: { finished in
+                self.configuring = false
+            })
         }
-        else {
-            labelTemperature.text = "-"
-            labelConditions.text = "–"
-            labelWindDirection.text = "– Wind"
-            labelWindSpeed.text = "– MPH"
-            imageViewWeather.image = nil
-        }
+        
+        labelWindSpeed.text = "\(weather.windSpeedMph) MPH"
+        imageViewWeather.image = UIImage(named: weather.icon)
         
         if !animate {
             configuring = false

@@ -65,13 +65,23 @@ struct Service: Codable {
     }
     
     struct Location: Codable {
+        struct Weather: Codable {
+            let description: String
+            let icon: String
+            let temperatureCelsius: Int
+            let windSpeedMph: Int
+            let windDirection: Int
+            let windDirectionCardinal: String
+        }
+        
         private enum CodingKeys: String, CodingKey {
-            case name, latitude, longitude
+            case name, latitude, longitude, weather
         }
         
         let name: String
         let latitude: Double
         let longitude: Double
+        let weather: Weather?
     }
     
     let serviceId: Int
