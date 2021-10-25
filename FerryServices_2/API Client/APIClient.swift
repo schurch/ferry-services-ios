@@ -18,10 +18,10 @@ class APIClient {
         let serviceID: Int
     }
     
-//    static let baseURL = URL(string: "http://192.168.86.249:3000")
-    static let baseURL = URL(string: "http://localhost:3001")
+//    static let baseURL = URL(string: "http://192.168.86.232:3001")
+//    static let baseURL = URL(string: "http://localhost:3001")
 //    private static let baseURL = URL(string: "http://test.scottishferryapp.com")
-//    private static let baseURL = URL(string: "https://scottishferryapp.com")
+    private static let baseURL = URL(string: "https://scottishferryapp.com")
     private static let root = "/api"
     
     static func fetchServices(completion: @escaping (Result<[Service], Error>) -> ()){
