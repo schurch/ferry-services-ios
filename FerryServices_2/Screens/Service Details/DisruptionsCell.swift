@@ -10,10 +10,11 @@ import UIKit
 
 class DisruptionsCell: UITableViewCell {
     
-    @IBOutlet var circleView: CircleView!
-    @IBOutlet var labelDisruptionDetails: UILabel!
-    @IBOutlet var labelReason: UILabel!
-    @IBOutlet var labelReasonTitle: UILabel!
+    @IBOutlet weak var circleView: CircleView!
+    @IBOutlet weak var labelDisruptionDetails: UILabel!
+    @IBOutlet weak var labelReason: UILabel!
+    @IBOutlet weak var labelReasonTitle: UILabel!
+    @IBOutlet weak var reasonStackView: UIStackView!
     
     func configureWithService(_ service: Service?) {
         switch service?.status {
@@ -28,6 +29,8 @@ class DisruptionsCell: UITableViewCell {
         }
 
         circleView.backgroundColor = service?.status.color ?? .gray
+        
+        reasonStackView.isHidden = (service?.disruptionReason?.isEmpty ?? true) ? true : false
         labelReason.text = service?.disruptionReason?.capitalized
     }
 }
