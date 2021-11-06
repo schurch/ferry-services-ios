@@ -59,6 +59,11 @@ class APIClient {
         sendAndCacheResult(request: request, completion: completion)
     }
     
+    static func fetchVessels(completion: @escaping (Result<[Vessel], Error>) -> ()) {
+        let url = URL(string: "\(APIClient.root)/vessels/", relativeTo: APIClient.baseURL)!
+        send(request: URLRequest(url: url), completion: completion)
+    }
+    
     private static func createRequest<T: Encodable>(with url: URL, body: T) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

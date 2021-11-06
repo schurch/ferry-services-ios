@@ -11,8 +11,16 @@ import MapKit
 
 class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     
+    private class VesselAnnotation: MKPointAnnotation {
+        var vessel: Vessel
+        
+        init(vessel: Vessel) {
+            self.vessel = vessel
+        }
+    }
     private struct Constants {
         static let portAnnotationReuseIdentifier = "PortAnnotationReuseId"
+        static let ferryAnnotationReuseId = "FerryAnnotationReuseId"
     }
     
     var shouldAllowAnnotationSelection = true
@@ -33,6 +41,14 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
         mapView.addAnnotations(portAnnotations)
         
         super.init()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+     
+        fetchVessels()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     //MARK: Public
@@ -40,13 +56,24 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
         mapView.showAnnotations(portAnnotations, animated: false)
     }
     
+    @objc func applicationDidBecomeActive() {
+        refresh()
+    }
+    
+    func refresh() {
+            fetchVessels()
+    }
     //MARK: MKMapViewDelegate
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation.isKind(of: MKUserLocation.self) {
             return nil
         }
         
-        return createPortAnnotationView(mapView: mapView, annotation: annotation)
+        if annotation.isKind(of: VesselAnnotation.self) {
+            return createFerryAnnotationView(mapView: mapView, annotation: annotation)
+        } else {
+            return createPortAnnotationView(mapView: mapView, annotation: annotation)
+        }
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -69,6 +96,22 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
     }
     
     //MARK: - Helpers
+    private func createFerryAnnotationView(mapView: MKMapView, annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let vesselAnnotation = annotation as? VesselAnnotation else { return nil }
+        
+        var ferryView = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.ferryAnnotationReuseId)
+        
+        if ferryView == nil {
+            ferryView = MKAnnotationView(annotation: vesselAnnotation, reuseIdentifier: Constants.ferryAnnotationReuseId)
+            ferryView?.canShowCallout = true
+        } else {
+            ferryView?.annotation = annotation
+        }
+        
+        ferryView?.image = UIImage(named: "ferry")!.rotated(by: vesselAnnotation.vessel.course ?? 0)
+        
+        return ferryView
+    }
     private func createPortAnnotationView(mapView: MKMapView, annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.portAnnotationReuseIdentifier)
         
@@ -91,5 +134,24 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
         pinAnnotationView.rightCalloutAccessoryView = directionsButton
         
         return pinAnnotationView
+    }
+    
+    private func fetchVessels() {
+        APIClient.fetchVessels { result in
+            guard case let .success(vessels) = result else { return }
+            
+            let newAnnotations: [VesselAnnotation] = vessels.map { vessel in
+                let annotation = VesselAnnotation(vessel: vessel)
+                annotation.coordinate = CLLocationCoordinate2D(latitude: vessel.latitude, longitude: vessel.longitude)
+                annotation.title = vessel.name
+                annotation.subtitle = "\(vessel.speed) knots • \(vessel.lastReceived.relativeTimeSinceNowText())"
+                
+                return annotation
+            }
+            
+            let currentAnnotations = self.mapView.annotations.filter { $0.isKind(of: VesselAnnotation.self) }
+            self.mapView.removeAnnotations(currentAnnotations)
+            self.mapView.addAnnotations(newAnnotations)
+        }
     }
 }
