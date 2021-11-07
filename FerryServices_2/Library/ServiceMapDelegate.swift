@@ -144,7 +144,10 @@ class ServiceMapDelegate: NSObject, MKMapViewDelegate {
                 let annotation = VesselAnnotation(vessel: vessel)
                 annotation.coordinate = CLLocationCoordinate2D(latitude: vessel.latitude, longitude: vessel.longitude)
                 annotation.title = vessel.name
-                annotation.subtitle = "\(vessel.speed) knots • \(vessel.lastReceived.relativeTimeSinceNowText())"
+                annotation.subtitle = [
+                    vessel.speed.map { "\($0) knots" },
+                    vessel.lastReceived.relativeTimeSinceNowText()
+                ].compactMap { $0 }.joined(separator: " • ")
                 
                 return annotation
             }

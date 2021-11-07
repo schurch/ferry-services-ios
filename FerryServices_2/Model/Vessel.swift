@@ -11,7 +11,7 @@ import Foundation
 struct Vessel: Decodable {
     let mmsi: Int
     let name: String
-    let speed: Double
+    let speed: Double?
     let course: Double?
     let latitude: Double
     let longitude: Double
