@@ -505,7 +505,7 @@ extension ServiceDetailViewController: UITableViewDataSource {
         case .summerTimetable:
             let identifier = MainStoryBoard.TableViewCellIdentifiers.basicCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-            cell.textLabel?.text = "Summer 2021"
+            cell.textLabel?.text = "Summer 2022"
             cell.accessoryType = .disclosureIndicator
             return cell
             
@@ -600,6 +600,6 @@ private extension Service {
     }
     
     var summerPath: String {
-        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2021/Summer/\(serviceId).pdf")
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2022/Summer/\(serviceId).pdf")
     }
 }
