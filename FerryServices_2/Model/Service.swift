@@ -25,8 +25,7 @@ struct Service: Codable {
                 }
             }()
             
-            let services = try APIDecoder.shared.decode([Service].self, from: data)
-            return services.sorted(by: { $0.sortOrder < $1.sortOrder })
+            return try APIDecoder.shared.decode([Service].self, from: data)
             
         } catch let error {
             fatalError("Unable to load default services: \(error)")
@@ -85,7 +84,6 @@ struct Service: Codable {
     }
     
     let serviceId: Int
-    let sortOrder: Int
     let status: Status
     let area: String
     let route: String

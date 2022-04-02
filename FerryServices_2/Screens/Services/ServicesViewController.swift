@@ -79,7 +79,7 @@ class ServicesViewController: UITableViewController {
                 return
             }
 
-            self.services = services.sorted(by: { $0.sortOrder < $1.sortOrder })
+            self.services = services
             self.searchResultsController.arrayOfServices = self.services
             self.tableData = ServicesViewController.generateTableData(from: self.services)
             self.tableView.reloadData()
@@ -138,7 +138,6 @@ class ServicesViewController: UITableViewController {
                 services.first(where: { service in service.serviceId == serviceID })
             }
             .compactMap { $0 }
-            .sorted(by: { $0.sortOrder < $1.sortOrder })
     }
     
     private func showDetails(for service: Service) {

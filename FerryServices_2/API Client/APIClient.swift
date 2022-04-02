@@ -18,7 +18,7 @@ class APIClient {
         let serviceID: Int
     }
     
-//    static let baseURL = URL(string: "http://192.168.86.232:3001")
+//    static let baseURL = URL(string: "http://192.168.86.27:3001")
 //    static let baseURL = URL(string: "http://localhost:3001")
 //    private static let baseURL = URL(string: "http://test.scottishferryapp.com")
     private static let baseURL = URL(string: "https://scottishferryapp.com")
@@ -86,7 +86,6 @@ class APIClient {
                 let servicesToCache = services.map {
                     Service(
                         serviceId: $0.serviceId,
-                        sortOrder: $0.sortOrder,
                         status: .unknown,
                         area: $0.area,
                         route: $0.route,
