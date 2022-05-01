@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Vessel: Decodable {
+struct Vessel: Codable {
     let mmsi: Int
     let name: String
     let speed: Double?

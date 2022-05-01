@@ -13,10 +13,9 @@ class MapViewController: UIViewController {
 
     @IBOutlet var mapView: MKMapView!
     
-    var locations: [Service.Location]?
+    var service: Service!
     
-    private var mapViewDelegate: ServiceMapDelegate!
-    private var didShowAnnotations = false
+    private var didShowLocations = false
     
     // MARK: - View lifecycle
     override func viewDidLoad() {
@@ -25,20 +24,28 @@ class MapViewController: UIViewController {
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithDefaultBackground()
         navigationItem.scrollEdgeAppearance = navBarAppearance
-        
-        if let locations = self.locations {
-            mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: locations)
-            mapView.delegate = mapViewDelegate            
-        }
+                
+        mapView.delegate = self
+        mapView.addAnnotations(service.locations.map(LocationAnnotation.init))
+        mapView.addAnnotations(service.vessels.map(VesselAnnotation.init))
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if !didShowAnnotations {
-            mapViewDelegate.showPorts()
-            didShowAnnotations = true
+        if !didShowLocations {
+            mapView.showAnnotations(
+                mapView.annotations.filter({ $0 is LocationAnnotation }),
+                animated: false
+            )
+            didShowLocations = true
         }
     }
     
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        return MapViewHelpers.mapView(mapView, viewFor: annotation)
+    }
 }

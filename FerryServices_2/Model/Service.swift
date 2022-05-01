@@ -92,4 +92,5 @@ struct Service: Codable {
     let updated: Date? // Time updated on server
     let additionalInfo: String?
     let locations: [Location]
+    let vessels: [Vessel]
 }

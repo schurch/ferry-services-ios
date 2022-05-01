@@ -64,7 +64,6 @@ class ServiceDetailViewController: UIViewController {
     var serviceID: Int!
     var service: Service?
 
-    var mapViewDelegate: ServiceMapDelegate?
     var dataSource: [Section] = []
     var headerHeight: CGFloat?
     var mapMotionEffect: UIMotionEffectGroup!
@@ -238,9 +237,12 @@ class ServiceDetailViewController: UIViewController {
         labelArea.text = service?.area
         labelRoute.text = service?.route
         
-        mapViewDelegate = ServiceMapDelegate(mapView: mapView, locations: service?.locations ?? [])
-        mapViewDelegate?.shouldAllowAnnotationSelection = false
-        mapView.delegate = mapViewDelegate
+        mapView.delegate = self
+        if let service = service {
+            mapView.removeAnnotations(mapView.annotations)
+            mapView.addAnnotations(service.locations.map(LocationAnnotation.init))
+            mapView.addAnnotations(service.vessels.map(VesselAnnotation.init))
+        }
         
         generateDatasource()
         tableView.reloadData()
@@ -252,9 +254,11 @@ class ServiceDetailViewController: UIViewController {
     
     // MARK: - ui actions
     @IBAction func touchedButtonShowMap(_ sender: UIButton) {
+        guard let service = service else { return }
         let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
-        mapViewController.title = service?.route
-        mapViewController.locations = service?.locations
+        
+        mapViewController.title = service.route
+        mapViewController.service = service
         
         show(mapViewController, sender: self)
     }
@@ -432,9 +436,9 @@ class ServiceDetailViewController: UIViewController {
     }
     
     private func setMapVisibleRect() {
-        guard let mapViewDelegate = mapViewDelegate else { return }
+        guard let locations = service?.locations else { return }
         
-        let rect = calculateMapRectForAnnotations(mapViewDelegate.portAnnotations)
+        let rect = MapViewHelpers.calculateMapRect(forLocations: locations)
         
         let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset - view.safeAreaInsets.bottom - (navigationController?.navigationBar.bounds.height ?? 44) - (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
         
@@ -601,5 +605,11 @@ private extension Service {
     
     var summerPath: String {
         return (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2022/Summer/\(serviceId).pdf")
+    }
+}
+
+extension ServiceDetailViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        return MapViewHelpers.mapView(mapView, viewFor: annotation)
     }
 }

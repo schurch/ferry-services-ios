@@ -93,7 +93,8 @@ class APIClient {
                         lastUpdatedDate: nil,
                         updated: nil,
                         additionalInfo: nil,
-                        locations: $0.locations
+                        locations: $0.locations,
+                        vessels: []
                     )
                 }
                 if let data = try? APIEncoder.shared.encode(servicesToCache) {
