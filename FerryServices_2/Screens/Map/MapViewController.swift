@@ -27,7 +27,7 @@ class MapViewController: UIViewController {
                 
         mapView.delegate = self
         mapView.addAnnotations(service.locations.map(LocationAnnotation.init))
-        mapView.addAnnotations(service.vessels.map(VesselAnnotation.init))
+        mapView.addAnnotations((service.vessels ?? []).map(VesselAnnotation.init))
     }
     
     override func viewDidLayoutSubviews() {

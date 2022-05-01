@@ -241,7 +241,7 @@ class ServiceDetailViewController: UIViewController {
         if let service = service {
             mapView.removeAnnotations(mapView.annotations)
             mapView.addAnnotations(service.locations.map(LocationAnnotation.init))
-            mapView.addAnnotations(service.vessels.map(VesselAnnotation.init))
+            mapView.addAnnotations((service.vessels ?? []).map(VesselAnnotation.init))
         }
         
         generateDatasource()

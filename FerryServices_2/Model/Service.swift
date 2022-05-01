@@ -28,7 +28,7 @@ struct Service: Codable {
             return try APIDecoder.shared.decode([Service].self, from: data)
             
         } catch let error {
-            fatalError("Unable to load default services: \(error)")
+            return []
         }
     }()
     
@@ -92,5 +92,5 @@ struct Service: Codable {
     let updated: Date? // Time updated on server
     let additionalInfo: String?
     let locations: [Location]
-    let vessels: [Vessel]
+    let vessels: [Vessel]?
 }
