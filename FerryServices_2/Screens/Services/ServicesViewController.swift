@@ -129,15 +129,13 @@ class ServicesViewController: UITableViewController {
     }
     
     private static func createSubscribedServices(from services: [Service], userDefaults: UserDefaults) -> [Service] {
-        guard let subscribedServiceIDs = userDefaults.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] else {
+        guard let subscribedServiceIDs = userDefaults.array(
+            forKey: UserDefaultsKeys.subscribedService
+        ) as? [Int] else {
             return []
         }
         
-        return subscribedServiceIDs
-            .map { serviceID in
-                services.first(where: { service in service.serviceId == serviceID })
-            }
-            .compactMap { $0 }
+        return services.filter { subscribedServiceIDs.contains($0.serviceId) }
     }
     
     private func showDetails(for service: Service) {

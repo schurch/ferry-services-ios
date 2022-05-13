@@ -10,14 +10,35 @@ import Foundation
 import MapKit
 
 class MapViewHelpers {
+    private class VesselAnnotationView: MKAnnotationView {
+        private var observation: NSKeyValueObservation?
+        
+        override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+            super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+            setup()
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        private func setup() {
+            guard let vesselAnnotation = annotation as? VesselAnnotation else { return }
+            observation = vesselAnnotation.observe(\.course, options: .new) { [weak self] object, change in
+                guard let newCourse = change.newValue else { return }
+                self?.image = UIImage(named: "ferry")!.rotated(by: newCourse)
+            }
+        }
+    }
+    
     static func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         switch annotation {
         case let vesselAnnotation as VesselAnnotation:
-            let ferryView = mapView.dequeueReusableAnnotationView(withIdentifier: "ferry") ?? MKAnnotationView(annotation: vesselAnnotation, reuseIdentifier: "ferry")
+            let ferryView = mapView.dequeueReusableAnnotationView(withIdentifier: "ferry") ?? VesselAnnotationView(annotation: vesselAnnotation, reuseIdentifier: "ferry")
             ferryView.annotation = vesselAnnotation
             ferryView.displayPriority = .required
             ferryView.canShowCallout = true
-            ferryView.image = UIImage(named: "ferry")!.rotated(by: vesselAnnotation.course ?? 0)
+            ferryView.image = UIImage(named: "ferry")!.rotated(by: vesselAnnotation.course)
             
             return ferryView
             

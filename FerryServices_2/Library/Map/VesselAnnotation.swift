@@ -13,18 +13,50 @@ class VesselAnnotation: NSObject, MKAnnotation {
     @objc dynamic var coordinate: CLLocationCoordinate2D
     @objc dynamic var title: String?
     @objc dynamic var subtitle: String?
-    var course: Double?
+    @objc dynamic var course: Double
+    
+    var vessel: Vessel {
+        didSet {
+            configure()
+        }
+    }
     
     init(vessel: Vessel) {
+        self.vessel = vessel
         self.coordinate = CLLocationCoordinate2D(
             latitude: vessel.latitude,
             longitude: vessel.longitude
         )
-        self.title = vessel.name
-        self.subtitle = [
+        self.course = 0
+        
+        super.init()
+        
+        configure()
+    }
+    
+    private func configure() {
+        coordinate = CLLocationCoordinate2D(
+            latitude: vessel.latitude,
+            longitude: vessel.longitude
+        )
+        title = vessel.name
+        subtitle = [
             vessel.speed.map { "\($0) knots" },
             vessel.lastReceived.relativeTimeSinceNowText()
         ].compactMap { $0 }.joined(separator: " • ")
-        self.course = vessel.course
+        
+        course = vessel.course ?? 0
+    }
+    
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let object = object as? VesselAnnotation else { return false }
+        return vessel.mmsi == object.vessel.mmsi
+        
+    }
+    
+    override var hash: Int {
+        var hasher = Hasher()
+        hasher.combine(vessel.mmsi)
+        return hasher.finalize()
     }
 }

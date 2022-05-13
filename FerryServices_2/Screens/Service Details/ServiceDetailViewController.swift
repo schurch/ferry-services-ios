@@ -239,9 +239,28 @@ class ServiceDetailViewController: UIViewController {
         
         mapView.delegate = self
         if let service = service {
-            mapView.removeAnnotations(mapView.annotations)
-            mapView.addAnnotations(service.locations.map(LocationAnnotation.init))
-            mapView.addAnnotations((service.vessels ?? []).map(VesselAnnotation.init))
+            if !mapView.annotations.contains(where: { $0 is LocationAnnotation }) {
+                mapView.addAnnotations(service.locations.map(LocationAnnotation.init))
+            }
+            
+            if let vessels = service.vessels {
+                let annotations = Set(vessels.map(VesselAnnotation.init))
+                let existingAnnotations = Set(mapView.annotations.compactMap { $0 as? VesselAnnotation})
+                
+                let new = annotations.subtracting(existingAnnotations)
+                let removed = existingAnnotations.subtracting(annotations)
+                
+                mapView.addAnnotations(Array(new))
+                mapView.removeAnnotations(Array(removed))
+                mapView.annotations
+                    .compactMap { $0 as? VesselAnnotation }
+                    .forEach { vesselAnnotation in
+                        guard let updatedVessel = vessels.first(where: { $0.mmsi == vesselAnnotation.vessel.mmsi }) else { return }
+                        UIView.animate(withDuration: 0.25) {
+                            vesselAnnotation.vessel = updatedVessel
+                        }
+                    }
+            }
         }
         
         generateDatasource()
@@ -442,7 +461,7 @@ class ServiceDetailViewController: UIViewController {
         
         let bottomInset = view.bounds.size.height - MainStoryBoard.Constants.contentInset - view.safeAreaInsets.bottom - (navigationController?.navigationBar.bounds.height ?? 44) - (view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
         
-        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsets.init(top: 60, left: 30, bottom: bottomInset + 5, right: 30))
+        let visibleRect = mapView.mapRectThatFits(rect, edgePadding: UIEdgeInsets.init(top: 60, left: 60, bottom: bottomInset + 18, right: 60))
         
         mapView.setVisibleMapRect(visibleRect, animated: false)
     }
