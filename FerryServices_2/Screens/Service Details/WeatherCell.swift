@@ -24,10 +24,10 @@ class WeatherCell: UITableViewCell, CAAnimationDelegate {
     var weather: Service.Location.Weather?
     var configuring = false
     
-    lazy var rotationAngle: Double? = {
+    var rotationAngle: Double? {
         guard let windDirection = weather?.windDirection else { return 0 }
         return Double(windDirection + 180)
-    }()
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

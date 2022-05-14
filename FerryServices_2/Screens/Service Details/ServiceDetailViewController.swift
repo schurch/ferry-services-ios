@@ -242,25 +242,6 @@ class ServiceDetailViewController: UIViewController {
             if !mapView.annotations.contains(where: { $0 is LocationAnnotation }) {
                 mapView.addAnnotations(service.locations.map(LocationAnnotation.init))
             }
-            
-            if let vessels = service.vessels {
-                let annotations = Set(vessels.map(VesselAnnotation.init))
-                let existingAnnotations = Set(mapView.annotations.compactMap { $0 as? VesselAnnotation})
-                
-                let new = annotations.subtracting(existingAnnotations)
-                let removed = existingAnnotations.subtracting(annotations)
-                
-                mapView.addAnnotations(Array(new))
-                mapView.removeAnnotations(Array(removed))
-                mapView.annotations
-                    .compactMap { $0 as? VesselAnnotation }
-                    .forEach { vesselAnnotation in
-                        guard let updatedVessel = vessels.first(where: { $0.mmsi == vesselAnnotation.vessel.mmsi }) else { return }
-                        UIView.animate(withDuration: 0.25) {
-                            vesselAnnotation.vessel = updatedVessel
-                        }
-                    }
-            }
         }
         
         generateDatasource()
@@ -307,6 +288,27 @@ class ServiceDetailViewController: UIViewController {
         self.headerHeight = headerHeight
         
         tableView.reloadData()
+    }
+    
+    private func configureVessels() {
+        guard let vessels = service?.vessels else { return }
+        
+        let annotations = Set(vessels.map(VesselAnnotation.init))
+        let existingAnnotations = Set(mapView.annotations.compactMap { $0 as? VesselAnnotation})
+        
+        let added = annotations.subtracting(existingAnnotations)
+        let removed = existingAnnotations.subtracting(annotations)
+        
+        mapView.addAnnotations(Array(added))
+        mapView.removeAnnotations(Array(removed))
+        mapView.annotations
+            .compactMap { $0 as? VesselAnnotation }
+            .forEach { vesselAnnotation in
+                guard let updatedVessel = vessels.first(where: { $0.mmsi == vesselAnnotation.vessel.mmsi }) else { return }
+                UIView.animate(withDuration: 0.25) {
+                    vesselAnnotation.vessel = updatedVessel
+                }
+            }
     }
     
     private func subscribeToService() {
@@ -435,6 +437,7 @@ class ServiceDetailViewController: UIViewController {
             self.service = service
             self.refreshingDisruptionInfo = false
             self.configureView()
+            self.configureVessels()
         }
     }
     
