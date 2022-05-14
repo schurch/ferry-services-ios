@@ -37,18 +37,18 @@ class APIClient {
     static func createInstallation(installationID: UUID, deviceToken: String, completion: @escaping (Result<[Service], Error>) -> ()) {
         let url = URL(string: "\(APIClient.root)/installations/\(installationID)", relativeTo: APIClient.baseURL)!
         let request = createRequest(with: url, body: CreateInstallationBody(deviceToken: deviceToken))
-        sendAndCacheResult(request: request, completion: completion)
+        send(request: request, completion: completion)
     }
     
     static func getInstallationServices(installationID: UUID, completion: @escaping (Result<[Service], Error>) -> ()) {
         let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
-        sendAndCacheResult(request: URLRequest(url: url), completion: completion)
+        send(request: URLRequest(url: url), completion: completion)
     }
     
     static func addService(for installationID: UUID, serviceID: Int, completion: @escaping (Result<[Service], Error>) -> ()) {
         let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
         let request = createRequest(with: url, body: CreateInstallationServiceBody(serviceID: serviceID))
-        sendAndCacheResult(request: request, completion: completion)
+        send(request: request, completion: completion)
     }
     
     static func removeService(for installationID: UUID, serviceID: Int, completion: @escaping (Result<[Service], Error>) -> ()) {
@@ -56,7 +56,7 @@ class APIClient {
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
         
-        sendAndCacheResult(request: request, completion: completion)
+        send(request: request, completion: completion)
     }
     
     static func fetchVessels(completion: @escaping (Result<[Vessel], Error>) -> ()) {
