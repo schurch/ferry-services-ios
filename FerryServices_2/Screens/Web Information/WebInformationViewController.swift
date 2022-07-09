@@ -68,6 +68,11 @@ extension WebInformationViewController: WKNavigationDelegate {
             return
         }
         
+        guard url.scheme.map({ ["http", "https"].contains($0) }) == true else {
+            decisionHandler(.allow)
+            return
+        }
+        
         let safariViewController = SFSafariViewController(url: url)
         present(safariViewController, animated: true, completion: nil)
         
