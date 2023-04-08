@@ -80,14 +80,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FDBD7DCF1DB18FDD00698A70 /* Embed App Extensions */ = {
+		FDBD7DCF1DB18FDD00698A70 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FDE391C51C1561AE000EDE26 /* Embed Watch Content */ = {
@@ -431,7 +431,7 @@
 				FD753ECD197A256E00CC5DE3 /* Frameworks */,
 				FD753ECE197A256E00CC5DE3 /* Resources */,
 				FDE391C51C1561AE000EDE26 /* Embed Watch Content */,
-				FDBD7DCF1DB18FDD00698A70 /* Embed App Extensions */,
+				FDBD7DCF1DB18FDD00698A70 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -471,7 +471,7 @@
 			attributes = {
 				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1420;
 				ORGANIZATIONNAME = "Stefan Church";
 				TargetAttributes = {
 					FD753ECF197A256E00CC5DE3 = {
