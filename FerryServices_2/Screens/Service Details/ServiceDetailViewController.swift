@@ -99,27 +99,22 @@ class ServiceDetailViewController: UIViewController {
         alertCell.configureLoading()
         
         APIClient.getInstallationServices(installationID: Installation.id) { [weak self] result in
-            guard let self = self else {
+            guard
+                let self = self,
+                let service = self.service,
+                case .success(let subscribedServices) = result
+            else {
                 return
             }
             
-            switch result {
-            case .failure:
-                self.alertCell.configureLoadedWithSwitchOn(false)
+            let subscribed = subscribedServices.map { $0.serviceId }.contains(service.serviceId)
+            self.alertCell.configureLoadedWithSwitchOn(subscribed)
+            
+            if subscribed {
+                self.addServiceIdToSubscribedList()
+            }
+            else {
                 self.removeServiceIdFromSubscribedList()
-                
-            case .success(let subscribedServices):
-                guard let service = self.service else { return }
-                
-                let subscribed = subscribedServices.map { $0.serviceId }.contains(service.serviceId)
-                self.alertCell.configureLoadedWithSwitchOn(subscribed)
-                
-                if subscribed {
-                    self.addServiceIdToSubscribedList()
-                }
-                else {
-                    self.removeServiceIdFromSubscribedList()
-                }
             }
         }
         
