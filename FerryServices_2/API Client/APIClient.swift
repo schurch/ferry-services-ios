@@ -97,9 +97,14 @@ class APIClient {
                         vessels: []
                     )
                 }
-                if let data = try? APIEncoder.shared.encode(servicesToCache) {
-                    try? data.write(to: Service.servicesCacheLocation)
+                
+                do {
+                    let data = try APIEncoder.shared.encode(servicesToCache)
+                    try data.write(to: Service.servicesCacheLocation)
+                } catch let error {
+                    print("Error caching services: \(error)")
                 }
+                
                 completion(result)
             case .failure:
                 completion(result)

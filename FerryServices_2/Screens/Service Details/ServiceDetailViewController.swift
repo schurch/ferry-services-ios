@@ -31,6 +31,7 @@ class ServiceDetailViewController: UIViewController {
         case loading
         case textOnly(text: String)
         case weather(weather: Service.Location.Weather)
+        case departure(departure: Service.Location.ScheduledDeparture)
         case alert
     }
     
@@ -112,8 +113,7 @@ class ServiceDetailViewController: UIViewController {
             
             if subscribed {
                 self.addServiceIdToSubscribedList()
-            }
-            else {
+            } else {
                 self.removeServiceIdFromSubscribedList()
             }
         }
@@ -310,9 +310,7 @@ class ServiceDetailViewController: UIViewController {
         guard let service = service else { return }
         
         APIClient.addService(for: Installation.id, serviceID: service.serviceId) { [weak self] result in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             
             switch result {
             case .failure:
@@ -402,16 +400,20 @@ class ServiceDetailViewController: UIViewController {
             sections.append(timetableSection)
         }
         
-        let weatherSections = service.locations
+        let locationSections: [Section] = service.locations
             .compactMap { location in
-                guard let weather = location.weather else { return nil }
-                return (location.name, weather)
-            }
-            .map { name, weather in
-                return Section(title: name, footer: nil, rows: [.weather(weather: weather)])
+                let weather = location.weather.map({ [Row.weather(weather: $0)] }) ?? []
+                let departures = location.scheduledDepartures?.map({ Row.departure(departure: $0) }) ?? []
+                guard weather.count > 0 || departures.count > 0 else { return nil }
+                
+                return Section(
+                    title: location.name,
+                    footer: nil,
+                    rows: weather + departures
+                )
             }
         
-        dataSource = sections + weatherSections
+        dataSource = sections + locationSections
     }
     
     // MARK: - Utility methods
@@ -559,6 +561,22 @@ extension ServiceDetailViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! WeatherCell
             cell.selectionStyle = .none
             cell.configure(with: weather, animate: true)
+            
+            return cell
+            
+        case .departure(let departure):
+            let identifier = MainStoryBoard.TableViewCellIdentifiers.textOnlyCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! TextCell
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            formatter.timeZone = TimeZone(identifier: "Europe/London")
+            
+            let departureTime = formatter.string(from: departure.departure)
+            let arrivalTime = formatter.string(from: departure.arrival)
+            let destination = departure.destination.name
+            
+            cell.labelText.text = "\(departureTime) arriving in \(destination) at \(arrivalTime)"
             
             return cell
             

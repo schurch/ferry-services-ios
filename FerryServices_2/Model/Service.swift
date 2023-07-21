@@ -28,6 +28,7 @@ struct Service: Codable {
             return try APIDecoder.shared.decode([Service].self, from: data)
             
         } catch let error {
+            print("Error loading default services: \(error)")
             return []
         }
     }()
@@ -73,14 +74,21 @@ struct Service: Codable {
             let windDirectionCardinal: String
         }
         
+        struct ScheduledDeparture: Codable {
+            let departure: Date
+            let arrival: Date
+            let destination: Location
+        }
+        
         private enum CodingKeys: String, CodingKey {
-            case name, latitude, longitude, weather
+            case name, latitude, longitude, weather, scheduledDepartures
         }
         
         let name: String
         let latitude: Double
         let longitude: Double
         let weather: Weather?
+        let scheduledDepartures: [ScheduledDeparture]?
     }
     
     let serviceId: Int
