@@ -31,9 +31,6 @@ struct Installation {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
-    static let applicationShortcutTypeRecentService = "UIApplicationShortcutIconTypeRecentService"
-    static let applicationShortcutUserInfoKeyServiceId = "ServiceId"
-                            
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

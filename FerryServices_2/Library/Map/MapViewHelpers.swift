@@ -63,7 +63,7 @@ class MapViewHelpers {
     }
     
     static func calculateMapRect(forLocations locations: [Service.Location]) -> MKMapRect {
-        return locations.reduce(MKMapRect.null) { rect, location in
+        let rect = locations.reduce(MKMapRect.null) { rect, location in
             rect.union(
                 MKMapRect(
                     origin: MKMapPoint.init(
@@ -76,5 +76,9 @@ class MapViewHelpers {
                 )
             )
         }
+        
+        return rect
+            .offsetBy(dx: 0, dy: 70000)
+            .insetBy(dx: -100000, dy: -100000)
     }
 }

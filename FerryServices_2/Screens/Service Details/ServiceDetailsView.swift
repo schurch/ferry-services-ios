@@ -45,18 +45,18 @@ struct ServiceDetailsView: View {
                             interactionModes: [],
                             annotationItems: model.annotations
                         ) { annotation in
-                                MapAnnotation(
-                                    coordinate: annotation.coordinate
-                                ) {
-                                    switch annotation.type {
-                                    case .location:
-                                        Image(systemName: "mappin.circle.fill")
-                                            .foregroundColor(.red)
-                                    case .vessel(let course):
-                                        Image("ferry")
-                                            .rotationEffect(.degrees(course))
-                                    }
+                            MapAnnotation(
+                                coordinate: annotation.coordinate
+                            ) {
+                                switch annotation.type {
+                                case .location:
+                                    Image(systemName: "mappin.circle.fill")
+                                        .foregroundColor(.red)
+                                case .vessel(let course):
+                                    Image("ferry")
+                                        .rotationEffect(.degrees(course))
                                 }
+                            }
                         }
                         .frame(maxHeight: .infinity)
                         .onTapGesture {
@@ -81,7 +81,7 @@ struct ServiceDetailsView: View {
                 
                 Section {
                     Group {
-                        if let additionalInfo = service.additionalInfo {
+                        if let additionalInfo = service.additionalInfo, !additionalInfo.isEmpty {
                             Button {
                                 showDisruptionInfo(additionalInfo)
                             } label: {
@@ -97,42 +97,46 @@ struct ServiceDetailsView: View {
                         HStack {
                             Text("Subscribe to updates")
                             Spacer()
-                            ProgressView()
+                            // Progress view sometimes wouldn't show again so give it a unique ID each time
+                            ProgressView().id(UUID())
                         }
                     } else {
                         Toggle("Subscribe to updates", isOn: $model.subscribed)
                     }
                 }
                 
-                Section("Timetables") {
-                    Button {
-                        showTimetable(
-                            service,
-                            URL(fileURLWithPath: (Bundle.main.bundlePath as NSString).appendingPathComponent("Timetables/2023/Summer/\(service.serviceId).pdf"))
-                        )
-                    } label: {
-                        HStack {
-                            Text("Summer 2023")
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                                .font(Font.system(.caption).weight(.bold))
-                                .foregroundColor(Color(UIColor.tertiaryLabel))
-                            
+                if model.timetables.count > 0 {
+                    Section("Timetables") {
+                        ForEach(model.timetables) { timetable in
+                            Button {
+                                showTimetable(
+                                    service,
+                                    timetable.fileLocation
+                                )
+                            } label: {
+                                HStack {
+                                    Text(timetable.text)
+                                    Spacer()
+                                    Image(systemName: "chevron.forward")
+                                        .font(Font.system(.caption).weight(.bold))
+                                        .foregroundColor(Color(UIColor.tertiaryLabel))
+                                    
+                                }
+                            }
                         }
                     }
                 }
                 
                 ForEach(service.locations) { location in
                     if let weather = location.weather {
-                        Section(location.name) {
+                        Section("\(location.name) weather") {
                             WeatherView(weather: weather)
                                 .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                         }
                     }
                     
-                    if
-                        let scheduledDepartures = location.scheduledDepartures,
-                        scheduledDepartures.count > 0
+                    if let scheduledDepartures = location.scheduledDepartures,
+                       scheduledDepartures.count > 0
                     {
                         Section {
                             ForEach(scheduledDepartures) { departureInfo in
@@ -153,12 +157,14 @@ struct ServiceDetailsView: View {
                             }
                         } header: {
                             HStack {
-                                Text(location.name)
+                                Text("\(location.name) departure")
                                 Spacer()
                                 Image(systemName: "arrow.right")
                                 Spacer()
-                                Text(scheduledDepartures.first!.destination.name)
+                                Text("\(scheduledDepartures.first!.destination.name) arrival")
                             }
+                        } footer: {
+                            Text("Check")
                         }
                     }
                 }
@@ -203,7 +209,7 @@ private struct WeatherView: View {
     
     var body: some View {
         HStack {
-            VStack {
+            VStack(spacing: 0) {
                 HStack {
                     Image(weather.icon)
                     Text("\(weather.temperatureCelsius)°C")
@@ -214,13 +220,13 @@ private struct WeatherView: View {
                     .foregroundColor(.secondary)
             }
             .frame(maxWidth: .infinity)
-            .padding([.top, .bottom], 8)
+            .padding([.top, .bottom], 4)
             
             Color(uiColor: UIColor.separator)
                 .frame(width: 0.5)
                 .padding(0)
             
-            VStack {
+            VStack(spacing: 0) {
                 HStack {
                     Image("Wind")
                         .rotationEffect(.degrees(Double(weather.windDirection + 180)))
@@ -232,7 +238,7 @@ private struct WeatherView: View {
                     .foregroundColor(.secondary)
             }
             .frame(maxWidth: .infinity)
-            .padding([.top, .bottom], 8)
+            .padding([.top, .bottom], 4)
         }
     }
 }
