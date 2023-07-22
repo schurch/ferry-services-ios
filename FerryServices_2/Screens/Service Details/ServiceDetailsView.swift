@@ -162,7 +162,17 @@ struct ServiceDetailsView: View {
                                 Text("\(scheduledDepartures.first!.destination.name) arrival")
                             }
                         } footer: {
-                            Text("Check")
+                            let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
+                            if badStatuses.contains(service.status) {
+                                HStack(alignment: .top) {
+                                    Image(systemName: "exclamationmark.triangle")
+                                        .foregroundColor(Color("Amber"))
+                                    Text("Sailings may not be operating to the scheduled departure times. Please check the disruption information or the ferry service operator website.")
+                                        .font(.footnote)
+                                        .foregroundColor(Color(UIColor.systemGray))
+                                }
+                                .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                            }
                         }
                     }
                 }
