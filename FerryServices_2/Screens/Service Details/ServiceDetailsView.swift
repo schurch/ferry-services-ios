@@ -39,7 +39,7 @@ struct ServiceDetailsView: View {
         if let service = model.service {
             List {
                 Section {
-                    ZStack {
+                    VStack(spacing: 0) {
                         Map(
                             mapRect: $model.mapRect,
                             interactionModes: [],
@@ -58,7 +58,7 @@ struct ServiceDetailsView: View {
                                 }
                             }
                         }
-                        .frame(maxHeight: .infinity)
+                        .frame(height: 200)
                         .onTapGesture {
                             showMap(service)
                         }
@@ -72,9 +72,7 @@ struct ServiceDetailsView: View {
                             .font(.body)
                             .padding(15)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(.ultraThinMaterial)
                         }
-                        .padding(.top, 200)
                     }
                 }
                 .listRowInsets(EdgeInsets())

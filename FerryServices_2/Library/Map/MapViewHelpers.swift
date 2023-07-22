@@ -77,8 +77,6 @@ class MapViewHelpers {
             )
         }
         
-        return rect
-            .offsetBy(dx: 0, dy: 70000)
-            .insetBy(dx: -100000, dy: -100000)
+        return rect.insetBy(dx: -rect.width * 0.2, dy: -rect.height * 0.2)
     }
 }
