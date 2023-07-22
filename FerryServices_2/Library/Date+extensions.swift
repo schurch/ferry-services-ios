@@ -9,6 +9,13 @@
 import UIKit
 
 extension Date {
+    
+    static let timeFormatStyle = {
+        var style = Date.FormatStyle(date: .omitted, time: .shortened)
+        style.timeZone = TimeZone(identifier: "Europe/London")!
+        return style
+    }()
+    
     static func stripTimeComponentsFromDate(_ date: Date) -> Date {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(abbreviation: "UTC")!
@@ -45,4 +52,5 @@ extension Date {
             return "\(components.second!) \(secondsText) ago"
         }
     }
+    
 }

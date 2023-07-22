@@ -64,7 +64,7 @@ struct Service: Codable {
         }
     }
     
-    struct Location: Codable {
+    struct Location: Codable, Identifiable {
         struct Weather: Codable {
             let description: String
             let icon: String
@@ -74,16 +74,23 @@ struct Service: Codable {
             let windDirectionCardinal: String
         }
         
-        struct ScheduledDeparture: Codable {
+        struct ScheduledDeparture: Codable, Identifiable {
+            private enum CodingKeys: String, CodingKey {
+                case departure, arrival, destination
+            }
+            
+            var id = UUID()
+            
             let departure: Date
             let arrival: Date
             let destination: Location
         }
         
         private enum CodingKeys: String, CodingKey {
-            case name, latitude, longitude, weather, scheduledDepartures
+            case id, name, latitude, longitude, weather, scheduledDepartures
         }
         
+        let id: Int
         let name: String
         let latitude: Double
         let longitude: Double
@@ -101,4 +108,8 @@ struct Service: Codable {
     let additionalInfo: String?
     let locations: [Location]
     let vessels: [Vessel]?
+}
+
+extension Service: Identifiable {
+    var id: Int { serviceId }
 }

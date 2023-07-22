@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ServicesViewController: UITableViewController {
     
@@ -139,10 +140,13 @@ class ServicesViewController: UITableViewController {
     }
     
     private func showDetails(for service: Service) {
-        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailViewController
-        serviceDetailViewController.serviceID = service.serviceId
-        serviceDetailViewController.service = service
-        self.navigationController?.pushViewController(serviceDetailViewController, animated: true)
+        let viewController = ServiceDetailsView.createViewController(
+            serviceID: service.id,
+            service: service,
+            navigationController: navigationController!
+        )
+        
+        navigationController!.pushViewController(viewController, animated: true)
     }
 }
 

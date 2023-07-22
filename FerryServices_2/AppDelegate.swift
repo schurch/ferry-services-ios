@@ -28,8 +28,6 @@ struct Installation {
     }()
 }
 
-let sharedDefaults = UserDefaults(suiteName: "group.stefanchurch.ferryservices")
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
@@ -38,8 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             
     var window: UIWindow?
     
-    var launchedShortcutItem: UIApplicationShortcutItem? // Saved shortcut item used as a result of an app launch, used later when app is activated.
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         var shouldPerformAdditionalDelegateHandling = true
         
@@ -61,51 +57,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         window?.tintColor = UIColor(named: "Tint")
         
-        if let shortcutItem = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
-            launchedShortcutItem = shortcutItem
-            // This will block "performActionForShortcutItem:completionHandler" from being called.
-            shouldPerformAdditionalDelegateHandling = false
-        }
-        else if let remoteNotificationUserInfo = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
+        if let remoteNotificationUserInfo = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
             handleNotification(userInfo: remoteNotificationUserInfo)
         }
         
         return shouldPerformAdditionalDelegateHandling
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        application.applicationIconBadgeNumber = 0
-        
-        if let shortcut = launchedShortcutItem {
-            let _ = handleShortCutItem(shortcut)
-            launchedShortcutItem = nil
-        }
-    }
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        guard url.scheme == "scottishferryapp" else {
-            return false
-        }
-        guard let pathComponents = NSURLComponents(string: url.absoluteString)?.path?.components(separatedBy: "/") else {
-            return false
-        }
-        
-        guard pathComponents.count > 1 else {
-            return false
-        }
-        
-        let lastElements = Array(pathComponents.suffix(2))
-        guard lastElements[0] == "services" else {
-            return false
-        }
-        
-        guard let serviceId = Int(lastElements[1]) else {
-            return false
-        }
-        
-        showDetails(forServiceID: serviceId)
-        
-        return true
     }
     
     // MARK: - Push notifications
@@ -148,32 +104,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     
-    // MARK: - Shortcut items
-    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        let handledShortCutItem = handleShortCutItem(shortcutItem)
-        completionHandler(handledShortCutItem)
-    }
-    
-    func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
-        var handled = false
-        if let serviceID = shortcutItem.userInfo?[AppDelegate.applicationShortcutUserInfoKeyServiceId] as? Int {
-            showDetails(forServiceID: serviceID)
-            handled = true
-        }
-        
-        return handled
-    }
-    
     // MARK: - Utility methods
     private func showDetails(forServiceID serviceId: Int) {
         guard
             let navigationController = window?.rootViewController as? UINavigationController,
             let servicesViewController = navigationController.viewControllers.first as? ServicesViewController else { return }
         
-        let serviceDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServiceDetailTableViewController") as! ServiceDetailViewController
-        
-        serviceDetailViewController.serviceID = serviceId
-        serviceDetailViewController.service = Service.defaultServices.first(where: { $0.serviceId == serviceId })
+        let serviceDetailViewController = ServiceDetailsView.createViewController(
+            serviceID: serviceId,
+            service: Service.defaultServices.first(where: { $0.serviceId == serviceId }),
+            navigationController: navigationController
+        )
         
         navigationController.setViewControllers([servicesViewController, serviceDetailViewController], animated: true)
     }

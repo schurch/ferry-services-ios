@@ -24,6 +24,42 @@ class APIClient {
     private static let baseURL = URL(string: "https://scottishferryapp.com")
     private static let root = "/api"
     
+    //MARK: - Async
+    static func fetchService(serviceID: Int) async throws -> Service {
+        let url = URL(string: "\(APIClient.root)/services/\(serviceID)", relativeTo: APIClient.baseURL)!
+        return try await send(request: URLRequest(url: url))
+    }
+    
+    @discardableResult static func addService(for installationID: UUID, serviceID: Int) async throws -> [Service] {
+        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
+        let request = createRequest(with: url, body: CreateInstallationServiceBody(serviceID: serviceID))
+        return try await send(request: request)
+    }
+    
+    @discardableResult static func removeService(for installationID: UUID, serviceID: Int) async throws -> [Service] {
+        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services/\(serviceID)", relativeTo: APIClient.baseURL)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        return try await send(request: request)
+    }
+    
+    private static func send<T: Decodable>(request: URLRequest) async throws -> T {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let response = response as? HTTPURLResponse else {
+            throw APIError.expectedHTTPResponse
+        }
+        
+        switch response.statusCode {
+        case 200..<300:
+            return try APIDecoder.shared.decode(T.self, from: data)
+        default:
+            throw APIError.badResponseCode
+        }
+    }
+    
+    //MARK: - Closure
     static func fetchServices(completion: @escaping (Result<[Service], Error>) -> ()){
         let url = URL(string: "\(APIClient.root)/services/", relativeTo: APIClient.baseURL)!
         sendAndCacheResult(request: URLRequest(url: url), completion: completion)

@@ -10,24 +10,14 @@
 		F8111586281E148600DE8E59 /* MapViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8111585281E148600DE8E59 /* MapViewHelpers.swift */; };
 		F8111589281E1B3300DE8E59 /* LocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8111588281E1B3300DE8E59 /* LocationAnnotation.swift */; };
 		F811158B281E1B4500DE8E59 /* VesselAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F811158A281E1B4500DE8E59 /* VesselAnnotation.swift */; };
+		F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */; };
+		F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */; };
 		F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */; };
 		F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3CB36264F841100D2E4AE /* CircleView.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1B5FAD258479150098B96B /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F85258479150098B96B /* Vessel.swift */; };
 		FD1B5FAF258479150098B96B /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F88258479150098B96B /* APIError.swift */; };
 		FD1B5FB0258479150098B96B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F89258479150098B96B /* APIClient.swift */; };
-		FD1B5FB1258479150098B96B /* DisruptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8C258479150098B96B /* DisruptionsCell.swift */; };
-		FD1B5FB2258479150098B96B /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8D258479150098B96B /* WeatherCell.swift */; };
-		FD1B5FB3258479150098B96B /* ServiceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F8E258479150098B96B /* ServiceDetailViewController.swift */; };
-		FD1B5FB4258479150098B96B /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F8F258479150098B96B /* WeatherCell.xib */; };
-		FD1B5FB5258479150098B96B /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F90258479150098B96B /* LoadingCell.swift */; };
-		FD1B5FB6258479150098B96B /* DisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F91258479150098B96B /* DisruptionsCell.xib */; };
-		FD1B5FB7258479150098B96B /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F92258479150098B96B /* TextCell.swift */; };
-		FD1B5FB8258479150098B96B /* AlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F93258479150098B96B /* AlertCell.swift */; };
-		FD1B5FB9258479150098B96B /* NoDisruptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F94258479150098B96B /* NoDisruptionCell.swift */; };
-		FD1B5FBA258479150098B96B /* NoDisruptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F95258479150098B96B /* NoDisruptionsCell.xib */; };
-		FD1B5FBB258479150098B96B /* AlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F96258479150098B96B /* AlertCell.xib */; };
-		FD1B5FBC258479150098B96B /* TextOnlyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5F97258479150098B96B /* TextOnlyCell.xib */; };
 		FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F99258479150098B96B /* MapViewController.swift */; };
 		FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9B258479150098B96B /* WebInformationViewController.swift */; };
 		FD1B5FBF258479150098B96B /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */; };
@@ -35,11 +25,10 @@
 		FD1B5FC1258479150098B96B /* ServiceStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5FA0258479150098B96B /* ServiceStatusCell.xib */; };
 		FD1B5FC2258479150098B96B /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA1258479150098B96B /* ServicesViewController.swift */; };
 		FD1B5FC3258479150098B96B /* ServiceStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA2258479150098B96B /* ServiceStatusCell.swift */; };
-		FD1B5FC4258479150098B96B /* NSDate+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA5258479150098B96B /* NSDate+extensions.swift */; };
+		FD1B5FC4258479150098B96B /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA5258479150098B96B /* Date+extensions.swift */; };
 		FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA7258479150098B96B /* String+extensions.swift */; };
 		FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA8258479150098B96B /* UIImage+extensions.swift */; };
 		FD1B5FC8258479150098B96B /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA9258479150098B96B /* Utility.swift */; };
-		FD1B5FC9258479150098B96B /* LastViewedServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FAA258479150098B96B /* LastViewedServices.swift */; };
 		FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FAB258479150098B96B /* Double+extensions.swift */; };
 		FD1B5FCE2584794E0098B96B /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FCD2584794E0098B96B /* Service.swift */; };
 		FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FD3258479E10098B96B /* Decoder.swift */; };
@@ -107,24 +96,14 @@
 		F8111585281E148600DE8E59 /* MapViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewHelpers.swift; sourceTree = "<group>"; };
 		F8111588281E1B3300DE8E59 /* LocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotation.swift; sourceTree = "<group>"; };
 		F811158A281E1B4500DE8E59 /* VesselAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselAnnotation.swift; sourceTree = "<group>"; };
+		F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsView.swift; sourceTree = "<group>"; };
+		F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailModel.swift; sourceTree = "<group>"; };
 		F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+Extensions.swift"; sourceTree = "<group>"; };
 		F8A3CB36264F841100D2E4AE /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1B5F85258479150098B96B /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
 		FD1B5F88258479150098B96B /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		FD1B5F89258479150098B96B /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		FD1B5F8C258479150098B96B /* DisruptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisruptionsCell.swift; sourceTree = "<group>"; };
-		FD1B5F8D258479150098B96B /* WeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
-		FD1B5F8E258479150098B96B /* ServiceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceDetailViewController.swift; sourceTree = "<group>"; };
-		FD1B5F8F258479150098B96B /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
-		FD1B5F90258479150098B96B /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
-		FD1B5F91258479150098B96B /* DisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisruptionsCell.xib; sourceTree = "<group>"; };
-		FD1B5F92258479150098B96B /* TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
-		FD1B5F93258479150098B96B /* AlertCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertCell.swift; sourceTree = "<group>"; };
-		FD1B5F94258479150098B96B /* NoDisruptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoDisruptionCell.swift; sourceTree = "<group>"; };
-		FD1B5F95258479150098B96B /* NoDisruptionsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoDisruptionsCell.xib; sourceTree = "<group>"; };
-		FD1B5F96258479150098B96B /* AlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertCell.xib; sourceTree = "<group>"; };
-		FD1B5F97258479150098B96B /* TextOnlyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextOnlyCell.xib; sourceTree = "<group>"; };
 		FD1B5F99258479150098B96B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		FD1B5F9B258479150098B96B /* WebInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInformationViewController.swift; sourceTree = "<group>"; };
 		FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
@@ -132,11 +111,10 @@
 		FD1B5FA0258479150098B96B /* ServiceStatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceStatusCell.xib; sourceTree = "<group>"; };
 		FD1B5FA1258479150098B96B /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		FD1B5FA2258479150098B96B /* ServiceStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusCell.swift; sourceTree = "<group>"; };
-		FD1B5FA5258479150098B96B /* NSDate+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+extensions.swift"; sourceTree = "<group>"; };
+		FD1B5FA5258479150098B96B /* Date+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FA7258479150098B96B /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FA8258479150098B96B /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FA9258479150098B96B /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
-		FD1B5FAA258479150098B96B /* LastViewedServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastViewedServices.swift; sourceTree = "<group>"; };
 		FD1B5FAB258479150098B96B /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FCD2584794E0098B96B /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		FD1B5FD3258479E10098B96B /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
@@ -287,19 +265,8 @@
 		FD1B5F8B258479150098B96B /* Service Details */ = {
 			isa = PBXGroup;
 			children = (
-				FD1B5F8E258479150098B96B /* ServiceDetailViewController.swift */,
-				FD1B5F8C258479150098B96B /* DisruptionsCell.swift */,
-				FD1B5F8D258479150098B96B /* WeatherCell.swift */,
-				FD1B5F90258479150098B96B /* LoadingCell.swift */,
-				FD1B5F93258479150098B96B /* AlertCell.swift */,
-				FD1B5F94258479150098B96B /* NoDisruptionCell.swift */,
-				FD1B5F92258479150098B96B /* TextCell.swift */,
-				FD1B5F8F258479150098B96B /* WeatherCell.xib */,
-				FD1B5F91258479150098B96B /* DisruptionsCell.xib */,
-				FD1B5F95258479150098B96B /* NoDisruptionsCell.xib */,
-				FD1B5F96258479150098B96B /* AlertCell.xib */,
-				FD1B5F97258479150098B96B /* TextOnlyCell.xib */,
-				F8A3CB36264F841100D2E4AE /* CircleView.swift */,
+				F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */,
+				F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */,
 			);
 			path = "Service Details";
 			sourceTree = "<group>";
@@ -335,6 +302,7 @@
 				FD1B5F9F258479150098B96B /* SearchResultsViewController.swift */,
 				FD1B5FA2258479150098B96B /* ServiceStatusCell.swift */,
 				FD1B5FA0258479150098B96B /* ServiceStatusCell.xib */,
+				F8A3CB36264F841100D2E4AE /* CircleView.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -343,11 +311,10 @@
 			isa = PBXGroup;
 			children = (
 				F8111587281E1B2200DE8E59 /* Map */,
-				FD1B5FA5258479150098B96B /* NSDate+extensions.swift */,
+				FD1B5FA5258479150098B96B /* Date+extensions.swift */,
 				FD1B5FA7258479150098B96B /* String+extensions.swift */,
 				FD1B5FA8258479150098B96B /* UIImage+extensions.swift */,
 				FD1B5FA9258479150098B96B /* Utility.swift */,
-				FD1B5FAA258479150098B96B /* LastViewedServices.swift */,
 				FD1B5FAB258479150098B96B /* Double+extensions.swift */,
 			);
 			path = Library;
@@ -531,18 +498,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD1B5FB4258479150098B96B /* WeatherCell.xib in Resources */,
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
-				FD1B5FB6258479150098B96B /* DisruptionsCell.xib in Resources */,
-				FD1B5FBC258479150098B96B /* TextOnlyCell.xib in Resources */,
 				FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */,
-				FD1B5FBA258479150098B96B /* NoDisruptionsCell.xib in Resources */,
 				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				FDC03DE919DFDD8D000CE1FA /* services.json in Resources */,
 				FD1B5FC1258479150098B96B /* ServiceStatusCell.xib in Resources */,
-				FD1B5FBB258479150098B96B /* AlertCell.xib in Resources */,
 				FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -561,30 +523,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD1B5FC4258479150098B96B /* NSDate+extensions.swift in Sources */,
+				FD1B5FC4258479150098B96B /* Date+extensions.swift in Sources */,
 				FD1B5FCE2584794E0098B96B /* Service.swift in Sources */,
 				FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */,
-				FD1B5FB8258479150098B96B /* AlertCell.swift in Sources */,
 				F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */,
+				F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */,
 				FD1B5FC2258479150098B96B /* ServicesViewController.swift in Sources */,
 				FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */,
 				F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */,
-				FD1B5FB7258479150098B96B /* TextCell.swift in Sources */,
-				FD1B5FB2258479150098B96B /* WeatherCell.swift in Sources */,
 				F8111586281E148600DE8E59 /* MapViewHelpers.swift in Sources */,
-				FD1B5FB5258479150098B96B /* LoadingCell.swift in Sources */,
 				FD1B5FC8258479150098B96B /* Utility.swift in Sources */,
-				FD1B5FB3258479150098B96B /* ServiceDetailViewController.swift in Sources */,
 				FD1B5FC0258479150098B96B /* SearchResultsViewController.swift in Sources */,
-				FD1B5FB1258479150098B96B /* DisruptionsCell.swift in Sources */,
 				FD1B5FAD258479150098B96B /* Vessel.swift in Sources */,
+				F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */,
 				FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */,
 				FD1B5FC3258479150098B96B /* ServiceStatusCell.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
-				FD1B5FC9258479150098B96B /* LastViewedServices.swift in Sources */,
 				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
 				FD1B5FAF258479150098B96B /* APIError.swift in Sources */,
-				FD1B5FB9258479150098B96B /* NoDisruptionCell.swift in Sources */,
 				FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */,
 				FD1B5FB0258479150098B96B /* APIClient.swift in Sources */,
 				FD1B5FBF258479150098B96B /* TimetablePreviewViewController.swift in Sources */,
@@ -740,14 +696,14 @@
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = L832SX5MC4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -773,14 +729,14 @@
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = L832SX5MC4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

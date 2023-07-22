@@ -24,6 +24,8 @@ class MapViewController: UIViewController {
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithDefaultBackground()
         navigationItem.scrollEdgeAppearance = navBarAppearance
+        
+        title = service.route
                 
         mapView.delegate = self
         mapView.addAnnotations(service.locations.map(LocationAnnotation.init))

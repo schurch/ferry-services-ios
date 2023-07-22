@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct Vessel: Codable {
+struct Vessel: Codable, Identifiable {
+    var id: Int { mmsi }
+    
     let mmsi: Int
     let name: String
     let speed: Double?
