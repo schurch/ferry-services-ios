@@ -184,24 +184,13 @@ struct ServiceDetailsView: View {
             .task {
                 await model.fetchLatestService()
             }
-            .onChange(of: scenePhase) { newPhase in
-                if newPhase == .active {
-                    Task {
-                        await model.fetchLatestService()
-                    }
-                }
+            .refreshable {
+                await model.fetchLatestService()
             }
         } else {
             Text("Loading...")
                 .task {
                     await model.fetchLatestService()
-                }
-                .onChange(of: scenePhase) { newPhase in
-                    if newPhase == .active {
-                        Task {
-                            await model.fetchLatestService()
-                        }
-                    }
                 }
         }
     }
