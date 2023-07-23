@@ -12,6 +12,7 @@ import MapKit
 struct ServiceDetailsView: View {
     
     @StateObject private var model: ServiceDetailModel
+    @Environment(\.scenePhase) var scenePhase
     
     var showDisruptionInfo: (String) -> Void
     var showTimetable: (Service, URL) -> Void
@@ -49,12 +50,13 @@ struct ServiceDetailsView: View {
                                 coordinate: annotation.coordinate
                             ) {
                                 switch annotation.type {
-                                case .location:
-                                    Image(systemName: "mappin.circle.fill")
-                                        .foregroundColor(.red)
                                 case .vessel(let course):
                                     Image("ferry")
                                         .rotationEffect(.degrees(course))
+                                case .location:
+                                    Image("map-annotation")
+                                        .resizable()
+                                        .frame(width: 20, height: 20)
                                 }
                             }
                         }
@@ -125,6 +127,20 @@ struct ServiceDetailsView: View {
                     }
                 }
                 
+                let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
+                if badStatuses.contains(service.status) && service.anyScheduledDepartures {
+                    Section("Scheduled departures") {
+                        HStack(alignment: .top) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .foregroundColor(Color("Amber"))
+                            Text("Sailings may not be operating to the scheduled departure times. Please check the disruption information or the ferry service operator website for more details.")
+                                .font(.footnote)
+                                .foregroundColor(Color(UIColor.systemGray))
+                        }
+                        .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                    }
+                }
+                
                 ForEach(service.locations) { location in
                     if let weather = location.weather {
                         Section("\(location.name) weather") {
@@ -159,18 +175,6 @@ struct ServiceDetailsView: View {
                                 Spacer()
                                 Text("\(departures.first!.destination.name) arrival")
                             }
-                        } footer: {
-                            let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
-                            if badStatuses.contains(service.status) {
-                                HStack(alignment: .top) {
-                                    Image(systemName: "exclamationmark.triangle")
-                                        .foregroundColor(Color("Amber"))
-                                    Text("Sailings may not be operating to the scheduled departure times. Please check the disruption information or the ferry service operator website.")
-                                        .font(.footnote)
-                                        .foregroundColor(Color(UIColor.systemGray))
-                                }
-                                .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                            }
                         }
                     }
                 }
@@ -180,10 +184,24 @@ struct ServiceDetailsView: View {
             .task {
                 await model.fetchLatestService()
             }
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .active {
+                    Task {
+                        await model.fetchLatestService()
+                    }
+                }
+            }
         } else {
             Text("Loading...")
                 .task {
                     await model.fetchLatestService()
+                }
+                .onChange(of: scenePhase) { newPhase in
+                    if newPhase == .active {
+                        Task {
+                            await model.fetchLatestService()
+                        }
+                    }
                 }
         }
     }
@@ -293,7 +311,8 @@ extension ServiceDetailsView {
     
 }
 
-extension Service {
+private extension Service {
+    
     var statusColor: Color {
         switch status {
         case .unknown: return Color("Grey")
@@ -311,13 +330,21 @@ extension Service {
         case .unknown: return ""
         }
     }
+    
+    var anyScheduledDepartures: Bool {
+        locations.contains(where: { $0.scheduledDepartures?.isEmpty == false })
+    }
+    
 }
 
 private extension Service.Location {
+    
     // Grouped on destination
     var groupedScheduledDepartures: [[Service.Location.ScheduledDeparture]] {
         guard let scheduledDepartures else { return [] }
         let groups = Dictionary(grouping: scheduledDepartures, by: { $0.destination.id })
         return Array(groups.values)
+            .sorted(by: { $0.first?.destination.name ?? "" < $1.first?.destination.name ?? "" })
     }
+    
 }

@@ -59,7 +59,7 @@ class ServiceDetailModel: ObservableObject {
             )
         }) ?? []
         
-        return locations + vessels
+        return vessels + locations
     }
     
     var timetables: [Timetable] {
