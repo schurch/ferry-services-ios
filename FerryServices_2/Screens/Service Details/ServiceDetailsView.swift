@@ -133,11 +133,9 @@ struct ServiceDetailsView: View {
                         }
                     }
                     
-                    if let scheduledDepartures = location.scheduledDepartures,
-                       scheduledDepartures.count > 0
-                    {
+                    ForEach(location.groupedScheduledDepartures, id: \.self.first?.destination.id) { departures in
                         Section {
-                            ForEach(scheduledDepartures) { departureInfo in
+                            ForEach(departures) { departureInfo in
                                 HStack {
                                     Text(
                                         departureInfo
@@ -159,7 +157,7 @@ struct ServiceDetailsView: View {
                                 Spacer()
                                 Image(systemName: "arrow.right")
                                 Spacer()
-                                Text("\(scheduledDepartures.first!.destination.name) arrival")
+                                Text("\(departures.first!.destination.name) arrival")
                             }
                         } footer: {
                             let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
@@ -312,5 +310,14 @@ extension Service {
         case .cancelled: return "Sailings have been cancelled for this service"
         case .unknown: return ""
         }
+    }
+}
+
+private extension Service.Location {
+    // Grouped on destination
+    var groupedScheduledDepartures: [[Service.Location.ScheduledDeparture]] {
+        guard let scheduledDepartures else { return [] }
+        let groups = Dictionary(grouping: scheduledDepartures, by: { $0.destination.id })
+        return Array(groups.values)
     }
 }
