@@ -58,6 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             handleNotification(userInfo: remoteNotificationUserInfo)
         }
         
+        // Remove old shortcut items
+        application.shortcutItems?.removeAll()
+        
         return shouldPerformAdditionalDelegateHandling
     }
     
