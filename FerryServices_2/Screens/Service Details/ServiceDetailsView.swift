@@ -98,10 +98,15 @@ struct ServiceDetailsView: View {
                             Text("Subscribe to updates")
                             Spacer()
                             // Progress view sometimes wouldn't show again so give it a unique ID each time
-                            ProgressView().id(UUID())
+                            ProgressView()
+                                .id(UUID())
+                                .padding(.trailing, 12)
                         }
                     } else {
                         Toggle("Subscribe to updates", isOn: $model.subscribed)
+                            .onChange(of: model.subscribed) { value in
+                                model.updateSubscribed(subscribed: value)
+                            }
                     }
                 }
                 
@@ -186,6 +191,11 @@ struct ServiceDetailsView: View {
             }
             .refreshable {
                 await model.fetchLatestService()
+            }
+            .alert("Error", isPresented: $model.showSubscribedError) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("A problem occured. Please try again later.")
             }
         } else {
             Text("Loading...")

@@ -6,9 +6,8 @@
 //  Copyright © 2023 Stefan Church. All rights reserved.
 //
 
-import Combine
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct Annotation: Identifiable {
     enum AnnotationType { case location, vessel(course: Double) }
@@ -34,7 +33,8 @@ class ServiceDetailModel: ObservableObject {
     @Published var service: Service?
     @Published var mapRect: MKMapRect
     @Published var subscribed: Bool
-    @Published var loadingSubscribed: Bool = true
+    @Published var loadingSubscribed: Bool = false
+    @Published var showSubscribedError: Bool = false
     
     var annotations: [Annotation] {
         guard let service else { return [] }
@@ -80,7 +80,6 @@ class ServiceDetailModel: ObservableObject {
     }
     
     private var serviceID: Int
-    private var bag = Set<AnyCancellable>()
     
     init(serviceID: Int, service: Service?) {
         self.serviceID = serviceID
@@ -93,10 +92,9 @@ class ServiceDetailModel: ObservableObject {
         }
         
         self.subscribed = subscribedIDs.contains(serviceID)
-        self.$subscribed.sink(receiveValue: updateSubscribed).store(in: &bag)
     }
     
-    private func updateSubscribed(subscribed: Bool) {
+    func updateSubscribed(subscribed: Bool) {
         Task {
             defer { loadingSubscribed = false }
             loadingSubscribed = true
@@ -110,7 +108,7 @@ class ServiceDetailModel: ObservableObject {
                     UserDefaults.standard.setValue(subscribedIDs.filter({ $0 != serviceID }), forKey: UserDefaultsKeys.subscribedService)
                 }
             } catch {
-                self.subscribed.toggle()
+                showSubscribedError = true
             }
         }
     }
@@ -121,7 +119,7 @@ class ServiceDetailModel: ObservableObject {
             self.service = service
             self.mapRect = MapViewHelpers.calculateMapRect(forLocations: service.locations)
         } catch {
-            // Do nothing on error
+
         }
     }
     
