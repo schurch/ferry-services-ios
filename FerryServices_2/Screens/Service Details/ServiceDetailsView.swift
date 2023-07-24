@@ -186,16 +186,21 @@ struct ServiceDetailsView: View {
             }
             .listStyle(.plain)
             .listRowInsets(EdgeInsets())
+            .alert("Error", isPresented: $model.showSubscribedError) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("A problem occured. Please try again later.")
+            }
             .task {
                 await model.fetchLatestService()
             }
             .refreshable {
                 await model.fetchLatestService()
             }
-            .alert("Error", isPresented: $model.showSubscribedError) {
-                Button("OK", role: .cancel) { }
-            } message: {
-                Text("A problem occured. Please try again later.")
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                Task {
+                    await model.fetchLatestService()
+                }
             }
         } else {
             Text("Loading...")
