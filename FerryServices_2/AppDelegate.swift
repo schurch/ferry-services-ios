@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        var shouldPerformAdditionalDelegateHandling = true
         
         SentrySDK.start { options in
             options.dsn = APIKeys.sentryDSN
@@ -61,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Remove old shortcut items
         application.shortcutItems?.removeAll()
         
-        return shouldPerformAdditionalDelegateHandling
+        return true
     }
     
     // MARK: - Push notifications

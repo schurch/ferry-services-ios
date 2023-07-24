@@ -93,20 +93,22 @@ struct ServiceDetailsView: View {
                     }
                     .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     
-                    if model.loadingSubscribed {
-                        HStack {
-                            Text("Subscribe to updates")
-                            Spacer()
-                            // Progress view sometimes wouldn't show again so give it a unique ID each time
-                            ProgressView()
-                                .id(UUID())
-                                .padding(.trailing, 12)
-                        }
-                    } else {
-                        Toggle("Subscribe to updates", isOn: $model.subscribed)
-                            .onChange(of: model.subscribed) { value in
-                                model.updateSubscribed(subscribed: value)
+                    if model.registeredForNotifications {
+                        if model.loadingSubscribed {
+                            HStack {
+                                Text("Subscribe to updates")
+                                Spacer()
+                                // Progress view sometimes wouldn't show again so give it a unique ID each time
+                                ProgressView()
+                                    .id(UUID())
+                                    .padding(.trailing, 12)
                             }
+                        } else {
+                            Toggle("Subscribe to updates", isOn: $model.subscribed)
+                                .onChange(of: model.subscribed) { value in
+                                    model.updateSubscribed(subscribed: value)
+                                }
+                        }                        
                     }
                 }
                 

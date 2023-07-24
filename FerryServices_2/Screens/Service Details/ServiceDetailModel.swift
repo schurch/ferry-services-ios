@@ -79,6 +79,10 @@ class ServiceDetailModel: ObservableObject {
         }
     }
     
+    var registeredForNotifications: Bool {
+        UserDefaults.standard.bool(forKey: UserDefaultsKeys.registeredForNotifications)
+    }
+    
     private var serviceID: Int
     
     init(serviceID: Int, service: Service?) {
