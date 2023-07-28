@@ -150,9 +150,12 @@ struct ServiceDetailsView: View {
                 
                 ForEach(service.locations) { location in
                     if let weather = location.weather {
-                        Section("\(location.name) weather") {
+                        Section {
                             WeatherView(weather: weather)
                                 .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                        } header: {
+                            Text("\(location.name)")
+                                .font(.title3)
                         }
                     }
                     
