@@ -29,7 +29,6 @@
   {
     "additional_info": null,
     "area": "ARRAN",
-    "disruption_reason": "operational",
     "last_updated_date": null,
     "locations": [
       {
@@ -125,7 +124,6 @@
   {
     "additional_info": null,
     "area": "BARRA and ERISKAY",
-    "disruption_reason": "technical",
     "last_updated_date": null,
     "locations": [
       {
@@ -309,7 +307,6 @@
   {
     "additional_info": null,
     "area": "COWAL & DUNOON",
-    "disruption_reason": "technical",
     "last_updated_date": null,
     "locations": [
       {
@@ -472,9 +469,22 @@
   {
     "additional_info": null,
     "area": "ISLAY",
-    "disruption_reason": "technical",
     "last_updated_date": null,
     "locations": [
+      {
+        "id": 26,
+        "latitude": 56.06858,
+        "longitude": -6.18819,
+        "name": "Colonsay",
+        "weather": null
+      },
+      {
+        "id": 19,
+        "latitude": 56.41158,
+        "longitude": -5.47725,
+        "name": "Oban",
+        "weather": null
+      },
       {
         "id": 36,
         "latitude": 55.62781,
@@ -561,7 +571,6 @@
   {
     "additional_info": null,
     "area": "KINTYRE",
-    "disruption_reason": "operational",
     "last_updated_date": null,
     "locations": [
       {
@@ -589,14 +598,13 @@
   {
     "additional_info": null,
     "area": "LEWIS",
-    "disruption_reason": "other",
     "last_updated_date": null,
     "locations": [
       {
         "id": 10,
         "latitude": 57.894939,
         "longitude": -5.160442,
-        "name": "Ullapool Bay",
+        "name": "Ullapool",
         "weather": null
       },
       {
@@ -617,14 +625,13 @@
   {
     "additional_info": null,
     "area": "LEWIS FREIGHT",
-    "disruption_reason": "operational ",
     "last_updated_date": null,
     "locations": [
       {
         "id": 10,
         "latitude": 57.894939,
         "longitude": -5.160442,
-        "name": "Ullapool Bay",
+        "name": "Ullapool",
         "weather": null
       },
       {
@@ -882,7 +889,6 @@
   {
     "additional_info": null,
     "area": "SMALL ISLES",
-    "disruption_reason": "operational",
     "last_updated_date": null,
     "locations": [
       {
