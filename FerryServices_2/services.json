@@ -2,6 +2,7 @@
   {
     "additional_info": null,
     "area": "ARDNAMURCHAN",
+    "disruption_reason": null,
     "last_updated_date": null,
     "locations": [
       {
@@ -29,6 +30,7 @@
   {
     "additional_info": null,
     "area": "ARRAN",
+    "disruption_reason": null,
     "last_updated_date": null,
     "locations": [
       {
@@ -85,7 +87,8 @@
     "sort_order": 3,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -119,7 +122,8 @@
     "sort_order": 4,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -146,7 +150,8 @@
     "sort_order": 5,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -173,7 +178,8 @@
     "sort_order": 6,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -200,7 +206,8 @@
     "sort_order": 7,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -234,7 +241,8 @@
     "sort_order": 8,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -275,7 +283,8 @@
     "sort_order": 9,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -302,7 +311,8 @@
     "sort_order": 10,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -329,7 +339,8 @@
     "sort_order": 11,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -356,6 +367,7 @@
     "status": -99,
     "updated": null,
     "vessels": [],
+    "disruption_reason": null,
     "last_updated_date": null
   },
   {
@@ -383,7 +395,8 @@
     "sort_order": 13,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -410,7 +423,8 @@
     "sort_order": 14,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -437,7 +451,8 @@
     "sort_order": 15,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -464,7 +479,8 @@
     "sort_order": 16,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -512,7 +528,8 @@
     "sort_order": 17,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -539,7 +556,8 @@
     "sort_order": 18,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -566,11 +584,13 @@
     "sort_order": 19,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
     "area": "KINTYRE",
+    "disruption_reason": null,
     "last_updated_date": null,
     "locations": [
       {
@@ -620,7 +640,8 @@
     "sort_order": 21,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -647,7 +668,8 @@
     "sort_order": 22,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -674,7 +696,8 @@
     "sort_order": 23,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -701,7 +724,8 @@
     "sort_order": 24,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -728,7 +752,8 @@
     "sort_order": 25,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -755,7 +780,8 @@
     "sort_order": 26,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -782,7 +808,8 @@
     "sort_order": 27,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -830,6 +857,7 @@
     "status": -99,
     "updated": null,
     "vessels": [],
+    "disruption_reason": null,
     "last_updated_date": null
   },
   {
@@ -857,7 +885,8 @@
     "sort_order": 29,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
@@ -884,11 +913,13 @@
     "sort_order": 30,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   },
   {
     "additional_info": null,
     "area": "SMALL ISLES",
+    "disruption_reason": null,
     "last_updated_date": null,
     "locations": [
       {
@@ -959,6 +990,7 @@
     "sort_order": 32,
     "status": -99,
     "updated": null,
-    "vessels": []
+    "vessels": [],
+    "disruption_reason": null
   }
 ]
