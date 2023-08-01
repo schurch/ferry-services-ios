@@ -3,6 +3,16 @@
     {
       "filename" : "map-icon.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "map-annotation-dark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
