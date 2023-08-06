@@ -130,7 +130,8 @@ class APIClient {
                         updated: nil,
                         additionalInfo: nil,
                         locations: $0.locations,
-                        vessels: []
+                        vessels: [],
+                        operator: nil
                     )
                 }
                 

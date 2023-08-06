@@ -179,14 +179,81 @@ struct ServiceDetailsView: View {
                             }
                         } header: {
                             HStack {
-                                Text("\(location.name) departure")
+                                Text("\(location.name)")
                                 Spacer()
                                 Image(systemName: "arrow.right")
                                 Spacer()
-                                Text("\(departures.first!.destination.name) arrival")
+                                Text("\(departures.first!.destination.name)")
                             }
                         }
                     }
+                }
+                
+                Section {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Image("calmac-icon")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                            Text("Caledonian MacBrayne")
+                                .font(.title2)
+                        }
+                        
+                        VStack(spacing: 5) {
+                            HStack {
+                                Button(action: {
+                                    
+                                }) {
+                                    Text("PHONE")
+                                        .foregroundColor(Color(UIColor.label))
+                                        .frame(maxWidth: .infinity)
+                                }
+                                
+                                Button(action: {
+                                    
+                                }) {
+                                    Text("WEBSITE")
+                                        .foregroundColor(Color(UIColor.label))
+                                        .frame(maxWidth: .infinity)
+                                }
+                            }
+                            
+                            HStack {
+                                Button(action: {
+                                    
+                                }) {
+                                    Text("EMAIL")
+                                        .foregroundColor(Color(UIColor.label))
+                                        .frame(maxWidth: .infinity)
+                                }
+                                
+                                Button(action: {
+                                    
+                                }) {
+                                    Text("TWITTER")
+                                        .foregroundColor(Color(UIColor.label))
+                                        .frame(maxWidth: .infinity)
+                                }
+                            }
+                            
+                            HStack {
+                                Button(action: {
+                                    
+                                }) {
+                                    Text("FACEBOOK")
+                                        .foregroundColor(Color(UIColor.label))
+                                        .frame(maxWidth: .infinity)
+                                }
+                                
+                                Spacer()
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                            }
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    .padding([.bottom], 5)
+                    .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                 }
             }
             .listStyle(.plain)

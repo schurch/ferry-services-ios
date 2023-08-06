@@ -98,6 +98,17 @@ struct Service: Codable {
         let scheduledDepartures: [ScheduledDeparture]?
     }
     
+    struct ServiceOperator: Codable {
+        let id: Int
+        let name: String
+        let website: String?
+        let localNumber: String?
+        let internationalNumber: String?
+        let email: String?
+        let x: String?
+        let facebook: String?
+    }
+    
     let serviceId: Int
     let status: Status
     let area: String
@@ -108,6 +119,7 @@ struct Service: Codable {
     let additionalInfo: String?
     let locations: [Location]
     let vessels: [Vessel]?
+    let `operator`: ServiceOperator?
 }
 
 extension Service: Identifiable {
