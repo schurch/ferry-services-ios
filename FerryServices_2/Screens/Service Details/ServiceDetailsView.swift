@@ -108,7 +108,7 @@ struct ServiceDetailsView: View {
                                 .onChange(of: model.subscribed) { value in
                                     model.updateSubscribed(subscribed: value)
                                 }
-                        }                        
+                        }
                     }
                 }
                 
@@ -189,71 +189,12 @@ struct ServiceDetailsView: View {
                     }
                 }
                 
-                Section {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Image("calmac-icon")
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                            Text("Caledonian MacBrayne")
-                                .font(.title2)
-                        }
-                        
-                        VStack(spacing: 5) {
-                            HStack {
-                                Button(action: {
-                                    
-                                }) {
-                                    Text("PHONE")
-                                        .foregroundColor(Color(UIColor.label))
-                                        .frame(maxWidth: .infinity)
-                                }
-                                
-                                Button(action: {
-                                    
-                                }) {
-                                    Text("WEBSITE")
-                                        .foregroundColor(Color(UIColor.label))
-                                        .frame(maxWidth: .infinity)
-                                }
-                            }
-                            
-                            HStack {
-                                Button(action: {
-                                    
-                                }) {
-                                    Text("EMAIL")
-                                        .foregroundColor(Color(UIColor.label))
-                                        .frame(maxWidth: .infinity)
-                                }
-                                
-                                Button(action: {
-                                    
-                                }) {
-                                    Text("TWITTER")
-                                        .foregroundColor(Color(UIColor.label))
-                                        .frame(maxWidth: .infinity)
-                                }
-                            }
-                            
-                            HStack {
-                                Button(action: {
-                                    
-                                }) {
-                                    Text("FACEBOOK")
-                                        .foregroundColor(Color(UIColor.label))
-                                        .frame(maxWidth: .infinity)
-                                }
-                                
-                                Spacer()
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                            }
-                        }
-                        .buttonStyle(.bordered)
+                if let serviceOperator = service.operator {
+                    Section {
+                        ServiceOperator(serviceOperator: serviceOperator)
+                            .padding([.bottom], 5)
+                            .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     }
-                    .padding([.bottom], 5)
-                    .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                 }
             }
             .listStyle(.plain)
@@ -279,6 +220,114 @@ struct ServiceDetailsView: View {
                 .task {
                     await model.fetchLatestService()
                 }
+        }
+    }
+    
+}
+
+private struct ServiceOperator: View {
+    
+    let serviceOperator: Service.ServiceOperator
+    @Environment(\.openURL) var openURL
+    @State private var showingPhoneAlert = false
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                let imageName: String? = {
+                    switch serviceOperator.id {
+                    case 1: return "calmac-icon"
+                    case 2: return "northlink-icon"
+                    case 3: return "western-ferries-icon"
+                    default: return nil
+                    }
+                }()
+                
+                if let imageName = imageName {
+                    Image(imageName)
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                }
+                
+                Text(serviceOperator.name)
+                    .font(.title2)
+            }
+            
+            VStack(spacing: 5) {
+                ForEach(serviceOperator.groupedContactItems, id: \.self) { group in
+                    HStack {
+                        ForEach(group, id: \.self) { item in
+                            switch item {
+                            case .phone:
+                                Button(action: {
+                                    showingPhoneAlert = true
+                                }) {
+                                    Text("PHONE")
+                                        .foregroundColor(Color(UIColor.label))
+                                        .frame(maxWidth: .infinity)
+                                }
+                                .confirmationDialog("Phone", isPresented: $showingPhoneAlert) {
+                                    if let local = serviceOperator.localNumber {
+                                        let localFormatted = local.replacingOccurrences(of: " ", with: "-")
+                                        Button(local) {
+                                            openURL(URL(string: "tel://\(localFormatted)")!)
+                                        }
+                                    }
+                                    
+                                    if let international = serviceOperator.internationalNumber {
+                                        let internationalFormatted = international.replacingOccurrences(of: " ", with: "-")
+                                        Button(international) {
+                                            openURL(URL(string: "tel://\(internationalFormatted)")!)
+                                        }
+                                    }
+                                }
+
+                            case .website:
+                                Button(action: {
+                                    openURL(URL(string: serviceOperator.website!)!)
+                                }) {
+                                    Text("WEBSITE")
+                                        .foregroundColor(Color(UIColor.label))
+                                        .frame(maxWidth: .infinity)
+                                }
+
+                            case .email:
+                                Button(action: {
+                                    openURL(URL(string: "mailto:\(serviceOperator.email!)")!)
+                                }) {
+                                    Text("EMAIL")
+                                        .foregroundColor(Color(UIColor.label))
+                                        .frame(maxWidth: .infinity)
+                                }
+
+                            case .x:
+                                Button(action: {
+                                    openURL(URL(string: serviceOperator.x!)!)
+                                }) {
+                                    Text("TWITTER")
+                                        .foregroundColor(Color(UIColor.label))
+                                        .frame(maxWidth: .infinity)
+                                }
+
+                            case .facebook:
+                                Button(action: {
+                                    openURL(URL(string: serviceOperator.facebook!)!)
+                                }) {
+                                    Text("FACEBOOK")
+                                        .foregroundColor(Color(UIColor.label))
+                                        .frame(maxWidth: .infinity)
+                                }
+
+                            case .spacer:
+                                Spacer()
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                            }
+                        }
+                    }
+                }
+            }
+            .buttonStyle(.bordered)
         }
     }
     
@@ -413,6 +462,32 @@ private extension Service {
     
 }
 
+private extension Service.ServiceOperator {
+    
+    enum ContactItem {
+        case phone, website, email, x, facebook, spacer
+    }
+    
+    var groupedContactItems: [[ContactItem]] {
+        let items: [ContactItem?] = [
+            localNumber != nil || internationalNumber != nil ? .phone : nil,
+            website != nil ? .website : nil,
+            email != nil ? .email : nil,
+            x != nil ? .x : nil,
+            facebook != nil ? .facebook : nil
+        ]
+        
+        let groupedItems = items.compactMap({ $0 }).groupedIntoTwos
+        if let last = groupedItems.last, last.count == 1 {
+            // Add spacer at end if only 1 item
+            return groupedItems.dropLast(1) + [[last[0], .spacer]]
+        } else {
+            return groupedItems
+        }
+    }
+    
+}
+
 private extension Service.Location {
     
     // Grouped on destination
@@ -423,4 +498,17 @@ private extension Service.Location {
             .sorted(by: { $0.first?.destination.name ?? "" < $1.first?.destination.name ?? "" })
     }
     
+}
+
+private extension Array {
+    var groupedIntoTwos: [[Element]] {
+        self.reduce([]) { accumulate, current in
+            if (accumulate.last?.count ?? 0) % 2 == 0 {
+                return accumulate + [[current]]
+            } else {
+                let currentLast = accumulate.last!.last!
+                return accumulate.dropLast(1) + [[currentLast, current]]
+            }
+        }
+    }
 }
