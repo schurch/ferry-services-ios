@@ -236,9 +236,9 @@ private struct ServiceOperator: View {
             HStack {
                 let imageName: String? = {
                     switch serviceOperator.id {
-                    case 1: return "calmac-icon"
-                    case 2: return "northlink-icon"
-                    case 3: return "western-ferries-icon"
+                    case 1: return "calmac-logo"
+                    case 2: return "northlink-logo"
+                    case 3: return "western-ferries-logo"
                     default: return nil
                     }
                 }()
@@ -246,7 +246,8 @@ private struct ServiceOperator: View {
                 if let imageName = imageName {
                     Image(imageName)
                         .resizable()
-                        .frame(width: 50, height: 50)
+                        .scaledToFit()
+                        .frame(height: 50)
                 }
                 
                 Text(serviceOperator.name)
