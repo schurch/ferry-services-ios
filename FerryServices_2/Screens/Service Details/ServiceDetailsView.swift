@@ -135,20 +135,19 @@ struct ServiceDetailsView: View {
                     }
                 }
                 
-                Section("Scheduled departures") {
+                Section("Scheduled Departures") {
                     HStack(alignment: .center) {
                         Button {
                             showingDateSelection = true
                         } label: {
                             Text("Departures on ")
-                                .font(.subheadline)
                             +
                             Text(model.date.formatted(.dateTime.weekday().year().month().day()))
-                                .font(.subheadline)
                                 .bold()
                                 .foregroundColor(Color("Tint"))
                         }
                     }
+                    .font(.body)
                     .frame(maxWidth: .infinity)
                     .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     
@@ -167,12 +166,9 @@ struct ServiceDetailsView: View {
                 
                 ForEach(service.locations) { location in
                     if let weather = location.weather {
-                        Section {
+                        Section(location.name) {
                             WeatherView(weather: weather)
                                 .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                        } header: {
-                            Text("\(location.name)")
-                                .font(.title3)
                         }
                     }
                     
@@ -224,12 +220,15 @@ struct ServiceDetailsView: View {
                         displayedComponents: [.date]
                     )
                     .datePickerStyle(.graphical)
-                    .navigationTitle("Departure date")
+                    .navigationTitle("Departure Date")
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Done") {
                                 showingDateSelection = false
+                                Task {
+                                    await model.fetchLatestService()
+                                }
                             }
                         }
                     }
@@ -248,11 +247,6 @@ struct ServiceDetailsView: View {
                 await model.fetchLatestService()
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                Task {
-                    await model.fetchLatestService()
-                }
-            }
-            .onChange(of: model.date) { _ in
                 Task {
                     await model.fetchLatestService()
                 }
