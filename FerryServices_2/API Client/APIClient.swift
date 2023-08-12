@@ -25,8 +25,24 @@ class APIClient {
     private static let root = "/api"
     
     //MARK: - Async
-    static func fetchService(serviceID: Int) async throws -> Service {
-        let url = URL(string: "\(APIClient.root)/services/\(serviceID)", relativeTo: APIClient.baseURL)!
+    static func fetchService(serviceID: Int, date: Date) async throws -> Service {
+        let url = URL(
+            string: "\(APIClient.root)/services/\(serviceID)",
+            relativeTo: APIClient.baseURL
+        )!.appending(
+            queryItems: [
+                URLQueryItem(
+                    name: "departuresDate",
+                    value: date.formatted(
+                        Date.ISO8601FormatStyle()
+                            .year()
+                            .month()
+                            .day()
+                    )
+                )
+            ]
+        )
+        
         return try await send(request: URLRequest(url: url))
     }
     

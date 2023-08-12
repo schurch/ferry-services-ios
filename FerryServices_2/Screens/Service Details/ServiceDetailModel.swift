@@ -35,6 +35,7 @@ class ServiceDetailModel: ObservableObject {
     @Published var subscribed: Bool
     @Published var loadingSubscribed: Bool = false
     @Published var showSubscribedError: Bool = false
+    @Published var date: Date = Date()
     
     var annotations: [Annotation] {
         guard let service else { return [] }
@@ -119,7 +120,7 @@ class ServiceDetailModel: ObservableObject {
     
     func fetchLatestService() async {
         do {
-            let service = try await APIClient.fetchService(serviceID: serviceID)
+            let service = try await APIClient.fetchService(serviceID: serviceID, date: date)
             self.service = service
             self.mapRect = MapViewHelpers.calculateMapRect(forLocations: service.locations)
         } catch {

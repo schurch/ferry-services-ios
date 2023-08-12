@@ -13,6 +13,7 @@ struct ServiceDetailsView: View {
     
     @StateObject private var model: ServiceDetailModel
     @Environment(\.scenePhase) var scenePhase
+    @State private var showingDateSelection = false
     
     var showDisruptionInfo: (String) -> Void
     var showTimetable: (Service, URL) -> Void
@@ -134,9 +135,25 @@ struct ServiceDetailsView: View {
                     }
                 }
                 
-                let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
-                if badStatuses.contains(service.status) && service.anyScheduledDepartures {
-                    Section("Scheduled departures") {
+                Section("Scheduled departures") {
+                    HStack(alignment: .center) {
+                        Button {
+                            showingDateSelection = true
+                        } label: {
+                            Text("Departures on ")
+                                .font(.subheadline)
+                            +
+                            Text(model.date.formatted(.dateTime.weekday().year().month().day()))
+                                .font(.subheadline)
+                                .bold()
+                                .foregroundColor(Color("Tint"))
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                    
+                    let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
+                    if badStatuses.contains(service.status) && service.anyScheduledDepartures {
                         HStack(alignment: .top) {
                             Image(systemName: "exclamationmark.triangle")
                                 .foregroundColor(Color("Amber"))
@@ -199,6 +216,26 @@ struct ServiceDetailsView: View {
             }
             .listStyle(.plain)
             .listRowInsets(EdgeInsets())
+            .sheet(isPresented: $showingDateSelection) {
+                NavigationView {
+                    DatePicker(
+                        "Departure Date",
+                        selection: $model.date,
+                        displayedComponents: [.date]
+                    )
+                    .datePickerStyle(.graphical)
+                    .navigationTitle("Departure date")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") {
+                                showingDateSelection = false
+                            }
+                        }
+                    }
+                }
+                .presentationDetents([.medium])
+            }
             .alert("Error", isPresented: $model.showSubscribedError) {
                 Button("OK", role: .cancel) { }
             } message: {
@@ -211,6 +248,11 @@ struct ServiceDetailsView: View {
                 await model.fetchLatestService()
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                Task {
+                    await model.fetchLatestService()
+                }
+            }
+            .onChange(of: model.date) { _ in
                 Task {
                     await model.fetchLatestService()
                 }
