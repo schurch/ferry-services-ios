@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         SentrySDK.start { options in
-            options.dsn = APIKeys.sentryDSN
+            options.dsn = "https://57b7260ca4a249ecb24c7975ae3ad79d@o434952.ingest.sentry.io/5392740"
         }
         
         UserDefaults.standard.register(defaults: [UserDefaultsKeys.registeredForNotifications: false])

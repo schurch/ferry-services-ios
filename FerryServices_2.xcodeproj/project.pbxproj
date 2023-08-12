@@ -32,7 +32,6 @@
 		FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FAB258479150098B96B /* Double+extensions.swift */; };
 		FD1B5FCE2584794E0098B96B /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FCD2584794E0098B96B /* Service.swift */; };
 		FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FD3258479E10098B96B /* Decoder.swift */; };
-		FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */; };
 		FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */; };
 		FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD753ED9197A256E00CC5DE3 /* Main.storyboard */; };
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
@@ -118,7 +117,6 @@
 		FD1B5FAB258479150098B96B /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FCD2584794E0098B96B /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		FD1B5FD3258479E10098B96B /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
-		FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FerryServices_2-Bridging-Header.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FerryServices_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753ED4197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -343,7 +341,6 @@
 			isa = PBXGroup;
 			children = (
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
-				FD4B7C6A1A589CC800CCD5C5 /* APIKeys.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
 				FDB2A789257B2716000B0659 /* Launch Screen.storyboard */,
 				FD1B5F8A258479150098B96B /* Screens */,
@@ -540,7 +537,6 @@
 				FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */,
 				FD1B5FC3258479150098B96B /* ServiceStatusCell.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
-				FD4B7C6B1A589CC800CCD5C5 /* APIKeys.swift in Sources */,
 				FD1B5FAF258479150098B96B /* APIError.swift in Sources */,
 				FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */,
 				FD1B5FB0258479150098B96B /* APIClient.swift in Sources */,
