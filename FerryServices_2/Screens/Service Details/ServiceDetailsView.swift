@@ -212,7 +212,14 @@ struct ServiceDetailsView: View {
             }
             .listStyle(.plain)
             .listRowInsets(EdgeInsets())
-            .sheet(isPresented: $showingDateSelection) {
+            .sheet(
+                isPresented: $showingDateSelection,
+                onDismiss: {
+                    Task {
+                        await model.fetchLatestService()
+                    }
+                }
+            ) {
                 NavigationView {
                     DatePicker(
                         "Departure Date",
@@ -226,9 +233,6 @@ struct ServiceDetailsView: View {
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Done") {
                                 showingDateSelection = false
-                                Task {
-                                    await model.fetchLatestService()
-                                }
                             }
                         }
                     }
