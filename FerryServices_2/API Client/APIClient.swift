@@ -34,7 +34,7 @@ class APIClient {
                 URLQueryItem(
                     name: "departuresDate",
                     value: date.formatted(
-                        Date.ISO8601FormatStyle()
+                        Date.ISO8601FormatStyle(timeZone: Calendar.current.timeZone)
                             .year()
                             .month()
                             .day()
