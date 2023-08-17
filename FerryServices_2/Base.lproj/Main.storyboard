@@ -4,34 +4,10 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Services-->
-        <scene sceneID="jsE-Lv-Auc">
-            <objects>
-                <tableViewController id="AJM-zh-PWT" customClass="ServicesViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="BN2-QZ-qgx">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" name="Background"/>
-                        <connections>
-                            <outlet property="dataSource" destination="AJM-zh-PWT" id="OyM-vv-ZTV"/>
-                            <outlet property="delegate" destination="AJM-zh-PWT" id="FkM-CZ-L3s"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Services" id="yHG-Ce-35f"/>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="YrD-yy-g6f">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </refreshControl>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ya0-De-3xJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-28" y="-450"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="dl7-uD-QXd">
             <objects>
@@ -40,51 +16,10 @@
                         <rect key="frame" x="0.0" y="59" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <connections>
-                        <segue destination="AJM-zh-PWT" kind="relationship" relationship="rootViewController" id="MWa-bP-xfV"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJ9-SM-b2F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-993" y="630"/>
-        </scene>
-        <!--Search Results View Controller-->
-        <scene sceneID="ao6-mH-kUg">
-            <objects>
-                <viewController storyboardIdentifier="SearchResultsController" automaticallyAdjustsScrollViewInsets="NO" id="SvL-w8-QSF" customClass="SearchResultsViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="BI8-79-J1n"/>
-                        <viewControllerLayoutGuide type="bottom" id="hQR-3V-iM6"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="0Di-8t-had">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="40f-Ts-kFH">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="SvL-w8-QSF" id="MMx-hv-aaM"/>
-                                    <outlet property="delegate" destination="SvL-w8-QSF" id="Iwy-ah-ExD"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="hQR-3V-iM6" firstAttribute="top" secondItem="40f-Ts-kFH" secondAttribute="bottom" id="7t1-iC-LuD"/>
-                            <constraint firstItem="40f-Ts-kFH" firstAttribute="leading" secondItem="0Di-8t-had" secondAttribute="leading" id="K2M-4l-0K9"/>
-                            <constraint firstAttribute="trailing" secondItem="40f-Ts-kFH" secondAttribute="trailing" id="Z9f-us-cWZ"/>
-                            <constraint firstItem="40f-Ts-kFH" firstAttribute="top" secondItem="BI8-79-J1n" secondAttribute="bottom" id="xKP-nd-gwE"/>
-                        </constraints>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <connections>
-                        <outlet property="tableView" destination="40f-Ts-kFH" id="ZE4-1V-REc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="get-Zt-KmS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-28" y="261"/>
         </scene>
         <!--Web Information View Controller-->
         <scene sceneID="T5f-hj-VZk">
@@ -122,7 +57,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6hO-O6-P8F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1169.3840579710145" y="616.37946428571422"/>
+            <point key="canvasLocation" x="-254" y="630"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="UGc-19-rqN">
@@ -155,7 +90,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JsN-Pf-Amj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1862.3188405797102" y="-450"/>
+            <point key="canvasLocation" x="1288" y="630"/>
         </scene>
         <!--Timetable Preview View Controller-->
         <scene sceneID="Wet-TP-UfD">
@@ -192,13 +127,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e0q-Ta-QkP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2000.0000000000002" y="605.21316964285711"/>
+            <point key="canvasLocation" x="514" y="630"/>
         </scene>
     </scenes>
     <resources>
-        <namedColor name="Background">
-            <color red="0.97299998998641968" green="0.98400002717971802" blue="0.98000001907348633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

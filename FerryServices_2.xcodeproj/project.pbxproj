@@ -12,8 +12,10 @@
 		F811158B281E1B4500DE8E59 /* VesselAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F811158A281E1B4500DE8E59 /* VesselAnnotation.swift */; };
 		F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */; };
 		F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */; };
+		F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6D2A88963900849ABA /* Service+Extensions.swift */; };
+		F8726C702A88A3BC00849ABA /* ServicesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6F2A88A3BC00849ABA /* ServicesModel.swift */; };
 		F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */; };
-		F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A3CB36264F841100D2E4AE /* CircleView.swift */; };
+		F8EBB3052A887F8F003DF8F3 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1B5FAD258479150098B96B /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F85258479150098B96B /* Vessel.swift */; };
 		FD1B5FAF258479150098B96B /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F88258479150098B96B /* APIError.swift */; };
@@ -21,10 +23,6 @@
 		FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F99258479150098B96B /* MapViewController.swift */; };
 		FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9B258479150098B96B /* WebInformationViewController.swift */; };
 		FD1B5FBF258479150098B96B /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */; };
-		FD1B5FC0258479150098B96B /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9F258479150098B96B /* SearchResultsViewController.swift */; };
-		FD1B5FC1258479150098B96B /* ServiceStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD1B5FA0258479150098B96B /* ServiceStatusCell.xib */; };
-		FD1B5FC2258479150098B96B /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA1258479150098B96B /* ServicesViewController.swift */; };
-		FD1B5FC3258479150098B96B /* ServiceStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA2258479150098B96B /* ServiceStatusCell.swift */; };
 		FD1B5FC4258479150098B96B /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA5258479150098B96B /* Date+extensions.swift */; };
 		FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA7258479150098B96B /* String+extensions.swift */; };
 		FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA8258479150098B96B /* UIImage+extensions.swift */; };
@@ -97,8 +95,10 @@
 		F811158A281E1B4500DE8E59 /* VesselAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselAnnotation.swift; sourceTree = "<group>"; };
 		F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsView.swift; sourceTree = "<group>"; };
 		F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailModel.swift; sourceTree = "<group>"; };
+		F8726C6D2A88963900849ABA /* Service+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Extensions.swift"; sourceTree = "<group>"; };
+		F8726C6F2A88A3BC00849ABA /* ServicesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesModel.swift; sourceTree = "<group>"; };
 		F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+Extensions.swift"; sourceTree = "<group>"; };
-		F8A3CB36264F841100D2E4AE /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1B5F85258479150098B96B /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
 		FD1B5F88258479150098B96B /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -106,10 +106,6 @@
 		FD1B5F99258479150098B96B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		FD1B5F9B258479150098B96B /* WebInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInformationViewController.swift; sourceTree = "<group>"; };
 		FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
-		FD1B5F9F258479150098B96B /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
-		FD1B5FA0258479150098B96B /* ServiceStatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceStatusCell.xib; sourceTree = "<group>"; };
-		FD1B5FA1258479150098B96B /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
-		FD1B5FA2258479150098B96B /* ServiceStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceStatusCell.swift; sourceTree = "<group>"; };
 		FD1B5FA5258479150098B96B /* Date+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FA7258479150098B96B /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FA8258479150098B96B /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
@@ -256,6 +252,7 @@
 				FD1B5F9A258479150098B96B /* Web Information */,
 				FD1B5F9C258479150098B96B /* Timetable Preview */,
 				F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */,
+				F8726C6D2A88963900849ABA /* Service+Extensions.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -296,11 +293,8 @@
 		FD1B5F9E258479150098B96B /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				FD1B5FA1258479150098B96B /* ServicesViewController.swift */,
-				FD1B5F9F258479150098B96B /* SearchResultsViewController.swift */,
-				FD1B5FA2258479150098B96B /* ServiceStatusCell.swift */,
-				FD1B5FA0258479150098B96B /* ServiceStatusCell.xib */,
-				F8A3CB36264F841100D2E4AE /* CircleView.swift */,
+				F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */,
+				F8726C6F2A88A3BC00849ABA /* ServicesModel.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -502,7 +496,6 @@
 				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				FDC03DE919DFDD8D000CE1FA /* services.json in Resources */,
-				FD1B5FC1258479150098B96B /* ServiceStatusCell.xib in Resources */,
 				FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,21 +514,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8726C702A88A3BC00849ABA /* ServicesModel.swift in Sources */,
 				FD1B5FC4258479150098B96B /* Date+extensions.swift in Sources */,
 				FD1B5FCE2584794E0098B96B /* Service.swift in Sources */,
 				FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */,
 				F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */,
 				F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */,
-				FD1B5FC2258479150098B96B /* ServicesViewController.swift in Sources */,
+				F8EBB3052A887F8F003DF8F3 /* ServicesView.swift in Sources */,
 				FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */,
-				F8A3CB37264F841100D2E4AE /* CircleView.swift in Sources */,
 				F8111586281E148600DE8E59 /* MapViewHelpers.swift in Sources */,
 				FD1B5FC8258479150098B96B /* Utility.swift in Sources */,
-				FD1B5FC0258479150098B96B /* SearchResultsViewController.swift in Sources */,
 				FD1B5FAD258479150098B96B /* Vessel.swift in Sources */,
 				F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */,
 				FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */,
-				FD1B5FC3258479150098B96B /* ServiceStatusCell.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				FD1B5FAF258479150098B96B /* APIError.swift in Sources */,
 				FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */,
@@ -543,6 +534,7 @@
 				FD1B5FBF258479150098B96B /* TimetablePreviewViewController.swift in Sources */,
 				FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */,
 				FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */,
+				F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */,
 				F8111589281E1B3300DE8E59 /* LocationAnnotation.swift in Sources */,
 				F811158B281E1B4500DE8E59 /* VesselAnnotation.swift in Sources */,
 			);

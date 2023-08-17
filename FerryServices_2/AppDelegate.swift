@@ -60,6 +60,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Remove old shortcut items
         application.shortcutItems?.removeAll()
         
+        let navigationController = window!.rootViewController as! UINavigationController
+        navigationController.setViewControllers([ServicesView.createViewController(navigationController: navigationController)], animated: false)
+        
         return true
     }
     
@@ -107,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     private func showDetails(forServiceID serviceId: Int) {
         guard
             let navigationController = window?.rootViewController as? UINavigationController,
-            let servicesViewController = navigationController.viewControllers.first as? ServicesViewController else { return }
+            let servicesViewController = navigationController.viewControllers.first else { return }
         
         let serviceDetailViewController = ServiceDetailsView.createViewController(
             serviceID: serviceId,

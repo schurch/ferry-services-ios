@@ -479,15 +479,6 @@ extension ServiceDetailsView {
 
 private extension Service {
     
-    var statusColor: Color {
-        switch status {
-        case .unknown: return Color("Grey")
-        case .normal: return Color("Green")
-        case .disrupted: return Color("Amber")
-        case .cancelled: return Color("Red")
-        }
-    }
-    
     var disruptionText: String {
         switch status {
         case .normal: return "There are currently no disruptions with this service"

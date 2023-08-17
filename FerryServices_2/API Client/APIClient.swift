@@ -25,6 +25,11 @@ class APIClient {
     private static let root = "/api"
     
     //MARK: - Async
+    static func fetchServices() async throws -> [Service] {
+        let url = URL(string: "\(APIClient.root)/services/", relativeTo: APIClient.baseURL)!
+        return try await send(request: URLRequest(url: url))
+    }
+        
     static func fetchService(serviceID: Int, date: Date) async throws -> Service {
         let url = URL(
             string: "\(APIClient.root)/services/\(serviceID)",
