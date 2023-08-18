@@ -28,7 +28,7 @@ struct ServicesView: View {
                 
             case .multiple(let sections):
                 ForEach(sections) { section in
-                    Section(section.title) {
+                    Section {
                         ForEach(section.services) { service in
                             Button {
                                 showService(service)
@@ -36,6 +36,18 @@ struct ServicesView: View {
                                 ServiceRow(service: service)
                             }
                         }
+                    } header: {
+                        HStack {
+                            if let imageName = section.image {
+                                Image(imageName)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 30)
+                            }
+                            Text(section.title)
+                        }
+                        .listRowInsets(EdgeInsets())
+                        .padding(.bottom, 10)
                     }
                 }
                 

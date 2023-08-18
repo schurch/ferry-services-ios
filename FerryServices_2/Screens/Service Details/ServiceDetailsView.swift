@@ -274,16 +274,7 @@ private struct ServiceOperator: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                let imageName: String? = {
-                    switch serviceOperator.id {
-                    case 1: return "calmac-logo"
-                    case 2: return "northlink-logo"
-                    case 3: return "western-ferries-logo"
-                    default: return nil
-                    }
-                }()
-                
-                if let imageName = imageName {
+                if let imageName = serviceOperator.imageName {
                     Image(imageName)
                         .resizable()
                         .scaledToFit()

@@ -15,6 +15,7 @@
 		F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6D2A88963900849ABA /* Service+Extensions.swift */; };
 		F8726C702A88A3BC00849ABA /* ServicesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6F2A88A3BC00849ABA /* ServicesModel.swift */; };
 		F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */; };
+		F8AC22302A8F31E1001C01FE /* Operator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */; };
 		F8EBB3052A887F8F003DF8F3 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1B5FAD258479150098B96B /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F85258479150098B96B /* Vessel.swift */; };
@@ -98,6 +99,7 @@
 		F8726C6D2A88963900849ABA /* Service+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Extensions.swift"; sourceTree = "<group>"; };
 		F8726C6F2A88A3BC00849ABA /* ServicesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesModel.swift; sourceTree = "<group>"; };
 		F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+Extensions.swift"; sourceTree = "<group>"; };
+		F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operator+Extensions.swift"; sourceTree = "<group>"; };
 		F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1B5F85258479150098B96B /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				FD1B5F9C258479150098B96B /* Timetable Preview */,
 				F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */,
 				F8726C6D2A88963900849ABA /* Service+Extensions.swift */,
+				F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 				F8726C702A88A3BC00849ABA /* ServicesModel.swift in Sources */,
 				FD1B5FC4258479150098B96B /* Date+extensions.swift in Sources */,
 				FD1B5FCE2584794E0098B96B /* Service.swift in Sources */,
+				F8AC22302A8F31E1001C01FE /* Operator+Extensions.swift in Sources */,
 				FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */,
 				F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */,
 				F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */,

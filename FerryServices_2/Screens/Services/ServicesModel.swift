@@ -17,6 +17,7 @@ class ServicesModel: ObservableObject {
             let id = UUID()
             
             let title: String
+            let image: String?
             let services: [Service]
         }
         
@@ -52,20 +53,27 @@ class ServicesModel: ObservableObject {
     private static func createSections(services: [Service], searchText: String = "") -> ServicesModel.Sections {
         if searchText.isEmpty {
             let subscribedIDs = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? []
-            
             let subscribedServices = services.filter({ subscribedIDs.contains($0.serviceId) })
             
             let serviceGroups = Dictionary(grouping: services, by: { $0.operator?.id ?? 0 })
             let sortedServiceGroups = serviceGroups.values
                 .sorted(by: { $0.first?.operator?.name ?? "" < $1.first?.operator?.name ?? "" })
+            let servicesGroupedByOperator = sortedServiceGroups.map({ services in
+                let serviceOperator = services.first?.operator
+                return Sections.Section(
+                    title: serviceOperator?.name ?? "Services",
+                    image: serviceOperator.flatMap({ $0.imageName }),
+                    services: services
+                )
+            })
             
-            return .multiple(
-                [
-                    subscribedServices.count > 0 ? Sections.Section(title: "Subscribed", services: subscribedServices) : nil,
-                    Sections.Section(title: "Services", services: services)
-                ]
-                .compactMap({ $0 })
-            )
+            if subscribedServices.count > 0 {
+                return .multiple(
+                    [Sections.Section(title: "Subscribed", image: nil, services: subscribedServices)] + servicesGroupedByOperator
+                )
+            } else {
+                return .multiple(servicesGroupedByOperator)
+            }
         } else {
             let filteredServices = services.filter { service in
                 let areaMatch = service.area.lowercased().contains(searchText.lowercased())
