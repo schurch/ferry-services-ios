@@ -27,7 +27,7 @@ class APIClient {
     //MARK: - Async
     static func fetchServices() async throws -> [Service] {
         let url = URL(string: "\(APIClient.root)/services/", relativeTo: APIClient.baseURL)!
-        return try await send(request: URLRequest(url: url))
+        return try await sendAndCacheResult(request: URLRequest(url: url))
     }
         
     static func fetchService(serviceID: Int, date: Date) async throws -> Service {
@@ -80,45 +80,39 @@ class APIClient {
         }
     }
     
+    private static func sendAndCacheResult(request: URLRequest) async throws -> [Service] {
+        let services: [Service] = try await send(request: request)
+        let servicesToCache = services.map {
+            Service(
+                serviceId: $0.serviceId,
+                status: .unknown,
+                area: $0.area,
+                route: $0.route,
+                disruptionReason: nil,
+                lastUpdatedDate: nil,
+                updated: nil,
+                additionalInfo: nil,
+                locations: $0.locations,
+                vessels: [],
+                operator: $0.operator
+            )
+        }
+        
+        do {
+            let data = try APIEncoder.shared.encode(servicesToCache)
+            try data.write(to: Service.servicesCacheLocation)
+        } catch let error {
+            print("Error caching services: \(error)")
+        }
+        
+        return services
+    }
+    
     //MARK: - Closure
-    static func fetchServices(completion: @escaping (Result<[Service], Error>) -> ()){
-        let url = URL(string: "\(APIClient.root)/services/", relativeTo: APIClient.baseURL)!
-        sendAndCacheResult(request: URLRequest(url: url), completion: completion)
-    }
-    
-    static func fetchService(serviceID: Int, completion: @escaping (Result<Service, Error>) -> ()) {
-        let url = URL(string: "\(APIClient.root)/services/\(serviceID)", relativeTo: APIClient.baseURL)!
-        send(request: URLRequest(url: url), completion: completion)
-    }
-    
     static func createInstallation(installationID: UUID, deviceToken: String, completion: @escaping (Result<[Service], Error>) -> ()) {
         let url = URL(string: "\(APIClient.root)/installations/\(installationID)", relativeTo: APIClient.baseURL)!
         let request = createRequest(with: url, body: CreateInstallationBody(deviceToken: deviceToken))
         send(request: request, completion: completion)
-    }
-    
-    static func getInstallationServices(installationID: UUID, completion: @escaping (Result<[Service], Error>) -> ()) {
-        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
-        send(request: URLRequest(url: url), completion: completion)
-    }
-    
-    static func addService(for installationID: UUID, serviceID: Int, completion: @escaping (Result<[Service], Error>) -> ()) {
-        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
-        let request = createRequest(with: url, body: CreateInstallationServiceBody(serviceID: serviceID))
-        send(request: request, completion: completion)
-    }
-    
-    static func removeService(for installationID: UUID, serviceID: Int, completion: @escaping (Result<[Service], Error>) -> ()) {
-        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services/\(serviceID)", relativeTo: APIClient.baseURL)!
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        
-        send(request: request, completion: completion)
-    }
-    
-    static func fetchVessels(completion: @escaping (Result<[Vessel], Error>) -> ()) {
-        let url = URL(string: "\(APIClient.root)/vessels/", relativeTo: APIClient.baseURL)!
-        send(request: URLRequest(url: url), completion: completion)
     }
     
     private static func createRequest<T: Encodable>(with url: URL, body: T) -> URLRequest {
@@ -134,40 +128,6 @@ class APIClient {
         request.allHTTPHeaderFields = headers
         
         return request
-    }
-    
-    private static func sendAndCacheResult(request: URLRequest, completion: @escaping (Result<[Service], Error>) -> ()) {
-        send(request: request, completion: { (result: Result<[Service], Error>) in
-            switch result {
-            case .success(let services):
-                let servicesToCache = services.map {
-                    Service(
-                        serviceId: $0.serviceId,
-                        status: .unknown,
-                        area: $0.area,
-                        route: $0.route,
-                        disruptionReason: nil,
-                        lastUpdatedDate: nil,
-                        updated: nil,
-                        additionalInfo: nil,
-                        locations: $0.locations,
-                        vessels: [],
-                        operator: nil
-                    )
-                }
-                
-                do {
-                    let data = try APIEncoder.shared.encode(servicesToCache)
-                    try data.write(to: Service.servicesCacheLocation)
-                } catch let error {
-                    print("Error caching services: \(error)")
-                }
-                
-                completion(result)
-            case .failure:
-                completion(result)
-            }
-        })
     }
     
     private static func send<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, Error>) -> ()) {

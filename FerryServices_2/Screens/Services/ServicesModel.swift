@@ -17,7 +17,6 @@ class ServicesModel: ObservableObject {
             let id = UUID()
             
             let title: String
-            let image: String?
             let services: [Service]
         }
         
@@ -62,14 +61,13 @@ class ServicesModel: ObservableObject {
                 let serviceOperator = services.first?.operator
                 return Sections.Section(
                     title: serviceOperator?.name ?? "Services",
-                    image: serviceOperator.flatMap({ $0.imageName }),
                     services: services
                 )
             })
             
             if subscribedServices.count > 0 {
                 return .multiple(
-                    [Sections.Section(title: "Subscribed", image: nil, services: subscribedServices)] + servicesGroupedByOperator
+                    [Sections.Section(title: "Subscribed", services: subscribedServices)] + servicesGroupedByOperator
                 )
             } else {
                 return .multiple(servicesGroupedByOperator)

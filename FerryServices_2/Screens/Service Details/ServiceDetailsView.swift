@@ -12,7 +12,6 @@ import MapKit
 struct ServiceDetailsView: View {
     
     @StateObject private var model: ServiceDetailModel
-    @Environment(\.scenePhase) var scenePhase
     @State private var showingDateSelection = false
     
     var showDisruptionInfo: (String) -> Void
