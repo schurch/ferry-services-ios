@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Vessel: Codable, Identifiable {
+struct Vessel: Codable, Equatable, Hashable, Identifiable {
     var id: Int { mmsi }
     
     let mmsi: Int

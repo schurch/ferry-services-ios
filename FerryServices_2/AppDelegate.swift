@@ -9,29 +9,12 @@
 import UIKit
 import Sentry
 
-enum UserDefaultsKeys {
-    static let subscribedService = "com.ferryservices.userdefaultkeys.subscribedservices.v2"
-    static let registeredForNotifications = "com.ferryservices.userdefaultkeys.registeredForNotifications"
-}
-
-struct Installation {
-    static let id: UUID = {
-        let key = "installationID"
-        
-        if let id = UserDefaults.standard.string(forKey: key) {
-            return UUID(uuidString: id)!
-        } else {
-            let id = UUID()
-            UserDefaults.standard.set(id.uuidString, forKey: key)
-            return id
-        }
-    }()
-}
-
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate, ObservableObject {
     
-    var window: UIWindow?
+    @Published var presentedServiceID: Int?
+    @Published var showNotificationMessage: Bool = false
+    
+    private (set) var notificationMessage = ""
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -51,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
-        window?.tintColor = UIColor(named: "Tint")
         
         if let remoteNotificationUserInfo = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
             handleNotification(userInfo: remoteNotificationUserInfo)
@@ -59,9 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Remove old shortcut items
         application.shortcutItems?.removeAll()
-        
-        let navigationController = window!.rootViewController as! UINavigationController
-        navigationController.setViewControllers([ServicesView.createViewController(navigationController: navigationController)], animated: false)
         
         return true
     }
@@ -72,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         APIClient.createInstallation(installationID: Installation.id, deviceToken: token, completion: { result in
             if case .success = result {
                 UserDefaults.standard.set(true, forKey: UserDefaultsKeys.registeredForNotifications)
-            }
+            }            
         })
     }
     
@@ -94,31 +73,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     private func handleNotification(userInfo: [AnyHashable: Any]) {
         guard let info = userInfo as? [String: AnyObject] else { return }
         if let serviceID = info["service_id"] as? Int {
-            showDetails(forServiceID: serviceID)
+            presentedServiceID = serviceID
         } else {
             guard let aps = info["aps"] as? [String: AnyObject] else { return }
             guard let message = aps["alert"] as? String else { return }
-            
-            let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            
-            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+            notificationMessage = message
+            showNotificationMessage = true
         }
-    }
-    
-    // MARK: - Utility methods
-    private func showDetails(forServiceID serviceId: Int) {
-        guard
-            let navigationController = window?.rootViewController as? UINavigationController,
-            let servicesViewController = navigationController.viewControllers.first else { return }
-        
-        let serviceDetailViewController = ServiceDetailsView.createViewController(
-            serviceID: serviceId,
-            service: Service.defaultServices.first(where: { $0.serviceId == serviceId }),
-            navigationController: navigationController
-        )
-        
-        navigationController.setViewControllers([servicesViewController, serviceDetailViewController], animated: true)
     }
     
 }

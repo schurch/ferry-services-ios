@@ -52,15 +52,16 @@ class ServicesModel: ObservableObject {
     private static func createSections(services: [Service], searchText: String = "") -> ServicesModel.Sections {
         if searchText.isEmpty {
             let subscribedIDs = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? []
-            let subscribedServices = services.filter({ subscribedIDs.contains($0.serviceId) })
+            let subscribedServices = services
+                .filter({ subscribedIDs.contains($0.serviceId) })
             
             let serviceGroups = Dictionary(grouping: services, by: { $0.operator?.id ?? 0 })
             let sortedServiceGroups = serviceGroups.values
                 .sorted(by: { $0.first?.operator?.name ?? "" < $1.first?.operator?.name ?? "" })
             let servicesGroupedByOperator = sortedServiceGroups.map({ services in
-                let serviceOperator = services.first?.operator
+                let serviceOperatorName = services.first?.operator?.name ?? "Services"
                 return Sections.Section(
-                    title: serviceOperator?.name ?? "Services",
+                    title: serviceOperatorName,
                     services: services
                 )
             })

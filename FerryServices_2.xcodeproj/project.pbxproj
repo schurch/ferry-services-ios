@@ -10,6 +10,9 @@
 		F8111586281E148600DE8E59 /* MapViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8111585281E148600DE8E59 /* MapViewHelpers.swift */; };
 		F8111589281E1B3300DE8E59 /* LocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8111588281E1B3300DE8E59 /* LocationAnnotation.swift */; };
 		F811158B281E1B4500DE8E59 /* VesselAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F811158A281E1B4500DE8E59 /* VesselAnnotation.swift */; };
+		F83501C32A905EFF009D7701 /* FerryServicesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83501C22A905EFF009D7701 /* FerryServicesApp.swift */; };
+		F83501C72A90A7D2009D7701 /* PDFViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83501C62A90A7D2009D7701 /* PDFViewerView.swift */; };
+		F83501C92A90A9C9009D7701 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83501C82A90A9C9009D7701 /* WebView.swift */; };
 		F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */; };
 		F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */; };
 		F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6D2A88963900849ABA /* Service+Extensions.swift */; };
@@ -94,6 +97,9 @@
 		F8111585281E148600DE8E59 /* MapViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewHelpers.swift; sourceTree = "<group>"; };
 		F8111588281E1B3300DE8E59 /* LocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotation.swift; sourceTree = "<group>"; };
 		F811158A281E1B4500DE8E59 /* VesselAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselAnnotation.swift; sourceTree = "<group>"; };
+		F83501C22A905EFF009D7701 /* FerryServicesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServicesApp.swift; sourceTree = "<group>"; };
+		F83501C62A90A7D2009D7701 /* PDFViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerView.swift; sourceTree = "<group>"; };
+		F83501C82A90A9C9009D7701 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsView.swift; sourceTree = "<group>"; };
 		F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailModel.swift; sourceTree = "<group>"; };
 		F8726C6D2A88963900849ABA /* Service+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Extensions.swift"; sourceTree = "<group>"; };
@@ -256,6 +262,8 @@
 				F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */,
 				F8726C6D2A88963900849ABA /* Service+Extensions.swift */,
 				F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */,
+				F83501C62A90A7D2009D7701 /* PDFViewerView.swift */,
+				F83501C82A90A9C9009D7701 /* WebView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -337,6 +345,7 @@
 		FD753ED2197A256E00CC5DE3 /* FerryServices_2 */ = {
 			isa = PBXGroup;
 			children = (
+				F83501C22A905EFF009D7701 /* FerryServicesApp.swift */,
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
 				FDB2A789257B2716000B0659 /* Launch Screen.storyboard */,
@@ -522,9 +531,11 @@
 				FD1B5FCE2584794E0098B96B /* Service.swift in Sources */,
 				F8AC22302A8F31E1001C01FE /* Operator+Extensions.swift in Sources */,
 				FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */,
+				F83501C72A90A7D2009D7701 /* PDFViewerView.swift in Sources */,
 				F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */,
 				F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */,
 				F8EBB3052A887F8F003DF8F3 /* ServicesView.swift in Sources */,
+				F83501C32A905EFF009D7701 /* FerryServicesApp.swift in Sources */,
 				FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */,
 				F8111586281E148600DE8E59 /* MapViewHelpers.swift in Sources */,
 				FD1B5FC8258479150098B96B /* Utility.swift in Sources */,
@@ -539,6 +550,7 @@
 				FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */,
 				FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */,
 				F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */,
+				F83501C92A90A9C9009D7701 /* WebView.swift in Sources */,
 				F8111589281E1B3300DE8E59 /* LocationAnnotation.swift in Sources */,
 				F811158B281E1B4500DE8E59 /* VesselAnnotation.swift in Sources */,
 			);
@@ -696,16 +708,20 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.71;
+				MARKETING_VERSION = 2.72;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -729,15 +745,19 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FerryServices_2/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.71;
+				MARKETING_VERSION = 2.72;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "FerryServices_2/FerryServices_2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";

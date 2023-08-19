@@ -8,22 +8,16 @@
 
 import SwiftUI
 import MapKit
+import PDFKit
 
 struct ServiceDetailsView: View {
     
     @StateObject private var model: ServiceDetailModel
     @State private var showingDateSelection = false
     
-    var showDisruptionInfo: (String) -> Void
-    var showTimetable: (Service, URL) -> Void
-    var showMap: (Service) -> Void
-    
     init(
         serviceID: Int,
-        service: Service?,
-        showDisruptionInfo: @escaping (String) -> Void,
-        showTimetable: @escaping (Service, URL) -> Void,
-        showMap: @escaping (Service) -> Void
+        service: Service?
     ) {
         _model = StateObject(
             wrappedValue: ServiceDetailModel(
@@ -31,9 +25,6 @@ struct ServiceDetailsView: View {
                 service: service
             )
         )
-        self.showDisruptionInfo = showDisruptionInfo
-        self.showTimetable = showTimetable
-        self.showMap = showMap
     }
     
     var body: some View {
@@ -62,19 +53,13 @@ struct ServiceDetailsView: View {
                         }
                         .frame(height: 200)
                         .onTapGesture {
-                            showMap(service)
+//                            showMap(service)
                         }
                         
-                        VStack {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(service.area)
-                                    .font(.title)
-                                Text(service.route)
-                            }
+                        Text(service.route)
                             .font(.body)
                             .padding(15)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        }
                     }
                 }
                 .listRowInsets(EdgeInsets())
@@ -82,8 +67,28 @@ struct ServiceDetailsView: View {
                 Section {
                     Group {
                         if let additionalInfo = service.additionalInfo, !additionalInfo.isEmpty {
-                            Button {
-                                showDisruptionInfo(additionalInfo)
+                            NavigationLink {
+                                let styledHtml = """
+                                <!DOCTYPE html>
+                                <html>
+                                    <head>
+                                        <meta name='viewport' content='width=device-width, initial-scale=1'>
+                                        <style type='text/css'>
+                                            :root {
+                                                color-scheme: light dark;
+                                            }
+                                            body { font: -apple-system-body; }
+                                            a { color: #21BFAA; }
+                                        </style>
+                                    </head>
+                                    <body>
+                                        \(additionalInfo)
+                                    </body>
+                                </html>
+                                """
+                                
+                                WebView(html: styledHtml)
+                                    .navigationTitle("Disruption Information")
                             } label: {
                                 DisruptionInfoView(service: service)
                             }
@@ -115,20 +120,11 @@ struct ServiceDetailsView: View {
                 if model.timetables.count > 0 {
                     Section("Timetables") {
                         ForEach(model.timetables) { timetable in
-                            Button {
-                                showTimetable(
-                                    service,
-                                    timetable.fileLocation
-                                )
+                            NavigationLink {
+                                PDFViewerView(document: PDFDocument(url: timetable.fileLocation)!)
+                                    .navigationTitle(timetable.text)
                             } label: {
-                                HStack {
-                                    Text(timetable.text)
-                                    Spacer()
-                                    Image(systemName: "chevron.forward")
-                                        .font(Font.system(.caption).weight(.bold))
-                                        .foregroundColor(Color(UIColor.tertiaryLabel))
-                                    
-                                }
+                                Text(timetable.text)
                             }
                         }
                     }
@@ -236,6 +232,7 @@ struct ServiceDetailsView: View {
                         }
                     }
                 }
+                .tint(Color("Tint"))
                 .presentationDetents([.medium])
             }
             .alert("Error", isPresented: $model.showSubscribedError) {
@@ -254,11 +251,13 @@ struct ServiceDetailsView: View {
                     await model.fetchLatestService()
                 }
             }
+            .navigationTitle(service.area)
         } else {
             Text("Loading...")
                 .task {
                     await model.fetchLatestService()
                 }
+                .navigationTitle("Service Details")
         }
     }
     
@@ -373,12 +372,6 @@ private struct DisruptionInfoView: View {
                 .fill(service.statusColor)
                 .frame(width: 25, height: 25, alignment: .center)
             Text(service.disruptionText)
-            
-            if !(service.additionalInfo ?? "").isEmpty {
-                Spacer()
-                Image(systemName: "info.circle")
-                    .foregroundColor(.accentColor)
-            }
         }
         .padding([.top, .bottom], 5)
     }
@@ -421,50 +414,6 @@ private struct WeatherView: View {
             .padding([.top, .bottom], 4)
         }
     }
-}
-
-extension ServiceDetailsView {
-    
-    // Used for bridging to the existing UIKit code
-    static func createViewController(
-        serviceID: Int,
-        service: Service?,
-        navigationController: UINavigationController
-    ) -> UIViewController {
-        let serviceDetailView = ServiceDetailsView(
-            serviceID: serviceID,
-            service: service,
-            showDisruptionInfo: { html in
-                let disruptionViewController = UIStoryboard(name: "Main", bundle: nil)
-                    .instantiateViewController(withIdentifier: "WebInformation") as! WebInformationViewController
-                disruptionViewController.html = html
-                
-                navigationController.pushViewController(disruptionViewController, animated: true)
-            },
-            showTimetable: { (service, timetableURL) in
-                let timetableViewController = UIStoryboard(name: "Main", bundle: nil)
-                    .instantiateViewController(withIdentifier: "TimetablePreview") as! TimetablePreviewViewController
-                timetableViewController.service = service
-                timetableViewController.url = timetableURL
-                
-                navigationController.pushViewController(timetableViewController, animated: true)
-            },
-            showMap: { service in
-                let mapViewController = UIStoryboard(name: "Main", bundle: nil)
-                    .instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
-                mapViewController.service = service
-                
-                navigationController.pushViewController(mapViewController, animated: true)
-            }
-        )
-        
-        let viewController = UIHostingController(rootView: serviceDetailView)
-        viewController.title = service?.area ?? "Service"
-        viewController.navigationItem.largeTitleDisplayMode = .never
-        
-        return viewController
-    }
-    
 }
 
 private extension Service {
