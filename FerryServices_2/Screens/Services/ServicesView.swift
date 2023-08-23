@@ -10,80 +10,50 @@ import SwiftUI
 
 struct ServicesView: View {
     
-    struct ServiceNavigationData: Identifiable, Hashable {
-        let id = UUID()
-        let serviceID: Int
-        let service: Service?
-    }
+    var showService: (Service) -> Void
     
     @StateObject private var model = ServicesModel()
-    @State private var presentedService: [ServiceNavigationData] = []
-    @EnvironmentObject private var appDelegate: AppDelegate
     
     var body: some View {
-        NavigationStack(path: $presentedService) {
-            List {
-                switch model.sections {
-                case .single(let services):
-                    ForEach(services) { service in
-                        NavigationLink(
-                            value: ServiceNavigationData(
-                                serviceID: service.id,
-                                service: service
-                            )
-                        ) {
-                            ServiceRow(service: service)
-                        }
+        List {
+            switch model.sections {
+            case .single(let services):
+                ForEach(services) { service in
+                    Button {
+                        showService(service)
+                    } label: {
+                        ServiceRow(service: service)
                     }
-                    
-                case .multiple(let sections):
-                    ForEach(sections) { section in
-                        Section(section.title) {
-                            ForEach(section.services) { service in
-                                NavigationLink(
-                                    value: ServiceNavigationData(
-                                        serviceID: service.id,
-                                        service: service
-                                    )
-                                ) {
-                                    ServiceRow(service: service)
-                                }
+                }
+                
+            case .multiple(let sections):
+                ForEach(sections) { section in
+                    Section(section.title) {
+                        ForEach(section.services) { service in
+                            Button {
+                                showService(service)
+                            } label: {
+                                ServiceRow(service: service)
                             }
                         }
                     }
                 }
+                
             }
-            .background(Color("Background"))
-            .scrollContentBackground(.hidden)
-            .searchable(text: $model.searchText)
-            .autocorrectionDisabled()
-            .task {
+        }
+        .background(Color("Background"))
+        .scrollContentBackground(.hidden)
+        .searchable(text: $model.searchText)
+        .autocorrectionDisabled()
+        .task {
+            await model.fetchServices()
+        }
+        .refreshable {
+            await model.fetchServices()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            Task {
                 await model.fetchServices()
-            }
-            .refreshable {
-                await model.fetchServices()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                Task {
-                    await model.fetchServices()
-                }
-            }
-            .navigationDestination(for: ServiceNavigationData.self) { navigationData in
-                ServiceDetailsView(serviceID: navigationData.serviceID, service: navigationData.service)
-            }
-            .navigationTitle("Services")
-            .navigationBarTitleDisplayMode(.inline)
-            .onChange(of: appDelegate.presentedServiceID) { serviceID in
-                guard let serviceID else { return }
-                presentedService = [ServiceNavigationData(serviceID: serviceID, service: nil)]
-            }
-            .alert(
-                "Alert",
-                isPresented: $appDelegate.showNotificationMessage
-            ) {
-                Button("OK", role: .cancel) { }
-            } message: {
-                Text(appDelegate.notificationMessage)
             }
         }
     }
@@ -108,8 +78,38 @@ private struct ServiceRow: View {
                     .foregroundColor(.secondary)
                     .lineLimit(1)
             }
+            Spacer()
+            Image(systemName: "chevron.forward")
+                .font(Font.system(.caption).weight(.bold))
+                .foregroundColor(Color(UIColor.tertiaryLabel))
         }
         .padding(.top, 2)
         .padding(.bottom, 2)
     }
+}
+
+extension ServicesView {
+    
+    // Used for bridging to the existing UIKit code
+    static func createViewController(
+        navigationController: UINavigationController
+    ) -> UIViewController {
+        let servicesView = ServicesView(
+            showService: { service in
+                let serviceDetailsViewController = ServiceDetailsView.createViewController(
+                    serviceID: service.id,
+                    service: service,
+                    navigationController: navigationController
+                )
+                
+                navigationController.pushViewController(serviceDetailsViewController, animated: true)
+            }
+        )
+        
+        let viewController = UIHostingController(rootView: servicesView)
+        viewController.title = "Services"
+        
+        return viewController
+    }
+    
 }

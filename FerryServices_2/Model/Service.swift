@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Service: Codable, Equatable, Hashable {
+struct Service: Codable {
     static let servicesCacheLocation: URL = {
         let cacheDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
         return cacheDirectory.appendingPathComponent("services.json")
@@ -33,7 +33,7 @@ struct Service: Codable, Equatable, Hashable {
         }
     }()
     
-    enum Status: Codable, Equatable, Hashable {
+    enum Status: Codable {
         case normal
         case disrupted
         case cancelled
@@ -64,8 +64,8 @@ struct Service: Codable, Equatable, Hashable {
         }
     }
     
-    struct Location: Codable, Equatable, Hashable, Identifiable {
-        struct Weather: Codable, Equatable, Hashable {
+    struct Location: Codable, Identifiable {
+        struct Weather: Codable {
             let description: String
             let icon: String
             let temperatureCelsius: Int
@@ -74,7 +74,7 @@ struct Service: Codable, Equatable, Hashable {
             let windDirectionCardinal: String
         }
         
-        struct ScheduledDeparture: Codable, Equatable, Hashable, Identifiable {
+        struct ScheduledDeparture: Codable, Identifiable {
             private enum CodingKeys: String, CodingKey {
                 case departure, arrival, destination
             }
@@ -98,7 +98,7 @@ struct Service: Codable, Equatable, Hashable {
         let scheduledDepartures: [ScheduledDeparture]?
     }
     
-    struct ServiceOperator: Codable, Equatable, Hashable {
+    struct ServiceOperator: Codable {
         let id: Int
         let name: String
         let website: String?
