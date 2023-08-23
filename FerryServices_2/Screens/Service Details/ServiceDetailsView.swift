@@ -517,7 +517,7 @@ private extension Service.Location {
         guard let scheduledDepartures else { return [] }
         let groups = Dictionary(grouping: scheduledDepartures, by: { $0.destination.id })
         return Array(groups.values)
-            .sorted(by: { $0.first?.destination.name ?? "" < $1.first?.destination.name ?? "" })
+            .sorted(by: { $0.first?.departure ?? Date() < $1.first?.departure ?? Date() })
     }
     
 }
