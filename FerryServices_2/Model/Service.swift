@@ -121,7 +121,3 @@ struct Service: Codable {
     let vessels: [Vessel]?
     let `operator`: ServiceOperator?
 }
-
-extension Service: Identifiable {
-    var id: Int { serviceId }
-}

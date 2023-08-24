@@ -17,28 +17,15 @@ struct ServicesView: View {
     var body: some View {
         List {
             switch model.sections {
-            case .single(let services):
-                ForEach(services) { service in
-                    Button {
-                        showService(service)
-                    } label: {
-                        ServiceRow(service: service)
-                    }
+            case .single(let rows):
+                ForEach(rows) { row in
+                    ServiceRow(row: row, showService: showService)
                 }
                 
             case .multiple(let sections):
                 ForEach(sections) { section in
-                    Section(section.title) {
-                        ForEach(section.services) { service in
-                            Button {
-                                showService(service)
-                            } label: {
-                                ServiceRow(service: service)
-                            }
-                        }
-                    }
+                    ServicesSection(section: section, showService: showService)
                 }
-                
             }
         }
         .background(Color("Background"))
@@ -59,32 +46,50 @@ struct ServicesView: View {
     }
 }
 
-private struct ServiceRow: View {
-    var service: Service
+private struct ServicesSection: View {
+    var section: ServicesModel.Sections.Section
+    var showService: (Service) -> Void
     
     var body: some View {
-        HStack {
-            Circle()
-                .fill(service.statusColor)
-                .frame(width: 25, height: 25, alignment: .center)
-                .padding(.trailing, 4)
-            VStack(alignment: .leading, spacing: 0) {
-                Text(service.area)
-                    .font(.body)
-                    .foregroundColor(.primary)
-                    .lineLimit(1)
-                Text(service.route)
-                    .font(.body)
-                    .foregroundColor(.secondary)
-                    .lineLimit(1)
+        Section(section.title) {
+            ForEach(section.rows) { row in
+                ServiceRow(row: row, showService: showService)
             }
-            Spacer()
-            Image(systemName: "chevron.forward")
-                .font(Font.system(.caption).weight(.bold))
-                .foregroundColor(Color(UIColor.tertiaryLabel))
         }
-        .padding(.top, 2)
-        .padding(.bottom, 2)
+    }
+}
+
+private struct ServiceRow: View {
+    var row: ServicesModel.Sections.Row
+    var showService: (Service) -> Void
+    
+    var body: some View {
+        Button {
+            showService(row.service)
+        } label: {
+            HStack {
+                Circle()
+                    .fill(row.service.status.statusColor)
+                    .frame(width: 25, height: 25, alignment: .center)
+                    .padding(.trailing, 4)
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(row.service.area)
+                        .font(.body)
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
+                    Text(row.service.route)
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                }
+                Spacer()
+                Image(systemName: "chevron.forward")
+                    .font(Font.system(.caption).weight(.bold))
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
+            }
+            .padding(.top, 2)
+            .padding(.bottom, 2)
+        }
     }
 }
 
@@ -97,7 +102,7 @@ extension ServicesView {
         let servicesView = ServicesView(
             showService: { service in
                 let serviceDetailsViewController = ServiceDetailsView.createViewController(
-                    serviceID: service.id,
+                    serviceID: service.serviceId,
                     service: service,
                     navigationController: navigationController
                 )

@@ -13,14 +13,19 @@ import Combine
 class ServicesModel: ObservableObject {
     
     enum Sections {
-        struct Section: Identifiable {
-            let id = UUID()
-            
-            let title: String
-            let services: [Service]
+        struct Row: Identifiable {
+            let id: String
+            let service: Service
         }
         
-        case single([Service])
+        struct Section: Identifiable {
+            var id: String { title }
+            
+            let title: String
+            let rows: [Row]
+        }
+        
+        case single([Row])
         case multiple([Section])
     }
     
@@ -49,6 +54,10 @@ class ServicesModel: ObservableObject {
         }
     }
     
+    func service(forID id: Int) -> Service {
+        services.first(where: { $0.serviceId == id })!
+    }
+    
     private static func createSections(services: [Service], searchText: String = "") -> ServicesModel.Sections {
         if searchText.isEmpty {
             let subscribedIDs = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? []
@@ -59,15 +68,30 @@ class ServicesModel: ObservableObject {
                 .sorted(by: { $0.first?.operator?.name ?? "" < $1.first?.operator?.name ?? "" })
             let servicesGroupedByOperator = sortedServiceGroups.map({ services in
                 let serviceOperator = services.first?.operator
+                let title = serviceOperator?.name ?? "Services"
                 return Sections.Section(
-                    title: serviceOperator?.name ?? "Services",
-                    services: services
+                    title: title,
+                    rows: services.map({
+                        Sections.Row(
+                            id: "\(title)\($0.serviceId)",
+                            service: $0
+                        )
+                    })
                 )
             })
             
             if subscribedServices.count > 0 {
+                let subscribedRows = subscribedServices.map({
+                    Sections.Row(
+                        id: "Subscribed\($0.serviceId)",
+                        service: $0
+                    )
+                })
                 return .multiple(
-                    [Sections.Section(title: "Subscribed", services: subscribedServices)] + servicesGroupedByOperator
+                    [Sections.Section(
+                        title: "Subscribed",
+                        rows: subscribedRows
+                    )] + servicesGroupedByOperator
                 )
             } else {
                 return .multiple(servicesGroupedByOperator)
@@ -79,7 +103,12 @@ class ServicesModel: ObservableObject {
                 return areaMatch || routeMatch
             }
             
-            return .single(filteredServices)
+            return .single(filteredServices.map({
+                Sections.Row(
+                    id: String($0.serviceId),
+                    service: $0
+                )
+            }))
         }
     }
     

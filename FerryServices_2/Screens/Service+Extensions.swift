@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-extension Service {
+extension Service.Status {
     var statusColor: Color {
-        switch status {
+        switch self {
         case .unknown: return Color("Grey")
         case .normal: return Color("Green")
         case .disrupted: return Color("Amber")
