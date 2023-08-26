@@ -68,15 +68,19 @@ extension WebInformationViewController: WKNavigationDelegate {
             decisionHandler(.allow)
             return
         }
-        
-        guard url.scheme.map({ ["http", "https"].contains($0) }) == true else {
+                
+        switch url.scheme {
+        case "http", "https":
+            let safariViewController = SFSafariViewController(url: url)
+            present(safariViewController, animated: true, completion: nil)
+            decisionHandler(.cancel)
+        case "tel", "mailto":
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            decisionHandler(.cancel)
+        default:
             decisionHandler(.allow)
-            return
         }
         
-        let safariViewController = SFSafariViewController(url: url)
-        present(safariViewController, animated: true, completion: nil)
         
-        decisionHandler(.cancel)
     }
 }
