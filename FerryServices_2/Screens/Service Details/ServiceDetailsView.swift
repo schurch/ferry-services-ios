@@ -134,33 +134,35 @@ struct ServiceDetailsView: View {
                     }
                 }
                 
-                Section("Scheduled Departures") {
-                    HStack(alignment: .center) {
-                        Button {
-                            showingDateSelection = true
-                        } label: {
-                            Text("Departures on ")
-                            +
-                            Text(model.date.formatted(.dateTime.weekday().year().month().day()))
-                                .bold()
-                                .foregroundColor(Color("Tint"))
+                if service.anyScheduledDepartures {
+                    Section("Scheduled Departures") {
+                        HStack(alignment: .center) {
+                            Button {
+                                showingDateSelection = true
+                            } label: {
+                                Text("Departures on ")
+                                +
+                                Text(model.date.formatted(.dateTime.weekday().year().month().day()))
+                                    .bold()
+                                    .foregroundColor(Color("Tint"))
+                            }
                         }
-                    }
-                    .font(.body)
-                    .frame(maxWidth: .infinity)
-                    .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                    
-                    let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
-                    if badStatuses.contains(service.status) && service.anyScheduledDepartures {
-                        HStack(alignment: .top) {
-                            Image(systemName: "exclamationmark.triangle")
-                                .foregroundColor(Color("Amber"))
-                            Text("Sailings may not be operating to the scheduled departure times. Please check the disruption information or the ferry service operator website for more details.")
-                                .font(.footnote)
-                                .foregroundColor(Color(UIColor.systemGray))
-                        }
+                        .font(.body)
+                        .frame(maxWidth: .infinity)
                         .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                    }
+                        
+                        let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
+                        if badStatuses.contains(service.status) {
+                            HStack(alignment: .top) {
+                                Image(systemName: "exclamationmark.triangle")
+                                    .foregroundColor(Color("Amber"))
+                                Text("Sailings may not be operating to the scheduled departure times. Please check the disruption information or the ferry service operator website for more details.")
+                                    .font(.footnote)
+                                    .foregroundColor(Color(UIColor.systemGray))
+                            }
+                            .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                        }
+                    }                    
                 }
                 
                 ForEach(service.locations) { location in
@@ -459,27 +461,10 @@ extension ServiceDetailsView {
         )
         
         let viewController = UIHostingController(rootView: serviceDetailView)
-        viewController.title = service?.area ?? "Service"
+        viewController.title = service?.area ?? String(localized: "Service")
         viewController.navigationItem.largeTitleDisplayMode = .never
         
         return viewController
-    }
-    
-}
-
-private extension Service {
-    
-    var disruptionText: String {
-        switch status {
-        case .normal: return "There are currently no disruptions with this service"
-        case .disrupted: return "There are disruptions with this service"
-        case .cancelled: return "Sailings have been cancelled for this service"
-        case .unknown: return ""
-        }
-    }
-    
-    var anyScheduledDepartures: Bool {
-        locations.contains(where: { $0.scheduledDepartures?.isEmpty == false })
     }
     
 }

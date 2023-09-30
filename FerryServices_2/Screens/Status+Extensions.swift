@@ -7,19 +7,15 @@
 //
 
 import Foundation
-import UIKit
+import SwiftUI
 
 extension Service.Status {
-    var color: UIColor {
+    var statusColor: Color {
         switch self {
-        case .normal:
-            return UIColor(named: "Green")!
-        case .disrupted:
-            return UIColor(named: "Amber")!
-        case .cancelled:
-            return UIColor(named: "Red")!
-        case .unknown:
-            return UIColor(named: "Grey")!
+        case .unknown: return Color("Grey")
+        case .normal: return Color("Green")
+        case .disrupted: return Color("Amber")
+        case .cancelled: return Color("Red")
         }
     }
 }

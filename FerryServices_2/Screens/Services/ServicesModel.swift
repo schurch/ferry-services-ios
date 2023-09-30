@@ -54,10 +54,6 @@ class ServicesModel: ObservableObject {
         }
     }
     
-    func service(forID id: Int) -> Service {
-        services.first(where: { $0.serviceId == id })!
-    }
-    
     private static func createSections(services: [Service], searchText: String = "") -> ServicesModel.Sections {
         if searchText.isEmpty {
             let subscribedIDs = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? []
@@ -68,7 +64,7 @@ class ServicesModel: ObservableObject {
                 .sorted(by: { $0.first?.operator?.name ?? "" < $1.first?.operator?.name ?? "" })
             let servicesGroupedByOperator = sortedServiceGroups.map({ services in
                 let serviceOperator = services.first?.operator
-                let title = serviceOperator?.name ?? "Services"
+                let title = serviceOperator?.name ?? String(localized: "Services")
                 return Sections.Section(
                     title: title,
                     rows: services.map({
@@ -89,7 +85,7 @@ class ServicesModel: ObservableObject {
                 })
                 return .multiple(
                     [Sections.Section(
-                        title: "Subscribed",
+                        title: String(localized: "Subscribed"),
                         rows: subscribedRows
                     )] + servicesGroupedByOperator
                 )

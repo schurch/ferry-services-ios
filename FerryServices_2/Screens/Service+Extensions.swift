@@ -8,13 +8,17 @@
 
 import SwiftUI
 
-extension Service.Status {
-    var statusColor: Color {
-        switch self {
-        case .unknown: return Color("Grey")
-        case .normal: return Color("Green")
-        case .disrupted: return Color("Amber")
-        case .cancelled: return Color("Red")
+extension Service {
+    var disruptionText: String {
+        switch status {
+        case .normal: return String(localized: "There are currently no disruptions with this service")
+        case .disrupted: return String(localized: "There are disruptions with this service")
+        case .cancelled: return String(localized: "Sailings have been cancelled for this service")
+        case .unknown: return String(localized: "There was a problem fetching the service status")
         }
+    }
+    
+    var anyScheduledDepartures: Bool {
+        locations.contains(where: { $0.scheduledDepartures?.isEmpty == false })
     }
 }

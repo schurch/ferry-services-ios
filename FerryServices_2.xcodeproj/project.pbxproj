@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,9 +25,7 @@
 		FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9B258479150098B96B /* WebInformationViewController.swift */; };
 		FD1B5FBF258479150098B96B /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */; };
 		FD1B5FC4258479150098B96B /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA5258479150098B96B /* Date+extensions.swift */; };
-		FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA7258479150098B96B /* String+extensions.swift */; };
 		FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA8258479150098B96B /* UIImage+extensions.swift */; };
-		FD1B5FC8258479150098B96B /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA9258479150098B96B /* Utility.swift */; };
 		FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FAB258479150098B96B /* Double+extensions.swift */; };
 		FD1B5FCE2584794E0098B96B /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FCD2584794E0098B96B /* Service.swift */; };
 		FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FD3258479E10098B96B /* Decoder.swift */; };
@@ -109,9 +107,7 @@
 		FD1B5F9B258479150098B96B /* WebInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInformationViewController.swift; sourceTree = "<group>"; };
 		FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
 		FD1B5FA5258479150098B96B /* Date+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
-		FD1B5FA7258479150098B96B /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FA8258479150098B96B /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
-		FD1B5FA9258479150098B96B /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		FD1B5FAB258479150098B96B /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FCD2584794E0098B96B /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		FD1B5FD3258479E10098B96B /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
@@ -307,9 +303,7 @@
 			children = (
 				F8111587281E1B2200DE8E59 /* Map */,
 				FD1B5FA5258479150098B96B /* Date+extensions.swift */,
-				FD1B5FA7258479150098B96B /* String+extensions.swift */,
 				FD1B5FA8258479150098B96B /* UIImage+extensions.swift */,
-				FD1B5FA9258479150098B96B /* Utility.swift */,
 				FD1B5FAB258479150098B96B /* Double+extensions.swift */,
 			);
 			path = Library;
@@ -525,9 +519,7 @@
 				F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */,
 				F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */,
 				F8EBB3052A887F8F003DF8F3 /* ServicesView.swift in Sources */,
-				FD1B5FC6258479150098B96B /* String+extensions.swift in Sources */,
 				F8111586281E148600DE8E59 /* MapViewHelpers.swift in Sources */,
-				FD1B5FC8258479150098B96B /* Utility.swift in Sources */,
 				FD1B5FAD258479150098B96B /* Vessel.swift in Sources */,
 				F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */,
 				FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */,

@@ -41,8 +41,8 @@ class VesselAnnotation: NSObject, MKAnnotation {
         )
         title = vessel.name
         subtitle = [
-            vessel.speed.map { "\($0) knots" },
-            vessel.lastReceived.relativeTimeSinceNowText()
+            vessel.speed.map { String(localized: "\($0.formatted()) knots") },
+            vessel.lastReceived.formatted(.relative(presentation: .numeric))
         ].compactMap { $0 }.joined(separator: " • ")
         
         course = vessel.course ?? 0
