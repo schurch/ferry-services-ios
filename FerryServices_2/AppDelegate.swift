@@ -68,12 +68,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     // MARK: - Push notifications
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        APIClient.createInstallation(installationID: Installation.id, deviceToken: token, completion: { result in
-            if case .success = result {
-                UserDefaults.standard.set(true, forKey: UserDefaultsKeys.registeredForNotifications)
+        Task {
+            do {
+                let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+                try await APIClient.createInstallation(installationID: Installation.id, deviceToken: token)
             }
-        })
+        }
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

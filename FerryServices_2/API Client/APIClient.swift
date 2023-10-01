@@ -65,6 +65,12 @@ class APIClient {
         return try await send(request: request)
     }
     
+    @discardableResult static func createInstallation(installationID: UUID, deviceToken: String) async throws -> [Service] {
+        let url = URL(string: "\(APIClient.root)/installations/\(installationID)", relativeTo: APIClient.baseURL)!
+        let request = createRequest(with: url, body: CreateInstallationBody(deviceToken: deviceToken))
+        return try await send(request: request)
+    }
+    
     private static func send<T: Decodable>(request: URLRequest) async throws -> T {
         let (data, response) = try await URLSession.shared.data(for: request)
         
@@ -108,13 +114,6 @@ class APIClient {
         return services
     }
     
-    //MARK: - Closure
-    static func createInstallation(installationID: UUID, deviceToken: String, completion: @escaping (Result<[Service], Error>) -> ()) {
-        let url = URL(string: "\(APIClient.root)/installations/\(installationID)", relativeTo: APIClient.baseURL)!
-        let request = createRequest(with: url, body: CreateInstallationBody(deviceToken: deviceToken))
-        send(request: request, completion: completion)
-    }
-    
     private static func createRequest<T: Encodable>(with url: URL, body: T) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -128,38 +127,5 @@ class APIClient {
         request.allHTTPHeaderFields = headers
         
         return request
-    }
-    
-    private static func send<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, Error>) -> ()) {
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                
-                guard let response = response as? HTTPURLResponse else {
-                    completion(.failure(APIError.expectedHTTPResponse))
-                    return
-                }
-                
-                guard let data = data else {
-                    completion(.failure(APIError.missingResponseData))
-                    return
-                }
-                
-                switch response.statusCode {
-                case 200..<300:
-                    do {
-                        let result = try APIDecoder.shared.decode(T.self, from: data)
-                        completion(.success(result))
-                    } catch {
-                        completion(.failure(error))
-                    }
-                default:
-                    completion(.failure(APIError.badResponseCode))
-                }
-            }
-        }.resume()
     }
 }
