@@ -46,7 +46,6 @@
 		FD8819FD1A998D76002A976A /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FC1A998D76002A976A /* Accounts.framework */; };
 		FD8819FF1A998DAA002A976A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819FE1A998DAA002A976A /* Social.framework */; };
 		FD90CF3019C40F3F009E1D74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD90CF2F19C40F3F009E1D74 /* QuickLook.framework */; };
-		FD9C66171A16CADC0050D99F /* Timetables in Resources */ = {isa = PBXBuildFile; fileRef = FD9C66161A16CADC0050D99F /* Timetables */; };
 		FDB2A774257B2293000B0659 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = FDB2A773257B2293000B0659 /* Sentry */; };
 		FDB2A77E257B25E0000B0659 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2A77D257B25E0000B0659 /* CoreServices.framework */; };
 		FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDB2A789257B2716000B0659 /* Launch Screen.storyboard */; };
@@ -139,7 +138,6 @@
 		FD9432D219CD0DAC003BBD23 /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
 		FD9432D319CD0DAC003BBD23 /* libPods-FMDB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-FMDB.a"; path = "Pods/build/Debug-iphoneos/libPods-FMDB.a"; sourceTree = "<group>"; };
 		FD9432D619CD0EA4003BBD23 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		FD9C66161A16CADC0050D99F /* Timetables */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Timetables; sourceTree = SOURCE_ROOT; };
 		FDB2A77D257B25E0000B0659 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		FDB2A789257B2716000B0659 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -351,7 +349,6 @@
 		FD753ED3197A256E00CC5DE3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FD9C66161A16CADC0050D99F /* Timetables */,
 				FDC03DE819DFDD8D000CE1FA /* services.json */,
 				FD753ED4197A256E00CC5DE3 /* Info.plist */,
 			);
@@ -490,7 +487,6 @@
 				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
 				FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */,
-				FD9C66171A16CADC0050D99F /* Timetables in Resources */,
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				FDC03DE919DFDD8D000CE1FA /* services.json in Resources */,
 				FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */,
