@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
-        window?.tintColor = UIColor(named: "Tint")
+        window?.tintColor = .colorTint
         
         if let remoteNotificationUserInfo = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
             handleNotification(userInfo: remoteNotificationUserInfo)

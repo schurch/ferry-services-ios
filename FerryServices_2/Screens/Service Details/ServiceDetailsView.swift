@@ -144,7 +144,7 @@ struct ServiceDetailsView: View {
                                 +
                                 Text(model.date.formatted(.dateTime.weekday().year().month().day()))
                                     .bold()
-                                    .foregroundColor(Color("Tint"))
+                                    .foregroundColor(.colorTint)
                             }
                         }
                         .font(.body)
@@ -155,7 +155,7 @@ struct ServiceDetailsView: View {
                         if badStatuses.contains(service.status) {
                             HStack(alignment: .top) {
                                 Image(systemName: "exclamationmark.triangle")
-                                    .foregroundColor(Color("Amber"))
+                                    .foregroundColor(.colorAmber)
                                 Text("Sailings may not be operating to the scheduled departure times. Please check the disruption information or the ferry service operator website for more details.")
                                     .font(.footnote)
                                     .foregroundColor(Color(UIColor.systemGray))

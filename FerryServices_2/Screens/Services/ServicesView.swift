@@ -28,7 +28,7 @@ struct ServicesView: View {
                 }
             }
         }
-        .background(Color("Background"))
+        .background(.colorBackground)
         .scrollContentBackground(.hidden)
         .searchable(text: $model.searchText)
         .autocorrectionDisabled()

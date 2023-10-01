@@ -12,10 +12,10 @@ import SwiftUI
 extension Service.Status {
     var statusColor: Color {
         switch self {
-        case .unknown: return Color("Grey")
-        case .normal: return Color("Green")
-        case .disrupted: return Color("Amber")
-        case .cancelled: return Color("Red")
+        case .unknown: return .colorGrey
+        case .normal: return .colorGreen
+        case .disrupted: return .colorAmber
+        case .cancelled: return .colorRed
         }
     }
 }
