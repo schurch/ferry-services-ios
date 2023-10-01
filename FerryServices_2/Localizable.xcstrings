@@ -1,0 +1,69 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%.1f knots" : {
+
+    },
+    "%@ MPH" : {
+
+    },
+    "%@°C" : {
+
+    },
+    "A problem occured. Please try again later." : {
+
+    },
+    "Departures on " : {
+
+    },
+    "Disruption Information" : {
+
+    },
+    "EMAIL" : {
+
+    },
+    "FACEBOOK" : {
+
+    },
+    "Loading..." : {
+
+    },
+    "PHONE" : {
+
+    },
+    "Sailings have been cancelled for this service" : {
+
+    },
+    "Sailings may not be operating to the scheduled departure times. Please check the disruption information or the ferry service operator website for more details." : {
+
+    },
+    "Service" : {
+
+    },
+    "Services" : {
+
+    },
+    "Subscribe to updates" : {
+
+    },
+    "Subscribed" : {
+
+    },
+    "There are currently no disruptions with this service" : {
+
+    },
+    "There are disruptions with this service" : {
+
+    },
+    "There was a problem fetching the service status" : {
+
+    },
+    "TWITTER" : {
+
+    },
+    "WEBSITE" : {
+
+    }
+  },
+  "version" : "1.0"
+}

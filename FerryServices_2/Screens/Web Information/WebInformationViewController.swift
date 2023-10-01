@@ -19,7 +19,7 @@ class WebInformationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = String(localized: "Disruption Information")
+        title = NSLocalizedString("Disruption Information", comment: "")
         webView.navigationDelegate = self
         loadHtml()
     }

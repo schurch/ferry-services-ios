@@ -41,7 +41,7 @@ class VesselAnnotation: NSObject, MKAnnotation {
         )
         title = vessel.name
         subtitle = [
-            vessel.speed.map { String(localized: "\($0.formatted()) knots") },
+            vessel.speed.map { String(format: NSLocalizedString("%.1f knots", comment: ""), $0) },
             vessel.lastReceived.formatted(.relative(presentation: .numeric))
         ].compactMap { $0 }.joined(separator: " • ")
         

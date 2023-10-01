@@ -112,7 +112,7 @@ extension ServicesView {
         )
         
         let viewController = UIHostingController(rootView: servicesView)
-        viewController.title = String(localized: "Services")
+        viewController.title = NSLocalizedString("Services", comment: "")
         
         return viewController
     }

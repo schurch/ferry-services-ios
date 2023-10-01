@@ -64,7 +64,7 @@ class ServicesModel: ObservableObject {
                 .sorted(by: { $0.first?.operator?.name ?? "" < $1.first?.operator?.name ?? "" })
             let servicesGroupedByOperator = sortedServiceGroups.map({ services in
                 let serviceOperator = services.first?.operator
-                let title = serviceOperator?.name ?? String(localized: "Services")
+                let title = serviceOperator?.name ?? NSLocalizedString("Services", comment: "")
                 return Sections.Section(
                     title: title,
                     rows: services.map({
@@ -85,7 +85,7 @@ class ServicesModel: ObservableObject {
                 })
                 return .multiple(
                     [Sections.Section(
-                        title: String(localized: "Subscribed"),
+                        title: NSLocalizedString("Subscribed", comment: ""),
                         rows: subscribedRows
                     )] + servicesGroupedByOperator
                 )

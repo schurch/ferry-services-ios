@@ -193,11 +193,11 @@ struct ServiceDetailsView: View {
                             }
                         } header: {
                             HStack {
-                                Text("\(location.name)")
+                                Text(location.name)
                                 Spacer()
                                 Image(systemName: "arrow.right")
                                 Spacer()
-                                Text("\(departures.first!.destination.name)")
+                                Text(departures.first!.destination.name)
                             }
                         }
                     }
@@ -461,7 +461,7 @@ extension ServiceDetailsView {
         )
         
         let viewController = UIHostingController(rootView: serviceDetailView)
-        viewController.title = service?.area ?? String(localized: "Service")
+        viewController.title = service?.area ?? NSLocalizedString("Service", comment: "")
         viewController.navigationItem.largeTitleDisplayMode = .never
         
         return viewController
