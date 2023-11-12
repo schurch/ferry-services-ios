@@ -17,8 +17,4 @@ extension Service {
         case .unknown: return NSLocalizedString("There was a problem fetching the service status", comment: "")
         }
     }
-    
-    var anyScheduledDepartures: Bool {
-        locations.contains(where: { $0.scheduledDepartures?.isEmpty == false })
-    }
 }

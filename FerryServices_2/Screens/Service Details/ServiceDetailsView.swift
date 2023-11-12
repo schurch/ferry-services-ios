@@ -134,35 +134,33 @@ struct ServiceDetailsView: View {
                     }
                 }
                 
-                if service.anyScheduledDepartures {
-                    Section("Scheduled Departures") {
-                        HStack(alignment: .center) {
-                            Button {
-                                showingDateSelection = true
-                            } label: {
-                                Text("Departures on ")
-                                +
-                                Text(model.date.formatted(.dateTime.weekday().year().month().day()))
-                                    .bold()
-                                    .foregroundColor(.colorTint)
-                            }
+                Section("Scheduled Departures") {
+                    HStack(alignment: .center) {
+                        Button {
+                            showingDateSelection = true
+                        } label: {
+                            Text("Departures on ")
+                            +
+                            Text(model.date.formatted(.dateTime.weekday().year().month().day()))
+                                .bold()
+                                .foregroundColor(.colorTint)
                         }
-                        .font(.body)
-                        .frame(maxWidth: .infinity)
+                    }
+                    .font(.body)
+                    .frame(maxWidth: .infinity)
+                    .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                    
+                    let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
+                    if badStatuses.contains(service.status) {
+                        HStack(alignment: .top) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .foregroundColor(.colorAmber)
+                            Text("Sailings may not be operating to the scheduled departure times. Please check the disruption information or the ferry service operator website for more details.")
+                                .font(.footnote)
+                                .foregroundColor(Color(UIColor.systemGray))
+                        }
                         .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                        
-                        let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
-                        if badStatuses.contains(service.status) {
-                            HStack(alignment: .top) {
-                                Image(systemName: "exclamationmark.triangle")
-                                    .foregroundColor(.colorAmber)
-                                Text("Sailings may not be operating to the scheduled departure times. Please check the disruption information or the ferry service operator website for more details.")
-                                    .font(.footnote)
-                                    .foregroundColor(Color(UIColor.systemGray))
-                            }
-                            .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                        }
-                    }                    
+                    }
                 }
                 
                 ForEach(service.locations) { location in
@@ -314,7 +312,7 @@ private struct ServiceOperator: View {
                                         }
                                     }
                                 }
-
+                                
                             case .website:
                                 Button(action: {
                                     openURL(URL(string: serviceOperator.website!)!)
@@ -323,7 +321,7 @@ private struct ServiceOperator: View {
                                         .foregroundColor(Color(UIColor.label))
                                         .frame(maxWidth: .infinity)
                                 }
-
+                                
                             case .email:
                                 Button(action: {
                                     openURL(URL(string: "mailto:\(serviceOperator.email!)")!)
@@ -332,7 +330,7 @@ private struct ServiceOperator: View {
                                         .foregroundColor(Color(UIColor.label))
                                         .frame(maxWidth: .infinity)
                                 }
-
+                                
                             case .x:
                                 Button(action: {
                                     openURL(URL(string: serviceOperator.x!)!)
@@ -341,7 +339,7 @@ private struct ServiceOperator: View {
                                         .foregroundColor(Color(UIColor.label))
                                         .frame(maxWidth: .infinity)
                                 }
-
+                                
                             case .facebook:
                                 Button(action: {
                                     openURL(URL(string: serviceOperator.facebook!)!)
@@ -350,7 +348,7 @@ private struct ServiceOperator: View {
                                         .foregroundColor(Color(UIColor.label))
                                         .frame(maxWidth: .infinity)
                                 }
-
+                                
                             case .spacer:
                                 Spacer()
                                     .frame(maxWidth: .infinity)
