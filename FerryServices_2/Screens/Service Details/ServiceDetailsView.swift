@@ -41,28 +41,30 @@ struct ServiceDetailsView: View {
             List {
                 Section {
                     VStack(spacing: 0) {
-                        Map(
-                            mapRect: $model.mapRect,
-                            interactionModes: [],
-                            annotationItems: model.annotations
-                        ) { annotation in
-                            MapAnnotation(
-                                coordinate: annotation.coordinate
-                            ) {
-                                switch annotation.type {
-                                case .vessel(let course):
-                                    Image("ferry")
-                                        .rotationEffect(.degrees(course))
-                                case .location:
-                                    Image("map-annotation")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
+                        if !model.annotations.isEmpty {
+                            Map(
+                                mapRect: $model.mapRect,
+                                interactionModes: [],
+                                annotationItems: model.annotations
+                            ) { annotation in
+                                MapAnnotation(
+                                    coordinate: annotation.coordinate
+                                ) {
+                                    switch annotation.type {
+                                    case .vessel(let course):
+                                        Image("ferry")
+                                            .rotationEffect(.degrees(course))
+                                    case .location:
+                                        Image("map-annotation")
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                    }
                                 }
                             }
-                        }
-                        .frame(height: 200)
-                        .onTapGesture {
-                            showMap(service)
+                            .frame(height: 200)
+                            .onTapGesture {
+                                showMap(service)
+                            }
                         }
                         
                         VStack {
