@@ -72,6 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             do {
                 let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
                 try await APIClient.createInstallation(installationID: Installation.id, deviceToken: token)
+                UserDefaults.standard.set(true, forKey: UserDefaultsKeys.registeredForNotifications)
             }
         }
     }
