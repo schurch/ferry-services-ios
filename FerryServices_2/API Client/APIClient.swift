@@ -24,7 +24,6 @@ class APIClient {
     private static let baseURL = URL(string: "https://scottishferryapp.com")
     private static let root = "/api"
     
-    //MARK: - Async
     static func fetchServices() async throws -> [Service] {
         let url = URL(string: "\(APIClient.root)/services/", relativeTo: APIClient.baseURL)!
         return try await sendAndCacheResult(request: URLRequest(url: url))

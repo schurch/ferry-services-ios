@@ -238,7 +238,8 @@ struct ServiceDetailsView: View {
                         }
                     }
                 }
-                .presentationDetents([.medium])
+                .presentationDetents([.fraction(0.6)])
+                .presentationDragIndicator(.visible)
             }
             .alert("Error", isPresented: $model.showSubscribedError) {
                 Button("OK", role: .cancel) { }
