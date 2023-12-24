@@ -79,6 +79,7 @@ struct ServiceDetailsView: View {
                         }
                     }
                 }
+                .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets())
                 
                 Section {
@@ -113,30 +114,21 @@ struct ServiceDetailsView: View {
                         }
                     }
                 }
+                .listRowSeparator(.hidden)
                 
-                if model.timetables.count > 0 {
-                    Section("Timetables") {
-                        ForEach(model.timetables) { timetable in
-                            Button {
-                                showTimetable(
-                                    service,
-                                    timetable.fileLocation
-                                )
-                            } label: {
-                                HStack {
-                                    Text(timetable.text)
-                                    Spacer()
-                                    Image(systemName: "chevron.forward")
-                                        .font(Font.system(.caption).weight(.bold))
-                                        .foregroundColor(Color(UIColor.tertiaryLabel))
-                                    
-                                }
-                            }
-                        }
-                    }
+                Section {
+                    LocationInformation(name: "Brodick")
                 }
+                .padding(.top, 8)
+                .listRowSeparator(.hidden)
                 
-                Section("Scheduled Departures") {
+                Section {
+                    LocationInformation(name: "Ardrossan")
+                }
+                .padding(.top, 8)
+                .listRowSeparator(.hidden)
+                
+                Section {
                     HStack(alignment: .center) {
                         Button {
                             showingDateSelection = true
@@ -151,6 +143,7 @@ struct ServiceDetailsView: View {
                     .font(.body)
                     .frame(maxWidth: .infinity)
                     .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                    .listRowSeparator(.hidden)
                     
                     let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
                     if badStatuses.contains(service.status) {
@@ -162,17 +155,11 @@ struct ServiceDetailsView: View {
                                 .foregroundColor(Color(UIColor.systemGray))
                         }
                         .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                        .listRowSeparator(.hidden)
                     }
                 }
                 
                 ForEach(service.locations) { location in
-                    if let weather = location.weather {
-                        Section(location.name) {
-                            WeatherView(weather: weather)
-                                .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                        }
-                    }
-                    
                     ForEach(location.groupedScheduledDepartures, id: \.self.first?.destination.id) { departures in
                         Section {
                             ForEach(departures) { departureInfo in
@@ -209,10 +196,10 @@ struct ServiceDetailsView: View {
                             .padding([.bottom], 5)
                             .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     }
+                    .listRowSeparator(.hidden)
                 }
             }
             .listStyle(.plain)
-            .listRowInsets(EdgeInsets())
             .sheet(
                 isPresented: $showingDateSelection,
                 onDismiss: {
@@ -265,6 +252,68 @@ struct ServiceDetailsView: View {
         }
     }
     
+}
+
+private struct LocationInformation: View {
+    let name: String
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(name)
+                .font(.title3)
+            
+            HStack {
+                Image(systemName: "clock")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 25)
+                    .padding([.leading], 8)
+                    .padding([.trailing], 14)
+                    .foregroundStyle(Color(red: 0.80, green: 0.80, blue: 0.80))
+                VStack(alignment: .leading) {
+                    Text("Next depature")
+                        .font(.subheadline)
+                    Text("to Ardrossan at 8:20 AM")
+                        .font(.subheadline)
+                        .foregroundStyle(Color(UIColor.secondaryLabel))
+                }
+            }
+            
+            Divider()
+                .padding(.leading, 55)
+            
+            HStack {
+                Image("02d")
+                VStack(alignment: .leading) {
+                    Text("Weather")
+                        .font(.subheadline)
+                    Text("11ºC Overcast clouds")
+                        .font(.subheadline)
+                        .foregroundStyle(Color(UIColor.secondaryLabel))
+                }
+            }
+            
+            Divider()
+                .padding(.leading, 55)
+            
+            HStack {
+                Image("Wind")
+                    .rotationEffect(.degrees(Double(270 + 180)))
+                VStack(alignment: .leading) {
+                    Text("Wind")
+                        .font(.subheadline)
+                    Text("26 MPH W")
+                        .font(.subheadline)
+                        .foregroundStyle(Color(UIColor.secondaryLabel))
+                }
+            }
+        }
+        .padding()
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(Color(UIColor.tertiaryLabel), lineWidth: 0.5)
+        )
+    }
 }
 
 private struct ServiceOperator: View {
