@@ -116,17 +116,13 @@ struct ServiceDetailsView: View {
                 }
                 .listRowSeparator(.hidden)
                 
-                Section {
-                    LocationInformation(name: "Brodick")
+                ForEach(service.locations) { location in
+                    Section {
+                        LocationInformation(location: location)
+                    }
+                    .padding(.top, 8)
+                    .listRowSeparator(.hidden)
                 }
-                .padding(.top, 8)
-                .listRowSeparator(.hidden)
-                
-                Section {
-                    LocationInformation(name: "Ardrossan")
-                }
-                .padding(.top, 8)
-                .listRowSeparator(.hidden)
                 
                 Section {
                     HStack(alignment: .center) {
@@ -255,56 +251,63 @@ struct ServiceDetailsView: View {
 }
 
 private struct LocationInformation: View {
-    let name: String
+    let location: Service.Location
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(name)
+            Text(location.name)
                 .font(.title3)
             
-            HStack {
-                Image(systemName: "clock")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 25)
-                    .padding([.leading], 8)
-                    .padding([.trailing], 14)
-                    .foregroundStyle(Color(red: 0.80, green: 0.80, blue: 0.80))
-                VStack(alignment: .leading) {
-                    Text("Next depature")
-                        .font(.subheadline)
-                    Text("to Ardrossan at 8:20 AM")
-                        .font(.subheadline)
+//            HStack(alignment: .center) {
+//                Image(systemName: "clock")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .fontWeight(.thin)
+//                    .frame(height: 30)
+//                    .foregroundStyle(Color(UIColor.secondaryLabel))
+//                    .padding([.leading, .trailing], 9)
+//                    .padding([.top, .bottom], 8)
+//                VStack(alignment: .leading) {
+//                    Text("Next depature")
+//                        .font(.subheadline)
+//                    Text("to Ardrossan at 8:20 AM")
+//                        .font(.subheadline)
+//                        .foregroundStyle(Color(UIColor.secondaryLabel))
+//                }
+//            }
+//            
+//            Divider()
+//                .padding(.leading, 55)
+            
+            if let weather = location.weather {
+                HStack(alignment: .center) {
+                    Image(weather.icon)
+                        .renderingMode(.template)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
+                    VStack(alignment: .leading) {
+                        Text("Weather")
+                            .font(.subheadline)
+                        Text("\(weather.temperatureCelsius)ºC • \(weather.description)")
+                            .font(.subheadline)
+                            .foregroundStyle(Color(UIColor.secondaryLabel))
+                    }
                 }
-            }
-            
-            Divider()
-                .padding(.leading, 55)
-            
-            HStack {
-                Image("02d")
-                VStack(alignment: .leading) {
-                    Text("Weather")
-                        .font(.subheadline)
-                    Text("11ºC Overcast clouds")
-                        .font(.subheadline)
+                
+                Divider()
+                    .padding(.leading, 55)
+                
+                HStack(alignment: .center) {
+                    Image("Wind")
+                        .renderingMode(.template)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
-                }
-            }
-            
-            Divider()
-                .padding(.leading, 55)
-            
-            HStack {
-                Image("Wind")
-                    .rotationEffect(.degrees(Double(270 + 180)))
-                VStack(alignment: .leading) {
-                    Text("Wind")
-                        .font(.subheadline)
-                    Text("26 MPH W")
-                        .font(.subheadline)
-                        .foregroundStyle(Color(UIColor.secondaryLabel))
+                        .rotationEffect(.degrees(Double(weather.windDirection + 180)))
+                    VStack(alignment: .leading) {
+                        Text("Wind")
+                            .font(.subheadline)
+                        Text("\(weather.windSpeedMph) MPH • \(weather.windDirectionCardinal)")
+                            .font(.subheadline)
+                            .foregroundStyle(Color(UIColor.secondaryLabel))
+                    }
                 }
             }
         }
@@ -411,45 +414,6 @@ private struct DisruptionInfoView: View {
             }
         }
         .padding([.top, .bottom], 5)
-    }
-}
-
-private struct WeatherView: View {
-    var weather: Service.Location.Weather
-    
-    var body: some View {
-        HStack {
-            VStack(spacing: 0) {
-                HStack {
-                    Image(weather.icon)
-                    Text("\(weather.temperatureCelsius)°C")
-                        .font(.body)
-                }
-                Text(weather.description)
-                    .font(.body)
-                    .foregroundColor(.secondary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding([.top, .bottom], 4)
-            
-            Color(uiColor: UIColor.separator)
-                .frame(width: 0.5)
-                .padding(0)
-            
-            VStack(spacing: 0) {
-                HStack {
-                    Image("Wind")
-                        .rotationEffect(.degrees(Double(weather.windDirection + 180)))
-                    Text("\(weather.windSpeedMph) MPH")
-                        .font(.body)
-                }
-                Text(weather.windDirectionCardinal)
-                    .font(.body)
-                    .foregroundColor(.secondary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding([.top, .bottom], 4)
-        }
     }
 }
 
