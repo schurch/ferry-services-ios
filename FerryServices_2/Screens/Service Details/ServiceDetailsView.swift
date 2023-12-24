@@ -288,80 +288,58 @@ private struct ServiceOperator: View {
             }
             
             VStack(spacing: 5) {
-                ForEach(serviceOperator.groupedContactItems, id: \.self) { group in
-                    HStack {
-                        ForEach(group, id: \.self) { item in
-                            switch item {
-                            case .phone:
-                                Button(action: {
-                                    showingPhoneAlert = true
-                                }) {
-                                    Text("PHONE")
-                                        .foregroundColor(Color(UIColor.label))
-                                        .frame(maxWidth: .infinity)
-                                }
-                                .confirmationDialog("Phone", isPresented: $showingPhoneAlert) {
-                                    if let local = serviceOperator.localNumber {
-                                        let localFormatted = local.replacingOccurrences(of: " ", with: "-")
-                                        Button(local) {
-                                            openURL(URL(string: "tel://\(localFormatted)")!)
-                                        }
-                                    }
-                                    
-                                    if let international = serviceOperator.internationalNumber {
-                                        let internationalFormatted = international.replacingOccurrences(of: " ", with: "-")
-                                        Button(international) {
-                                            openURL(URL(string: "tel://\(internationalFormatted)")!)
-                                        }
-                                    }
-                                }
-                                
-                            case .website:
-                                Button(action: {
-                                    openURL(URL(string: serviceOperator.website!)!)
-                                }) {
-                                    Text("WEBSITE")
-                                        .foregroundColor(Color(UIColor.label))
-                                        .frame(maxWidth: .infinity)
-                                }
-                                
-                            case .email:
-                                Button(action: {
-                                    openURL(URL(string: "mailto:\(serviceOperator.email!)")!)
-                                }) {
-                                    Text("EMAIL")
-                                        .foregroundColor(Color(UIColor.label))
-                                        .frame(maxWidth: .infinity)
-                                }
-                                
-                            case .x:
-                                Button(action: {
-                                    openURL(URL(string: serviceOperator.x!)!)
-                                }) {
-                                    Text("TWITTER")
-                                        .foregroundColor(Color(UIColor.label))
-                                        .frame(maxWidth: .infinity)
-                                }
-                                
-                            case .facebook:
-                                Button(action: {
-                                    openURL(URL(string: serviceOperator.facebook!)!)
-                                }) {
-                                    Text("FACEBOOK")
-                                        .foregroundColor(Color(UIColor.label))
-                                        .frame(maxWidth: .infinity)
-                                }
-                                
-                            case .spacer:
-                                Spacer()
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
+                HStack {
+                    Button("PHONE") {
+                        showingPhoneAlert = true
+                    }
+                    .disabled(serviceOperator.localNumber == nil && serviceOperator.internationalNumber == nil)
+                    .confirmationDialog("Phone", isPresented: $showingPhoneAlert) {
+                        if let local = serviceOperator.localNumber {
+                            let localFormatted = local.replacingOccurrences(of: " ", with: "-")
+                            Button(local) {
+                                openURL(URL(string: "tel://\(localFormatted)")!)
+                            }
+                        }
+                        
+                        if let international = serviceOperator.internationalNumber {
+                            let internationalFormatted = international.replacingOccurrences(of: " ", with: "-")
+                            Button(international) {
+                                openURL(URL(string: "tel://\(internationalFormatted)")!)
                             }
                         }
                     }
+                    
+                    Button("WEBSITE") {
+                        openURL(URL(string: serviceOperator.website!)!)
+                    }
+                    .disabled(serviceOperator.website == nil)
+                }
+                
+                HStack {
+                    Button("EMAIL") {
+                        openURL(URL(string: "mailto:\(serviceOperator.email!)")!)
+                    }
+                    .disabled(serviceOperator.email == nil)
+                    
+                    Button("TWITTER") {
+                        openURL(URL(string: serviceOperator.x!)!)
+                    }
+                    .disabled(serviceOperator.x == nil)
+                }
+                
+                HStack {
+                    Button("FACEBOOK") {
+                        openURL(URL(string: serviceOperator.facebook!)!)
+                    }
+                    .disabled(serviceOperator.facebook == nil)
+                    
+                    Spacer()
+                        .frame(maxWidth: .infinity)
+                        .padding()
+
                 }
             }
-            .buttonStyle(.bordered)
+            .buttonStyle(.standard)
         }
     }
     
@@ -470,32 +448,6 @@ extension ServiceDetailsView {
     
 }
 
-private extension Service.ServiceOperator {
-    
-    enum ContactItem {
-        case phone, website, email, x, facebook, spacer
-    }
-    
-    var groupedContactItems: [[ContactItem]] {
-        let items: [ContactItem?] = [
-            localNumber != nil || internationalNumber != nil ? .phone : nil,
-            website != nil ? .website : nil,
-            email != nil ? .email : nil,
-            x != nil ? .x : nil,
-            facebook != nil ? .facebook : nil
-        ]
-        
-        let groupedItems = items.compactMap({ $0 }).groupedIntoTwos
-        if let last = groupedItems.last, last.count == 1 {
-            // Add spacer at end if only 1 item
-            return groupedItems.dropLast(1) + [[last[0], .spacer]]
-        } else {
-            return groupedItems
-        }
-    }
-    
-}
-
 private extension Service.Location {
     
     // Grouped on destination
@@ -508,15 +460,20 @@ private extension Service.Location {
     
 }
 
-private extension Array {
-    var groupedIntoTwos: [[Element]] {
-        self.reduce([]) { accumulate, current in
-            if (accumulate.last?.count ?? 0) % 2 == 0 {
-                return accumulate + [[current]]
-            } else {
-                let currentLast = accumulate.last!.last!
-                return accumulate.dropLast(1) + [[currentLast, current]]
-            }
-        }
+extension ButtonStyle where Self == StandardButtonStyle {
+    static var standard: StandardButtonStyle { StandardButtonStyle() }
+}
+
+struct StandardButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var isEnabled
+    
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration
+            .label
+            .frame(maxWidth: .infinity, minHeight: 33)
+            .foregroundStyle(isEnabled ? Color(UIColor.label) : Color(UIColor.systemGray2))
+            .background(Color(UIColor.systemGray5))
+            .cornerRadius(6)
+            
     }
 }

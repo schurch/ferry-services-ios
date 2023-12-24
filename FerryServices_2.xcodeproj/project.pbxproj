@@ -10,7 +10,6 @@
 		F8111586281E148600DE8E59 /* MapViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8111585281E148600DE8E59 /* MapViewHelpers.swift */; };
 		F8111589281E1B3300DE8E59 /* LocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8111588281E1B3300DE8E59 /* LocationAnnotation.swift */; };
 		F811158B281E1B4500DE8E59 /* VesselAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F811158A281E1B4500DE8E59 /* VesselAnnotation.swift */; };
-		F81993612AC8FE4D00293037 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F81993602AC8FE4D00293037 /* Localizable.xcstrings */; };
 		F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */; };
 		F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */; };
 		F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6D2A88963900849ABA /* Service+Extensions.swift */; };
@@ -92,7 +91,6 @@
 		F8111585281E148600DE8E59 /* MapViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewHelpers.swift; sourceTree = "<group>"; };
 		F8111588281E1B3300DE8E59 /* LocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAnnotation.swift; sourceTree = "<group>"; };
 		F811158A281E1B4500DE8E59 /* VesselAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselAnnotation.swift; sourceTree = "<group>"; };
-		F81993602AC8FE4D00293037 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsView.swift; sourceTree = "<group>"; };
 		F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailModel.swift; sourceTree = "<group>"; };
 		F8726C6D2A88963900849ABA /* Service+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Extensions.swift"; sourceTree = "<group>"; };
@@ -344,7 +342,6 @@
 				FD075CE31A734FDF00C78250 /* Settings.bundle */,
 				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
 				FD839D6E257B112E00D12705 /* Colors.xcassets */,
-				F81993602AC8FE4D00293037 /* Localizable.xcstrings */,
 			);
 			path = FerryServices_2;
 			sourceTree = "<group>";
@@ -492,7 +489,6 @@
 				FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */,
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				FDC03DE919DFDD8D000CE1FA /* services.json in Resources */,
-				F81993612AC8FE4D00293037 /* Localizable.xcstrings in Resources */,
 				FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
