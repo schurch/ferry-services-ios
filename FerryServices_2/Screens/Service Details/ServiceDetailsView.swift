@@ -8,6 +8,7 @@
 
 import SwiftUI
 import MapKit
+import Combine
 
 struct ServiceDetailsView: View {
     
@@ -79,8 +80,8 @@ struct ServiceDetailsView: View {
                         }
                     }
                 }
-                .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
                 
                 Section {
                     Group {
@@ -106,17 +107,18 @@ struct ServiceDetailsView: View {
                                     .id(UUID())
                                     .padding(.trailing, 12)
                             }
+                            .listRowSeparator(.hidden)
                         } else {
                             Toggle("Subscribe to updates", isOn: $model.subscribed)
                                 .onChange(of: model.subscribed) { value in
                                     model.updateSubscribed(subscribed: value)
                                 }
+                                .listRowSeparator(.hidden)
                         }
                     }
                 }
-                .listRowSeparator(.hidden)
                 
-                ForEach(service.locations) { location in
+                ForEach(service.locations.sorted(by: { $0.name < $1.name })) { location in
                     Section {
                         LocationInformation(location: location)
                     }
@@ -155,7 +157,7 @@ struct ServiceDetailsView: View {
                     }
                 }
                 
-                ForEach(service.locations) { location in
+                ForEach(service.locations.sorted(by: { $0.scheduledDepartures?.first?.departure ?? Date() < $1.scheduledDepartures?.first?.departure ?? Date() })) { location in
                     ForEach(location.groupedScheduledDepartures, id: \.self.first?.destination.id) { departures in
                         Section {
                             ForEach(departures) { departureInfo in
@@ -251,7 +253,21 @@ struct ServiceDetailsView: View {
 }
 
 private struct LocationInformation: View {
-    let location: Service.Location
+    private static let animationOffsets = Bool.random() ? [15, 0, -15, 0, 0] : [-15, 0, 15, 0, 0]
+
+    private let location: Service.Location
+    
+    @State private var animationRotationOffset = 0
+    @State private var currentAnimationOffsetIndex = 0
+    
+    private let animationInterval: Double
+    private let timer: Publishers.Autoconnect<Timer.TimerPublisher>
+    
+    init(location: Service.Location) {
+        self.location = location
+        self.animationInterval = Double.random(in: 1...2)
+        self.timer = Timer.publish(every: animationInterval, on: .main, in: .common).autoconnect()
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -300,7 +316,14 @@ private struct LocationInformation: View {
                     Image("Wind")
                         .renderingMode(.template)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
-                        .rotationEffect(.degrees(Double(weather.windDirection + 180)))
+                        .rotationEffect(
+                            .degrees(Double(weather.windDirection + animationRotationOffset + 180))
+                        )
+                        .animation(.linear(duration: animationInterval), value: animationRotationOffset)
+                        .onReceive(timer) { input in
+                            animationRotationOffset = LocationInformation.animationOffsets[currentAnimationOffsetIndex % LocationInformation.animationOffsets.count]
+                            currentAnimationOffsetIndex += 1
+                        }
                     VStack(alignment: .leading) {
                         Text("Wind")
                             .font(.subheadline)
