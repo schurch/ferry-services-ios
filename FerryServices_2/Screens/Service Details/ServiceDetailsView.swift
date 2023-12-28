@@ -274,26 +274,28 @@ private struct LocationInformation: View {
             Text(location.name)
                 .font(.title3)
             
-//            HStack(alignment: .center) {
-//                Image(systemName: "clock")
-//                    .resizable()
-//                    .scaledToFit()
-//                    .fontWeight(.thin)
-//                    .frame(height: 30)
-//                    .foregroundStyle(Color(UIColor.secondaryLabel))
-//                    .padding([.leading, .trailing], 9)
-//                    .padding([.top, .bottom], 8)
-//                VStack(alignment: .leading) {
-//                    Text("Next depature")
-//                        .font(.subheadline)
-//                    Text("to Ardrossan at 8:20 AM")
-//                        .font(.subheadline)
-//                        .foregroundStyle(Color(UIColor.secondaryLabel))
-//                }
-//            }
-//            
-//            Divider()
-//                .padding(.leading, 55)
+            if let nextDeparture = location.nextDeparture {
+                HStack(alignment: .center) {
+                    Image(systemName: "clock")
+                        .resizable()
+                        .scaledToFit()
+                        .fontWeight(.thin)
+                        .frame(height: 25)
+                        .foregroundStyle(Color(UIColor.secondaryLabel))
+                        .padding([.leading, .trailing], 12)
+                        .padding([.top, .bottom], 8)
+                    VStack(alignment: .leading) {
+                        Text("Next depature")
+                            .font(.subheadline)
+                        Text("to \(nextDeparture.destination.name) at \(nextDeparture.departure.formatted(Date.timeFormatStyle))")
+                            .font(.subheadline)
+                            .foregroundStyle(Color(UIColor.secondaryLabel))
+                    }
+                }
+                
+                Divider()
+                    .padding(.leading, 55)
+            }
             
             if let weather = location.weather {
                 HStack(alignment: .center) {
