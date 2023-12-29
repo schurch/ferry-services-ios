@@ -287,7 +287,7 @@ private struct LocationInformation: View {
                     VStack(alignment: .leading) {
                         Text("Next depature")
                             .font(.subheadline)
-                        Text("to \(nextDeparture.destination.name) at \(nextDeparture.departure.formatted(Date.timeFormatStyle))")
+                        Text("\(nextDeparture.departure.formatted(Date.timeFormatStyle)) to \(nextDeparture.destination.name)")
                             .font(.subheadline)
                             .foregroundStyle(Color(UIColor.secondaryLabel))
                     }
