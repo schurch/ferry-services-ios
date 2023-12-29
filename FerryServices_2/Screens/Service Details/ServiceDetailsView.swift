@@ -285,7 +285,7 @@ private struct LocationInformation: View {
                         .padding([.leading, .trailing], 12)
                         .padding([.top, .bottom], 8)
                     VStack(alignment: .leading) {
-                        Text("Next depature")
+                        Text("Next departure")
                             .font(.subheadline)
                         Text("\(nextDeparture.departure.formatted(Date.timeFormatStyle)) to \(nextDeparture.destination.name)")
                             .font(.subheadline)
