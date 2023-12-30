@@ -16,14 +16,12 @@ struct ServiceDetailsView: View {
     @State private var showingDateSelection = false
     
     var showDisruptionInfo: (String) -> Void
-    var showTimetable: (Service, URL) -> Void
     var showMap: (Service) -> Void
     
     init(
         serviceID: Int,
         service: Service?,
         showDisruptionInfo: @escaping (String) -> Void,
-        showTimetable: @escaping (Service, URL) -> Void,
         showMap: @escaping (Service) -> Void
     ) {
         _model = StateObject(
@@ -33,7 +31,6 @@ struct ServiceDetailsView: View {
             )
         )
         self.showDisruptionInfo = showDisruptionInfo
-        self.showTimetable = showTimetable
         self.showMap = showMap
     }
     
@@ -490,14 +487,6 @@ extension ServiceDetailsView {
                 disruptionViewController.html = html
                 
                 navigationController.pushViewController(disruptionViewController, animated: true)
-            },
-            showTimetable: { (service, timetableURL) in
-                let timetableViewController = UIStoryboard(name: "Main", bundle: nil)
-                    .instantiateViewController(withIdentifier: "TimetablePreview") as! TimetablePreviewViewController
-                timetableViewController.service = service
-                timetableViewController.url = timetableURL
-                
-                navigationController.pushViewController(timetableViewController, animated: true)
             },
             showMap: { service in
                 let mapViewController = UIStoryboard(name: "Main", bundle: nil)

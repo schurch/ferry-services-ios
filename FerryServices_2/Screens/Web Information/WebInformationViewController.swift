@@ -60,11 +60,10 @@ class WebInformationViewController: UIViewController {
 extension WebInformationViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard navigationAction.navigationType == .linkActivated else {
-            decisionHandler(.allow)
-            return
-        }
-        guard let url = navigationAction.request.url else {
+        guard 
+            navigationAction.navigationType == .linkActivated,
+            let url = navigationAction.request.url
+        else {
             decisionHandler(.allow)
             return
         }

@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         SentrySDK.start { options in
             options.dsn = "https://57b7260ca4a249ecb24c7975ae3ad79d@o434952.ingest.sentry.io/5392740"
         }
@@ -97,8 +96,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if let serviceID = info["service_id"] as? Int {
             showDetails(forServiceID: serviceID)
         } else {
-            guard let aps = info["aps"] as? [String: AnyObject] else { return }
-            guard let message = aps["alert"] as? String else { return }
+            guard 
+                let aps = info["aps"] as? [String: AnyObject],
+                let message = aps["alert"] as? String
+            else {
+                return
+            }
             
             let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -111,7 +114,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     private func showDetails(forServiceID serviceId: Int) {
         guard
             let navigationController = window?.rootViewController as? UINavigationController,
-            let servicesViewController = navigationController.viewControllers.first else { return }
+            let servicesViewController = navigationController.viewControllers.first 
+        else {
+            return
+        }
         
         let serviceDetailViewController = ServiceDetailsView.createViewController(
             serviceID: serviceId,

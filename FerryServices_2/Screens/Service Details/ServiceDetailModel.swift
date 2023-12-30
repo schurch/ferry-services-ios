@@ -20,13 +20,6 @@ struct Annotation: Identifiable {
     let type: AnnotationType
 }
 
-struct Timetable: Identifiable {
-    var id: URL { fileLocation }
-    
-    let text: String
-    let fileLocation: URL
-}
-
 @MainActor
 class ServiceDetailModel: ObservableObject {
     
@@ -61,23 +54,6 @@ class ServiceDetailModel: ObservableObject {
         }) ?? []
         
         return vessels + locations
-    }
-    
-    var timetables: [Timetable] {
-        let bundlePath = Bundle.main.bundlePath as NSString
-        
-        let summerPath = bundlePath.appendingPathComponent("Timetables/2023/Summer/\(serviceID).pdf")
-        
-        if FileManager.default.fileExists(atPath: summerPath) {
-            return [
-                Timetable(
-                    text: "Summer 2023",
-                    fileLocation: URL(fileURLWithPath: summerPath)
-                )
-            ]
-        } else {
-            return []
-        }
     }
     
     var registeredForNotifications: Bool {

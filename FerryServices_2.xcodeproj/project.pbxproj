@@ -23,7 +23,6 @@
 		FD1B5FB0258479150098B96B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F89258479150098B96B /* APIClient.swift */; };
 		FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F99258479150098B96B /* MapViewController.swift */; };
 		FD1B5FBE258479150098B96B /* WebInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9B258479150098B96B /* WebInformationViewController.swift */; };
-		FD1B5FBF258479150098B96B /* TimetablePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */; };
 		FD1B5FC4258479150098B96B /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA5258479150098B96B /* Date+extensions.swift */; };
 		FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA8258479150098B96B /* UIImage+extensions.swift */; };
 		FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FAB258479150098B96B /* Double+extensions.swift */; };
@@ -104,7 +103,6 @@
 		FD1B5F89258479150098B96B /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		FD1B5F99258479150098B96B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		FD1B5F9B258479150098B96B /* WebInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInformationViewController.swift; sourceTree = "<group>"; };
-		FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimetablePreviewViewController.swift; sourceTree = "<group>"; };
 		FD1B5FA5258479150098B96B /* Date+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FA8258479150098B96B /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FAB258479150098B96B /* Double+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
@@ -246,10 +244,6 @@
 				FD1B5F8B258479150098B96B /* Service Details */,
 				FD1B5F98258479150098B96B /* Map */,
 				FD1B5F9A258479150098B96B /* Web Information */,
-				FD1B5F9C258479150098B96B /* Timetable Preview */,
-				F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */,
-				F8726C6D2A88963900849ABA /* Service+Extensions.swift */,
-				F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -279,14 +273,6 @@
 			path = "Web Information";
 			sourceTree = "<group>";
 		};
-		FD1B5F9C258479150098B96B /* Timetable Preview */ = {
-			isa = PBXGroup;
-			children = (
-				FD1B5F9D258479150098B96B /* TimetablePreviewViewController.swift */,
-			);
-			path = "Timetable Preview";
-			sourceTree = "<group>";
-		};
 		FD1B5F9E258479150098B96B /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,8 +287,11 @@
 			children = (
 				F8111587281E1B2200DE8E59 /* Map */,
 				FD1B5FA5258479150098B96B /* Date+extensions.swift */,
-				FD1B5FA8258479150098B96B /* UIImage+extensions.swift */,
 				FD1B5FAB258479150098B96B /* Double+extensions.swift */,
+				F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */,
+				F8726C6D2A88963900849ABA /* Service+Extensions.swift */,
+				F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */,
+				FD1B5FA8258479150098B96B /* UIImage+extensions.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -523,7 +512,6 @@
 				FD1B5FAF258479150098B96B /* APIError.swift in Sources */,
 				FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */,
 				FD1B5FB0258479150098B96B /* APIClient.swift in Sources */,
-				FD1B5FBF258479150098B96B /* TimetablePreviewViewController.swift in Sources */,
 				FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */,
 				FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */,
 				F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */,

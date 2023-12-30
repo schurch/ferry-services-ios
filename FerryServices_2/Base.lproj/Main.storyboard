@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="i66-8G-Nwo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="i66-8G-Nwo">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -91,43 +91,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JsN-Pf-Amj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1288" y="630"/>
-        </scene>
-        <!--Timetable Preview View Controller-->
-        <scene sceneID="Wet-TP-UfD">
-            <objects>
-                <viewController storyboardIdentifier="TimetablePreview" id="gbg-aM-v0o" customClass="TimetablePreviewViewController" customModule="FerryServices_2" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eG4-a0-Mfh"/>
-                        <viewControllerLayoutGuide type="bottom" id="wK6-sv-5TR"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="v1p-QK-vy3">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uuz-xc-oOs">
-                                <rect key="frame" x="0.0" y="59" width="393" height="793"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <wkWebViewConfiguration key="configuration">
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="uuz-xc-oOs" secondAttribute="bottom" id="K9h-cL-GDA"/>
-                            <constraint firstItem="uuz-xc-oOs" firstAttribute="leading" secondItem="v1p-QK-vy3" secondAttribute="leading" id="f6m-iZ-9SU"/>
-                            <constraint firstItem="uuz-xc-oOs" firstAttribute="top" secondItem="eG4-a0-Mfh" secondAttribute="bottom" id="oGh-jJ-bdj"/>
-                            <constraint firstAttribute="trailing" secondItem="uuz-xc-oOs" secondAttribute="trailing" id="yee-Yf-Vei"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="webview" destination="uuz-xc-oOs" id="1Il-hc-LzR"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="e0q-Ta-QkP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="514" y="630"/>
         </scene>
     </scenes>
     <resources>
