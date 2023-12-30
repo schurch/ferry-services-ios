@@ -139,6 +139,7 @@ struct ServiceDetailsView: View {
                         }
                     }
                     .font(.body)
+                    .padding(.top, 10)
                     .frame(maxWidth: .infinity)
                     .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     .listRowSeparator(.hidden)
@@ -191,7 +192,7 @@ struct ServiceDetailsView: View {
                 if let serviceOperator = service.operator {
                     Section {
                         ServiceOperator(serviceOperator: serviceOperator)
-                            .padding([.bottom], 5)
+                            .padding([.top, .bottom], 5)
                             .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     }
                     .listRowSeparator(.hidden)
@@ -276,16 +277,15 @@ private struct LocationInformation: View {
             
             if let nextDeparture = location.nextDeparture {
                 HStack(alignment: .center) {
-                    Image(systemName: "clock")
+                    Image(systemName: "ferry")
                         .resizable()
                         .scaledToFit()
                         .fontWeight(.thin)
-                        .frame(height: 25)
-                        .foregroundStyle(Color(UIColor.secondaryLabel))
+                        .frame(width: 20)
                         .padding([.leading, .trailing], 12)
-                        .padding([.top, .bottom], 8)
+                        .foregroundStyle(Color(UIColor.secondaryLabel))
                     VStack(alignment: .leading) {
-                        Text("Next departure")
+                        Text("Next ferry departure")
                             .font(.subheadline)
                         Text("\(nextDeparture.departure.formatted(Date.timeFormatStyle)) to \(nextDeparture.destination.name)")
                             .font(.subheadline)
@@ -297,10 +297,37 @@ private struct LocationInformation: View {
                     .padding(.leading, 55)
             }
             
+//            HStack(alignment: .center) {
+//                Image(systemName: "lightrail")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .fontWeight(.thin)
+//                    .frame(width: 20)
+//                    .padding([.leading, .trailing], 12)
+//                    .foregroundStyle(Color(UIColor.secondaryLabel))
+//                VStack(alignment: .leading) {
+//                    Text("Next rail departure")
+//                        .font(.subheadline)
+//                    Text("7:48 AM to Glasgow Central")
+//                        .font(.subheadline)
+//                        .foregroundStyle(Color(UIColor.secondaryLabel))
+//                    Text("Platform 1")
+//                        .font(.subheadline)
+//                        .foregroundStyle(Color(UIColor.secondaryLabel))
+//                }
+//            }
+//            
+//            Divider()
+//                .padding(.leading, 55)
+            
             if let weather = location.weather {
                 HStack(alignment: .center) {
                     Image(weather.icon)
                         .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35)
+                        .padding([.leading, .trailing], 6)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
                     VStack(alignment: .leading) {
                         Text("Weather")
@@ -317,6 +344,10 @@ private struct LocationInformation: View {
                 HStack(alignment: .center) {
                     Image("Wind")
                         .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35)
+                        .padding([.leading, .trailing], 6)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
                         .rotationEffect(
                             .degrees(Double(weather.windDirection + animationRotationOffset + 180))

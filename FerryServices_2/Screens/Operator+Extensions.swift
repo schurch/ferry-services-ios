@@ -12,8 +12,6 @@ extension Service.ServiceOperator {
     var imageName: String? {
         switch self.id {
         case 1: return "calmac-logo"
-        case 2: return "northlink-logo"
-        case 3: return "western-ferries-logo"
         default: return nil
         }
     }
