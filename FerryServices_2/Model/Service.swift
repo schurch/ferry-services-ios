@@ -93,8 +93,22 @@ struct Service: Codable {
             let destination: DepatureLocation
         }
         
+        struct RailDeparture: Codable, Identifiable {
+            private enum CodingKeys: String, CodingKey {
+                case from, to, departure, departureInfo, isCancelled, platform
+            }
+            
+            var id = UUID()
+            let from: String
+            let to: String
+            let departure: Date
+            let departureInfo: String
+            let isCancelled: Bool
+            let platform: String?
+        }
+        
         private enum CodingKeys: String, CodingKey {
-            case id, name, latitude, longitude, weather, scheduledDepartures, nextDeparture
+            case id, name, latitude, longitude, weather, scheduledDepartures, nextDeparture, nextRailDeparture
         }
         
         let id: Int
@@ -104,6 +118,7 @@ struct Service: Codable {
         let weather: Weather?
         let scheduledDepartures: [ScheduledDeparture]?
         let nextDeparture: ScheduledDeparture?
+        let nextRailDeparture: RailDeparture?
     }
     
     struct ServiceOperator: Codable {

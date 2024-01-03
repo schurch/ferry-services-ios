@@ -294,28 +294,39 @@ private struct LocationInformation: View {
                     .padding(.leading, 55)
             }
             
-//            HStack(alignment: .center) {
-//                Image(systemName: "lightrail")
-//                    .resizable()
-//                    .scaledToFit()
-//                    .fontWeight(.thin)
-//                    .frame(width: 20)
-//                    .padding([.leading, .trailing], 12)
-//                    .foregroundStyle(Color(UIColor.secondaryLabel))
-//                VStack(alignment: .leading) {
-//                    Text("Next rail departure")
-//                        .font(.subheadline)
-//                    Text("7:48 AM to Glasgow Central")
-//                        .font(.subheadline)
-//                        .foregroundStyle(Color(UIColor.secondaryLabel))
-//                    Text("Platform 1")
-//                        .font(.subheadline)
-//                        .foregroundStyle(Color(UIColor.secondaryLabel))
-//                }
-//            }
-//            
-//            Divider()
-//                .padding(.leading, 55)
+            if let railDeparture = location.nextRailDeparture {
+                HStack(alignment: .center) {
+                    Image(systemName: "lightrail")
+                        .resizable()
+                        .scaledToFit()
+                        .fontWeight(.thin)
+                        .frame(width: 18)
+                        .padding([.leading, .trailing], 14)
+                        .foregroundStyle(Color(UIColor.secondaryLabel))
+                    VStack(alignment: .leading) {
+                        Text("Next rail departure")
+                            .font(.subheadline)
+                        Text("\(railDeparture.departure.formatted(Date.timeFormatStyle)) to \(railDeparture.to)")
+                            .font(.subheadline)
+                            .foregroundStyle(Color(UIColor.secondaryLabel))
+                        HStack {
+                            Text(railDeparture.departureInfo)
+                                .foregroundStyle(railDeparture.isCancelled ? Color(UIColor.colorRed) : Color(UIColor.secondaryLabel))
+                            Text("•")
+                                .foregroundStyle(Color(UIColor.secondaryLabel))
+                            if let platform = railDeparture.platform {
+                                Text("Platform \(platform)")
+                                    .foregroundStyle(Color(UIColor.secondaryLabel))
+                            }
+                        }
+                        .font(.subheadline)
+                        
+                    }
+                }
+                
+                Divider()
+                    .padding(.leading, 55)
+            }
             
             if let weather = location.weather {
                 HStack(alignment: .center) {
