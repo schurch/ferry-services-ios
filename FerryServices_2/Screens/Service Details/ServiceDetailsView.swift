@@ -309,12 +309,12 @@ private struct LocationInformation: View {
                         Text("\(railDeparture.departure.formatted(Date.timeFormatStyle)) to \(railDeparture.to)")
                             .font(.subheadline)
                             .foregroundStyle(Color(UIColor.secondaryLabel))
-                        HStack {
+                        HStack(spacing: 4) {
                             Text(railDeparture.departureInfo)
                                 .foregroundStyle(railDeparture.isCancelled ? Color(UIColor.colorRed) : Color(UIColor.secondaryLabel))
-                            Text("•")
-                                .foregroundStyle(Color(UIColor.secondaryLabel))
                             if let platform = railDeparture.platform {
+                                Text("•")
+                                    .foregroundStyle(Color(UIColor.secondaryLabel))
                                 Text("Platform \(platform)")
                                     .foregroundStyle(Color(UIColor.secondaryLabel))
                             }
