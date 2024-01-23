@@ -268,6 +268,8 @@ private struct LocationInformation: View {
     }
     
     var body: some View {
+        let textVerticalSpacing: CGFloat = 4
+        
         VStack(alignment: .leading) {
             Text(location.name)
                 .font(.title3)
@@ -281,7 +283,7 @@ private struct LocationInformation: View {
                         .frame(width: 20)
                         .padding([.leading, .trailing], 12)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: textVerticalSpacing) {
                         Text("Next ferry departure")
                             .font(.subheadline)
                         Text("\(nextDeparture.departure.formatted(Date.timeFormatStyle)) to \(nextDeparture.destination.name)")
@@ -303,23 +305,25 @@ private struct LocationInformation: View {
                         .frame(width: 18)
                         .padding([.leading, .trailing], 14)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: textVerticalSpacing) {
                         Text("Next rail departure")
                             .font(.subheadline)
-                        Text("\(railDeparture.departure.formatted(Date.timeFormatStyle)) to \(railDeparture.to)")
-                            .font(.subheadline)
-                            .foregroundStyle(Color(UIColor.secondaryLabel))
-                        HStack(spacing: 4) {
-                            Text(railDeparture.departureInfo)
-                                .foregroundStyle(railDeparture.isCancelled ? Color(UIColor.colorRed) : Color(UIColor.secondaryLabel))
-                            if let platform = railDeparture.platform {
-                                Text("•")
-                                    .foregroundStyle(Color(UIColor.secondaryLabel))
-                                Text("Platform \(platform)")
-                                    .foregroundStyle(Color(UIColor.secondaryLabel))
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("\(railDeparture.departure.formatted(Date.timeFormatStyle)) to \(railDeparture.to)")
+                                .font(.subheadline)
+                                .foregroundStyle(Color(UIColor.secondaryLabel))
+                            HStack(spacing: 4) {
+                                Text(railDeparture.departureInfo)
+                                    .foregroundStyle(railDeparture.isCancelled ? Color(UIColor.colorRed) : Color(UIColor.secondaryLabel))
+                                if let platform = railDeparture.platform {
+                                    Text("•")
+                                        .foregroundStyle(Color(UIColor.secondaryLabel))
+                                    Text("Platform \(platform)")
+                                        .foregroundStyle(Color(UIColor.secondaryLabel))
+                                }
                             }
+                            .font(.subheadline)
                         }
-                        .font(.subheadline)
                         
                     }
                 }
@@ -337,7 +341,7 @@ private struct LocationInformation: View {
                         .frame(width: 35)
                         .padding([.leading, .trailing], 6)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: textVerticalSpacing) {
                         Text("Weather")
                             .font(.subheadline)
                         Text("\(weather.temperatureCelsius)ºC • \(weather.description)")
@@ -365,7 +369,7 @@ private struct LocationInformation: View {
                             animationRotationOffset = LocationInformation.animationOffsets[currentAnimationOffsetIndex % LocationInformation.animationOffsets.count]
                             currentAnimationOffsetIndex += 1
                         }
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: textVerticalSpacing) {
                         Text("Wind")
                             .font(.subheadline)
                         Text("\(weather.windSpeedMph) MPH • \(weather.windDirectionCardinal)")
