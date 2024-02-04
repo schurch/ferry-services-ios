@@ -9,6 +9,10 @@
 import UIKit
 import Sentry
 
+extension Notification.Name {
+    static let registeredForNotifications = Notification.Name("com.stefanchurch.ferryservices.registeredfornotifications")
+}
+
 enum UserDefaultsKeys {
     static let subscribedService = "com.ferryservices.userdefaultkeys.subscribedservices.v2"
     static let registeredForNotifications = "com.ferryservices.userdefaultkeys.registeredForNotifications"
@@ -72,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
                 try await APIClient.createInstallation(installationID: Installation.id, deviceToken: token)
                 UserDefaults.standard.set(true, forKey: UserDefaultsKeys.registeredForNotifications)
+                NotificationCenter.default.post(name: .registeredForNotifications, object: self)
             }
         }
     }

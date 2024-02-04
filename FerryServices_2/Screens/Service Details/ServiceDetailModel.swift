@@ -29,6 +29,8 @@ class ServiceDetailModel: ObservableObject {
     @Published var loadingSubscribed: Bool = false
     @Published var showSubscribedError: Bool = false
     @Published var date: Date = Date()
+    @Published var isEnabledForNotifications: Bool = false
+    @Published var isRegisteredForNotifications: Bool = false
     
     var annotations: [Annotation] {
         guard let service else { return [] }
@@ -56,10 +58,6 @@ class ServiceDetailModel: ObservableObject {
         return vessels + locations
     }
     
-    var registeredForNotifications: Bool {
-        UserDefaults.standard.bool(forKey: UserDefaultsKeys.registeredForNotifications)
-    }
-    
     private var serviceID: Int
     
     init(serviceID: Int, service: Service?) {
@@ -73,6 +71,18 @@ class ServiceDetailModel: ObservableObject {
         }
         
         self.subscribed = subscribedIDs.contains(serviceID)
+        
+        checkIsRegisteredForNotifications()
+    }
+    
+    func checkIsRegisteredForNotifications() {
+        isRegisteredForNotifications = UserDefaults.standard.bool(forKey: UserDefaultsKeys.registeredForNotifications)
+    }
+    
+    func checkIsEnabledForNotifications() async {
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
+        isEnabledForNotifications = settings.authorizationStatus == .authorized
     }
     
     func updateSubscribed(subscribed: Bool) {

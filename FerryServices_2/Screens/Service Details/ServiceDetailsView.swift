@@ -14,6 +14,7 @@ struct ServiceDetailsView: View {
     
     @StateObject private var model: ServiceDetailModel
     @State private var showingDateSelection = false
+    @Environment(\.openURL) private var openURL
     
     var showDisruptionInfo: (String) -> Void
     var showMap: (Service) -> Void
@@ -94,24 +95,34 @@ struct ServiceDetailsView: View {
                     }
                     .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     
-                    if model.registeredForNotifications {
-                        if model.loadingSubscribed {
-                            HStack {
-                                Text("Subscribe to updates")
-                                Spacer()
-                                // Progress view sometimes wouldn't show again so give it a unique ID each time
-                                ProgressView()
-                                    .id(UUID())
-                                    .padding(.trailing, 12)
-                            }
-                            .listRowSeparator(.hidden)
-                        } else {
-                            Toggle("Subscribe to updates", isOn: $model.subscribed)
-                                .onChange(of: model.subscribed) { value in
-                                    model.updateSubscribed(subscribed: value)
+                    if model.isEnabledForNotifications {
+                        if model.isRegisteredForNotifications {
+                            if model.loadingSubscribed {
+                                HStack {
+                                    Text("Subscribe to updates")
+                                    Spacer()
+                                    // Progress view sometimes wouldn't show again so give it a unique ID each time
+                                    ProgressView()
+                                        .id(UUID())
+                                        .padding(.trailing, 12)
                                 }
                                 .listRowSeparator(.hidden)
+                            } else {
+                                Toggle("Subscribe to updates", isOn: $model.subscribed)
+                                    .onChange(of: model.subscribed) { value in
+                                        model.updateSubscribed(subscribed: value)
+                                    }
+                                    .listRowSeparator(.hidden)
+                            }
                         }
+                    } else {
+                        Button {
+                            let url = URL(string: UIApplication.openNotificationSettingsURLString)!
+                            openURL(url)
+                        } label: {
+                            NavigationLink("Enable notifications to subscribe", destination: EmptyView())
+                        }
+                        .listRowSeparator(.hidden)
                     }
                 }
                 
@@ -235,11 +246,17 @@ struct ServiceDetailsView: View {
             .refreshable {
                 await model.fetchLatestService()
             }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                Task {
-                    await model.fetchLatestService()
-                }
+            .onAppear {
+                Task { await model.fetchLatestService() }
+                Task { await model.checkIsEnabledForNotifications() }
             }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                Task { await model.fetchLatestService() }
+                Task { await model.checkIsEnabledForNotifications() }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .registeredForNotifications), perform: { _ in
+                model.checkIsRegisteredForNotifications()
+            })
         } else {
             Text("Loading...")
                 .task {
