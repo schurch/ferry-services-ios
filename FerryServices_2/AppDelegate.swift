@@ -44,15 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         UserDefaults.standard.register(defaults: [UserDefaultsKeys.registeredForNotifications: false])
 
-        // Configure push notifications
         UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
-            DispatchQueue.main.async {
-                if (granted) {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }                
-            }
-        }
         
         window?.tintColor = .colorTint
         
@@ -69,6 +61,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        Task { @MainActor in
+            do {
+                let granted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
+                if granted {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            } catch {
+                print("Failed get permissions for notifications: \(error)")
+            }
+        }
+    }
+    
     // MARK: - Push notifications
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Task {
@@ -77,6 +82,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 try await APIClient.createInstallation(installationID: Installation.id, deviceToken: token)
                 UserDefaults.standard.set(true, forKey: UserDefaultsKeys.registeredForNotifications)
                 NotificationCenter.default.post(name: .registeredForNotifications, object: self)
+            } catch {
+                print("Error creating installation: \(error)")
             }
         }
     }

@@ -93,6 +93,7 @@ struct ServiceDetailsView: View {
                             DisruptionInfoView(service: service)
                         }
                     }
+                    .listRowSeparator(.hidden)
                     .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     
                     if model.isEnabledForNotifications {
