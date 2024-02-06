@@ -17,6 +17,9 @@
 		F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */; };
 		F8AC22302A8F31E1001C01FE /* Operator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */; };
 		F8EBB3052A887F8F003DF8F3 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */; };
+		F8EFFA702B71E28F004EBA8D /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EFFA6F2B71E28E004EBA8D /* UserDefaultKeys.swift */; };
+		F8EFFA722B71E2A7004EBA8D /* Installation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EFFA712B71E2A7004EBA8D /* Installation.swift */; };
+		F8EFFA742B71E2D0004EBA8D /* NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EFFA732B71E2D0004EBA8D /* NotificationNames.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1B5FAD258479150098B96B /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F85258479150098B96B /* Vessel.swift */; };
 		FD1B5FAF258479150098B96B /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F88258479150098B96B /* APIError.swift */; };
@@ -97,6 +100,9 @@
 		F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+Extensions.swift"; sourceTree = "<group>"; };
 		F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operator+Extensions.swift"; sourceTree = "<group>"; };
 		F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
+		F8EFFA6F2B71E28E004EBA8D /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
+		F8EFFA712B71E2A7004EBA8D /* Installation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Installation.swift; sourceTree = "<group>"; };
+		F8EFFA732B71E2D0004EBA8D /* NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNames.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1B5F85258479150098B96B /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
 		FD1B5F88258479150098B96B /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -319,6 +325,9 @@
 			isa = PBXGroup;
 			children = (
 				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
+				F8EFFA712B71E2A7004EBA8D /* Installation.swift */,
+				F8EFFA732B71E2D0004EBA8D /* NotificationNames.swift */,
+				F8EFFA6F2B71E28E004EBA8D /* UserDefaultKeys.swift */,
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
 				FDB2A789257B2716000B0659 /* Launch Screen.storyboard */,
 				FD1B5F8A258479150098B96B /* Screens */,
@@ -507,11 +516,14 @@
 				F8111586281E148600DE8E59 /* MapViewHelpers.swift in Sources */,
 				FD1B5FAD258479150098B96B /* Vessel.swift in Sources */,
 				F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */,
+				F8EFFA722B71E2A7004EBA8D /* Installation.swift in Sources */,
 				FD1B5FCA258479150098B96B /* Double+extensions.swift in Sources */,
+				F8EFFA742B71E2D0004EBA8D /* NotificationNames.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				FD1B5FAF258479150098B96B /* APIError.swift in Sources */,
 				FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */,
 				FD1B5FB0258479150098B96B /* APIClient.swift in Sources */,
+				F8EFFA702B71E28F004EBA8D /* UserDefaultKeys.swift in Sources */,
 				FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */,
 				FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */,
 				F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */,
