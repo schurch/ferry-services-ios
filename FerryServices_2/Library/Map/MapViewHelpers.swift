@@ -26,11 +26,14 @@ class MapViewHelpers {
             guard let vesselAnnotation = annotation as? VesselAnnotation else { return }
             observation = vesselAnnotation.observe(\.course, options: .new) { [weak self] object, change in
                 guard let newCourse = change.newValue else { return }
-                self?.image = UIImage(named: "ferry")!.rotated(by: newCourse)
+                MainActor.assumeIsolated {
+                    self?.image = UIImage(named: "ferry")!.rotated(by: newCourse)                    
+                }
             }
         }
     }
     
+    @MainActor
     static func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         switch annotation {
         case let vesselAnnotation as VesselAnnotation:

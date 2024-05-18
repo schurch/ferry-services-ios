@@ -41,7 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationDidBecomeActive(_ application: UIApplication) {
         Task { @MainActor in
             do {
-                let granted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
+                nonisolated(unsafe) let center = UNUserNotificationCenter.current()
+                let granted = try await center.requestAuthorization(options: [.alert, .sound])
                 if granted {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
@@ -69,15 +70,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("Failed to register for remote notifications: \(error)")
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         // App in foreground
         completionHandler([.list, .banner])
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         // App became active
-        handleNotification(userInfo: response.notification.request.content.userInfo)
-        completionHandler()
+        MainActor.assumeIsolated {
+            handleNotification(userInfo: response.notification.request.content.userInfo)
+            completionHandler()
+        }
     }
     
     private func handleNotification(userInfo: [AnyHashable: Any]) {

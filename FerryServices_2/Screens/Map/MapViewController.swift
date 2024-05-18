@@ -47,20 +47,24 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        return MapViewHelpers.mapView(mapView, viewFor: annotation)
+    nonisolated func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        MainActor.assumeIsolated {
+            return MapViewHelpers.mapView(mapView, viewFor: annotation)
+        }
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let annotation = view.annotation else { return }
-        
-        let placemark = MKPlacemark(coordinate: annotation.coordinate, addressDictionary: nil)
-        
-        let destination = MKMapItem(placemark: placemark)
-        if let title = annotation.title {
-            destination.name = title
+    nonisolated func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        MainActor.assumeIsolated {
+            guard let annotation = view.annotation else { return }
+            
+            let placemark = MKPlacemark(coordinate: annotation.coordinate, addressDictionary: nil)
+            
+            let destination = MKMapItem(placemark: placemark)
+            if let title = annotation.title {
+                destination.name = title
+            }
+            
+            MKMapItem.openMaps(with: [destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
         }
-        
-        MKMapItem.openMaps(with: [destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
 }

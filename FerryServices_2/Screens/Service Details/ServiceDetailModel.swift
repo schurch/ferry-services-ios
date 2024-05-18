@@ -6,6 +6,7 @@
 //  Copyright © 2023 Stefan Church. All rights reserved.
 //
 
+@preconcurrency import UIKit
 import MapKit
 import SwiftUI
 
@@ -80,7 +81,7 @@ class ServiceDetailModel: ObservableObject {
     }
     
     func checkIsEnabledForNotifications() async {
-        let center = UNUserNotificationCenter.current()
+        nonisolated(unsafe) let center = UNUserNotificationCenter.current()
         let settings = await center.notificationSettings()
         isEnabledForNotifications = settings.authorizationStatus == .authorized
     }

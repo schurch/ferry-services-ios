@@ -59,27 +59,27 @@ class WebInformationViewController: UIViewController {
 
 extension WebInformationViewController: WKNavigationDelegate {
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard 
-            navigationAction.navigationType == .linkActivated,
-            let url = navigationAction.request.url
-        else {
-            decisionHandler(.allow)
-            return
+    nonisolated func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        MainActor.assumeIsolated {
+            guard
+                navigationAction.navigationType == .linkActivated,
+                let url = navigationAction.request.url
+            else {
+                decisionHandler(.allow)
+                return
+            }
+            
+            switch url.scheme {
+            case "http", "https":
+                let safariViewController = SFSafariViewController(url: url)
+                present(safariViewController, animated: true, completion: nil)
+                decisionHandler(.cancel)
+            case "tel", "mailto":
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                decisionHandler(.cancel)
+            default:
+                decisionHandler(.allow)
+            }
         }
-                
-        switch url.scheme {
-        case "http", "https":
-            let safariViewController = SFSafariViewController(url: url)
-            present(safariViewController, animated: true, completion: nil)
-            decisionHandler(.cancel)
-        case "tel", "mailto":
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            decisionHandler(.cancel)
-        default:
-            decisionHandler(.allow)
-        }
-        
-        
     }
 }
