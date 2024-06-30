@@ -26,13 +26,12 @@ struct SettingsView: View {
                 .padding()
             } header: {
                 Text("Hi, I'm Stefan. Thanks for using the Scottish Ferries App. Although I now live overseas, I grew up on the Isle of Arran so can appreciate how vital the ferry services are. If you have any questions or issues please feel free to email me, or if you find the app useful you can also leave a review on the App Store.")
-                    .font(.caption)
+                    .font(.body)
                     .textCase(nil)
                     .padding(.bottom)
-                    .frame(maxWidth: .infinity)
             } footer: {
                 Text(version)
-                    .frame(maxWidth: .infinity)
+                    .font(.body)
                     .padding(.vertical)
             }
             .listRowInsets(EdgeInsets())
