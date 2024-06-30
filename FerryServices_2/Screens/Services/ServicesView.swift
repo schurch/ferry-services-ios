@@ -113,6 +113,23 @@ extension ServicesView {
         
         let viewController = UIHostingController(rootView: servicesView)
         viewController.title = NSLocalizedString("Services", comment: "")
+        viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "gearshape"),
+            primaryAction: UIAction { _ in
+                let settingsViewController = UIHostingController(rootView: SettingsView())
+                settingsViewController.title = NSLocalizedString("Settings", comment: "")
+                settingsViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
+                    title: NSLocalizedString("Done", comment: ""),
+                    primaryAction: UIAction { _ in
+                        navigationController.dismiss(animated: true)
+                    }
+                )
+                let settingsNavigationController = UINavigationController(rootViewController: settingsViewController)
+                settingsNavigationController.navigationBar.prefersLargeTitles = true
+                
+                navigationController.present(settingsNavigationController, animated: true)
+            }
+        )
         
         return viewController
     }

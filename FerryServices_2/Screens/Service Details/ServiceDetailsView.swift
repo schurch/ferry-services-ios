@@ -153,18 +153,44 @@ struct ServiceDetailsView: View {
                     .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                     .listRowSeparator(.hidden)
                     
-                    let badStatuses: [Service.Status] = [.cancelled, .disrupted, .unknown]
-                    if badStatuses.contains(service.status) {
-                        HStack(alignment: .top) {
+                    HStack(alignment: .top) {
+                        if [Service.Status.cancelled, .disrupted, .unknown].contains(service.status) {
                             Image(systemName: "exclamationmark.triangle")
                                 .foregroundColor(.colorAmber)
-                            Text("Sailings may not be operating to the scheduled departure times. Please check the disruption information or the ferry service operator website for more details.")
-                                .font(.footnote)
-                                .foregroundColor(Color(UIColor.systemGray))
                         }
-                        .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                        .listRowSeparator(.hidden)
+                        
+                        let moreInfoURL = URL(string: "ferryservices://more-info")!
+                        
+                        let text = {
+                            let additionalInfo = if !(service.additionalInfo ?? "").isEmpty {
+                                "[up to date information](\(moreInfoURL))"
+                            } else {
+                                "up to date information"
+                            }
+                            
+                            let website = if let website = service.operator?.website, !website.isEmpty {
+                                "[website](\(website))"
+                            } else {
+                                "website"
+                            }
+                            
+                            return "Scheduled departure times provided by [Traveline](https://www.traveline.info). Sailings may not be operating to the scheduled departure times. Please check the most \(additionalInfo) from the ferry service operator or their \(website) for more details."
+                        }()
+                        
+                        Text(LocalizedStringKey(text))
+                            .font(.footnote)
+                            .foregroundColor(Color(UIColor.systemGray))
+                            .environment(\.openURL, OpenURLAction { url in
+                                if url == moreInfoURL {
+                                    showDisruptionInfo(service.additionalInfo!)
+                                    return .handled
+                                } else {
+                                    return .systemAction
+                                }
+                            })
                     }
+                    .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                    .listRowSeparator(.hidden)
                 }
                 
                 ForEach(service.locations.sorted(by: { $0.scheduledDepartures?.first?.departure ?? Date() < $1.scheduledDepartures?.first?.departure ?? Date() })) { location in
