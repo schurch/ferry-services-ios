@@ -39,29 +39,27 @@ struct SettingsView: View {
                     Toggle("Enabled",
                            isOn: Binding(
                             get: { isOn },
-                            set: { isOn in
+                            set: { newIsOn in
                                 Task {
                                     notificationsState = .loading
 
                                     do {
                                         try await APIClient.updatePushEnabledStatus(
                                             installationID: Installation.id,
-                                            isEnabled: isOn
+                                            isEnabled: newIsOn
                                         )
-                                        notificationsState = .authorized(isOn: isOn)
+                                        notificationsState = .authorized(isOn: newIsOn)
                                     } catch {
-                                        notificationsState = .authorized(isOn: !isOn)
+                                        notificationsState = .authorized(isOn: !newIsOn)
                                     }
                                 }
                             })
                     )
                     
                 case .notAuthorized:
-                    Button {
+                    Button("Enable notifications in Settings") {
                         let url = URL(string: UIApplication.openNotificationSettingsURLString)!
                         openURL(url)
-                    } label: {
-                        NavigationLink("Enable notifications in Settings", destination: EmptyView())
                     }
                     
                 case .error:
