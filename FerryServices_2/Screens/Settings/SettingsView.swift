@@ -8,22 +8,24 @@
 
 import SwiftUI
 
+enum SettingsNotificationsState {
+    case loading
+    case authorized(isOn: Bool)
+    case notAuthorized
+    case error
+}
+
 struct SettingsView: View {
     @Environment(\.openURL) private var openURL
     
-    @State private var areNotificationsAuthorized = true
-    @State private var loadingNotifications = true
-    @State private var pushNotificationsEnabled = false
-    @State private var errorLoadingNotfications = false
+    @State private var notificationsState: SettingsNotificationsState = .loading
     
     var body: some View {
         let version = "Version \(Bundle.main.releaseVersionNumber).\(Bundle.main.buildVersionNumber)"
         List {
             Section {
-                if errorLoadingNotfications {
-                    Text("An error occured fetching the notification status")
-                        .foregroundStyle(Color.gray)
-                } else if loadingNotifications {
+                switch notificationsState {
+                case .loading:
                     HStack {
                         Text("Enabled")
                         Spacer()
@@ -32,35 +34,40 @@ struct SettingsView: View {
                             .id(UUID())
                             .padding(.trailing, 12)
                     }
-                } else if !areNotificationsAuthorized {
-                    Button {
-                        let url = URL(string: UIApplication.openNotificationSettingsURLString)!
-                        openURL(url)
-                    } label: {
-                        NavigationLink("Enable notifications to in Settings", destination: EmptyView())
-                    }
-                } else {
+                    
+                case .authorized(let isOn):
                     Toggle("Enabled",
                            isOn: Binding(
-                            get: { pushNotificationsEnabled },
+                            get: { isOn },
                             set: { isOn in
                                 Task {
-                                    loadingNotifications = true
+                                    notificationsState = .loading
 
                                     do {
                                         try await APIClient.updatePushEnabledStatus(
                                             installationID: Installation.id,
                                             isEnabled: isOn
                                         )
-                                        pushNotificationsEnabled = isOn
+                                        notificationsState = .authorized(isOn: isOn)
                                     } catch {
-                                        pushNotificationsEnabled = !isOn
+                                        notificationsState = .authorized(isOn: !isOn)
                                     }
-                                    
-                                    loadingNotifications = false
                                 }
                             })
                     )
+                    
+                case .notAuthorized:
+                    Button {
+                        let url = URL(string: UIApplication.openNotificationSettingsURLString)!
+                        openURL(url)
+                    } label: {
+                        NavigationLink("Enable notifications in Settings", destination: EmptyView())
+                    }
+                    
+                case .error:
+                    Text("An error occured fetching the notification status")
+                        .foregroundStyle(Color.gray)
+                    
                 }
             } header: {
                 Text("Push Notifications")
@@ -100,19 +107,19 @@ struct SettingsView: View {
     
     @MainActor
     private func checkNotificationState() async {
-        areNotificationsAuthorized = await Self.areNotificationsAuthorized()
+        let areNotificationsAuthorized = await Self.areNotificationsAuthorized()
         guard areNotificationsAuthorized else {
-            loadingNotifications = false
+            notificationsState = .notAuthorized
             return
         }
         
         do {
-            pushNotificationsEnabled = try await APIClient.getPushEnabledStatus(
+            let enabled = try await APIClient.getPushEnabledStatus(
                 installationID: Installation.id
             )
-            loadingNotifications = false
+            notificationsState = .authorized(isOn: enabled)
         } catch {
-            errorLoadingNotfications = true
+            notificationsState = .error
         }
     }
     
