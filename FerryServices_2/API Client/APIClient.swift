@@ -70,6 +70,18 @@ class APIClient {
         return try await send(request: request)
     }
     
+    static func getPushEnabledStatus(installationID: UUID) async throws -> Bool {
+        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/push-status", relativeTo: APIClient.baseURL)!
+        let result: PushStatus = try await send(request: URLRequest(url: url))
+        return result.enabled
+    }
+    
+    static func updatePushEnabledStatus(installationID: UUID, isEnabled: Bool) async throws {
+        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/push-status", relativeTo: APIClient.baseURL)!
+        let request = createRequest(with: url, body: PushStatus(enabled: isEnabled))
+        let _: PushStatus = try await send(request: request)
+    }
+    
     private static func send<T: Decodable>(request: URLRequest) async throws -> T {
         let (data, response) = try await URLSession.shared.data(for: request)
         
