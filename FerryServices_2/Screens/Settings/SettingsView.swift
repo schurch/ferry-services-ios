@@ -27,7 +27,7 @@ struct SettingsView: View {
                 switch notificationsState {
                 case .loading:
                     HStack {
-                        Text("Enabled")
+                        Text("Push Notifications")
                         Spacer()
                         // Progress view sometimes wouldn't show again so give it a unique ID each time
                         ProgressView()
@@ -36,7 +36,7 @@ struct SettingsView: View {
                     }
                     
                 case .authorized(let isOn):
-                    Toggle("Enabled",
+                    Toggle("Push Notifications",
                            isOn: Binding(
                             get: { isOn },
                             set: { newIsOn in
@@ -67,8 +67,6 @@ struct SettingsView: View {
                         .foregroundStyle(Color.gray)
                     
                 }
-            } header: {
-                Text("Push Notifications")
             }
             
             Section {

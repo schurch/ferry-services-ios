@@ -29,6 +29,7 @@ struct ServicesView: View {
             }
         }
         .background(.colorBackground)
+        .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .searchable(text: $model.searchText)
         .autocorrectionDisabled()
@@ -68,19 +69,27 @@ private struct ServiceRow: View {
             showService(row.service)
         } label: {
             HStack {
-                Circle()
-                    .fill(row.service.status.statusColor)
-                    .frame(width: 25, height: 25, alignment: .center)
+                DisruptionIndicator(status: row.service.status)
                     .padding(.trailing, 4)
                 VStack(alignment: .leading, spacing: 0) {
                     Text(row.service.area)
                         .font(.body)
                         .foregroundColor(.primary)
-                        .lineLimit(1)
                     Text(row.service.route)
                         .font(.body)
                         .foregroundColor(.secondary)
-                        .lineLimit(1)
+                    
+                    let disruptionText = switch row.service.status {
+                    case .normal: "Normal Operations"
+                    case .disrupted: "Sailings Disrupted"
+                    case .cancelled: "Sailings Cancelled"
+                    case .unknown: "Unknown Status"
+                    }
+                    
+                    Text(disruptionText)
+                        .font(.subheadline.bold())
+                        .foregroundStyle(row.service.status.statusColor)
+                        .padding(.top, 5)
                 }
                 Spacer()
                 Image(systemName: "chevron.forward")

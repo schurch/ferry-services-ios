@@ -514,9 +514,8 @@ private struct DisruptionInfoView: View {
     
     var body: some View {
         HStack(spacing: 20) {
-            Circle()
-                .fill(service.status.statusColor)
-                .frame(width: 25, height: 25, alignment: .center)
+            DisruptionIndicator(status: service.status)
+            
             Text(service.disruptionText)
             
             if !(service.additionalInfo ?? "").isEmpty {

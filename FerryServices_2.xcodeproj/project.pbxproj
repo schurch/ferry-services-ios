@@ -15,6 +15,7 @@
 		F83AF9402C831238001817F8 /* PushStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83AF93F2C831238001817F8 /* PushStatus.swift */; };
 		F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6D2A88963900849ABA /* Service+Extensions.swift */; };
 		F8726C702A88A3BC00849ABA /* ServicesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6F2A88A3BC00849ABA /* ServicesModel.swift */; };
+		F88848082C957C81004A6848 /* DisruptionIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88848072C957C81004A6848 /* DisruptionIndicator.swift */; };
 		F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */; };
 		F8AC22302A8F31E1001C01FE /* Operator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */; };
 		F8EBB3052A887F8F003DF8F3 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */; };
@@ -100,6 +101,7 @@
 		F83AF93F2C831238001817F8 /* PushStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushStatus.swift; sourceTree = "<group>"; };
 		F8726C6D2A88963900849ABA /* Service+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Extensions.swift"; sourceTree = "<group>"; };
 		F8726C6F2A88A3BC00849ABA /* ServicesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesModel.swift; sourceTree = "<group>"; };
+		F88848072C957C81004A6848 /* DisruptionIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionIndicator.swift; sourceTree = "<group>"; };
 		F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+Extensions.swift"; sourceTree = "<group>"; };
 		F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operator+Extensions.swift"; sourceTree = "<group>"; };
 		F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
@@ -228,6 +230,14 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		F88848062C957C6D004A6848 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F88848072C957C81004A6848 /* DisruptionIndicator.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F8FCD1072C30CEB20059492D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,6 +355,7 @@
 				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
 				FDB2A789257B2716000B0659 /* Launch Screen.storyboard */,
 				FD1B5F8A258479150098B96B /* Screens */,
+				F88848062C957C6D004A6848 /* Views */,
 				FD1B5F86258479150098B96B /* API Client */,
 				FD1B5F83258479150098B96B /* Model */,
 				FD1B5FA4258479150098B96B /* Library */,
@@ -540,6 +551,7 @@
 				FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */,
 				FD1B5FB0258479150098B96B /* APIClient.swift in Sources */,
 				F8EFFA702B71E28F004EBA8D /* UserDefaultKeys.swift in Sources */,
+				F88848082C957C81004A6848 /* DisruptionIndicator.swift in Sources */,
 				FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */,
 				FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */,
 				F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */,
@@ -699,7 +711,7 @@
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = L832SX5MC4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -711,7 +723,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.84;
+				MARKETING_VERSION = 2.85;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -732,7 +744,7 @@
 				CODE_SIGN_ENTITLEMENTS = FerryServices_2/FerryServices_2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = L832SX5MC4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -744,7 +756,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.84;
+				MARKETING_VERSION = 2.85;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
