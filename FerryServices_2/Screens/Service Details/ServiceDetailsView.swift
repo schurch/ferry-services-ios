@@ -198,28 +198,33 @@ struct ServiceDetailsView: View {
                         Section {
                             ForEach(departures) { departureInfo in
                                 HStack {
-                                    Text(
-                                        departureInfo
-                                            .departure
-                                            .formatted(Date.timeFormatStyle)
-                                    )
+                                    let departureTime = departureInfo
+                                        .departure
+                                        .formatted(Date.timeFormatStyle)
+                                    Text(departureTime)
+                                        .accessibilityLabel("\(departureTime) departure")
+                                    
                                     Spacer()
-                                    Text(
-                                        departureInfo
-                                            .arrival
-                                            .formatted(Date.timeFormatStyle)
-                                    )
+                                    
+                                    let arrivalTime = departureInfo
+                                        .arrival
+                                        .formatted(Date.timeFormatStyle)
+                                    Text(arrivalTime)
+                                        .accessibilityLabel("\(arrivalTime) arrival")
                                 }
                                 .foregroundColor(departureInfo.departure > Date() ? Color(UIColor.label) : Color(UIColor.systemGray2))
+                                .accessibilityElement(children: .combine)
                             }
                         } header: {
                             HStack {
                                 Text(location.name)
                                 Spacer()
                                 Image(systemName: "arrow.right")
+                                    .accessibilityLabel("to")
                                 Spacer()
                                 Text(departures.first!.destination.name)
                             }
+                            .accessibilityElement(children: .combine)
                         }
                     }
                 }
@@ -327,6 +332,7 @@ private struct LocationInformation: View {
                         .frame(width: 20)
                         .padding([.leading, .trailing], 12)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
+                        .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: textVerticalSpacing) {
                         Text("Next ferry departure")
                             .font(.subheadline)
@@ -334,6 +340,7 @@ private struct LocationInformation: View {
                             .font(.subheadline)
                             .foregroundStyle(Color(UIColor.secondaryLabel))
                     }
+                    .accessibilityElement(children: .combine)
                 }
                 
                 Divider()
@@ -349,6 +356,7 @@ private struct LocationInformation: View {
                         .frame(width: 18)
                         .padding([.leading, .trailing], 14)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
+                        .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: textVerticalSpacing) {
                         Text("Next rail departure")
                             .font(.subheadline)
@@ -362,14 +370,15 @@ private struct LocationInformation: View {
                                 if let platform = railDeparture.platform {
                                     Text("•")
                                         .foregroundStyle(Color(UIColor.secondaryLabel))
+                                        .accessibilityHidden(true)
                                     Text("Platform \(platform)")
                                         .foregroundStyle(Color(UIColor.secondaryLabel))
                                 }
                             }
                             .font(.subheadline)
                         }
-                        
                     }
+                    .accessibilityElement(children: .combine)
                 }
                 
                 Divider()
@@ -385,13 +394,16 @@ private struct LocationInformation: View {
                         .frame(width: 35)
                         .padding([.leading, .trailing], 6)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
+                        .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: textVerticalSpacing) {
                         Text("Weather")
                             .font(.subheadline)
                         Text("\(weather.temperatureCelsius)ºC • \(weather.description)")
                             .font(.subheadline)
                             .foregroundStyle(Color(UIColor.secondaryLabel))
+                            .accessibilityLabel("\(weather.temperatureCelsius)ºC, \(weather.description)")
                     }
+                    .accessibilityElement(children: .combine)
                 }
                 
                 Divider()
@@ -413,13 +425,16 @@ private struct LocationInformation: View {
                             animationRotationOffset = LocationInformation.animationOffsets[currentAnimationOffsetIndex % LocationInformation.animationOffsets.count]
                             currentAnimationOffsetIndex += 1
                         }
+                        .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: textVerticalSpacing) {
                         Text("Wind")
                             .font(.subheadline)
                         Text("\(weather.windSpeedMph) MPH • \(weather.windDirectionCardinal)")
                             .font(.subheadline)
                             .foregroundStyle(Color(UIColor.secondaryLabel))
+                            .accessibilityLabel("\(weather.windSpeedMph) MPH, \(weather.windDirectionCardinal)")
                     }
+                    .accessibilityElement(children: .combine)
                 }
             }
         }
@@ -428,6 +443,7 @@ private struct LocationInformation: View {
             RoundedRectangle(cornerRadius: 6)
                 .stroke(Color(UIColor.tertiaryLabel), lineWidth: 0.5)
         )
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -445,6 +461,7 @@ private struct ServiceOperator: View {
                         .resizable()
                         .scaledToFit()
                         .frame(height: 50)
+                        .accessibilityHidden(true)
                 }
                 
                 Text(serviceOperator.name)
