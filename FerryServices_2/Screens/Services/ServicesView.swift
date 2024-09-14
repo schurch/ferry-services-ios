@@ -99,6 +99,8 @@ private struct ServiceRow: View {
             .padding(.top, 2)
             .padding(.bottom, 2)
         }
+        .accessibilityElement(children: .combine)
+        .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
     }
 }
 

@@ -23,5 +23,6 @@ struct DisruptionIndicator: View {
                 .fill(status.statusColor.opacity(0.2))
                 .frame(width: 25, height: 25, alignment: .center)
         }
+        .accessibilityHidden(true)
     }
 }
