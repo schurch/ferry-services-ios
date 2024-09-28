@@ -91,8 +91,6 @@ struct SettingsView: View {
                     .font(.callout)
             }
         }
-        .background(.colorBackground)
-        .scrollContentBackground(.hidden)
         .task {
             await checkNotificationState()
         }
@@ -101,10 +99,8 @@ struct SettingsView: View {
         }
     }
     
-    @MainActor
     private func checkNotificationState() async {
-        let areNotificationsAuthorized = await Self.areNotificationsAuthorized()
-        guard areNotificationsAuthorized else {
+        guard await areNotificationsAuthorized() else {
             notificationsState = .notAuthorized
             return
         }
@@ -118,12 +114,11 @@ struct SettingsView: View {
             notificationsState = .error
         }
     }
-    
-    static func areNotificationsAuthorized() async -> Bool {
-        nonisolated(unsafe) let center = UNUserNotificationCenter.current()
-        let settings = await center.notificationSettings()
-        return settings.authorizationStatus == .authorized
-    }
+}
+
+private func areNotificationsAuthorized() async -> Bool {
+    let settings = await UNUserNotificationCenter.current().notificationSettings()
+    return settings.authorizationStatus == .authorized
 }
 
 private extension Bundle {

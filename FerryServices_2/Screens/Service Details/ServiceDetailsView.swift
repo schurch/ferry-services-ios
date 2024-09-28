@@ -300,21 +300,7 @@ struct ServiceDetailsView: View {
 }
 
 private struct LocationInformation: View {
-    private static let animationOffsets = Bool.random() ? [15, 0, -15, 0, 0] : [-15, 0, 15, 0, 0]
-
-    private let location: Service.Location
-    
-    @State private var animationRotationOffset = 0
-    @State private var currentAnimationOffsetIndex = 0
-    
-    private let animationInterval: Double
-    private let timer: Publishers.Autoconnect<Timer.TimerPublisher>
-    
-    init(location: Service.Location) {
-        self.location = location
-        self.animationInterval = Double.random(in: 1...2)
-        self.timer = Timer.publish(every: animationInterval, on: .main, in: .common).autoconnect()
-    }
+    let location: Service.Location
     
     var body: some View {
         let textVerticalSpacing: CGFloat = 4
@@ -417,14 +403,6 @@ private struct LocationInformation: View {
                         .frame(width: 35)
                         .padding([.leading, .trailing], 6)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
-                        .rotationEffect(
-                            .degrees(Double(weather.windDirection + animationRotationOffset + 180))
-                        )
-                        .animation(.linear(duration: animationInterval), value: animationRotationOffset)
-                        .onReceive(timer) { input in
-                            animationRotationOffset = LocationInformation.animationOffsets[currentAnimationOffsetIndex % LocationInformation.animationOffsets.count]
-                            currentAnimationOffsetIndex += 1
-                        }
                         .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: textVerticalSpacing) {
                         Text("Wind")

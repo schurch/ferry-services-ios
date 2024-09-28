@@ -52,9 +52,31 @@ private struct ServicesSection: View {
     var showService: (Service) -> Void
     
     var body: some View {
-        Section(section.title) {
+        Section {
             ForEach(section.rows) { row in
                 ServiceRow(row: row, showService: showService)
+            }
+        } header: {
+            switch section.sectionType {
+            case .subscribed:
+                HStack {
+                    Image(systemName: "dot.radiowaves.up.forward")
+                        .accessibilityHidden(true)
+                    Text(section.title)
+                }
+            case .services:
+                if let imageName = section.imageName {
+                    HStack {
+                        Image(imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25)
+                            .accessibilityHidden(true)
+                        Text(section.title)
+                    }
+                } else {
+                    Text(section.title)
+                }
             }
         }
     }

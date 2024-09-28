@@ -19,9 +19,13 @@ class ServicesModel: ObservableObject {
         }
         
         struct Section: Identifiable {
+            enum SectionType { case subscribed, services }
+            
             var id: String { title }
             
+            let sectionType: SectionType
             let title: String
+            let imageName: String?
             let rows: [Row]
         }
         
@@ -66,7 +70,9 @@ class ServicesModel: ObservableObject {
                 let serviceOperator = services.first?.operator
                 let title = serviceOperator?.name ?? NSLocalizedString("Services", comment: "")
                 return Sections.Section(
+                    sectionType: .services,
                     title: title,
+                    imageName: serviceOperator?.imageName,
                     rows: services.map({
                         Sections.Row(
                             id: "\(title)\($0.serviceId)",
@@ -85,7 +91,9 @@ class ServicesModel: ObservableObject {
                 })
                 return .multiple(
                     [Sections.Section(
+                        sectionType: .subscribed,
                         title: NSLocalizedString("Subscribed", comment: ""),
+                        imageName: nil,
                         rows: subscribedRows
                     )] + servicesGroupedByOperator
                 )

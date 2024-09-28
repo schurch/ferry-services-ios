@@ -9,7 +9,7 @@
 import UIKit
 import Sentry
 
-@UIApplicationMain
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var window: UIWindow?
@@ -20,13 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         UserDefaults.standard.register(defaults: [UserDefaultsKeys.registeredForNotifications: false])
-
+        
         UNUserNotificationCenter.current().delegate = self
         
         window?.tintColor = .colorTint
         
         if let remoteNotificationUserInfo = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
-            handleNotification(userInfo: remoteNotificationUserInfo)
+            let data = NotificationData(remoteNotificationUserInfo)
+            handleNotification(data: data)
         }
         
         // Remove old shortcut items
@@ -41,8 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationDidBecomeActive(_ application: UIApplication) {
         Task { @MainActor in
             do {
-                nonisolated(unsafe) let center = UNUserNotificationCenter.current()
-                let granted = try await center.requestAuthorization(options: [.alert, .sound])
+                let granted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
                 if granted {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
@@ -70,34 +70,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("Failed to register for remote notifications: \(error)")
     }
     
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         // App in foreground
-        completionHandler([.list, .banner])
+        [.list, .banner]
     }
     
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         // App became active
-        MainActor.assumeIsolated {
-            handleNotification(userInfo: response.notification.request.content.userInfo)
-            completionHandler()
-        }
+        let data = NotificationData(response.notification.request.content.userInfo)
+        await handleNotification(data: data)
     }
     
-    private func handleNotification(userInfo: [AnyHashable: Any]) {
-        guard let info = userInfo as? [String: AnyObject] else { return }
-        if let serviceID = info["service_id"] as? Int {
+    private func handleNotification(data: NotificationData?) {
+        guard let data = data else { return }
+        switch data {
+        case .service(let serviceID):
             showDetails(forServiceID: serviceID)
-        } else {
-            guard 
-                let aps = info["aps"] as? [String: AnyObject],
-                let message = aps["alert"] as? String
-            else {
-                return
-            }
-            
+        case .text(let message):
             let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            
             window?.rootViewController?.present(alertController, animated: true, completion: nil)
         }
     }
@@ -122,3 +113,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
 }
 
+private enum NotificationData: Sendable {
+    case service(serviceID: Int)
+    case text(message: String)
+    
+    init?(_ data: [AnyHashable : Any]) {
+        guard let info = data as? [String: AnyObject] else {
+            return nil
+        }
+        if let serviceID = info["service_id"] as? Int {
+            self = .service(serviceID: serviceID)
+        } else {
+            guard
+                let aps = info["aps"] as? [String: AnyObject],
+                let message = aps["alert"] as? String
+            else {
+                return nil
+            }
+            
+            self = .text(message: message)
+        }
+    }
+}

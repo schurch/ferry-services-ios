@@ -26,8 +26,8 @@ class MapViewHelpers {
             guard let vesselAnnotation = annotation as? VesselAnnotation else { return }
             observation = vesselAnnotation.observe(\.course, options: .new) { [weak self] object, change in
                 guard let newCourse = change.newValue else { return }
-                MainActor.assumeIsolated {
-                    self?.image = UIImage(named: "ferry")!.rotated(by: newCourse)                    
+                Task { @MainActor in
+                    self?.image = UIImage(named: "ferry")!.rotated(by: newCourse)
                 }
             }
         }
