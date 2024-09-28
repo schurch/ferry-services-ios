@@ -403,6 +403,7 @@ private struct LocationInformation: View {
                         .frame(width: 35)
                         .padding([.leading, .trailing], 6)
                         .foregroundStyle(Color(UIColor.secondaryLabel))
+                        .rotationEffect(.degrees(Double(weather.windDirection + 180)))
                         .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: textVerticalSpacing) {
                         Text("Wind")
