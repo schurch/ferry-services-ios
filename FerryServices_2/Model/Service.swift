@@ -143,4 +143,5 @@ struct Service: Codable {
     let locations: [Location]
     let vessels: [Vessel]?
     let `operator`: ServiceOperator?
+    let scheduledDeparturesAvailable: Bool?
 }

@@ -111,7 +111,8 @@ class APIClient {
                 additionalInfo: nil,
                 locations: $0.locations,
                 vessels: [],
-                operator: $0.operator
+                operator: $0.operator,
+                scheduledDeparturesAvailable: nil
             )
         }
         

@@ -135,96 +135,98 @@ struct ServiceDetailsView: View {
                     .listRowSeparator(.hidden)
                 }
                 
-                Section {
-                    HStack(alignment: .center) {
-                        Button {
-                            showingDateSelection = true
-                        } label: {
-                            Text("Departures on ")
-                            +
-                            Text(model.date.formatted(.dateTime.weekday().year().month().day()))
-                                .bold()
-                                .foregroundColor(.colorTint)
+                if service.scheduledDeparturesAvailable == true {
+                    Section {
+                        HStack(alignment: .center) {
+                            Button {
+                                showingDateSelection = true
+                            } label: {
+                                Text("Departures on ")
+                                +
+                                Text(model.date.formatted(.dateTime.weekday().year().month().day()))
+                                    .bold()
+                                    .foregroundColor(.colorTint)
+                            }
                         }
-                    }
-                    .font(.body)
-                    .padding(.top, 10)
-                    .frame(maxWidth: .infinity)
-                    .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                    .listRowSeparator(.hidden)
-                    
-                    HStack(alignment: .top) {
-                        if [Service.Status.cancelled, .disrupted, .unknown].contains(service.status) {
-                            Image(systemName: "exclamationmark.triangle")
-                                .foregroundColor(.colorAmber)
-                        }
+                        .font(.body)
+                        .padding(.top, 10)
+                        .frame(maxWidth: .infinity)
+                        .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                        .listRowSeparator(.hidden)
                         
-                        let moreInfoURL = URL(string: "ferryservices://more-info")!
-                        
-                        let text = {
-                            let additionalInfo = if !(service.additionalInfo ?? "").isEmpty {
-                                "[up to date information](\(moreInfoURL))"
-                            } else {
-                                "up to date information"
+                        HStack(alignment: .top) {
+                            if [Service.Status.cancelled, .disrupted, .unknown].contains(service.status) {
+                                Image(systemName: "exclamationmark.triangle")
+                                    .foregroundColor(.colorAmber)
                             }
                             
-                            let website = if let website = service.operator?.website, !website.isEmpty {
-                                "[website](\(website))"
-                            } else {
-                                "website"
-                            }
+                            let moreInfoURL = URL(string: "ferryservices://more-info")!
                             
-                            return "Scheduled departure times provided by [Traveline](https://www.traveline.info). Sailings may not be operating to the scheduled departure times. Please check the most \(additionalInfo) from the ferry service operator or their \(website) for more details."
-                        }()
-                        
-                        Text(LocalizedStringKey(text))
-                            .font(.footnote)
-                            .foregroundColor(Color(UIColor.systemGray))
-                            .environment(\.openURL, OpenURLAction { url in
-                                if url == moreInfoURL {
-                                    showDisruptionInfo(service.additionalInfo!)
-                                    return .handled
+                            let text = {
+                                let additionalInfo = if !(service.additionalInfo ?? "").isEmpty {
+                                    "[up to date information](\(moreInfoURL))"
                                 } else {
-                                    return .systemAction
+                                    "up to date information"
                                 }
-                            })
+                                
+                                let website = if let website = service.operator?.website, !website.isEmpty {
+                                    "[website](\(website))"
+                                } else {
+                                    "website"
+                                }
+                                
+                                return "Scheduled departure times provided by [Traveline](https://www.traveline.info). Sailings may not be operating to the scheduled departure times. Please check the most \(additionalInfo) from the ferry service operator or their \(website) for more details."
+                            }()
+                            
+                            Text(LocalizedStringKey(text))
+                                .font(.footnote)
+                                .foregroundColor(Color(UIColor.systemGray))
+                                .environment(\.openURL, OpenURLAction { url in
+                                    if url == moreInfoURL {
+                                        showDisruptionInfo(service.additionalInfo!)
+                                        return .handled
+                                    } else {
+                                        return .systemAction
+                                    }
+                                })
+                        }
+                        .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                        .listRowSeparator(.hidden)
                     }
-                    .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                    .listRowSeparator(.hidden)
-                }
-                
-                ForEach(service.locations.sorted(by: { $0.scheduledDepartures?.first?.departure ?? Date() < $1.scheduledDepartures?.first?.departure ?? Date() })) { location in
-                    ForEach(location.groupedScheduledDepartures, id: \.self.first?.destination.id) { departures in
-                        Section {
-                            ForEach(departures) { departureInfo in
-                                HStack {
-                                    let departureTime = departureInfo
-                                        .departure
-                                        .formatted(Date.timeFormatStyle)
-                                    Text(departureTime)
-                                        .accessibilityLabel("\(departureTime) departure")
-                                    
-                                    Spacer()
-                                    
-                                    let arrivalTime = departureInfo
-                                        .arrival
-                                        .formatted(Date.timeFormatStyle)
-                                    Text(arrivalTime)
-                                        .accessibilityLabel("\(arrivalTime) arrival")
+                    
+                    ForEach(service.locations.sorted(by: { $0.scheduledDepartures?.first?.departure ?? Date() < $1.scheduledDepartures?.first?.departure ?? Date() })) { location in
+                        ForEach(location.groupedScheduledDepartures, id: \.self.first?.destination.id) { departures in
+                            Section {
+                                ForEach(departures) { departureInfo in
+                                    HStack {
+                                        let departureTime = departureInfo
+                                            .departure
+                                            .formatted(Date.timeFormatStyle)
+                                        Text(departureTime)
+                                            .accessibilityLabel("\(departureTime) departure")
+                                        
+                                        Spacer()
+                                        
+                                        let arrivalTime = departureInfo
+                                            .arrival
+                                            .formatted(Date.timeFormatStyle)
+                                        Text(arrivalTime)
+                                            .accessibilityLabel("\(arrivalTime) arrival")
+                                    }
+                                    .foregroundColor(departureInfo.departure > Date() ? Color(UIColor.label) : Color(UIColor.systemGray2))
+                                    .accessibilityElement(children: .combine)
                                 }
-                                .foregroundColor(departureInfo.departure > Date() ? Color(UIColor.label) : Color(UIColor.systemGray2))
+                            } header: {
+                                HStack {
+                                    Text(location.name)
+                                    Spacer()
+                                    Image(systemName: "arrow.right")
+                                        .accessibilityLabel("to")
+                                    Spacer()
+                                    Text(departures.first!.destination.name)
+                                }
                                 .accessibilityElement(children: .combine)
                             }
-                        } header: {
-                            HStack {
-                                Text(location.name)
-                                Spacer()
-                                Image(systemName: "arrow.right")
-                                    .accessibilityLabel("to")
-                                Spacer()
-                                Text(departures.first!.destination.name)
-                            }
-                            .accessibilityElement(children: .combine)
                         }
                     }
                 }
