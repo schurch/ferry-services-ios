@@ -538,11 +538,9 @@ extension ServiceDetailsView {
             serviceID: serviceID,
             service: service,
             showDisruptionInfo: { html in
-                let disruptionViewController = UIStoryboard(name: "Main", bundle: nil)
-                    .instantiateViewController(withIdentifier: "WebInformation") as! WebInformationViewController
-                disruptionViewController.html = html
-                
-                navigationController.pushViewController(disruptionViewController, animated: true)
+                let webInformationView = WebInformationView(html: html)
+                let hosting = UIHostingController(rootView: webInformationView)
+                navigationController.pushViewController(hosting, animated: true)
             },
             showMap: { service in
                 let mapViewController = UIStoryboard(name: "Main", bundle: nil)
@@ -591,3 +589,4 @@ struct StandardButtonStyle: ButtonStyle {
             
     }
 }
+
