@@ -8,11 +8,13 @@
 
 import UIKit
 import Sentry
+import SwiftUI
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var window: UIWindow?
+    private let navigationState = AppNavigationState()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         SentrySDK.start { options in
@@ -24,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().delegate = self
         
         window?.tintColor = .colorTint
+        let rootView = RootView(navigationState: navigationState)
+        window?.rootViewController = UIHostingController(rootView: rootView)
+        window?.makeKeyAndVisible()
         
         if let remoteNotificationUserInfo = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
             let data = NotificationData(remoteNotificationUserInfo)
@@ -32,9 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Remove old shortcut items
         application.shortcutItems?.removeAll()
-        
-        let navigationController = window!.rootViewController as! UINavigationController
-        navigationController.setViewControllers([ServicesView.createViewController(navigationController: navigationController)], animated: false)
         
         return true
     }
@@ -87,30 +89,159 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         case .service(let serviceID):
             showDetails(forServiceID: serviceID)
         case .text(let message):
-            let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+            Task { @MainActor in
+                navigationState.alertMessage = message
+            }
         }
     }
     
     // MARK: - Utility methods
     private func showDetails(forServiceID serviceId: Int) {
-        guard
-            let navigationController = window?.rootViewController as? UINavigationController,
-            let servicesViewController = navigationController.viewControllers.first 
-        else {
-            return
+        Task { @MainActor in
+            navigationState.path = [.serviceDetails(serviceId)]
         }
-        
-        let serviceDetailViewController = ServiceDetailsView.createViewController(
-            serviceID: serviceId,
-            service: Service.defaultServices.first(where: { $0.serviceId == serviceId }),
-            navigationController: navigationController
-        )
-        
-        navigationController.setViewControllers([servicesViewController, serviceDetailViewController], animated: true)
     }
     
+}
+
+@MainActor
+private final class AppNavigationState: ObservableObject {
+    enum Destination: Hashable {
+        case serviceDetails(Int)
+        case map(UUID)
+        case webInfo(UUID)
+    }
+
+    @Published var path: [Destination] = [] {
+        didSet {
+            pruneNavigationPayloads()
+        }
+    }
+    @Published var alertMessage: String?
+
+    private var mapServices: [UUID: Service] = [:]
+    private var webInfoHTML: [UUID: String] = [:]
+
+    func pushMap(service: Service) {
+        let id = UUID()
+        mapServices[id] = service
+        path.append(.map(id))
+    }
+
+    func pushWebInfo(html: String) {
+        let id = UUID()
+        webInfoHTML[id] = html
+        path.append(.webInfo(id))
+    }
+
+    func mapService(for id: UUID) -> Service? {
+        mapServices[id]
+    }
+
+    func webInfo(for id: UUID) -> String? {
+        webInfoHTML[id]
+    }
+
+    private func pruneNavigationPayloads() {
+        let mapIDs = Set(
+            path.compactMap { destination in
+                if case .map(let id) = destination { return id }
+                return nil
+            }
+        )
+        mapServices = mapServices.filter { mapIDs.contains($0.key) }
+
+        let webInfoIDs = Set(
+            path.compactMap { destination in
+                if case .webInfo(let id) = destination { return id }
+                return nil
+            }
+        )
+        webInfoHTML = webInfoHTML.filter { webInfoIDs.contains($0.key) }
+    }
+}
+
+private struct RootView: View {
+    @ObservedObject var navigationState: AppNavigationState
+    @State private var showingSettings = false
+
+    var body: some View {
+        NavigationStack(path: $navigationState.path) {
+            ServicesView { service in
+                navigationState.path.append(.serviceDetails(service.serviceId))
+            }
+            .navigationTitle("Services")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showingSettings = true
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+                }
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsSheetView()
+            }
+            .navigationDestination(for: AppNavigationState.Destination.self) { destination in
+                switch destination {
+                case .serviceDetails(let serviceID):
+                    ServiceDetailsView(
+                        serviceID: serviceID,
+                        service: Service.defaultServices.first(where: { $0.serviceId == serviceID }),
+                        showDisruptionInfo: { html in
+                            navigationState.pushWebInfo(html: html)
+                        },
+                        showMap: { service in
+                            navigationState.pushMap(service: service)
+                        }
+                    )
+                case .map(let id):
+                    if let service = navigationState.mapService(for: id) {
+                        MapView(service: service)
+                    }
+                case .webInfo(let id):
+                    if let html = navigationState.webInfo(for: id) {
+                        WebInformationView(html: html)
+                    }
+                }
+            }
+            .alert("Alert", isPresented: alertIsPresentedBinding) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(navigationState.alertMessage ?? "")
+            }
+        }
+    }
+
+    private var alertIsPresentedBinding: Binding<Bool> {
+        Binding(
+            get: { navigationState.alertMessage != nil },
+            set: { isPresented in
+                if !isPresented {
+                    navigationState.alertMessage = nil
+                }
+            }
+        )
+    }
+}
+
+private struct SettingsSheetView: View {
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            SettingsView()
+                .navigationTitle("Settings")
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done") {
+                            dismiss()
+                        }
+                    }
+                }
+        }
+    }
 }
 
 private enum NotificationData: Sendable {

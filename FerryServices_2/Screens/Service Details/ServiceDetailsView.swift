@@ -302,11 +302,15 @@ struct ServiceDetailsView: View {
             .onReceive(NotificationCenter.default.publisher(for: .registeredForNotifications), perform: { _ in
                 model.checkIsRegisteredForNotifications()
             })
+            .navigationTitle(service.area)
+            .navigationBarTitleDisplayMode(.inline)
         } else {
             Text("Loading...")
                 .task {
                     await model.fetchLatestService()
                 }
+                .navigationTitle("Service")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
     
@@ -535,37 +539,6 @@ private struct DisruptionInfoView: View {
         }
         .padding([.top, .bottom], 5)
     }
-}
-
-extension ServiceDetailsView {
-    
-    // Used for bridging to the existing UIKit code
-    static func createViewController(
-        serviceID: Int,
-        service: Service?,
-        navigationController: UINavigationController
-    ) -> UIViewController {
-        let serviceDetailView = ServiceDetailsView(
-            serviceID: serviceID,
-            service: service,
-            showDisruptionInfo: { html in
-                let webInformationView = WebInformationView(html: html)
-                let hosting = UIHostingController(rootView: webInformationView)
-                navigationController.pushViewController(hosting, animated: true)
-            },
-            showMap: { service in
-                let mapViewController = UIHostingController(rootView: MapView(service: service))
-                navigationController.pushViewController(mapViewController, animated: true)
-            }
-        )
-        
-        let viewController = UIHostingController(rootView: serviceDetailView)
-        viewController.title = service?.area ?? NSLocalizedString("Service", comment: "")
-        viewController.navigationItem.largeTitleDisplayMode = .never
-        
-        return viewController
-    }
-    
 }
 
 private extension Service.Location {
