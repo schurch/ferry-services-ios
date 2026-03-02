@@ -21,6 +21,10 @@
 		F8EFFA722B71E2A7004EBA8D /* Installation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EFFA712B71E2A7004EBA8D /* Installation.swift */; };
 		F8EFFA742B71E2D0004EBA8D /* NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EFFA732B71E2D0004EBA8D /* NotificationNames.swift */; };
 		F8FCD1092C30CEC50059492D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCD1082C30CEC50059492D /* SettingsView.swift */; };
+		FD03813C2F5650D800A1B657 /* NotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03813A2F5650D800A1B657 /* NotificationData.swift */; };
+		FD03813D2F5650D800A1B657 /* AppNavigationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0381382F5650D800A1B657 /* AppNavigationState.swift */; };
+		FD03813E2F5650D800A1B657 /* FerryServicesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0381392F5650D800A1B657 /* FerryServicesApp.swift */; };
+		FD03813F2F5650D800A1B657 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD03813B2F5650D800A1B657 /* RootView.swift */; };
 		FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD075CE31A734FDF00C78250 /* Settings.bundle */; };
 		FD1B5FAD258479150098B96B /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F85258479150098B96B /* Vessel.swift */; };
 		FD1B5FAF258479150098B96B /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F88258479150098B96B /* APIError.swift */; };
@@ -102,6 +106,10 @@
 		F8EFFA712B71E2A7004EBA8D /* Installation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Installation.swift; sourceTree = "<group>"; };
 		F8EFFA732B71E2D0004EBA8D /* NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNames.swift; sourceTree = "<group>"; };
 		F8FCD1082C30CEC50059492D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FD0381382F5650D800A1B657 /* AppNavigationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationState.swift; sourceTree = "<group>"; };
+		FD0381392F5650D800A1B657 /* FerryServicesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FerryServicesApp.swift; sourceTree = "<group>"; };
+		FD03813A2F5650D800A1B657 /* NotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationData.swift; sourceTree = "<group>"; };
+		FD03813B2F5650D800A1B657 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		FD075CE31A734FDF00C78250 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FD1B5F85258479150098B96B /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
 		FD1B5F88258479150098B96B /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -334,22 +342,26 @@
 		FD753ED2197A256E00CC5DE3 /* FerryServices_2 */ = {
 			isa = PBXGroup;
 			children = (
-				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
-				F8EFFA712B71E2A7004EBA8D /* Installation.swift */,
-				F8EFFA732B71E2D0004EBA8D /* NotificationNames.swift */,
-				F8EFFA6F2B71E28E004EBA8D /* UserDefaultKeys.swift */,
-				FDB2A789257B2716000B0659 /* Launch Screen.storyboard */,
-				FD1B5F8A258479150098B96B /* Screens */,
-				F88848062C957C6D004A6848 /* Views */,
-				FD1B5F86258479150098B96B /* API Client */,
-				FD1B5F83258479150098B96B /* Model */,
-				FD1B5FA4258479150098B96B /* Library */,
-				FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */,
-				FD753ED3197A256E00CC5DE3 /* Supporting Files */,
-				FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */,
 				FD075CE31A734FDF00C78250 /* Settings.bundle */,
-				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
+				FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */,
+				FD5E7DB5197A30AF00F438F6 /* FerryServices_2-Bridging-Header.h */,
+				FDB2A789257B2716000B0659 /* Launch Screen.storyboard */,
+				FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */,
+				FD0381382F5650D800A1B657 /* AppNavigationState.swift */,
+				FD0381392F5650D800A1B657 /* FerryServicesApp.swift */,
+				F8EFFA712B71E2A7004EBA8D /* Installation.swift */,
+				FD03813A2F5650D800A1B657 /* NotificationData.swift */,
+				F8EFFA732B71E2D0004EBA8D /* NotificationNames.swift */,
+				FD03813B2F5650D800A1B657 /* RootView.swift */,
+				F8EFFA6F2B71E28E004EBA8D /* UserDefaultKeys.swift */,
 				FD839D6E257B112E00D12705 /* Colors.xcassets */,
+				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
+				FD1B5F86258479150098B96B /* API Client */,
+				FD1B5FA4258479150098B96B /* Library */,
+				FD1B5F83258479150098B96B /* Model */,
+				FD1B5F8A258479150098B96B /* Screens */,
+				FD753ED3197A256E00CC5DE3 /* Supporting Files */,
+				F88848062C957C6D004A6848 /* Views */,
 			);
 			path = FerryServices_2;
 			sourceTree = "<group>";
@@ -527,6 +539,10 @@
 				FD1B5FAD258479150098B96B /* Vessel.swift in Sources */,
 				F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */,
 				F8EFFA722B71E2A7004EBA8D /* Installation.swift in Sources */,
+				FD03813C2F5650D800A1B657 /* NotificationData.swift in Sources */,
+				FD03813D2F5650D800A1B657 /* AppNavigationState.swift in Sources */,
+				FD03813E2F5650D800A1B657 /* FerryServicesApp.swift in Sources */,
+				FD03813F2F5650D800A1B657 /* RootView.swift in Sources */,
 				F8EFFA742B71E2D0004EBA8D /* NotificationNames.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				F8FCD1092C30CEC50059492D /* SettingsView.swift in Sources */,
