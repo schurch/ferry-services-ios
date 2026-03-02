@@ -31,7 +31,6 @@
 		FD1B5FCE2584794E0098B96B /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FCD2584794E0098B96B /* Service.swift */; };
 		FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FD3258479E10098B96B /* Decoder.swift */; };
 		FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */; };
-		FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD753ED9197A256E00CC5DE3 /* Main.storyboard */; };
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
 		FD753EE9197A256E00CC5DE3 /* FerryServices_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753EE8197A256E00CC5DE3 /* FerryServices_2Tests.swift */; };
 		FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD839D6E257B112E00D12705 /* Colors.xcassets */; };
@@ -116,7 +115,6 @@
 		FD753ED0197A256E00CC5DE3 /* FerryServices_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FerryServices_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753ED4197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FD753EDA197A256E00CC5DE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FD753EDC197A256E00CC5DE3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FerryServices_2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753EE7197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -340,7 +338,6 @@
 				F8EFFA712B71E2A7004EBA8D /* Installation.swift */,
 				F8EFFA732B71E2D0004EBA8D /* NotificationNames.swift */,
 				F8EFFA6F2B71E28E004EBA8D /* UserDefaultKeys.swift */,
-				FD753ED9197A256E00CC5DE3 /* Main.storyboard */,
 				FDB2A789257B2716000B0659 /* Launch Screen.storyboard */,
 				FD1B5F8A258479150098B96B /* Screens */,
 				F88848062C957C6D004A6848 /* Views */,
@@ -495,7 +492,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD753EDB197A256E00CC5DE3 /* Main.storyboard in Resources */,
 				FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */,
 				FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */,
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
@@ -561,17 +557,6 @@
 			targetProxy = FD753EE3197A256E00CC5DE3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		FD753ED9197A256E00CC5DE3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FD753EDA197A256E00CC5DE3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		FD753EEA197A256E00CC5DE3 /* Debug */ = {

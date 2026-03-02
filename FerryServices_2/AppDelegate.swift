@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         UNUserNotificationCenter.current().delegate = self
         
+        window = UIWindow(frame: UIScreen.main.bounds)
         window?.tintColor = .colorTint
         let rootView = RootView(navigationState: navigationState)
         window?.rootViewController = UIHostingController(rootView: rootView)
