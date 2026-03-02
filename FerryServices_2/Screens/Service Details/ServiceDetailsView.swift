@@ -15,6 +15,18 @@ struct ServiceDetailsView: View {
     @StateObject private var model: ServiceDetailModel
     @State private var showingDateSelection = false
     @Environment(\.openURL) private var openURL
+    private var mapPosition: Binding<MapCameraPosition> {
+        Binding(
+            get: {
+                .rect(model.mapRect)
+            },
+            set: { newPosition in
+                if let rect = newPosition.rect {
+                    model.mapRect = rect
+                }
+            }
+        )
+    }
     
     var showDisruptionInfo: (String) -> Void
     var showMap: (Service) -> Void
@@ -42,21 +54,20 @@ struct ServiceDetailsView: View {
                     VStack(spacing: 0) {
                         if !model.annotations.isEmpty {
                             Map(
-                                mapRect: $model.mapRect,
-                                interactionModes: [],
-                                annotationItems: model.annotations
-                            ) { annotation in
-                                MapAnnotation(
-                                    coordinate: annotation.coordinate
-                                ) {
-                                    switch annotation.type {
-                                    case .vessel(let course):
-                                        Image("ferry")
-                                            .rotationEffect(.degrees(course))
-                                    case .location:
-                                        Image("map-annotation")
-                                            .resizable()
-                                            .frame(width: 20, height: 20)
+                                position: mapPosition,
+                                interactionModes: []
+                            ) {
+                                ForEach(model.annotations) { annotation in
+                                    MapKit.Annotation("", coordinate: annotation.coordinate) {
+                                        switch annotation.type {
+                                        case .vessel(let course):
+                                            Image("ferry")
+                                                .rotationEffect(.degrees(course))
+                                        case .location:
+                                            Image("map-annotation")
+                                                .resizable()
+                                                .frame(width: 20, height: 20)
+                                        }
                                     }
                                 }
                             }
@@ -543,10 +554,7 @@ extension ServiceDetailsView {
                 navigationController.pushViewController(hosting, animated: true)
             },
             showMap: { service in
-                let mapViewController = UIStoryboard(name: "Main", bundle: nil)
-                    .instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
-                mapViewController.service = service
-                
+                let mapViewController = UIHostingController(rootView: MapView(service: service))
                 navigationController.pushViewController(mapViewController, animated: true)
             }
         )
@@ -589,4 +597,3 @@ struct StandardButtonStyle: ButtonStyle {
             
     }
 }
-

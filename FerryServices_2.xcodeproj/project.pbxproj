@@ -27,7 +27,7 @@
 		FD1B5FAD258479150098B96B /* Vessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F85258479150098B96B /* Vessel.swift */; };
 		FD1B5FAF258479150098B96B /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F88258479150098B96B /* APIError.swift */; };
 		FD1B5FB0258479150098B96B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F89258479150098B96B /* APIClient.swift */; };
-		FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F99258479150098B96B /* MapViewController.swift */; };
+		FD1B5FBD258479150098B96B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F99258479150098B96B /* MapView.swift */; };
 		FD1B5FBE258479150098B96B /* WebInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5F9B258479150098B96B /* WebInformationView.swift */; };
 		FD1B5FC4258479150098B96B /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA5258479150098B96B /* Date+extensions.swift */; };
 		FD1B5FC7258479150098B96B /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FA8258479150098B96B /* UIImage+extensions.swift */; };
@@ -113,7 +113,7 @@
 		FD1B5F85258479150098B96B /* Vessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vessel.swift; sourceTree = "<group>"; };
 		FD1B5F88258479150098B96B /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		FD1B5F89258479150098B96B /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		FD1B5F99258479150098B96B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		FD1B5F99258479150098B96B /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		FD1B5F9B258479150098B96B /* WebInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebInformationView.swift; sourceTree = "<group>"; };
 		FD1B5FA5258479150098B96B /* Date+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
 		FD1B5FA8258479150098B96B /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
@@ -290,7 +290,7 @@
 		FD1B5F98258479150098B96B /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				FD1B5F99258479150098B96B /* MapViewController.swift */,
+				FD1B5F99258479150098B96B /* MapView.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -548,7 +548,7 @@
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				F8FCD1092C30CEC50059492D /* SettingsView.swift in Sources */,
 				FD1B5FAF258479150098B96B /* APIError.swift in Sources */,
-				FD1B5FBD258479150098B96B /* MapViewController.swift in Sources */,
+				FD1B5FBD258479150098B96B /* MapView.swift in Sources */,
 				FD1B5FB0258479150098B96B /* APIClient.swift in Sources */,
 				F8EFFA702B71E28F004EBA8D /* UserDefaultKeys.swift in Sources */,
 				F88848082C957C81004A6848 /* DisruptionIndicator.swift in Sources */,

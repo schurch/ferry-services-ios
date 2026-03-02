@@ -157,7 +157,7 @@ extension ServicesView {
                         navigationController.dismiss(animated: true)
                     }
                 )
-                settingsViewController.navigationItem.rightBarButtonItem?.style = .done
+                settingsViewController.navigationItem.rightBarButtonItem?.style = .prominent
                 let settingsNavigationController = UINavigationController(rootViewController: settingsViewController)
                 settingsNavigationController.navigationBar.prefersLargeTitles = true
                 
