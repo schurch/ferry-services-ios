@@ -19,11 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         UNUserNotificationCenter.current().delegate = self
         
-        if let remoteNotificationUserInfo = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
-            let data = NotificationData(remoteNotificationUserInfo)
-            handleNotification(data: data)
-        }
-        
         // Remove old shortcut items
         application.shortcutItems?.removeAll()
         
