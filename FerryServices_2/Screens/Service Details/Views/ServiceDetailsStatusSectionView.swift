@@ -26,32 +26,30 @@ struct ServiceDetailsStatusSectionView: View {
             .listRowSeparator(.hidden)
             .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
 
-            if isEnabledForNotifications {
-                if isRegisteredForNotifications {
-                    if loadingSubscribed {
-                        HStack {
-                            Text("Subscribe to updates")
-                            Spacer()
-                            ProgressView()
-                                .id(UUID())
-                                .padding(.trailing, 12)
-                        }
-                        .listRowSeparator(.hidden)
-                    } else {
-                        Toggle("Subscribe to updates", isOn: $subscribed)
-                            .onChange(of: subscribed) { value in
-                                updateSubscribed(value)
-                            }
-                            .listRowSeparator(.hidden)
-                    }
-                }
-            } else {
+            if !isEnabledForNotifications {
                 Button {
                     openNotificationSettings()
                 } label: {
                     NavigationLink("Enable notifications to subscribe", destination: EmptyView())
                 }
                 .listRowSeparator(.hidden)
+            } else if isRegisteredForNotifications {
+                if loadingSubscribed {
+                    HStack {
+                        Text("Subscribe to updates")
+                        Spacer()
+                        ProgressView()
+                            .id(UUID())
+                            .padding(.trailing, 12)
+                    }
+                    .listRowSeparator(.hidden)
+                } else {
+                    Toggle("Subscribe to updates", isOn: $subscribed)
+                        .onChange(of: subscribed) { _, value in
+                            updateSubscribed(value)
+                        }
+                        .listRowSeparator(.hidden)
+                }
             }
         }
     }

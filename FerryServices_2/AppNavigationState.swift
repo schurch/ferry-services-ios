@@ -66,34 +66,31 @@ final class AppNavigationState {
     }
 
     private func pruneNavigationPayloads() {
-        let serviceDetailsIDs = Set(
-            path.compactMap { destination in
-                if case .serviceDetails(let id) = destination {
-                    return id
-                }
-                return nil
-            }
-        )
+        let serviceDetailsIDs = activeIDs(for: \.serviceDetailsID)
         serviceDetailsPayloads = serviceDetailsPayloads.filter { serviceDetailsIDs.contains($0.key) }
         
-        let mapIDs = Set(
-            path.compactMap { destination in
-                if case .map(let id) = destination {
-                    return id
-                }
-                return nil
-            }
-        )
+        let mapIDs = activeIDs(for: \.mapID)
         mapServices = mapServices.filter { mapIDs.contains($0.key) }
 
-        let webInfoIDs = Set(
-            path.compactMap { destination in
-                if case .webInfo(let id) = destination {
-                    return id
-                }
-                return nil
-            }
-        )
+        let webInfoIDs = activeIDs(for: \.webInfoID)
         webInfoHTML = webInfoHTML.filter { webInfoIDs.contains($0.key) }
+    }
+    
+    private func activeIDs(for keyPath: KeyPath<Destination, UUID?>) -> Set<UUID> {
+        Set(path.compactMap { $0[keyPath: keyPath] })
+    }
+}
+
+private extension AppNavigationState.Destination {
+    var serviceDetailsID: UUID? {
+        if case .serviceDetails(let id) = self { id } else { nil }
+    }
+    
+    var mapID: UUID? {
+        if case .map(let id) = self { id } else { nil }
+    }
+    
+    var webInfoID: UUID? {
+        if case .webInfo(let id) = self { id } else { nil }
     }
 }

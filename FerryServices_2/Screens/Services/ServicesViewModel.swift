@@ -82,61 +82,55 @@ class ServicesViewModel {
     }
     
     private static func createSections(services: [Service], searchText: String = "") -> ServicesViewModel.Sections {
-        if searchText.isEmpty {
-            let subscribedIDs = AppPreferences.shared.subscribedServiceIDs
-            let subscribedServices = services.filter({ subscribedIDs.contains($0.serviceId) })
-            
-            let serviceGroups = Dictionary(grouping: services, by: { $0.operator?.id ?? 0 })
-            let sortedServiceGroups = serviceGroups.values
-                .sorted(by: { $0.first?.operator?.name ?? "" < $1.first?.operator?.name ?? "" })
-            let servicesGroupedByOperator = sortedServiceGroups.map({ services in
+        guard !searchText.isEmpty else {
+            return groupedSections(services: services)
+        }
+        
+        return searchSections(services: services, searchText: searchText)
+    }
+    
+    private static func groupedSections(services: [Service]) -> ServicesViewModel.Sections {
+        let subscribedIDs = Set(AppPreferences.shared.subscribedServiceIDs)
+        let subscribedRows = services
+            .filter { subscribedIDs.contains($0.serviceId) }
+            .map { Sections.Row(id: "Subscribed\($0.serviceId)", service: $0) }
+        
+        let groupedOperatorSections = Dictionary(grouping: services, by: { $0.operator?.id ?? 0 })
+            .values
+            .sorted(by: { ($0.first?.operator?.name ?? "") < ($1.first?.operator?.name ?? "") })
+            .map { services in
                 let serviceOperator = services.first?.operator
                 let title = serviceOperator?.name ?? NSLocalizedString("Services", comment: "")
                 return Sections.Section(
                     sectionType: .services,
                     title: title,
                     imageName: serviceOperator?.imageName,
-                    rows: services.map({
-                        Sections.Row(
-                            id: "\(title)\($0.serviceId)",
-                            service: $0
-                        )
-                    })
+                    rows: services.map { Sections.Row(id: "\(title)\($0.serviceId)", service: $0) }
                 )
-            })
-            
-            if subscribedServices.count > 0 {
-                let subscribedRows = subscribedServices.map({
-                    Sections.Row(
-                        id: "Subscribed\($0.serviceId)",
-                        service: $0
-                    )
-                })
-                return .multiple(
-                    [Sections.Section(
-                        sectionType: .subscribed,
-                        title: NSLocalizedString("Subscribed", comment: ""),
-                        imageName: nil,
-                        rows: subscribedRows
-                    )] + servicesGroupedByOperator
-                )
-            } else {
-                return .multiple(servicesGroupedByOperator)
             }
-        } else {
-            let filteredServices = services.filter { service in
-                let areaMatch = service.area.lowercased().contains(searchText.lowercased())
-                let routeMatch = service.route.lowercased().contains(searchText.lowercased())
-                return areaMatch || routeMatch
-            }
-            
-            return .single(filteredServices.map({
-                Sections.Row(
-                    id: String($0.serviceId),
-                    service: $0
-                )
-            }))
+        
+        guard !subscribedRows.isEmpty else {
+            return .multiple(groupedOperatorSections)
         }
+        
+        let subscribedSection = Sections.Section(
+            sectionType: .subscribed,
+            title: NSLocalizedString("Subscribed", comment: ""),
+            imageName: nil,
+            rows: subscribedRows
+        )
+        return .multiple([subscribedSection] + groupedOperatorSections)
+    }
+    
+    private static func searchSections(services: [Service], searchText: String) -> ServicesViewModel.Sections {
+        let query = searchText.lowercased()
+        let filteredServices = services.filter { service in
+            service.area.lowercased().contains(query) || service.route.lowercased().contains(query)
+        }
+        
+        return .single(
+            filteredServices.map { Sections.Row(id: String($0.serviceId), service: $0) }
+        )
     }
     
 }

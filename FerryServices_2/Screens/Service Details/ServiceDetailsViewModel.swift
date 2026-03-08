@@ -93,15 +93,12 @@ class ServiceDetailsViewModel {
     }
     
     var sortedLocationsByName: [Service.Location] {
-        (service?.locations ?? []).sorted(by: { $0.name < $1.name })
+        (service?.locations ?? [])
+            .sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending })
     }
     
     var shouldShowScheduledDepartures: Bool {
         service?.scheduledDeparturesAvailable == true
-    }
-    
-    var selectedDateTitle: String {
-        "\(Copy.departureDatePrefix)\(date.formatted(.dateTime.weekday().year().month().day()))"
     }
     
     var selectedDateValueTitle: String {
@@ -132,7 +129,8 @@ class ServiceDetailsViewModel {
     }
     
     var scheduledDepartureSections: [ScheduledDepartureSection] {
-        (service?.locations ?? [])
+        let now = Date()
+        return (service?.locations ?? [])
             .sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending })
             .flatMap { location in
                 groupedScheduledDepartures(for: location).map { departures in
@@ -146,7 +144,7 @@ class ServiceDetailsViewModel {
                             arrivalTimeText: arrivalTime,
                             departureAccessibilityText: "\(departureTime) departure",
                             arrivalAccessibilityText: "\(arrivalTime) arrival",
-                            isPastDeparture: departureInfo.departure <= Date()
+                            isPastDeparture: departureInfo.departure <= now
                         )
                     }
                     
