@@ -300,13 +300,21 @@
 			children = (
 				F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */,
 				F836406F2A6BD702008F44AB /* ServiceDetailsViewModel.swift */,
+				F8A111202F70000100AAA001 /* Views */,
+			);
+			path = "Service Details";
+			sourceTree = "<group>";
+		};
+		F8A111202F70000100AAA001 /* Views */ = {
+			isa = PBXGroup;
+			children = (
 				F8A111172F70000100AAA001 /* DisruptionInfoView.swift */,
 				F8A111192F70000100AAA001 /* LocationInformationView.swift */,
 				F8A1111B2F70000100AAA001 /* ServiceOperatorView.swift */,
 				F8A1111D2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift */,
 				F8A1111F2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift */,
 			);
-			path = "Service Details";
+			path = Views;
 			sourceTree = "<group>";
 		};
 		FD1B5F98258479150098B96B /* Map */ = {
