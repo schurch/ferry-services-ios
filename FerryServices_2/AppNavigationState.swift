@@ -5,9 +5,14 @@ final class AppNavigationState: ObservableObject {
     static let shared = AppNavigationState()
 
     enum Destination: Hashable {
-        case serviceDetails(Int)
+        case serviceDetails(UUID)
         case map(UUID)
         case webInfo(UUID)
+    }
+    
+    struct ServiceDetailsPayload {
+        let serviceID: Int
+        let seedService: Service?
     }
 
     @Published var path: [Destination] = [] {
@@ -17,8 +22,26 @@ final class AppNavigationState: ObservableObject {
     }
     @Published var alertMessage: String?
 
+    private var serviceDetailsPayloads: [UUID: ServiceDetailsPayload] = [:]
     private var mapServices: [UUID: Service] = [:]
     private var webInfoHTML: [UUID: String] = [:]
+    
+    func pushServiceDetails(service: Service) {
+        pushServiceDetails(serviceID: service.serviceId, seedService: service)
+    }
+    
+    func pushServiceDetails(serviceID: Int, seedService: Service? = nil) {
+        let id = UUID()
+        serviceDetailsPayloads[id] = ServiceDetailsPayload(
+            serviceID: serviceID,
+            seedService: seedService
+        )
+        path.append(.serviceDetails(id))
+    }
+    
+    func serviceDetails(for id: UUID) -> ServiceDetailsPayload? {
+        serviceDetailsPayloads[id]
+    }
 
     func pushMap(service: Service) {
         let id = UUID()
@@ -41,6 +64,16 @@ final class AppNavigationState: ObservableObject {
     }
 
     private func pruneNavigationPayloads() {
+        let serviceDetailsIDs = Set(
+            path.compactMap { destination in
+                if case .serviceDetails(let id) = destination {
+                    return id
+                }
+                return nil
+            }
+        )
+        serviceDetailsPayloads = serviceDetailsPayloads.filter { serviceDetailsIDs.contains($0.key) }
+        
         let mapIDs = Set(
             path.compactMap { destination in
                 if case .map(let id) = destination {

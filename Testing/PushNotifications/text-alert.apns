@@ -1,0 +1,7 @@
+{
+  "Simulator Target Bundle": "com.stefanchurch.ferryservices",
+  "aps": {
+    "alert": "Test notification message from simulator",
+    "sound": "default"
+  }
+}

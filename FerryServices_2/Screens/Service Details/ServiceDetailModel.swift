@@ -32,6 +32,7 @@ class ServiceDetailModel: ObservableObject {
     @Published var date: Date = Date()
     @Published var isEnabledForNotifications: Bool = false
     @Published var isRegisteredForNotifications: Bool = false
+    @Published var failedToLoadService: Bool = false
     
     var annotations: [Annotation] {
         guard let service else { return [] }
@@ -62,10 +63,12 @@ class ServiceDetailModel: ObservableObject {
     private var serviceID: Int
     
     init(serviceID: Int, service: Service?) {
-        self.serviceID = serviceID
-        self.service = service
+        let seedService = service ?? Service.defaultServices.first(where: { $0.serviceId == serviceID })
         
-        if let service {
+        self.serviceID = serviceID
+        self.service = seedService
+
+        if let service = seedService {
             self.mapRect = MapViewHelpers.calculateMapRect(forLocations: service.locations)
         } else {
             self.mapRect = MKMapRect()
@@ -106,12 +109,41 @@ class ServiceDetailModel: ObservableObject {
     }
     
     func fetchLatestService() async {
-        do {
-            let service = try await APIClient.fetchService(serviceID: serviceID, date: date)
+        failedToLoadService = false
+        
+        func applyService(_ service: Service) {
             self.service = service
             self.mapRect = MapViewHelpers.calculateMapRect(forLocations: service.locations)
+        }
+        
+        do {
+            let service = try await APIClient.fetchService(serviceID: serviceID, date: date)
+            applyService(service)
+            return
         } catch {
-
+            // Try the single-service endpoint without date in case date-constrained lookup fails.
+            do {
+                let service = try await APIClient.fetchService(serviceID: serviceID)
+                applyService(service)
+                return
+            } catch {
+                // Fallback to list endpoint so details can still render.
+                do {
+                    let services = try await APIClient.fetchServices()
+                    if let service = services.first(where: { $0.serviceId == serviceID }) {
+                        applyService(service)
+                        return
+                    }
+                } catch {
+                    // Fall through to cached/default fallback.
+                }
+            }
+        }
+        
+        if let fallback = Service.defaultServices.first(where: { $0.serviceId == serviceID }) {
+            applyService(fallback)
+        } else {
+            failedToLoadService = true
         }
     }
     

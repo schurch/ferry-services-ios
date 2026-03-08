@@ -305,10 +305,30 @@ struct ServiceDetailsView: View {
             .navigationTitle(service.area)
             .navigationBarTitleDisplayMode(.inline)
         } else {
-            Text("Loading...")
-                .task {
-                    await model.fetchLatestService()
+            VStack(spacing: 12) {
+                if model.failedToLoadService {
+                    Text("Unable to load this service right now.")
+                        .foregroundStyle(.secondary)
+                    Button("Retry") {
+                        Task {
+                            await model.fetchLatestService()
+                        }
+                    }
+                } else {
+                    ProgressView("Loading...")
+                    Button("Retry") {
+                        Task {
+                            await model.fetchLatestService()
+                        }
+                    }
                 }
+            }
+            .task {
+                await model.fetchLatestService()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                Task { await model.fetchLatestService() }
+            }
                 .navigationTitle("Service")
                 .navigationBarTitleDisplayMode(.inline)
         }

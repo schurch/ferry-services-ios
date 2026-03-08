@@ -9,7 +9,7 @@
 import UIKit
 import Sentry
 
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         SentrySDK.start { options in
             options.dsn = "https://57b7260ca4a249ecb24c7975ae3ad79d@o434952.ingest.sentry.io/5392740"
@@ -56,34 +56,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("Failed to register for remote notifications: \(error)")
     }
     
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+    @MainActor
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         // App in foreground
         [.list, .banner]
     }
     
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        // App became active
+    @MainActor
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse
+    ) async {
         let data = NotificationData(response.notification.request.content.userInfo)
-        handleNotification(data: data)
+        await self.handleNotification(data: data)
     }
     
-    private nonisolated func handleNotification(data: NotificationData?) {
+    @MainActor
+    private func handleNotification(data: NotificationData?) async {
         guard let data = data else { return }
         switch data {
         case .service(let serviceID):
-            showDetails(forServiceID: serviceID)
+            await showDetails(forServiceID: serviceID)
         case .text(let message):
-            Task { @MainActor in
-                AppNavigationState.shared.alertMessage = message
-            }
+            AppNavigationState.shared.alertMessage = message
         }
     }
     
     // MARK: - Utility methods
-    private nonisolated func showDetails(forServiceID serviceId: Int) {
-        Task { @MainActor in
-            AppNavigationState.shared.path = [.serviceDetails(serviceId)]
+    @MainActor
+    private func showDetails(forServiceID serviceId: Int) async {
+        let serviceFromList: Service?
+        do {
+            let services = try await APIClient.fetchServices()
+            serviceFromList = services.first(where: { $0.serviceId == serviceId })
+        } catch {
+            serviceFromList = nil
         }
+        
+        let seedService = serviceFromList ?? Service.defaultServices.first(where: { $0.serviceId == serviceId })
+        if seedService == nil {
+            let message = "Unknown push service_id: \(serviceId)"
+            print(message)
+            SentrySDK.capture(message: message)
+        }
+        
+        AppNavigationState.shared.path = []
+        AppNavigationState.shared.pushServiceDetails(
+            serviceID: serviceId,
+            seedService: seedService
+        )
     }
     
 }

@@ -50,6 +50,14 @@ class APIClient {
         return try await send(request: URLRequest(url: url))
     }
     
+    static func fetchService(serviceID: Int) async throws -> Service {
+        let url = URL(
+            string: "\(APIClient.root)/services/\(serviceID)",
+            relativeTo: APIClient.baseURL
+        )!
+        return try await send(request: URLRequest(url: url))
+    }
+    
     @discardableResult static func addService(for installationID: UUID, serviceID: Int) async throws -> [Service] {
         let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
         let request = createRequest(with: url, body: CreateInstallationServiceBody(serviceID: serviceID))

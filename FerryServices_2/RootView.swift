@@ -7,7 +7,7 @@ struct RootView: View {
     var body: some View {
         NavigationStack(path: $navigationState.path) {
             ServicesView { service in
-                navigationState.path.append(.serviceDetails(service.serviceId))
+                navigationState.pushServiceDetails(service: service)
             }
             .navigationTitle("Services")
             .toolbar {
@@ -24,17 +24,21 @@ struct RootView: View {
             }
             .navigationDestination(for: AppNavigationState.Destination.self) { destination in
                 switch destination {
-                case .serviceDetails(let serviceID):
-                    ServiceDetailsView(
-                        serviceID: serviceID,
-                        service: Service.defaultServices.first(where: { $0.serviceId == serviceID }),
-                        showDisruptionInfo: { html in
-                            navigationState.pushWebInfo(html: html)
-                        },
-                        showMap: { service in
-                            navigationState.pushMap(service: service)
-                        }
-                    )
+                case .serviceDetails(let id):
+                    if let details = navigationState.serviceDetails(for: id) {
+                        ServiceDetailsView(
+                            serviceID: details.serviceID,
+                            service: details.seedService,
+                            showDisruptionInfo: { html in
+                                navigationState.pushWebInfo(html: html)
+                            },
+                            showMap: { service in
+                                navigationState.pushMap(service: service)
+                            }
+                        )
+                    } else {
+                        Text("Service details unavailable")
+                    }
                 case .map(let id):
                     if let service = navigationState.mapService(for: id) {
                         MapView(service: service)

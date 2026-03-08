@@ -1,0 +1,8 @@
+{
+  "Simulator Target Bundle": "com.stefanchurch.ferryservices",
+  "aps": {
+    "alert": "Service update available",
+    "sound": "default"
+  },
+  "service_id": 14
+}
