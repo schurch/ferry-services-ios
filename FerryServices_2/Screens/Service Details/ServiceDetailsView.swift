@@ -129,8 +129,9 @@ struct ServiceDetailsView: View {
                         }
                     } else {
                         Button {
-                            let url = URL(string: UIApplication.openNotificationSettingsURLString)!
-                            openURL(url)
+                            if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                                openURL(url)
+                            }
                         } label: {
                             NavigationLink("Enable notifications to subscribe", destination: EmptyView())
                         }
@@ -171,7 +172,7 @@ struct ServiceDetailsView: View {
                                     .foregroundColor(.colorAmber)
                             }
                             
-                            let moreInfoURL = URL(string: "ferryservices://more-info")!
+                            let moreInfoURL = "ferryservices://more-info"
                             
                             let text = {
                                 let additionalInfo = if !(service.additionalInfo ?? "").isEmpty {
@@ -193,8 +194,10 @@ struct ServiceDetailsView: View {
                                 .font(.footnote)
                                 .foregroundColor(Color(UIColor.systemGray))
                                 .environment(\.openURL, OpenURLAction { url in
-                                    if url == moreInfoURL {
-                                        showDisruptionInfo(service.additionalInfo!)
+                                    if url.absoluteString == moreInfoURL,
+                                        let additionalInfo = service.additionalInfo
+                                    {
+                                        showDisruptionInfo(additionalInfo)
                                         return .handled
                                     } else {
                                         return .systemAction
@@ -229,12 +232,13 @@ struct ServiceDetailsView: View {
                                 }
                             } header: {
                                 HStack {
+                                    let destinationName = departures.first?.destination.name ?? ""
                                     Text(location.name)
                                     Spacer()
                                     Image(systemName: "arrow.right")
                                         .accessibilityLabel("to")
                                     Spacer()
-                                    Text(departures.first!.destination.name)
+                                    Text(destinationName)
                                 }
                                 .accessibilityElement(children: .combine)
                             }
@@ -494,39 +498,53 @@ private struct ServiceOperator: View {
                         if let local = serviceOperator.localNumber {
                             let localFormatted = local.replacingOccurrences(of: " ", with: "-")
                             Button(local) {
-                                openURL(URL(string: "tel://\(localFormatted)")!)
+                                if let url = URL(string: "tel://\(localFormatted)") {
+                                    openURL(url)
+                                }
                             }
                         }
                         
                         if let international = serviceOperator.internationalNumber {
                             let internationalFormatted = international.replacingOccurrences(of: " ", with: "-")
                             Button(international) {
-                                openURL(URL(string: "tel://\(internationalFormatted)")!)
+                                if let url = URL(string: "tel://\(internationalFormatted)") {
+                                    openURL(url)
+                                }
                             }
                         }
                     }
                     
                     Button("WEBSITE") {
-                        openURL(URL(string: serviceOperator.website!)!)
+                        if let website = serviceOperator.website, let url = URL(string: website) {
+                            openURL(url)
+                        }
                     }
                     .disabled(serviceOperator.website == nil)
                 }
                 
                 HStack {
                     Button("EMAIL") {
-                        openURL(URL(string: "mailto:\(serviceOperator.email!)")!)
+                        if let email = serviceOperator.email,
+                            let url = URL(string: "mailto:\(email)")
+                        {
+                            openURL(url)
+                        }
                     }
                     .disabled(serviceOperator.email == nil)
                     
                     Button("TWITTER") {
-                        openURL(URL(string: serviceOperator.x!)!)
+                        if let x = serviceOperator.x, let url = URL(string: x) {
+                            openURL(url)
+                        }
                     }
                     .disabled(serviceOperator.x == nil)
                 }
                 
                 HStack {
                     Button("FACEBOOK") {
-                        openURL(URL(string: serviceOperator.facebook!)!)
+                        if let facebook = serviceOperator.facebook, let url = URL(string: facebook) {
+                            openURL(url)
+                        }
                     }
                     .disabled(serviceOperator.facebook == nil)
                     

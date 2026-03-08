@@ -58,8 +58,9 @@ struct SettingsView: View {
                     
                 case .notAuthorized:
                     Button("Enable notifications in Settings") {
-                        let url = URL(string: UIApplication.openNotificationSettingsURLString)!
-                        openURL(url)
+                        if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                            openURL(url)
+                        }
                     }
                     
                 case .error:
@@ -71,14 +72,16 @@ struct SettingsView: View {
             
             Section {
                 Button("Email") {
-                    let url = URL(string: "mailto:stefan.church@gmail.com?subject=Scottish Ferries App (\(version))")!
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    if let url = supportEmailURL(version: version) {
+                        openURL(url)
+                    }
                 }
                 
-                Link(
-                    "Rate on App Store",
-                    destination: URL(string: "https://apps.apple.com/app/id861271891")!
-                )
+                Button("Rate on App Store") {
+                    if let url = URL(string: "https://apps.apple.com/app/id861271891") {
+                        openURL(url)
+                    }
+                }
             } header: {
                 Text("Contact")
             }
@@ -123,11 +126,21 @@ private func areNotificationsAuthorized() async -> Bool {
 
 private extension Bundle {
     var releaseVersionNumber: String {
-        return infoDictionary?["CFBundleShortVersionString"] as! String
+        return infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
     }
     var buildVersionNumber: String {
-        return infoDictionary?["CFBundleVersion"] as! String
+        return infoDictionary?["CFBundleVersion"] as? String ?? "0"
     }
+}
+
+private func supportEmailURL(version: String) -> URL? {
+    var components = URLComponents()
+    components.scheme = "mailto"
+    components.path = "stefan.church@gmail.com"
+    components.queryItems = [
+        URLQueryItem(name: "subject", value: "Scottish Ferries App (\(version))")
+    ]
+    return components.url
 }
 
 #Preview {

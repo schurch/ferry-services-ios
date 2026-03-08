@@ -10,7 +10,8 @@ import Foundation
 
 struct Service: Codable {
     static let servicesCacheLocation: URL = {
-        let cacheDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let cacheDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+            ?? FileManager.default.temporaryDirectory
         return cacheDirectory.appendingPathComponent("services.json")
     }()
     
@@ -20,7 +21,9 @@ struct Service: Codable {
                 if FileManager.default.fileExists(atPath: servicesCacheLocation.path) {
                     return try Data(contentsOf: servicesCacheLocation)
                 } else {
-                    let defaultServicesFilePath = Bundle.main.path(forResource: "services", ofType: "json")!
+                    guard let defaultServicesFilePath = Bundle.main.path(forResource: "services", ofType: "json") else {
+                        throw APIError.missingResponseData
+                    }
                     return try Data(contentsOf: URL(fileURLWithPath: defaultServicesFilePath))
                 }
             }()

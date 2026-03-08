@@ -48,7 +48,7 @@ struct WebInformationView: View {
                 </body>
             </html>
             """
-        let baseURL = URL(string: "about:blank")!
+        guard let baseURL = URL(string: "about:blank") else { return }
         _ = page.load(html: styledHtml, baseURL: baseURL)
     }
 }

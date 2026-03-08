@@ -25,15 +25,12 @@ class APIClient {
     private static let root = "/api"
     
     static func fetchServices() async throws -> [Service] {
-        let url = URL(string: "\(APIClient.root)/services/", relativeTo: APIClient.baseURL)!
+        let url = try makeURL(path: "\(APIClient.root)/services/")
         return try await sendAndCacheResult(request: URLRequest(url: url))
     }
         
     static func fetchService(serviceID: Int, date: Date) async throws -> Service {
-        let url = URL(
-            string: "\(APIClient.root)/services/\(serviceID)",
-            relativeTo: APIClient.baseURL
-        )!.appending(
+        let url = try makeURL(path: "\(APIClient.root)/services/\(serviceID)").appending(
             queryItems: [
                 URLQueryItem(
                     name: "departuresDate",
@@ -51,21 +48,18 @@ class APIClient {
     }
     
     static func fetchService(serviceID: Int) async throws -> Service {
-        let url = URL(
-            string: "\(APIClient.root)/services/\(serviceID)",
-            relativeTo: APIClient.baseURL
-        )!
+        let url = try makeURL(path: "\(APIClient.root)/services/\(serviceID)")
         return try await send(request: URLRequest(url: url))
     }
     
     @discardableResult static func addService(for installationID: UUID, serviceID: Int) async throws -> [Service] {
-        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services", relativeTo: APIClient.baseURL)!
-        let request = createRequest(with: url, body: CreateInstallationServiceBody(serviceID: serviceID))
+        let url = try makeURL(path: "\(APIClient.root)/installations/\(installationID)/services")
+        let request = try createRequest(with: url, body: CreateInstallationServiceBody(serviceID: serviceID))
         return try await send(request: request)
     }
     
     @discardableResult static func removeService(for installationID: UUID, serviceID: Int) async throws -> [Service] {
-        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/services/\(serviceID)", relativeTo: APIClient.baseURL)!
+        let url = try makeURL(path: "\(APIClient.root)/installations/\(installationID)/services/\(serviceID)")
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
         
@@ -73,20 +67,20 @@ class APIClient {
     }
     
     @discardableResult static func createInstallation(installationID: UUID, deviceToken: String) async throws -> [Service] {
-        let url = URL(string: "\(APIClient.root)/installations/\(installationID)", relativeTo: APIClient.baseURL)!
-        let request = createRequest(with: url, body: CreateInstallationBody(deviceToken: deviceToken))
+        let url = try makeURL(path: "\(APIClient.root)/installations/\(installationID)")
+        let request = try createRequest(with: url, body: CreateInstallationBody(deviceToken: deviceToken))
         return try await send(request: request)
     }
     
     static func getPushEnabledStatus(installationID: UUID) async throws -> Bool {
-        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/push-status", relativeTo: APIClient.baseURL)!
+        let url = try makeURL(path: "\(APIClient.root)/installations/\(installationID)/push-status")
         let result: PushStatus = try await send(request: URLRequest(url: url))
         return result.enabled
     }
     
     static func updatePushEnabledStatus(installationID: UUID, isEnabled: Bool) async throws {
-        let url = URL(string: "\(APIClient.root)/installations/\(installationID)/push-status", relativeTo: APIClient.baseURL)!
-        let request = createRequest(with: url, body: PushStatus(enabled: isEnabled))
+        let url = try makeURL(path: "\(APIClient.root)/installations/\(installationID)/push-status")
+        let request = try createRequest(with: url, body: PushStatus(enabled: isEnabled))
         let _: PushStatus = try await send(request: request)
     }
     
@@ -134,18 +128,34 @@ class APIClient {
         return services
     }
     
-    private static func createRequest<T: Encodable>(with url: URL, body: T) -> URLRequest {
+    private static func createRequest<T: Encodable>(with url: URL, body: T) throws -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
-        request.httpBody = try! encoder.encode(body)
+        do {
+            request.httpBody = try encoder.encode(body)
+        } catch {
+            throw APIError.requestEncodingFailed
+        }
         
         var headers = request.allHTTPHeaderFields ?? [:]
         headers["Content-Type"] = "application/json"
         request.allHTTPHeaderFields = headers
         
         return request
+    }
+
+    private static func makeURL(path: String) throws -> URL {
+        guard let baseURL else {
+            throw APIError.invalidURL
+        }
+
+        guard let url = URL(string: path, relativeTo: baseURL) else {
+            throw APIError.invalidURL
+        }
+
+        return url
     }
 }

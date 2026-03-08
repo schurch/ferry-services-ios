@@ -12,4 +12,6 @@ enum APIError: Error, LocalizedError {
     case missingResponseData
     case expectedHTTPResponse
     case badResponseCode
+    case invalidURL
+    case requestEncodingFailed
 }
