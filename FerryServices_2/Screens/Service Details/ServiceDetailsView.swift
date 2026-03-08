@@ -295,13 +295,8 @@ struct ServiceDetailsView: View {
             .refreshable {
                 await model.fetchLatestService()
             }
-            .onAppear {
-                Task { await model.fetchLatestService() }
-                Task { await model.checkIsEnabledForNotifications() }
-            }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                Task { await model.fetchLatestService() }
-                Task { await model.checkIsEnabledForNotifications() }
+                refreshFromAppActivation()
             }
             .onReceive(NotificationCenter.default.publisher(for: .registeredForNotifications), perform: { _ in
                 model.checkIsRegisteredForNotifications()
@@ -331,13 +326,24 @@ struct ServiceDetailsView: View {
                 await model.fetchLatestService()
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                Task { await model.fetchLatestService() }
+                Task {
+                    await model.fetchLatestService()
+                }
             }
                 .navigationTitle("Service")
                 .navigationBarTitleDisplayMode(.inline)
         }
     }
     
+}
+
+private extension ServiceDetailsView {
+    func refreshFromAppActivation() {
+        Task {
+            await model.fetchLatestService()
+            await model.checkIsEnabledForNotifications()
+        }
+    }
 }
 
 private struct LocationInformation: View {
