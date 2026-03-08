@@ -37,9 +37,9 @@ struct ServicesViewModelTests {
         }
 
         #expect(sections.first?.title == "Subscribed")
-        #expect(sections.first?.rows.map { $0.service.serviceId } == [2])
+        #expect(sections.first?.rows.map(\.service.serviceId) == [2])
 
-        let operatorSectionTitles = Array(sections.dropFirst().map { $0.title })
+        let operatorSectionTitles = Array(sections.dropFirst().map(\.title))
         #expect(operatorSectionTitles == ["Alpha Ferries", "Beta Ferries"])
     }
 
@@ -67,14 +67,14 @@ struct ServicesViewModelTests {
             Issue.record("Expected single search section for area query")
             return
         }
-        #expect(rows.map { $0.service.serviceId } == [1])
+        #expect(rows.map(\.service.serviceId) == [1])
 
         viewModel.searchText = "armadale"
         guard case .single(let routeRows) = viewModel.sections else {
             Issue.record("Expected single search section for route query")
             return
         }
-        #expect(routeRows.map { $0.service.serviceId } == [2])
+        #expect(routeRows.map(\.service.serviceId) == [2])
     }
 
     @Test @MainActor
