@@ -9,158 +9,214 @@
 import SwiftUI
 import MapKit
 
+struct UIKitServiceMapView: UIViewRepresentable {
+    let service: Service
+    var interactionEnabled: Bool
+    var fitToLocationsOnly: Bool = true
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeUIView(context: Context) -> MKMapView {
+        let mapView = MKMapView()
+        mapView.delegate = context.coordinator
+        mapView.showsCompass = true
+
+        return mapView
+    }
+
+    func updateUIView(_ mapView: MKMapView, context: Context) {
+        context.coordinator.parent = self
+
+        mapView.isScrollEnabled = interactionEnabled
+        mapView.isZoomEnabled = interactionEnabled
+        mapView.isRotateEnabled = interactionEnabled
+        mapView.isPitchEnabled = interactionEnabled
+        mapView.isUserInteractionEnabled = interactionEnabled
+
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(context.coordinator.annotations(for: service))
+
+        let locationCoordinates = service.locations.map {
+            CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
+        }
+        let vesselCoordinates = (service.vessels ?? []).map {
+            CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
+        }
+        let focusCoordinates = if fitToLocationsOnly, !locationCoordinates.isEmpty {
+            locationCoordinates
+        } else {
+            locationCoordinates + vesselCoordinates
+        }
+
+        let mapRect = MapViewHelpers.calculateMapRect(forCoordinates: focusCoordinates)
+        if !mapRect.isNull && !mapRect.isEmpty {
+            mapView.setVisibleMapRect(
+                mapRect,
+                edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20),
+                animated: false
+            )
+        }
+    }
+
+    final class Coordinator: NSObject, MKMapViewDelegate {
+        var parent: UIKitServiceMapView
+
+        init(_ parent: UIKitServiceMapView) {
+            self.parent = parent
+        }
+
+        func annotations(for service: Service) -> [ServiceAnnotation] {
+            let locationAnnotations: [ServiceAnnotation] = service.locations.map { location in
+                let subtitle: String? = {
+                    guard let nextDeparture = location.nextDeparture else { return nil }
+                    return "Next departure: \(nextDeparture.departure.formatted(.dateTime.hour().minute()))"
+                }()
+
+                return ServiceAnnotation(
+                    coordinate: CLLocationCoordinate2D(
+                        latitude: location.latitude,
+                        longitude: location.longitude
+                    ),
+                    title: location.name,
+                    subtitle: subtitle,
+                    kind: .location(location)
+                )
+            }
+
+            let vesselAnnotations: [ServiceAnnotation] = (service.vessels ?? []).map { vessel in
+                let subtitle: String = {
+                    if let speed = vessel.speed {
+                        return "\(speed.formatted(.number.precision(.fractionLength(1)))) kn"
+                    } else {
+                        return "Speed unknown"
+                    }
+                }()
+
+                return ServiceAnnotation(
+                    coordinate: CLLocationCoordinate2D(
+                        latitude: vessel.latitude,
+                        longitude: vessel.longitude
+                    ),
+                    title: vessel.name,
+                    subtitle: subtitle,
+                    kind: .vessel(vessel)
+                )
+            }
+
+            return locationAnnotations + vesselAnnotations
+        }
+
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard let annotation = annotation as? ServiceAnnotation else { return nil }
+
+            let view: MKAnnotationView
+            switch annotation.kind {
+            case .location:
+                let identifier = "location"
+                view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+                    ?? MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                view.image = UIImage(named: "map-annotation")
+                view.transform = .identity
+                view.displayPriority = .required
+                view.zPriority = .min
+            case .vessel(let vessel):
+                let identifier = "vessel"
+                view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+                    ?? MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                view.transform = .identity
+                view.image = rotatedFerryImage(course: vessel.course)
+                view.displayPriority = .required
+                view.zPriority = .max
+            }
+
+            view.annotation = annotation
+            view.canShowCallout = true
+            view.detailCalloutAccessoryView = detailCalloutView(for: annotation)
+            return view
+        }
+        
+        private func rotatedFerryImage(course: Double?) -> UIImage? {
+            guard let image = UIImage(named: "ferry"), let course else { return UIImage(named: "ferry") }
+            
+            let angle = CGFloat(course * .pi / 180)
+            let renderer = UIGraphicsImageRenderer(size: image.size)
+            return renderer.image { context in
+                context.cgContext.translateBy(x: image.size.width / 2, y: image.size.height / 2)
+                context.cgContext.rotate(by: angle)
+                image.draw(
+                    in: CGRect(
+                        x: -image.size.width / 2,
+                        y: -image.size.height / 2,
+                        width: image.size.width,
+                        height: image.size.height
+                    )
+                )
+            }
+        }
+
+        private func detailCalloutView(for annotation: ServiceAnnotation) -> UIView? {
+            let label = UILabel()
+            label.numberOfLines = 0
+            label.font = .preferredFont(forTextStyle: .footnote)
+            label.textColor = .secondaryLabel
+
+            switch annotation.kind {
+            case .vessel(let vessel):
+                let speedText: String = if let speed = vessel.speed {
+                    "\(speed.formatted(.number.precision(.fractionLength(1)))) knots"
+                } else {
+                    "Unknown"
+                }
+                let relativeDateText = RelativeDateTimeFormatter().localizedString(
+                    for: vessel.lastReceived,
+                    relativeTo: Date()
+                )
+                label.text = "\(speedText) • \(relativeDateText)"
+            case .location(let location):
+                if let nextDeparture = location.nextDeparture {
+                    label.text = "Next departure: \(nextDeparture.departure.formatted(.dateTime.hour().minute()))"
+                } else {
+                    label.text = "No upcoming departure info"
+                }
+            }
+
+            return label
+        }
+    }
+
+    final class ServiceAnnotation: NSObject, MKAnnotation {
+        enum Kind {
+            case location(Service.Location)
+            case vessel(Vessel)
+        }
+
+        let coordinate: CLLocationCoordinate2D
+        let title: String?
+        let subtitle: String?
+        let kind: Kind
+
+        init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String?, kind: Kind) {
+            self.coordinate = coordinate
+            self.title = title
+            self.subtitle = subtitle
+            self.kind = kind
+        }
+    }
+}
+
 struct MapView: View {
     let service: Service
 
-    @State private var cameraPosition: MapCameraPosition = .automatic
-    @State private var mapBounds: MapCameraBounds?
-    @State private var selectedVessel: Vessel?
-
-    private struct MapItem: Identifiable {
-        enum Kind {
-            case vessel(Vessel)
-            case location
-        }
-
-        let id = UUID()
-        let coordinate: CLLocationCoordinate2D
-        let title: String
-        let kind: Kind
-
-        var mapPoint: MKMapPoint {
-            MKMapPoint(coordinate)
-        }
-    }
-
-    private var locationItems: [MapItem] {
-        service.locations.map { location in
-            MapItem(
-                coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude),
-                title: location.name,
-                kind: .location
-            )
-        }
-    }
-
-    private var vesselItems: [MapItem] {
-        (service.vessels ?? []).map { vessel in
-            MapItem(
-                coordinate: CLLocationCoordinate2D(latitude: vessel.latitude, longitude: vessel.longitude),
-                title: vessel.name,
-                kind: .vessel(vessel)
-            )
-        }
-    }
-
-    private var mapItems: [MapItem] {
-        locationItems + vesselItems
-    }
-
     var body: some View {
-        ZStack(alignment: .bottom) {
-            Map(
-                position: $cameraPosition,
-                bounds: mapBounds,
-                interactionModes: [.all],
-                content: {
-                    ForEach(mapItems) { item in
-                        MapKit.Annotation(coordinate: item.coordinate, anchor: .center) {
-                            annotationView(for: item)
-                        } label: {
-                            Text(item.title)
-                        }
-                    }
-                }
-            )
-            .onTapGesture {
-                selectedVessel = nil
-            }
-
-            if let vessel = selectedVessel {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(vessel.name)
-                        .font(.headline)
-                    Text("Speed: \(speedText(for: vessel))")
-                        .font(.subheadline)
-                    Text("Last received: \(relativeLastReceivedText(for: vessel.lastReceived))")
-                        .font(.subheadline)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(12)
-                .background(.thinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(12)
-            }
-        }
+        UIKitServiceMapView(
+            service: service,
+            interactionEnabled: true,
+            fitToLocationsOnly: true
+        )
+        .ignoresSafeArea()
         .navigationTitle(service.route)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            updateMapRegion()
-        }
-    }
-
-    @ViewBuilder
-    private func annotationView(for item: MapItem) -> some View {
-        switch item.kind {
-        case .vessel(let vessel):
-            Image("ferry")
-                .rotationEffect(.degrees(vessel.course ?? 0))
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    selectedVessel = vessel
-                }
-        case .location:
-            Image("map-annotation")
-                .resizable()
-                .frame(width: 20, height: 20)
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    selectedVessel = nil
-                }
-        }
-    }
-
-    private func speedText(for vessel: Vessel) -> String {
-        guard let speed = vessel.speed else {
-            return "Unknown"
-        }
-        return "\(speed.formatted(.number.precision(.fractionLength(1)))) kn"
-    }
-
-    private func relativeLastReceivedText(for date: Date) -> String {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .full
-        return formatter.localizedString(for: date, relativeTo: Date())
-    }
-
-    private func updateMapRegion() {
-        let focusItems = locationItems.isEmpty ? mapItems : locationItems
-        let points = focusItems.map(\.mapPoint)
-
-        guard let firstPoint = points.first else { return }
-
-        var minX = firstPoint.x
-        var minY = firstPoint.y
-        var maxX = firstPoint.x
-        var maxY = firstPoint.y
-
-        for point in points.dropFirst() {
-            minX = min(minX, point.x)
-            minY = min(minY, point.y)
-            maxX = max(maxX, point.x)
-            maxY = max(maxY, point.y)
-        }
-
-        var rect = MKMapRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
-        if rect.size.width == 0 || rect.size.height == 0 {
-            rect = rect.insetBy(dx: -1_000, dy: -1_000)
-        } else {
-            let xInset = -(rect.size.width * 0.2)
-            let yInset = -(rect.size.height * 0.2)
-            rect = rect.insetBy(dx: xInset, dy: yInset)
-        }
-
-        mapBounds = MapCameraBounds(centerCoordinateBounds: rect)
-        cameraPosition = .rect(rect)
     }
 }
