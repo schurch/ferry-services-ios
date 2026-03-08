@@ -1,7 +1,9 @@
 import Foundation
+import Observation
 
 @MainActor
-final class MapViewModel: ObservableObject {
+@Observable
+final class MapViewModel {
     let service: Service
 
     init(service: Service) {

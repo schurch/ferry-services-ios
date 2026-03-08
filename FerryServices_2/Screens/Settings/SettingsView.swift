@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.openURL) private var openURL
-    @StateObject private var viewModel = SettingsViewModel()
+    @State private var viewModel = SettingsViewModel()
     
     var body: some View {
         List {

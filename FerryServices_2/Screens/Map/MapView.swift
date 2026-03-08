@@ -207,10 +207,10 @@ struct UIKitServiceMapView: UIViewRepresentable {
 }
 
 struct MapView: View {
-    @StateObject private var viewModel: MapViewModel
+    @State private var viewModel: MapViewModel
 
     init(service: Service) {
-        _viewModel = StateObject(wrappedValue: MapViewModel(service: service))
+        _viewModel = State(initialValue: MapViewModel(service: service))
     }
 
     var body: some View {

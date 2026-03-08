@@ -1,4 +1,5 @@
 import Foundation
+import Observation
 import UIKit
 import UserNotifications
 
@@ -10,7 +11,8 @@ enum SettingsNotificationsState {
 }
 
 @MainActor
-final class SettingsViewModel: ObservableObject {
+@Observable
+final class SettingsViewModel {
     enum Copy {
         static let pushNotificationsTitle = "Push Notifications"
         static let enableNotificationsInSettings = "Enable notifications in Settings"
@@ -21,7 +23,7 @@ final class SettingsViewModel: ObservableObject {
         static let supportFooter = "Hi, I'm Stefan. Thanks for using the Scottish Ferries App. Although I now live overseas, I grew up on the Isle of Arran so can appreciate how vital the ferry services are. If you have any questions or issues please feel free to email me, or if you find the app useful you can also leave a review on the App Store."
     }
     
-    @Published var notificationsState: SettingsNotificationsState = .loading
+    var notificationsState: SettingsNotificationsState = .loading
 
     var versionText: String {
         "Version \(Bundle.main.releaseVersionNumber).\(Bundle.main.buildVersionNumber)"

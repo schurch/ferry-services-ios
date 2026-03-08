@@ -1,8 +1,10 @@
 import SwiftUI
 import WebKit
+import Observation
 
 @MainActor
-final class WebInformationViewModel: ObservableObject {
+@Observable
+final class WebInformationViewModel {
     enum Copy {
         static let navigationTitle = "Disruption Information"
     }

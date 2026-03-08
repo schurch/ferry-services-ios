@@ -2,10 +2,10 @@ import SwiftUI
 import WebKit
 
 struct WebInformationView: View {
-    @StateObject private var viewModel: WebInformationViewModel
+    @State private var viewModel: WebInformationViewModel
 
     init(html: String) {
-        _viewModel = StateObject(wrappedValue: WebInformationViewModel(html: html))
+        _viewModel = State(initialValue: WebInformationViewModel(html: html))
     }
 
     var body: some View {

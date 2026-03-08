@@ -1,7 +1,9 @@
 import Foundation
+import Observation
 
 @MainActor
-final class AppNavigationState: ObservableObject {
+@Observable
+final class AppNavigationState {
     static let shared = AppNavigationState()
 
     enum Destination: Hashable {
@@ -15,12 +17,12 @@ final class AppNavigationState: ObservableObject {
         let seedService: Service?
     }
 
-    @Published var path: [Destination] = [] {
+    var path: [Destination] = [] {
         didSet {
             pruneNavigationPayloads()
         }
     }
-    @Published var alertMessage: String?
+    var alertMessage: String?
 
     private var serviceDetailsPayloads: [UUID: ServiceDetailsPayload] = [:]
     private var mapServices: [UUID: Service] = [:]

@@ -1,10 +1,12 @@
 import SwiftUI
 
 struct RootView: View {
-    @ObservedObject var navigationState: AppNavigationState
+    var navigationState: AppNavigationState
     @State private var showingSettings = false
 
     var body: some View {
+        @Bindable var navigationState = navigationState
+        
         NavigationStack(path: $navigationState.path) {
             ServicesView { service in
                 navigationState.pushServiceDetails(service: service)

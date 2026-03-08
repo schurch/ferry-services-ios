@@ -12,7 +12,7 @@ struct ServicesView: View {
     
     var showService: (Service) -> Void
     
-    @StateObject private var viewModel = ServicesViewModel()
+    @State private var viewModel = ServicesViewModel()
     
     var body: some View {
         List {

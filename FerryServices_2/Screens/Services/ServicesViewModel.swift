@@ -7,10 +7,11 @@
 //
 
 import Foundation
-import Combine
+import Observation
 
 @MainActor
-class ServicesViewModel: ObservableObject {
+@Observable
+class ServicesViewModel {
     
     enum Sections {
         struct Row: Identifiable {
@@ -58,20 +59,17 @@ class ServicesViewModel: ObservableObject {
         case multiple([Section])
     }
     
-    @Published var sections: Sections
-    @Published var searchText = ""
+    var sections: Sections
+    var searchText = "" {
+        didSet {
+            sections = ServicesViewModel.createSections(services: services, searchText: searchText)
+        }
+    }
     
     private var services: [Service] = Service.defaultServices
-    private var bag = Set<AnyCancellable>()
     
     init() {
         sections = ServicesViewModel.createSections(services: Service.defaultServices)
-        $searchText
-            .sink(receiveValue: { [weak self] text in
-                guard let self else { return }
-                self.sections = ServicesViewModel.createSections(services: self.services, searchText: text)
-            })
-            .store(in: &bag)
     }
     
     func fetchServices() async {

@@ -8,6 +8,7 @@
 
 @preconcurrency import UIKit
 import MapKit
+import Observation
 import SwiftUI
 
 struct Annotation: Identifiable {
@@ -22,7 +23,8 @@ struct Annotation: Identifiable {
 }
 
 @MainActor
-class ServiceDetailsViewModel: ObservableObject {
+@Observable
+class ServiceDetailsViewModel {
     struct Copy {
         static let departureDatePrefix = "Departures on "
         static let doneButtonTitle = "Done"
@@ -54,15 +56,15 @@ class ServiceDetailsViewModel: ObservableObject {
         let rows: [Row]
     }
     
-    @Published var service: Service?
-    @Published var mapRect: MKMapRect
-    @Published var subscribed: Bool
-    @Published var loadingSubscribed: Bool = false
-    @Published var showSubscribedError: Bool = false
-    @Published var date: Date = Date()
-    @Published var isEnabledForNotifications: Bool = false
-    @Published var isRegisteredForNotifications: Bool = false
-    @Published var failedToLoadService: Bool = false
+    var service: Service?
+    var mapRect: MKMapRect
+    var subscribed: Bool
+    var loadingSubscribed: Bool = false
+    var showSubscribedError: Bool = false
+    var date: Date = Date()
+    var isEnabledForNotifications: Bool = false
+    var isRegisteredForNotifications: Bool = false
+    var failedToLoadService: Bool = false
     
     var annotations: [Annotation] {
         guard let service else { return [] }

@@ -12,7 +12,7 @@ import Combine
 
 struct ServiceDetailsView: View {
     
-    @StateObject private var viewModel: ServiceDetailsViewModel
+    @State private var viewModel: ServiceDetailsViewModel
     @State private var showingDateSelection = false
     @Environment(\.openURL) private var openURL
     private var mapPosition: Binding<MapCameraPosition> {
@@ -37,8 +37,8 @@ struct ServiceDetailsView: View {
         showDisruptionInfo: @escaping (String) -> Void,
         showMap: @escaping (Service) -> Void
     ) {
-        _viewModel = StateObject(
-            wrappedValue: ServiceDetailsViewModel(
+        _viewModel = State(
+            initialValue: ServiceDetailsViewModel(
                 serviceID: serviceID,
                 service: service
             )
@@ -48,6 +48,8 @@ struct ServiceDetailsView: View {
     }
     
     var body: some View {
+        @Bindable var viewModel = viewModel
+        
         if let service = viewModel.service {
             List {
                 ServiceDetailsHeaderSectionView(
