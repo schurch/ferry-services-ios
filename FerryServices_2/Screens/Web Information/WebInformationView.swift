@@ -1,4 +1,3 @@
-import SafariServices
 import SwiftUI
 import WebKit
 
@@ -57,54 +56,25 @@ struct WebInformationView: View {
 @available(iOS 26.0, *)
 private struct NavigationDecider: WebPage.NavigationDeciding {
     @MainActor
-    func decidePolicyFor(navigationAction: WebPage.NavigationAction) async
-        -> WebPage.NavigationPreferences?
-    {
-        guard let url = navigationAction.request.url else {
-            return WebPage.NavigationPreferences()  // allow by default
+    mutating func decidePolicy(
+        for action: WebPage.NavigationAction,
+        preferences: inout WebPage.NavigationPreferences
+    ) async -> WKNavigationActionPolicy {
+        guard let url = action.request.url else {
+            return .allow
         }
 
         switch url.scheme?.lowercased() {
         case "http", "https":
-            await presentSafari(url)
-            return nil  // cancel WebView navigation; handled externally
+            await UIApplication.shared.open(url)
+            return .cancel
         case "tel", "mailto":
             await UIApplication.shared.open(url)
-            return nil  // cancel and open via system
+            return .cancel
         default:
-            return WebPage.NavigationPreferences()  // allow
+            return .allow
         }
     }
-}
-
-@available(iOS 26.0, *)
-@MainActor
-private func presentSafari(_ url: URL) async {
-    guard
-        let root = UIApplication.shared.connectedScenes
-            .compactMap({ $0 as? UIWindowScene })
-            .flatMap({ $0.windows })
-            .first(where: { $0.isKeyWindow })?.rootViewController
-    else { return }
-
-    let top = topViewController(from: root)
-    let safari = SFSafariViewController(url: url)
-    top?.present(safari, animated: true)
-}
-
-@available(iOS 26.0, *)
-@MainActor
-private func topViewController(from root: UIViewController?)
-    -> UIViewController?
-{
-    if let nav = root as? UINavigationController {
-        return topViewController(from: nav.visibleViewController)
-    } else if let tab = root as? UITabBarController {
-        return topViewController(from: tab.selectedViewController)
-    } else if let presented = root?.presentedViewController {
-        return topViewController(from: presented)
-    }
-    return root
 }
 
 @available(iOS 26.0, *)
