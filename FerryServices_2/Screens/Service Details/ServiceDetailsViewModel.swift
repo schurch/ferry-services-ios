@@ -133,7 +133,7 @@ class ServiceDetailsViewModel: ObservableObject {
         (service?.locations ?? [])
             .sorted(by: { ($0.scheduledDepartures?.first?.departure ?? Date()) < ($1.scheduledDepartures?.first?.departure ?? Date()) })
             .flatMap { location in
-                location.groupedScheduledDepartures.map { departures in
+                groupedScheduledDepartures(for: location).map { departures in
                     let rows = departures.map { departureInfo in
                         let departureTime = departureInfo.departure.formatted(Date.timeFormatStyle)
                         let arrivalTime = departureInfo.arrival.formatted(Date.timeFormatStyle)
@@ -170,6 +170,13 @@ class ServiceDetailsViewModel: ObservableObject {
     }
     
     private var serviceID: Int
+    
+    private func groupedScheduledDepartures(for location: Service.Location) -> [[Service.Location.ScheduledDeparture]] {
+        guard let scheduledDepartures = location.scheduledDepartures else { return [] }
+        let groups = Dictionary(grouping: scheduledDepartures, by: { $0.destination.id })
+        return Array(groups.values)
+            .sorted(by: { ($0.first?.departure ?? Date()) < ($1.first?.departure ?? Date()) })
+    }
     
     init(serviceID: Int, service: Service?) {
         let seedService = service ?? Service.defaultServices.first(where: { $0.serviceId == serviceID })

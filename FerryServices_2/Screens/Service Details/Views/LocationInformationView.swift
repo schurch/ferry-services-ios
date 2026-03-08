@@ -126,13 +126,3 @@ struct LocationInformation: View {
         .accessibilityElement(children: .combine)
     }
 }
-
-extension Service.Location {
-    // Grouped on destination
-    var groupedScheduledDepartures: [[Service.Location.ScheduledDeparture]] {
-        guard let scheduledDepartures else { return [] }
-        let groups = Dictionary(grouping: scheduledDepartures, by: { $0.destination.id })
-        return Array(groups.values)
-            .sorted(by: { $0.first?.departure ?? Date() < $1.first?.departure ?? Date() })
-    }
-}
