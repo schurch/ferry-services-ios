@@ -1,9 +1,10 @@
-import XCTest
+import Testing
 @testable import FerryServices_2
 
-@MainActor
-final class AppNavigationStateTests: XCTestCase {
-    func testPrunesNavigationPayloadsWhenPathShrinks() {
+@Suite
+struct AppNavigationStateTests {
+    @Test @MainActor
+    func prunesNavigationPayloadsWhenPathShrinks() {
         let state = AppNavigationState()
         let service = TestDataFactory.makeService(
             id: 11,
@@ -16,36 +17,39 @@ final class AppNavigationStateTests: XCTestCase {
         state.pushMap(service: service)
         state.pushWebInfo(html: "<p>Info</p>")
 
-        XCTAssertEqual(state.path.count, 3)
+        #expect(state.path.count == 3)
 
         guard case .serviceDetails(let detailsID) = state.path[0],
               case .map(let mapID) = state.path[1],
               case .webInfo(let webInfoID) = state.path[2] else {
-            return XCTFail("Unexpected navigation path layout")
+            Issue.record("Unexpected navigation path layout")
+            return
         }
 
-        XCTAssertNotNil(state.serviceDetails(for: detailsID))
-        XCTAssertNotNil(state.mapService(for: mapID))
-        XCTAssertNotNil(state.webInfo(for: webInfoID))
+        #expect(state.serviceDetails(for: detailsID) != nil)
+        #expect(state.mapService(for: mapID) != nil)
+        #expect(state.webInfo(for: webInfoID) != nil)
 
         state.path = [state.path[0]]
 
-        XCTAssertNotNil(state.serviceDetails(for: detailsID))
-        XCTAssertNil(state.mapService(for: mapID))
-        XCTAssertNil(state.webInfo(for: webInfoID))
+        #expect(state.serviceDetails(for: detailsID) != nil)
+        #expect(state.mapService(for: mapID) == nil)
+        #expect(state.webInfo(for: webInfoID) == nil)
     }
 
-    func testPushServiceDetailsByIDStoresNilSeedService() {
+    @Test @MainActor
+    func pushServiceDetailsByIDStoresNilSeedService() {
         let state = AppNavigationState()
 
         state.pushServiceDetails(serviceID: 42)
 
         guard case .serviceDetails(let detailsID) = state.path.first else {
-            return XCTFail("Expected service details destination")
+            Issue.record("Expected service details destination")
+            return
         }
 
         let payload = state.serviceDetails(for: detailsID)
-        XCTAssertEqual(payload?.serviceID, 42)
-        XCTAssertNil(payload?.seedService)
+        #expect(payload?.serviceID == 42)
+        #expect(payload?.seedService == nil)
     }
 }

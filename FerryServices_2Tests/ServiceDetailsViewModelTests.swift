@@ -1,9 +1,11 @@
-import XCTest
+import Foundation
+import Testing
 @testable import FerryServices_2
 
-@MainActor
-final class ServiceDetailsViewModelTests: XCTestCase {
-    func testScheduledDeparturesAreSortedByLocationNameAndGroupedByDestination() {
+@Suite
+struct ServiceDetailsViewModelTests {
+    @Test @MainActor
+    func scheduledDeparturesAreSortedByLocationNameAndGroupedByDestination() {
         let base = Date(timeIntervalSince1970: 1_700_000_000)
 
         let alphaDepartures = [
@@ -61,19 +63,20 @@ final class ServiceDetailsViewModelTests: XCTestCase {
 
         let viewModel = ServiceDetailsViewModel(serviceID: 77, service: service)
 
-        XCTAssertEqual(viewModel.sortedLocationsByName.map(\.name), ["Alpha", "Zeta"])
-        XCTAssertEqual(viewModel.scheduledDepartureSections.map(\.originName), ["Alpha", "Alpha", "Zeta"])
+        #expect(viewModel.sortedLocationsByName.map { $0.name } == ["Alpha", "Zeta"])
+        #expect(viewModel.scheduledDepartureSections.map { $0.originName } == ["Alpha", "Alpha", "Zeta"])
 
         let alphaSections = viewModel.scheduledDepartureSections.filter { $0.originName == "Alpha" }
-        XCTAssertEqual(alphaSections.count, 2)
-        XCTAssertEqual(alphaSections.map(\.destinationName).sorted(), ["Brodick", "Campbeltown"])
-        XCTAssertEqual(alphaSections.first { $0.destinationName == "Brodick" }?.rows.count, 2)
+        #expect(alphaSections.count == 2)
+        #expect(alphaSections.map { $0.destinationName }.sorted() == ["Brodick", "Campbeltown"])
+        #expect(alphaSections.first { $0.destinationName == "Brodick" }?.rows.count == 2)
 
-        XCTAssertTrue(viewModel.showScheduledDepartureWarning)
-        XCTAssertEqual(viewModel.annotations.count, 3)
+        #expect(viewModel.showScheduledDepartureWarning)
+        #expect(viewModel.annotations.count == 3)
     }
 
-    func testScheduledDepartureInfoTextUsesAppropriateLinks() {
+    @Test @MainActor
+    func scheduledDepartureInfoTextUsesAppropriateLinks() {
         let location = TestDataFactory.makeLocation(id: 1, name: "Port")
         let serviceWithLinks = TestDataFactory.makeService(
             id: 1,
@@ -85,8 +88,8 @@ final class ServiceDetailsViewModelTests: XCTestCase {
         )
         let withLinksViewModel = ServiceDetailsViewModel(serviceID: 1, service: serviceWithLinks)
 
-        XCTAssertTrue(withLinksViewModel.scheduledDepartureInfoText.contains(ServiceDetailsViewModel.Copy.moreInfoURL))
-        XCTAssertTrue(withLinksViewModel.scheduledDepartureInfoText.contains("https://operator.example"))
+        #expect(withLinksViewModel.scheduledDepartureInfoText.contains(ServiceDetailsViewModel.Copy.moreInfoURL))
+        #expect(withLinksViewModel.scheduledDepartureInfoText.contains("https://operator.example"))
 
         let serviceWithoutLinks = TestDataFactory.makeService(
             id: 2,
@@ -98,6 +101,6 @@ final class ServiceDetailsViewModelTests: XCTestCase {
         )
         let withoutLinksViewModel = ServiceDetailsViewModel(serviceID: 2, service: serviceWithoutLinks)
 
-        XCTAssertFalse(withoutLinksViewModel.scheduledDepartureInfoText.contains(ServiceDetailsViewModel.Copy.moreInfoURL))
+        #expect(!withoutLinksViewModel.scheduledDepartureInfoText.contains(ServiceDetailsViewModel.Copy.moreInfoURL))
     }
 }
