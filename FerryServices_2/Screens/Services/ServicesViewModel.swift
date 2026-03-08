@@ -62,7 +62,7 @@ class ServicesViewModel {
     var sections: Sections
     var searchText = "" {
         didSet {
-            sections = ServicesViewModel.createSections(services: services, searchText: searchText)
+            refreshSections()
         }
     }
     
@@ -72,13 +72,23 @@ class ServicesViewModel {
         sections = ServicesViewModel.createSections(services: Service.defaultServices)
     }
     
+    init(initialServices: [Service], searchText: String = "") {
+        self.services = initialServices
+        self.searchText = searchText
+        self.sections = ServicesViewModel.createSections(services: initialServices, searchText: searchText)
+    }
+    
     func fetchServices() async {
         do {
             services = try await APIClient.fetchServices()
-            sections = ServicesViewModel.createSections(services: services, searchText: searchText)
+            refreshSections()
         } catch {
             // Do nothing
         }
+    }
+    
+    private func refreshSections() {
+        sections = ServicesViewModel.createSections(services: services, searchText: searchText)
     }
     
     private static func createSections(services: [Service], searchText: String = "") -> ServicesViewModel.Sections {
