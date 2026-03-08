@@ -133,7 +133,7 @@ class ServiceDetailsViewModel {
     
     var scheduledDepartureSections: [ScheduledDepartureSection] {
         (service?.locations ?? [])
-            .sorted(by: { ($0.scheduledDepartures?.first?.departure ?? Date()) < ($1.scheduledDepartures?.first?.departure ?? Date()) })
+            .sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending })
             .flatMap { location in
                 groupedScheduledDepartures(for: location).map { departures in
                     let rows = departures.map { departureInfo in
