@@ -60,7 +60,7 @@ class ServicesModel: ObservableObject {
     
     private static func createSections(services: [Service], searchText: String = "") -> ServicesModel.Sections {
         if searchText.isEmpty {
-            let subscribedIDs = UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? []
+            let subscribedIDs = AppPreferences.shared.subscribedServiceIDs
             let subscribedServices = services.filter({ subscribedIDs.contains($0.serviceId) })
             
             let serviceGroups = Dictionary(grouping: services, by: { $0.operator?.id ?? 0 })

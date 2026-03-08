@@ -12,10 +12,10 @@ import Sentry
 class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         SentrySDK.start { options in
-            options.dsn = "https://57b7260ca4a249ecb24c7975ae3ad79d@o434952.ingest.sentry.io/5392740"
+            options.dsn = AppConfig.sentryDSN
         }
         
-        UserDefaults.standard.register(defaults: [UserDefaultsKeys.registeredForNotifications: false])
+        AppPreferences.shared.registerDefaults()
         
         UNUserNotificationCenter.current().delegate = self
         
@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency UNUserNot
             do {
                 let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
                 try await APIClient.createInstallation(installationID: Installation.id, deviceToken: token)
-                UserDefaults.standard.set(true, forKey: UserDefaultsKeys.registeredForNotifications)
+                AppPreferences.shared.isRegisteredForNotifications = true
                 NotificationCenter.default.post(name: .registeredForNotifications, object: self)
             } catch {
                 print("Error creating installation: \(error)")

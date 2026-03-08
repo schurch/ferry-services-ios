@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F8111586281E148600DE8E59 /* MapViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8111585281E148600DE8E59 /* MapViewHelpers.swift */; };
+		F8111588281E148600DE8E59 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8111589281E148600DE8E59 /* AppConfig.swift */; };
+		F811158A281E148600DE8E59 /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = F811158B281E148600DE8E59 /* AppPreferences.swift */; };
 		F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */; };
 		F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */; };
 		F83640722A6BD703008F44AB /* ServiceDetailsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83640712A6BD703008F44AB /* ServiceDetailsComponents.swift */; };
@@ -93,6 +95,8 @@
 
 /* Begin PBXFileReference section */
 		02D9493F193C4A87EAD799AC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8111589281E148600DE8E59 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		F811158B281E148600DE8E59 /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
 		F8111585281E148600DE8E59 /* MapViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewHelpers.swift; sourceTree = "<group>"; };
 		F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsView.swift; sourceTree = "<group>"; };
 		F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailModel.swift; sourceTree = "<group>"; };
@@ -315,6 +319,8 @@
 			isa = PBXGroup;
 			children = (
 				F8111587281E1B2200DE8E59 /* Map */,
+				F8111589281E148600DE8E59 /* AppConfig.swift */,
+				F811158B281E148600DE8E59 /* AppPreferences.swift */,
 				FD1B5FA5258479150098B96B /* Date+extensions.swift */,
 				F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */,
 				F8726C6D2A88963900849ABA /* Service+Extensions.swift */,
@@ -531,6 +537,8 @@
 			files = (
 				F8726C702A88A3BC00849ABA /* ServicesModel.swift in Sources */,
 				FD1B5FC4258479150098B96B /* Date+extensions.swift in Sources */,
+				F8111588281E148600DE8E59 /* AppConfig.swift in Sources */,
+				F811158A281E148600DE8E59 /* AppPreferences.swift in Sources */,
 				FD1B5FCE2584794E0098B96B /* Service.swift in Sources */,
 				F8AC22302A8F31E1001C01FE /* Operator+Extensions.swift in Sources */,
 				FD1B5FBE258479150098B96B /* WebInformationView.swift in Sources */,

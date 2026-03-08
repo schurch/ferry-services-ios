@@ -74,13 +74,13 @@ class ServiceDetailModel: ObservableObject {
             self.mapRect = MKMapRect()
         }
         
-        self.subscribed = subscribedIDs.contains(serviceID)
+        self.subscribed = AppPreferences.shared.subscribedServiceIDs.contains(serviceID)
         
         checkIsRegisteredForNotifications()
     }
     
     func checkIsRegisteredForNotifications() {
-        isRegisteredForNotifications = UserDefaults.standard.bool(forKey: UserDefaultsKeys.registeredForNotifications)
+        isRegisteredForNotifications = AppPreferences.shared.isRegisteredForNotifications
     }
     
     func checkIsEnabledForNotifications() async {
@@ -95,13 +95,15 @@ class ServiceDetailModel: ObservableObject {
             loadingSubscribed = true
             
             do {
+                var subscribedIDs = Set(AppPreferences.shared.subscribedServiceIDs)
                 if subscribed {
                     try await APIClient.addService(for: Installation.id, serviceID: serviceID)
-                    UserDefaults.standard.setValue(([serviceID] + subscribedIDs), forKey: UserDefaultsKeys.subscribedService)
+                    subscribedIDs.insert(serviceID)
                 } else {
                     try await APIClient.removeService(for: Installation.id, serviceID: serviceID)
-                    UserDefaults.standard.setValue(subscribedIDs.filter({ $0 != serviceID }), forKey: UserDefaultsKeys.subscribedService)
+                    subscribedIDs.remove(serviceID)
                 }
+                AppPreferences.shared.subscribedServiceIDs = Array(subscribedIDs).sorted()
             } catch {
                 showSubscribedError = true
             }
@@ -147,8 +149,4 @@ class ServiceDetailModel: ObservableObject {
         }
     }
     
-}
-
-private var subscribedIDs: [Int] {
-    UserDefaults.standard.array(forKey: UserDefaultsKeys.subscribedService) as? [Int] ?? []
 }

@@ -9,15 +9,7 @@
 import Foundation
 
 struct Installation {
-    static let id: UUID = {
-        let key = "installationID"
-        
-        if let id = UserDefaults.standard.string(forKey: key) {
-            return UUID(uuidString: id)!
-        } else {
-            let id = UUID()
-            UserDefaults.standard.set(id.uuidString, forKey: key)
-            return id
-        }
-    }()
+    static var id: UUID {
+        AppPreferences.shared.installationID
+    }
 }

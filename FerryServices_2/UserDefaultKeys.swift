@@ -11,4 +11,5 @@ import Foundation
 enum UserDefaultsKeys {
     static let subscribedService = "com.ferryservices.userdefaultkeys.subscribedservices.v2"
     static let registeredForNotifications = "com.ferryservices.userdefaultkeys.registeredForNotifications"
+    static let installationID = "com.ferryservices.userdefaultkeys.installationID"
 }

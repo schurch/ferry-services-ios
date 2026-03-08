@@ -21,7 +21,7 @@ class APIClient {
 //    static let baseURL = URL(string: "http://192.168.86.27:3001")
 //    static let baseURL = URL(string: "http://localhost:3001")
 //    private static let baseURL = URL(string: "http://test.scottishferryapp.com")
-    private static let baseURL = URL(string: "https://scottishferryapp.com")
+    private static let baseURL = AppConfig.apiBaseURL
     private static let root = "/api"
     
     static func fetchServices() async throws -> [Service] {
@@ -148,10 +148,6 @@ class APIClient {
     }
 
     private static func makeURL(path: String) throws -> URL {
-        guard let baseURL else {
-            throw APIError.invalidURL
-        }
-
         guard let url = URL(string: path, relativeTo: baseURL) else {
             throw APIError.invalidURL
         }

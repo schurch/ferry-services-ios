@@ -31,6 +31,10 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>APIBaseURL</key>
+	<string>https://scottishferryapp.com</string>
+	<key>SentryDSN</key>
+	<string>https://57b7260ca4a249ecb24c7975ae3ad79d@o434952.ingest.sentry.io/5392740</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
