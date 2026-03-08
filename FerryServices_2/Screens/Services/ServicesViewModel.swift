@@ -1,5 +1,5 @@
 //
-//  ServicesModel.swift
+//  ServicesViewModel.swift
 //  FerryServices_2
 //
 //  Created by Stefan Church on 13/08/23.
@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 @MainActor
-class ServicesModel: ObservableObject {
+class ServicesViewModel: ObservableObject {
     
     enum Sections {
         struct Row: Identifiable {
@@ -40,11 +40,11 @@ class ServicesModel: ObservableObject {
     private var bag = Set<AnyCancellable>()
     
     init() {
-        sections = ServicesModel.createSections(services: Service.defaultServices)
+        sections = ServicesViewModel.createSections(services: Service.defaultServices)
         $searchText
             .sink(receiveValue: { [weak self] text in
                 guard let self else { return }
-                self.sections = ServicesModel.createSections(services: self.services, searchText: text)
+                self.sections = ServicesViewModel.createSections(services: self.services, searchText: text)
             })
             .store(in: &bag)
     }
@@ -52,13 +52,13 @@ class ServicesModel: ObservableObject {
     func fetchServices() async {
         do {
             services = try await APIClient.fetchServices()
-            sections = ServicesModel.createSections(services: services, searchText: searchText)
+            sections = ServicesViewModel.createSections(services: services, searchText: searchText)
         } catch {
             // Do nothing
         }
     }
     
-    private static func createSections(services: [Service], searchText: String = "") -> ServicesModel.Sections {
+    private static func createSections(services: [Service], searchText: String = "") -> ServicesViewModel.Sections {
         if searchText.isEmpty {
             let subscribedIDs = AppPreferences.shared.subscribedServiceIDs
             let subscribedServices = services.filter({ subscribedIDs.contains($0.serviceId) })

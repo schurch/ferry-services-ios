@@ -1,0 +1,84 @@
+import Foundation
+import UIKit
+import UserNotifications
+
+enum SettingsNotificationsState {
+    case loading
+    case authorized(isOn: Bool)
+    case notAuthorized
+    case error
+}
+
+@MainActor
+final class SettingsViewModel: ObservableObject {
+    @Published var notificationsState: SettingsNotificationsState = .loading
+
+    var versionText: String {
+        "Version \(Bundle.main.releaseVersionNumber).\(Bundle.main.buildVersionNumber)"
+    }
+
+    func toggleNotifications(isEnabled: Bool) {
+        Task {
+            notificationsState = .loading
+
+            do {
+                try await APIClient.updatePushEnabledStatus(
+                    installationID: Installation.id,
+                    isEnabled: isEnabled
+                )
+                notificationsState = .authorized(isOn: isEnabled)
+            } catch {
+                notificationsState = .authorized(isOn: !isEnabled)
+            }
+        }
+    }
+
+    func refreshNotificationState() async {
+        guard await areNotificationsAuthorized() else {
+            notificationsState = .notAuthorized
+            return
+        }
+
+        do {
+            let enabled = try await APIClient.getPushEnabledStatus(
+                installationID: Installation.id
+            )
+            notificationsState = .authorized(isOn: enabled)
+        } catch {
+            notificationsState = .error
+        }
+    }
+
+    func supportEmailURL() -> URL? {
+        var components = URLComponents()
+        components.scheme = "mailto"
+        components.path = "stefan.church@gmail.com"
+        components.queryItems = [
+            URLQueryItem(name: "subject", value: "Scottish Ferries App (\(versionText))")
+        ]
+        return components.url
+    }
+
+    var appStoreURL: URL? {
+        URL(string: "https://apps.apple.com/app/id861271891")
+    }
+
+    var notificationSettingsURL: URL? {
+        URL(string: UIApplication.openNotificationSettingsURLString)
+    }
+
+    private func areNotificationsAuthorized() async -> Bool {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        return settings.authorizationStatus == .authorized
+    }
+}
+
+private extension Bundle {
+    var releaseVersionNumber: String {
+        infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
+    }
+
+    var buildVersionNumber: String {
+        infoDictionary?["CFBundleVersion"] as? String ?? "0"
+    }
+}

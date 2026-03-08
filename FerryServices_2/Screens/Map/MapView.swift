@@ -207,16 +207,20 @@ struct UIKitServiceMapView: UIViewRepresentable {
 }
 
 struct MapView: View {
-    let service: Service
+    @StateObject private var viewModel: MapViewModel
+
+    init(service: Service) {
+        _viewModel = StateObject(wrappedValue: MapViewModel(service: service))
+    }
 
     var body: some View {
         UIKitServiceMapView(
-            service: service,
+            service: viewModel.service,
             interactionEnabled: true,
             fitToLocationsOnly: true
         )
         .ignoresSafeArea()
-        .navigationTitle(service.route)
+        .navigationTitle(viewModel.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

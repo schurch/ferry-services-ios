@@ -12,11 +12,11 @@ struct ServicesView: View {
     
     var showService: (Service) -> Void
     
-    @StateObject private var model = ServicesModel()
+    @StateObject private var viewModel = ServicesViewModel()
     
     var body: some View {
         List {
-            switch model.sections {
+            switch viewModel.sections {
             case .single(let rows):
                 ForEach(rows) { row in
                     ServiceRow(row: row, showService: showService)
@@ -31,24 +31,24 @@ struct ServicesView: View {
         .background(.colorBackground)
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-        .searchable(text: $model.searchText)
+        .searchable(text: $viewModel.searchText)
         .autocorrectionDisabled()
         .task {
-            await model.fetchServices()
+            await viewModel.fetchServices()
         }
         .refreshable {
-            await model.fetchServices()
+            await viewModel.fetchServices()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             Task {
-                await model.fetchServices()
+                await viewModel.fetchServices()
             }
         }
     }
 }
 
 private struct ServicesSection: View {
-    var section: ServicesModel.Sections.Section
+    var section: ServicesViewModel.Sections.Section
     var showService: (Service) -> Void
     
     var body: some View {
@@ -83,7 +83,7 @@ private struct ServicesSection: View {
 }
 
 private struct ServiceRow: View {
-    var row: ServicesModel.Sections.Row
+    var row: ServicesViewModel.Sections.Row
     var showService: (Service) -> Void
     
     var body: some View {

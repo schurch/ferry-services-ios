@@ -1,5 +1,5 @@
 //
-//  ServiceDetailModel.swift
+//  ServiceDetailsViewModel.swift
 //  FerryServices_2
 //
 //  Created by Stefan Church on 22/07/23.
@@ -22,7 +22,7 @@ struct Annotation: Identifiable {
 }
 
 @MainActor
-class ServiceDetailModel: ObservableObject {
+class ServiceDetailsViewModel: ObservableObject {
     
     @Published var service: Service?
     @Published var mapRect: MKMapRect

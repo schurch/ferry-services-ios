@@ -11,11 +11,18 @@
 		F8111588281E148600DE8E59 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8111589281E148600DE8E59 /* AppConfig.swift */; };
 		F811158A281E148600DE8E59 /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = F811158B281E148600DE8E59 /* AppPreferences.swift */; };
 		F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */; };
-		F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */; };
-		F83640722A6BD703008F44AB /* ServiceDetailsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83640712A6BD703008F44AB /* ServiceDetailsComponents.swift */; };
+		F83640702A6BD702008F44AB /* ServiceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406F2A6BD702008F44AB /* ServiceDetailsViewModel.swift */; };
 		F83AF9402C831238001817F8 /* PushStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83AF93F2C831238001817F8 /* PushStatus.swift */; };
 		F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6D2A88963900849ABA /* Service+Extensions.swift */; };
-		F8726C702A88A3BC00849ABA /* ServicesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6F2A88A3BC00849ABA /* ServicesModel.swift */; };
+		F8726C702A88A3BC00849ABA /* ServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6F2A88A3BC00849ABA /* ServicesViewModel.swift */; };
+		F8A111102F70000100AAA001 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A111112F70000100AAA001 /* MapViewModel.swift */; };
+		F8A111122F70000100AAA001 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A111132F70000100AAA001 /* SettingsViewModel.swift */; };
+		F8A111142F70000100AAA001 /* WebInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A111152F70000100AAA001 /* WebInformationViewModel.swift */; };
+		F8A111162F70000100AAA001 /* DisruptionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A111172F70000100AAA001 /* DisruptionInfoView.swift */; };
+		F8A111182F70000100AAA001 /* LocationInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A111192F70000100AAA001 /* LocationInformationView.swift */; };
+		F8A1111A2F70000100AAA001 /* ServiceOperatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A1111B2F70000100AAA001 /* ServiceOperatorView.swift */; };
+		F8A1111C2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A1111D2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift */; };
+		F8A1111E2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A1111F2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift */; };
 		F88848082C957C81004A6848 /* DisruptionIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88848072C957C81004A6848 /* DisruptionIndicator.swift */; };
 		F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */; };
 		F8AC22302A8F31E1001C01FE /* Operator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */; };
@@ -99,15 +106,22 @@
 		F811158B281E148600DE8E59 /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
 		F8111585281E148600DE8E59 /* MapViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewHelpers.swift; sourceTree = "<group>"; };
 		F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsView.swift; sourceTree = "<group>"; };
-		F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailModel.swift; sourceTree = "<group>"; };
-		F83640712A6BD703008F44AB /* ServiceDetailsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsComponents.swift; sourceTree = "<group>"; };
+		F836406F2A6BD702008F44AB /* ServiceDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsViewModel.swift; sourceTree = "<group>"; };
 		F83AF93F2C831238001817F8 /* PushStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushStatus.swift; sourceTree = "<group>"; };
 		F8726C6D2A88963900849ABA /* Service+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Extensions.swift"; sourceTree = "<group>"; };
-		F8726C6F2A88A3BC00849ABA /* ServicesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesModel.swift; sourceTree = "<group>"; };
+		F8726C6F2A88A3BC00849ABA /* ServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesViewModel.swift; sourceTree = "<group>"; };
 		F88848072C957C81004A6848 /* DisruptionIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionIndicator.swift; sourceTree = "<group>"; };
 		F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+Extensions.swift"; sourceTree = "<group>"; };
 		F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operator+Extensions.swift"; sourceTree = "<group>"; };
 		F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
+		F8A111112F70000100AAA001 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		F8A111132F70000100AAA001 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		F8A111152F70000100AAA001 /* WebInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebInformationViewModel.swift; sourceTree = "<group>"; };
+		F8A111172F70000100AAA001 /* DisruptionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionInfoView.swift; sourceTree = "<group>"; };
+		F8A111192F70000100AAA001 /* LocationInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInformationView.swift; sourceTree = "<group>"; };
+		F8A1111B2F70000100AAA001 /* ServiceOperatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceOperatorView.swift; sourceTree = "<group>"; };
+		F8A1111D2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsHeaderSectionView.swift; sourceTree = "<group>"; };
+		F8A1111F2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsStatusSectionView.swift; sourceTree = "<group>"; };
 		F8EFFA6F2B71E28E004EBA8D /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		F8EFFA712B71E2A7004EBA8D /* Installation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Installation.swift; sourceTree = "<group>"; };
 		F8EFFA732B71E2D0004EBA8D /* NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNames.swift; sourceTree = "<group>"; };
@@ -244,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				F8FCD1082C30CEC50059492D /* SettingsView.swift */,
+				F8A111132F70000100AAA001 /* SettingsViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -284,8 +299,12 @@
 			isa = PBXGroup;
 			children = (
 				F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */,
-				F836406F2A6BD702008F44AB /* ServiceDetailModel.swift */,
-				F83640712A6BD703008F44AB /* ServiceDetailsComponents.swift */,
+				F836406F2A6BD702008F44AB /* ServiceDetailsViewModel.swift */,
+				F8A111172F70000100AAA001 /* DisruptionInfoView.swift */,
+				F8A111192F70000100AAA001 /* LocationInformationView.swift */,
+				F8A1111B2F70000100AAA001 /* ServiceOperatorView.swift */,
+				F8A1111D2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift */,
+				F8A1111F2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift */,
 			);
 			path = "Service Details";
 			sourceTree = "<group>";
@@ -294,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				FD1B5F99258479150098B96B /* MapView.swift */,
+				F8A111112F70000100AAA001 /* MapViewModel.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -302,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				FD1B5F9B258479150098B96B /* WebInformationView.swift */,
+				F8A111152F70000100AAA001 /* WebInformationViewModel.swift */,
 			);
 			path = "Web Information";
 			sourceTree = "<group>";
@@ -310,7 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */,
-				F8726C6F2A88A3BC00849ABA /* ServicesModel.swift */,
+				F8726C6F2A88A3BC00849ABA /* ServicesViewModel.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -535,21 +556,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8726C702A88A3BC00849ABA /* ServicesModel.swift in Sources */,
+				F8726C702A88A3BC00849ABA /* ServicesViewModel.swift in Sources */,
 				FD1B5FC4258479150098B96B /* Date+extensions.swift in Sources */,
 				F8111588281E148600DE8E59 /* AppConfig.swift in Sources */,
 				F811158A281E148600DE8E59 /* AppPreferences.swift in Sources */,
 				FD1B5FCE2584794E0098B96B /* Service.swift in Sources */,
 				F8AC22302A8F31E1001C01FE /* Operator+Extensions.swift in Sources */,
 				FD1B5FBE258479150098B96B /* WebInformationView.swift in Sources */,
+				F8A111142F70000100AAA001 /* WebInformationViewModel.swift in Sources */,
 				F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */,
 				F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */,
-				F83640722A6BD703008F44AB /* ServiceDetailsComponents.swift in Sources */,
+				F8A111162F70000100AAA001 /* DisruptionInfoView.swift in Sources */,
+				F8A1111C2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift in Sources */,
+				F8A111182F70000100AAA001 /* LocationInformationView.swift in Sources */,
+				F8A1111A2F70000100AAA001 /* ServiceOperatorView.swift in Sources */,
+				F8A1111E2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift in Sources */,
 				F83AF9402C831238001817F8 /* PushStatus.swift in Sources */,
 				F8EBB3052A887F8F003DF8F3 /* ServicesView.swift in Sources */,
 				F8111586281E148600DE8E59 /* MapViewHelpers.swift in Sources */,
+				F8A111102F70000100AAA001 /* MapViewModel.swift in Sources */,
 				FD1B5FAD258479150098B96B /* Vessel.swift in Sources */,
-				F83640702A6BD702008F44AB /* ServiceDetailModel.swift in Sources */,
+				F83640702A6BD702008F44AB /* ServiceDetailsViewModel.swift in Sources */,
 				F8EFFA722B71E2A7004EBA8D /* Installation.swift in Sources */,
 				FD03813C2F5650D800A1B657 /* NotificationData.swift in Sources */,
 				FD03813D2F5650D800A1B657 /* AppNavigationState.swift in Sources */,
@@ -558,6 +585,7 @@
 				F8EFFA742B71E2D0004EBA8D /* NotificationNames.swift in Sources */,
 				FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */,
 				F8FCD1092C30CEC50059492D /* SettingsView.swift in Sources */,
+				F8A111122F70000100AAA001 /* SettingsViewModel.swift in Sources */,
 				FD1B5FAF258479150098B96B /* APIError.swift in Sources */,
 				FD1B5FBD258479150098B96B /* MapView.swift in Sources */,
 				FD1B5FB0258479150098B96B /* APIClient.swift in Sources */,

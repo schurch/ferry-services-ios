@@ -12,17 +12,17 @@ import Combine
 
 struct ServiceDetailsView: View {
     
-    @StateObject private var model: ServiceDetailModel
+    @StateObject private var viewModel: ServiceDetailsViewModel
     @State private var showingDateSelection = false
     @Environment(\.openURL) private var openURL
     private var mapPosition: Binding<MapCameraPosition> {
         Binding(
             get: {
-                .rect(model.mapRect)
+                .rect(viewModel.mapRect)
             },
             set: { newPosition in
                 if let rect = newPosition.rect {
-                    model.mapRect = rect
+                    viewModel.mapRect = rect
                 }
             }
         )
@@ -37,8 +37,8 @@ struct ServiceDetailsView: View {
         showDisruptionInfo: @escaping (String) -> Void,
         showMap: @escaping (Service) -> Void
     ) {
-        _model = StateObject(
-            wrappedValue: ServiceDetailModel(
+        _viewModel = StateObject(
+            wrappedValue: ServiceDetailsViewModel(
                 serviceID: serviceID,
                 service: service
             )
@@ -48,96 +48,29 @@ struct ServiceDetailsView: View {
     }
     
     var body: some View {
-        if let service = model.service {
+        if let service = viewModel.service {
             List {
-                Section {
-                    VStack(spacing: 0) {
-                        if !model.annotations.isEmpty {
-                            Map(
-                                position: mapPosition,
-                                interactionModes: []
-                            ) {
-                                ForEach(model.annotations) { annotation in
-                                    MapKit.Annotation("", coordinate: annotation.coordinate) {
-                                        switch annotation.type {
-                                        case .vessel(let course):
-                                            Image("ferry")
-                                                .rotationEffect(.degrees(course))
-                                        case .location:
-                                            Image("map-annotation")
-                                                .resizable()
-                                                .frame(width: 20, height: 20)
-                                        }
-                                    }
-                                }
-                            }
-                            .frame(height: 200)
-                            .onTapGesture {
-                                showMap(service)
-                            }
+                ServiceDetailsHeaderSectionView(
+                    service: service,
+                    annotations: viewModel.annotations,
+                    mapPosition: mapPosition,
+                    showMap: showMap
+                )
+
+                ServiceDetailsStatusSectionView(
+                    service: service,
+                    isEnabledForNotifications: viewModel.isEnabledForNotifications,
+                    isRegisteredForNotifications: viewModel.isRegisteredForNotifications,
+                    loadingSubscribed: viewModel.loadingSubscribed,
+                    subscribed: $viewModel.subscribed,
+                    updateSubscribed: { viewModel.updateSubscribed(subscribed: $0) },
+                    openNotificationSettings: {
+                        if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                            openURL(url)
                         }
-                        
-                        VStack {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(service.area)
-                                    .font(.title)
-                                Text(service.route)
-                            }
-                            .font(.body)
-                            .padding(15)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }
-                }
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                
-                Section {
-                    Group {
-                        if let additionalInfo = service.additionalInfo, !additionalInfo.isEmpty {
-                            Button {
-                                showDisruptionInfo(additionalInfo)
-                            } label: {
-                                DisruptionInfoView(service: service)
-                            }
-                        } else {
-                            DisruptionInfoView(service: service)
-                        }
-                    }
-                    .listRowSeparator(.hidden)
-                    .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                    
-                    if model.isEnabledForNotifications {
-                        if model.isRegisteredForNotifications {
-                            if model.loadingSubscribed {
-                                HStack {
-                                    Text("Subscribe to updates")
-                                    Spacer()
-                                    // Progress view sometimes wouldn't show again so give it a unique ID each time
-                                    ProgressView()
-                                        .id(UUID())
-                                        .padding(.trailing, 12)
-                                }
-                                .listRowSeparator(.hidden)
-                            } else {
-                                Toggle("Subscribe to updates", isOn: $model.subscribed)
-                                    .onChange(of: model.subscribed) { value in
-                                        model.updateSubscribed(subscribed: value)
-                                    }
-                                    .listRowSeparator(.hidden)
-                            }
-                        }
-                    } else {
-                        Button {
-                            if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
-                                openURL(url)
-                            }
-                        } label: {
-                            NavigationLink("Enable notifications to subscribe", destination: EmptyView())
-                        }
-                        .listRowSeparator(.hidden)
-                    }
-                }
+                    },
+                    showDisruptionInfo: showDisruptionInfo
+                )
                 
                 ForEach(service.locations.sorted(by: { $0.name < $1.name })) { location in
                     Section {
@@ -155,7 +88,7 @@ struct ServiceDetailsView: View {
                             } label: {
                                 Text("Departures on ")
                                 +
-                                Text(model.date.formatted(.dateTime.weekday().year().month().day()))
+                                Text(viewModel.date.formatted(.dateTime.weekday().year().month().day()))
                                     .bold()
                                     .foregroundColor(.colorTint)
                             }
@@ -260,14 +193,14 @@ struct ServiceDetailsView: View {
                 isPresented: $showingDateSelection,
                 onDismiss: {
                     Task {
-                        await model.fetchLatestService()
+                        await viewModel.fetchLatestService()
                     }
                 }
             ) {
                 NavigationView {
                     DatePicker(
                         "Departure Date",
-                        selection: $model.date,
+                        selection: $viewModel.date,
                         displayedComponents: [.date]
                     )
                     .datePickerStyle(.graphical)
@@ -284,50 +217,50 @@ struct ServiceDetailsView: View {
                 .presentationDetents([.fraction(0.6)])
                 .presentationDragIndicator(.visible)
             }
-            .alert("Error", isPresented: $model.showSubscribedError) {
+            .alert("Error", isPresented: $viewModel.showSubscribedError) {
                 Button("OK", role: .cancel) { }
             } message: {
                 Text("A problem occured. Please try again later.")
             }
             .task {
-                await model.fetchLatestService()
+                await viewModel.fetchLatestService()
             }
             .refreshable {
-                await model.fetchLatestService()
+                await viewModel.fetchLatestService()
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 refreshFromAppActivation()
             }
             .onReceive(NotificationCenter.default.publisher(for: .registeredForNotifications), perform: { _ in
-                model.checkIsRegisteredForNotifications()
+                viewModel.checkIsRegisteredForNotifications()
             })
             .navigationTitle(service.area)
             .navigationBarTitleDisplayMode(.inline)
         } else {
             VStack(spacing: 12) {
-                if model.failedToLoadService {
+                if viewModel.failedToLoadService {
                     Text("Unable to load this service right now.")
                         .foregroundStyle(.secondary)
                     Button("Retry") {
                         Task {
-                            await model.fetchLatestService()
+                            await viewModel.fetchLatestService()
                         }
                     }
                 } else {
                     ProgressView("Loading...")
                     Button("Retry") {
                         Task {
-                            await model.fetchLatestService()
+                            await viewModel.fetchLatestService()
                         }
                     }
                 }
             }
             .task {
-                await model.fetchLatestService()
+                await viewModel.fetchLatestService()
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 Task {
-                    await model.fetchLatestService()
+                    await viewModel.fetchLatestService()
                 }
             }
                 .navigationTitle("Service")
@@ -340,8 +273,8 @@ struct ServiceDetailsView: View {
 private extension ServiceDetailsView {
     func refreshFromAppActivation() {
         Task {
-            await model.fetchLatestService()
-            await model.checkIsEnabledForNotifications()
+            await viewModel.fetchLatestService()
+            await viewModel.checkIsEnabledForNotifications()
         }
     }
 }
