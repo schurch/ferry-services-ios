@@ -65,14 +65,14 @@ struct ServiceDetailsView: View {
                     subscribed: $viewModel.subscribed,
                     updateSubscribed: { viewModel.updateSubscribed(subscribed: $0) },
                     openNotificationSettings: {
-                        if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                        if let url = viewModel.notificationSettingsURL {
                             openURL(url)
                         }
                     },
                     showDisruptionInfo: showDisruptionInfo
                 )
                 
-                ForEach(service.locations.sorted(by: { $0.name < $1.name })) { location in
+                ForEach(viewModel.sortedLocationsByName) { location in
                     Section {
                         LocationInformation(location: location)
                     }
@@ -80,16 +80,13 @@ struct ServiceDetailsView: View {
                     .listRowSeparator(.hidden)
                 }
                 
-                if service.scheduledDeparturesAvailable == true {
+                if viewModel.shouldShowScheduledDepartures {
                     Section {
                         HStack(alignment: .center) {
                             Button {
                                 showingDateSelection = true
                             } label: {
-                                Text("Departures on ")
-                                +
-                                Text(viewModel.date.formatted(.dateTime.weekday().year().month().day()))
-                                    .bold()
+                                Text("\(ServiceDetailsViewModel.Copy.departureDatePrefix)\(viewModel.selectedDateValueTitle)")
                                     .foregroundColor(.colorTint)
                             }
                         }
@@ -100,34 +97,16 @@ struct ServiceDetailsView: View {
                         .listRowSeparator(.hidden)
                         
                         HStack(alignment: .top) {
-                            if [Service.Status.cancelled, .disrupted, .unknown].contains(service.status) {
+                            if viewModel.showScheduledDepartureWarning {
                                 Image(systemName: "exclamationmark.triangle")
                                     .foregroundColor(.colorAmber)
                             }
-                            
-                            let moreInfoURL = "ferryservices://more-info"
-                            
-                            let text = {
-                                let additionalInfo = if !(service.additionalInfo ?? "").isEmpty {
-                                    "[up to date information](\(moreInfoURL))"
-                                } else {
-                                    "up to date information"
-                                }
-                                
-                                let website = if let website = service.operator?.website, !website.isEmpty {
-                                    "[website](\(website))"
-                                } else {
-                                    "website"
-                                }
-                                
-                                return "Scheduled departure times provided by [Traveline](https://www.traveline.info). Sailings may not be operating to the scheduled departure times. Please check the most \(additionalInfo) from the ferry service operator or their \(website) for more details."
-                            }()
-                            
-                            Text(LocalizedStringKey(text))
+
+                            Text(LocalizedStringKey(viewModel.scheduledDepartureInfoText))
                                 .font(.footnote)
                                 .foregroundColor(Color(UIColor.systemGray))
                                 .environment(\.openURL, OpenURLAction { url in
-                                    if url.absoluteString == moreInfoURL,
+                                    if url.absoluteString == ServiceDetailsViewModel.Copy.moreInfoURL,
                                         let additionalInfo = service.additionalInfo
                                     {
                                         showDisruptionInfo(additionalInfo)
@@ -141,45 +120,36 @@ struct ServiceDetailsView: View {
                         .listRowSeparator(.hidden)
                     }
                     
-                    ForEach(service.locations.sorted(by: { $0.scheduledDepartures?.first?.departure ?? Date() < $1.scheduledDepartures?.first?.departure ?? Date() })) { location in
-                        ForEach(location.groupedScheduledDepartures, id: \.self.first?.destination.id) { departures in
-                            Section {
-                                ForEach(departures) { departureInfo in
-                                    HStack {
-                                        let departureTime = departureInfo
-                                            .departure
-                                            .formatted(Date.timeFormatStyle)
-                                        Text(departureTime)
-                                            .accessibilityLabel("\(departureTime) departure")
-                                        
-                                        Spacer()
-                                        
-                                        let arrivalTime = departureInfo
-                                            .arrival
-                                            .formatted(Date.timeFormatStyle)
-                                        Text(arrivalTime)
-                                            .accessibilityLabel("\(arrivalTime) arrival")
-                                    }
-                                    .foregroundColor(departureInfo.departure > Date() ? Color(UIColor.label) : Color(UIColor.systemGray2))
-                                    .accessibilityElement(children: .combine)
-                                }
-                            } header: {
+                    ForEach(viewModel.scheduledDepartureSections) { section in
+                        Section {
+                            ForEach(section.rows) { row in
                                 HStack {
-                                    let destinationName = departures.first?.destination.name ?? ""
-                                    Text(location.name)
+                                    Text(row.departureTimeText)
+                                        .accessibilityLabel(row.departureAccessibilityText)
+                                    
                                     Spacer()
-                                    Image(systemName: "arrow.right")
-                                        .accessibilityLabel("to")
-                                    Spacer()
-                                    Text(destinationName)
+                                    
+                                    Text(row.arrivalTimeText)
+                                        .accessibilityLabel(row.arrivalAccessibilityText)
                                 }
+                                .foregroundColor(row.isPastDeparture ? Color(UIColor.systemGray2) : Color(UIColor.label))
                                 .accessibilityElement(children: .combine)
                             }
+                        } header: {
+                            HStack {
+                                Text(section.originName)
+                                Spacer()
+                                Image(systemName: "arrow.right")
+                                    .accessibilityLabel("to")
+                                Spacer()
+                                Text(section.destinationName)
+                            }
+                            .accessibilityElement(children: .combine)
                         }
                     }
                 }
                 
-                if let serviceOperator = service.operator {
+                if let serviceOperator = viewModel.serviceOperator {
                     Section {
                         ServiceOperator(serviceOperator: serviceOperator)
                             .padding([.top, .bottom], 5)
@@ -199,16 +169,16 @@ struct ServiceDetailsView: View {
             ) {
                 NavigationView {
                     DatePicker(
-                        "Departure Date",
+                        ServiceDetailsViewModel.Copy.departureDatePickerTitle,
                         selection: $viewModel.date,
                         displayedComponents: [.date]
                     )
                     .datePickerStyle(.graphical)
-                    .navigationTitle("Departure Date")
+                    .navigationTitle(ServiceDetailsViewModel.Copy.departureDatePickerTitle)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
-                            Button("Done") {
+                            Button(ServiceDetailsViewModel.Copy.doneButtonTitle) {
                                 showingDateSelection = false
                             }
                         }
@@ -217,10 +187,10 @@ struct ServiceDetailsView: View {
                 .presentationDetents([.fraction(0.6)])
                 .presentationDragIndicator(.visible)
             }
-            .alert("Error", isPresented: $viewModel.showSubscribedError) {
-                Button("OK", role: .cancel) { }
+            .alert(ServiceDetailsViewModel.Copy.errorAlertTitle, isPresented: $viewModel.showSubscribedError) {
+                Button(ServiceDetailsViewModel.Copy.okButtonTitle, role: .cancel) { }
             } message: {
-                Text("A problem occured. Please try again later.")
+                Text(ServiceDetailsViewModel.Copy.errorAlertMessage)
             }
             .task {
                 await viewModel.fetchLatestService()
@@ -234,21 +204,21 @@ struct ServiceDetailsView: View {
             .onReceive(NotificationCenter.default.publisher(for: .registeredForNotifications), perform: { _ in
                 viewModel.checkIsRegisteredForNotifications()
             })
-            .navigationTitle(service.area)
+            .navigationTitle(viewModel.navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
         } else {
             VStack(spacing: 12) {
                 if viewModel.failedToLoadService {
-                    Text("Unable to load this service right now.")
+                    Text(ServiceDetailsViewModel.Copy.failedToLoadMessage)
                         .foregroundStyle(.secondary)
-                    Button("Retry") {
+                    Button(ServiceDetailsViewModel.Copy.retryButtonTitle) {
                         Task {
                             await viewModel.fetchLatestService()
                         }
                     }
                 } else {
-                    ProgressView("Loading...")
-                    Button("Retry") {
+                    ProgressView(ServiceDetailsViewModel.Copy.loadingTitle)
+                    Button(ServiceDetailsViewModel.Copy.retryButtonTitle) {
                         Task {
                             await viewModel.fetchLatestService()
                         }
@@ -263,7 +233,7 @@ struct ServiceDetailsView: View {
                     await viewModel.fetchLatestService()
                 }
             }
-                .navigationTitle("Service")
+                .navigationTitle(viewModel.navigationTitle)
                 .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -273,8 +243,7 @@ struct ServiceDetailsView: View {
 private extension ServiceDetailsView {
     func refreshFromAppActivation() {
         Task {
-            await viewModel.fetchLatestService()
-            await viewModel.checkIsEnabledForNotifications()
+            await viewModel.handleDidBecomeActive()
         }
     }
 }

@@ -57,26 +57,23 @@ private struct ServicesSection: View {
                 ServiceRow(row: row, showService: showService)
             }
         } header: {
-            switch section.sectionType {
-            case .subscribed:
+            if let systemImageName = section.systemImageName {
                 HStack {
-                    Image(systemName: "dot.radiowaves.up.forward")
+                    Image(systemName: systemImageName)
                         .accessibilityHidden(true)
                     Text(section.title)
                 }
-            case .services:
-                if let imageName = section.imageName {
-                    HStack {
-                        Image(imageName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25)
-                            .accessibilityHidden(true)
-                        Text(section.title)
-                    }
-                } else {
+            } else if section.usesAssetImage, let imageName = section.imageName {
+                HStack {
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25)
+                        .accessibilityHidden(true)
                     Text(section.title)
                 }
+            } else {
+                Text(section.title)
             }
         }
     }
@@ -91,26 +88,19 @@ private struct ServiceRow: View {
             showService(row.service)
         } label: {
             HStack {
-                DisruptionIndicator(status: row.service.status)
+                DisruptionIndicator(status: row.status)
                     .padding(.trailing, 4)
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(row.service.area)
+                    Text(row.area)
                         .font(.body)
                         .foregroundColor(.primary)
-                    Text(row.service.route)
+                    Text(row.route)
                         .font(.body)
                         .foregroundColor(.secondary)
                     
-                    let disruptionText = switch row.service.status {
-                    case .normal: "Normal Operations"
-                    case .disrupted: "Sailings Disrupted"
-                    case .cancelled: "Sailings Cancelled"
-                    case .unknown: "Unknown Status"
-                    }
-                    
-                    Text(disruptionText)
+                    Text(row.disruptionText)
                         .font(.subheadline.bold())
-                        .foregroundStyle(row.service.status.statusColor)
+                        .foregroundStyle(row.status.statusColor)
                         .padding(.top, 5)
                 }
                 Spacer()

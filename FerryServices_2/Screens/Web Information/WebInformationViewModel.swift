@@ -3,6 +3,10 @@ import WebKit
 
 @MainActor
 final class WebInformationViewModel: ObservableObject {
+    enum Copy {
+        static let navigationTitle = "Disruption Information"
+    }
+    
     let html: String
     let page: WebPage
 

@@ -18,7 +18,7 @@ struct SettingsView: View {
                 switch viewModel.notificationsState {
                 case .loading:
                     HStack {
-                        Text("Push Notifications")
+                        Text(SettingsViewModel.Copy.pushNotificationsTitle)
                         Spacer()
                         // Progress view sometimes wouldn't show again so give it a unique ID each time
                         ProgressView()
@@ -27,7 +27,7 @@ struct SettingsView: View {
                     }
                     
                 case .authorized(let isOn):
-                    Toggle("Push Notifications",
+                    Toggle(SettingsViewModel.Copy.pushNotificationsTitle,
                            isOn: Binding(
                             get: { isOn },
                             set: { newIsOn in
@@ -36,39 +36,39 @@ struct SettingsView: View {
                     )
                     
                 case .notAuthorized:
-                    Button("Enable notifications in Settings") {
+                    Button(SettingsViewModel.Copy.enableNotificationsInSettings) {
                         if let url = viewModel.notificationSettingsURL {
                             openURL(url)
                         }
                     }
                     
                 case .error:
-                    Text("An error occured fetching the notification status")
+                    Text(SettingsViewModel.Copy.notificationsStatusError)
                         .foregroundStyle(Color.gray)
                     
                 }
             }
             
             Section {
-                Button("Email") {
+                Button(SettingsViewModel.Copy.emailButtonTitle) {
                     if let url = viewModel.supportEmailURL() {
                         openURL(url)
                     }
                 }
                 
-                Button("Rate on App Store") {
+                Button(SettingsViewModel.Copy.rateButtonTitle) {
                     if let url = viewModel.appStoreURL {
                         openURL(url)
                     }
                 }
             } header: {
-                Text("Contact")
+                Text(SettingsViewModel.Copy.contactSectionTitle)
             }
             
             Section {
                 Text(viewModel.versionText)
             } footer: {
-                Text("Hi, I'm Stefan. Thanks for using the Scottish Ferries App. Although I now live overseas, I grew up on the Isle of Arran so can appreciate how vital the ferry services are. If you have any questions or issues please feel free to email me, or if you find the app useful you can also leave a review on the App Store.")
+                Text(viewModel.supportFooterText)
                     .padding(.top, 10)
                     .font(.callout)
             }

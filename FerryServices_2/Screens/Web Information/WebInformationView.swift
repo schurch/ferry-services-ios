@@ -10,7 +10,7 @@ struct WebInformationView: View {
 
     var body: some View {
         WebView(viewModel.page)
-            .navigationTitle("Disruption Information")
+            .navigationTitle(WebInformationViewModel.Copy.navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .task { await viewModel.loadHTML() }
             .onReceive(

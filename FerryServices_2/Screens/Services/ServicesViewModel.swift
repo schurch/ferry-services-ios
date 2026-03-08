@@ -16,6 +16,18 @@ class ServicesViewModel: ObservableObject {
         struct Row: Identifiable {
             let id: String
             let service: Service
+            
+            var area: String { service.area }
+            var route: String { service.route }
+            var disruptionText: String {
+                switch service.status {
+                case .normal: "Normal Operations"
+                case .disrupted: "Sailings Disrupted"
+                case .cancelled: "Sailings Cancelled"
+                case .unknown: "Unknown Status"
+                }
+            }
+            var status: Service.Status { service.status }
         }
         
         struct Section: Identifiable {
@@ -27,6 +39,19 @@ class ServicesViewModel: ObservableObject {
             let title: String
             let imageName: String?
             let rows: [Row]
+
+            var systemImageName: String? {
+                switch sectionType {
+                case .subscribed:
+                    "dot.radiowaves.up.forward"
+                case .services:
+                    nil
+                }
+            }
+            
+            var usesAssetImage: Bool {
+                sectionType == .services
+            }
         }
         
         case single([Row])

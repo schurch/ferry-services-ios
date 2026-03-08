@@ -23,6 +23,36 @@ struct Annotation: Identifiable {
 
 @MainActor
 class ServiceDetailsViewModel: ObservableObject {
+    struct Copy {
+        static let departureDatePrefix = "Departures on "
+        static let doneButtonTitle = "Done"
+        static let okButtonTitle = "OK"
+        static let departureDatePickerTitle = "Departure Date"
+        static let errorAlertTitle = "Error"
+        static let errorAlertMessage = "A problem occured. Please try again later."
+        static let retryButtonTitle = "Retry"
+        static let loadingTitle = "Loading..."
+        static let failedToLoadMessage = "Unable to load this service right now."
+        static let unknownDestination = ""
+        static let travelineURL = "https://www.traveline.info"
+        static let moreInfoURL = "ferryservices://more-info"
+    }
+    
+    struct ScheduledDepartureSection: Identifiable {
+        struct Row: Identifiable {
+            let id: UUID
+            let departureTimeText: String
+            let arrivalTimeText: String
+            let departureAccessibilityText: String
+            let arrivalAccessibilityText: String
+            let isPastDeparture: Bool
+        }
+        
+        var id: String { "\(originName)-\(destinationName)" }
+        let originName: String
+        let destinationName: String
+        let rows: [Row]
+    }
     
     @Published var service: Service?
     @Published var mapRect: MKMapRect
@@ -60,6 +90,85 @@ class ServiceDetailsViewModel: ObservableObject {
         return vessels + locations
     }
     
+    var sortedLocationsByName: [Service.Location] {
+        (service?.locations ?? []).sorted(by: { $0.name < $1.name })
+    }
+    
+    var shouldShowScheduledDepartures: Bool {
+        service?.scheduledDeparturesAvailable == true
+    }
+    
+    var selectedDateTitle: String {
+        "\(Copy.departureDatePrefix)\(date.formatted(.dateTime.weekday().year().month().day()))"
+    }
+    
+    var selectedDateValueTitle: String {
+        date.formatted(.dateTime.weekday().year().month().day())
+    }
+    
+    var showScheduledDepartureWarning: Bool {
+        guard let status = service?.status else { return false }
+        return [Service.Status.cancelled, .disrupted, .unknown].contains(status)
+    }
+    
+    var scheduledDepartureInfoText: String {
+        guard let service else { return "" }
+        
+        let additionalInfoText: String = if !(service.additionalInfo ?? "").isEmpty {
+            "[up to date information](\(Copy.moreInfoURL))"
+        } else {
+            "up to date information"
+        }
+        
+        let websiteText: String = if let website = service.operator?.website, !website.isEmpty {
+            "[website](\(website))"
+        } else {
+            "website"
+        }
+        
+        return "Scheduled departure times provided by [Traveline](\(Copy.travelineURL)). Sailings may not be operating to the scheduled departure times. Please check the most \(additionalInfoText) from the ferry service operator or their \(websiteText) for more details."
+    }
+    
+    var scheduledDepartureSections: [ScheduledDepartureSection] {
+        (service?.locations ?? [])
+            .sorted(by: { ($0.scheduledDepartures?.first?.departure ?? Date()) < ($1.scheduledDepartures?.first?.departure ?? Date()) })
+            .flatMap { location in
+                location.groupedScheduledDepartures.map { departures in
+                    let rows = departures.map { departureInfo in
+                        let departureTime = departureInfo.departure.formatted(Date.timeFormatStyle)
+                        let arrivalTime = departureInfo.arrival.formatted(Date.timeFormatStyle)
+                        
+                        return ScheduledDepartureSection.Row(
+                            id: departureInfo.id,
+                            departureTimeText: departureTime,
+                            arrivalTimeText: arrivalTime,
+                            departureAccessibilityText: "\(departureTime) departure",
+                            arrivalAccessibilityText: "\(arrivalTime) arrival",
+                            isPastDeparture: departureInfo.departure <= Date()
+                        )
+                    }
+                    
+                    return ScheduledDepartureSection(
+                        originName: location.name,
+                        destinationName: departures.first?.destination.name ?? Copy.unknownDestination,
+                        rows: rows
+                    )
+                }
+            }
+    }
+    
+    var serviceOperator: Service.ServiceOperator? {
+        service?.operator
+    }
+    
+    var navigationTitle: String {
+        service?.area ?? "Service"
+    }
+    
+    var notificationSettingsURL: URL? {
+        URL(string: UIApplication.openNotificationSettingsURLString)
+    }
+    
     private var serviceID: Int
     
     init(serviceID: Int, service: Service?) {
@@ -77,6 +186,11 @@ class ServiceDetailsViewModel: ObservableObject {
         self.subscribed = AppPreferences.shared.subscribedServiceIDs.contains(serviceID)
         
         checkIsRegisteredForNotifications()
+    }
+    
+    func handleDidBecomeActive() async {
+        await fetchLatestService()
+        await checkIsEnabledForNotifications()
     }
     
     func checkIsRegisteredForNotifications() {
