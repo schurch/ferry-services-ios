@@ -3,6 +3,10 @@ import Foundation
 final class AppPreferences: @unchecked Sendable {
     static let shared = AppPreferences()
 
+    private enum LegacyUserDefaultsKeys {
+        static let installationID = "installationID"
+    }
+
     private let defaults: UserDefaults
 
     init(defaults: UserDefaults = .standard) {
@@ -29,6 +33,16 @@ final class AppPreferences: @unchecked Sendable {
 
     var installationID: UUID {
         get {
+            if let legacyValue = defaults.string(forKey: LegacyUserDefaultsKeys.installationID),
+                let legacyID = UUID(uuidString: legacyValue)
+            {
+                let currentValue = defaults.string(forKey: UserDefaultsKeys.installationID)
+                if currentValue != legacyID.uuidString {
+                    defaults.set(legacyID.uuidString, forKey: UserDefaultsKeys.installationID)
+                }
+                return legacyID
+            }
+
             if let value = defaults.string(forKey: UserDefaultsKeys.installationID),
                 let id = UUID(uuidString: value)
             {
@@ -37,10 +51,12 @@ final class AppPreferences: @unchecked Sendable {
 
             let id = UUID()
             defaults.set(id.uuidString, forKey: UserDefaultsKeys.installationID)
+            defaults.set(id.uuidString, forKey: LegacyUserDefaultsKeys.installationID)
             return id
         }
         set {
             defaults.set(newValue.uuidString, forKey: UserDefaultsKeys.installationID)
+            defaults.set(newValue.uuidString, forKey: LegacyUserDefaultsKeys.installationID)
         }
     }
 
