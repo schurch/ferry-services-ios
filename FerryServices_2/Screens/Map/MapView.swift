@@ -13,6 +13,11 @@ struct UIKitServiceMapView: UIViewRepresentable {
     let service: Service
     var interactionEnabled: Bool
     var fitToLocationsOnly: Bool = true
+    private static let departureTimeFormatStyle: Date.FormatStyle = {
+        var style = Date.FormatStyle(date: .omitted, time: .shortened)
+        style.timeZone = TimeZone(secondsFromGMT: 0)!
+        return style
+    }()
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -71,7 +76,7 @@ struct UIKitServiceMapView: UIViewRepresentable {
             let locationAnnotations: [ServiceAnnotation] = service.locations.map { location in
                 let subtitle: String? = {
                     guard let nextDeparture = location.nextDeparture else { return nil }
-                    return "Next departure: \(nextDeparture.departure.formatted(.dateTime.hour().minute()))"
+                    return "Next departure: \(nextDeparture.departure.formatted(UIKitServiceMapView.departureTimeFormatStyle))"
                 }()
 
                 return ServiceAnnotation(
@@ -176,7 +181,7 @@ struct UIKitServiceMapView: UIViewRepresentable {
                 label.text = "\(speedText) • \(relativeDateText)"
             case .location(let location):
                 if let nextDeparture = location.nextDeparture {
-                    label.text = "Next departure: \(nextDeparture.departure.formatted(.dateTime.hour().minute()))"
+                    label.text = "Next departure: \(nextDeparture.departure.formatted(UIKitServiceMapView.departureTimeFormatStyle))"
                 } else {
                     label.text = "No upcoming departure info"
                 }
