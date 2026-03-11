@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ServiceDetailsStatusSectionView: View {
     let service: Service
+    let hasLoadedNotificationsAuthorization: Bool
     let isEnabledForNotifications: Bool
     let isRegisteredForNotifications: Bool
     let loadingSubscribed: Bool
@@ -26,14 +27,14 @@ struct ServiceDetailsStatusSectionView: View {
             .listRowSeparator(.hidden)
             .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
 
-            if !isEnabledForNotifications {
+            if hasLoadedNotificationsAuthorization && !isEnabledForNotifications {
                 Button {
                     openNotificationSettings()
                 } label: {
                     NavigationLink("Enable notifications to subscribe", destination: EmptyView())
                 }
                 .listRowSeparator(.hidden)
-            } else if isRegisteredForNotifications {
+            } else if hasLoadedNotificationsAuthorization && isRegisteredForNotifications {
                 if loadingSubscribed {
                     HStack {
                         Text("Subscribe to updates")

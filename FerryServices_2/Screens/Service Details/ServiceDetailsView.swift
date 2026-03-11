@@ -66,6 +66,7 @@ struct ServiceDetailsView: View {
 
                 ServiceDetailsStatusSectionView(
                     service: service,
+                    hasLoadedNotificationsAuthorization: viewModel.hasLoadedNotificationsAuthorization,
                     isEnabledForNotifications: viewModel.isEnabledForNotifications,
                     isRegisteredForNotifications: viewModel.isRegisteredForNotifications,
                     loadingSubscribed: viewModel.loadingSubscribed,

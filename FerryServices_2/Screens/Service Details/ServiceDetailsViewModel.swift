@@ -65,6 +65,7 @@ class ServiceDetailsViewModel {
     var showSubscribedError: Bool = false
     var date: Date = Date()
     var isEnabledForNotifications: Bool = false
+    var hasLoadedNotificationsAuthorization: Bool = false
     var isRegisteredForNotifications: Bool = false
     var failedToLoadService: Bool = false
     
@@ -230,6 +231,7 @@ class ServiceDetailsViewModel {
         nonisolated(unsafe) let center = UNUserNotificationCenter.current()
         let settings = await center.notificationSettings()
         isEnabledForNotifications = settings.authorizationStatus == .authorized
+        hasLoadedNotificationsAuthorization = true
     }
     
     func updateSubscribed(subscribed: Bool) {
