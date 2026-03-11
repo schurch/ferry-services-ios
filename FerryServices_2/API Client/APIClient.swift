@@ -101,8 +101,40 @@ class APIClient {
     
     private static func sendAndCacheResult(request: URLRequest) async throws -> [Service] {
         let services: [Service] = try await send(request: request)
-        let servicesToCache = services.map {
-            Service(
+        let servicesToCache: [Service] = services.map {
+            let locationsWithoutNotes = $0.locations.map { location in
+                let scheduledDeparturesWithoutNotes = location.scheduledDepartures?.map { departure in
+                    Service.Location.ScheduledDeparture(
+                        id: departure.id,
+                        departure: departure.departure,
+                        arrival: departure.arrival,
+                        destination: departure.destination,
+                        note: nil
+                    )
+                }
+                let nextDepartureWithoutNote = location.nextDeparture.map { departure in
+                    Service.Location.ScheduledDeparture(
+                        id: departure.id,
+                        departure: departure.departure,
+                        arrival: departure.arrival,
+                        destination: departure.destination,
+                        note: nil
+                    )
+                }
+
+                return Service.Location(
+                    id: location.id,
+                    name: location.name,
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    weather: location.weather,
+                    scheduledDepartures: scheduledDeparturesWithoutNotes,
+                    nextDeparture: nextDepartureWithoutNote,
+                    nextRailDeparture: location.nextRailDeparture
+                )
+            }
+
+            return Service(
                 serviceId: $0.serviceId,
                 status: .unknown,
                 area: $0.area,
@@ -111,7 +143,7 @@ class APIClient {
                 lastUpdatedDate: nil,
                 updated: nil,
                 additionalInfo: nil,
-                locations: $0.locations,
+                locations: locationsWithoutNotes,
                 vessels: [],
                 operator: $0.operator,
                 scheduledDeparturesAvailable: nil

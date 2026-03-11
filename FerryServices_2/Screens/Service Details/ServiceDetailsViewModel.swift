@@ -47,12 +47,14 @@ class ServiceDetailsViewModel {
             let arrivalTimeText: String
             let departureAccessibilityText: String
             let arrivalAccessibilityText: String
+            let note: String?
             let isPastDeparture: Bool
         }
         
         var id: String { "\(originName)-\(destinationName)" }
         let originName: String
         let destinationName: String
+        let sharedNote: String?
         let rows: [Row]
     }
     
@@ -134,9 +136,21 @@ class ServiceDetailsViewModel {
             .sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending })
             .flatMap { location in
                 groupedScheduledDepartures(for: location).map { departures in
+                    let notes = departures.map(\.note).map(Self.normalizedNote)
+                    let sharedNote: String? = {
+                        guard let firstNote = notes.first, firstNote != nil else {
+                            return nil
+                        }
+                        if notes.allSatisfy({ $0 == firstNote }) {
+                            return firstNote
+                        }
+                        return nil
+                    }()
+
                     let rows = departures.map { departureInfo in
                         let departureTime = departureInfo.departure.formatted(Date.timeFormatStyle)
                         let arrivalTime = departureInfo.arrival.formatted(Date.timeFormatStyle)
+                        let rowNote = Self.normalizedNote(departureInfo.note)
                         
                         return ScheduledDepartureSection.Row(
                             id: departureInfo.id,
@@ -144,6 +158,7 @@ class ServiceDetailsViewModel {
                             arrivalTimeText: arrivalTime,
                             departureAccessibilityText: "\(departureTime) departure",
                             arrivalAccessibilityText: "\(arrivalTime) arrival",
+                            note: sharedNote == nil ? rowNote : nil,
                             isPastDeparture: departureInfo.departure <= now
                         )
                     }
@@ -151,6 +166,7 @@ class ServiceDetailsViewModel {
                     return ScheduledDepartureSection(
                         originName: location.name,
                         destinationName: departures.first?.destination.name ?? Copy.unknownDestination,
+                        sharedNote: sharedNote,
                         rows: rows
                     )
                 }
@@ -170,6 +186,12 @@ class ServiceDetailsViewModel {
     }
     
     private var serviceID: Int
+
+    private static func normalizedNote(_ value: String?) -> String? {
+        guard let value else { return nil }
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
     
     private func groupedScheduledDepartures(for location: Service.Location) -> [[Service.Location.ScheduledDeparture]] {
         guard let scheduledDepartures = location.scheduledDepartures else { return [] }

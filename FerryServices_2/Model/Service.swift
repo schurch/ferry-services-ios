@@ -86,14 +86,46 @@ struct Service: Codable {
             }
             
             private enum CodingKeys: String, CodingKey {
+                case notes
                 case departure, arrival, destination
             }
             
-            var id = UUID()
+            var id: UUID = UUID()
             
             let departure: Date
             let arrival: Date
             let destination: DepatureLocation
+            let note: String?
+
+            init(
+                id: UUID = UUID(),
+                departure: Date,
+                arrival: Date,
+                destination: DepatureLocation,
+                note: String?
+            ) {
+                self.id = id
+                self.departure = departure
+                self.arrival = arrival
+                self.destination = destination
+                self.note = note
+            }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                departure = try container.decode(Date.self, forKey: .departure)
+                arrival = try container.decode(Date.self, forKey: .arrival)
+                destination = try container.decode(DepatureLocation.self, forKey: .destination)
+                note = try container.decodeIfPresent(String.self, forKey: .notes)
+            }
+
+            func encode(to encoder: Encoder) throws {
+                var container = encoder.container(keyedBy: CodingKeys.self)
+                try container.encode(departure, forKey: .departure)
+                try container.encode(arrival, forKey: .arrival)
+                try container.encode(destination, forKey: .destination)
+                try container.encodeIfPresent(note, forKey: .notes)
+            }
         }
         
         struct RailDeparture: Codable, Identifiable {

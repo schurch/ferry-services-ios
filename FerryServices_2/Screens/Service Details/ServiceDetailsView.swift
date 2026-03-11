@@ -11,9 +11,14 @@ import MapKit
 import Combine
 
 struct ServiceDetailsView: View {
+    private struct DepartureNoteSheetItem: Identifiable {
+        let id: UUID
+        let note: String
+    }
     
     @State private var viewModel: ServiceDetailsViewModel
     @State private var showingDateSelection = false
+    @State private var selectedDepartureNote: DepartureNoteSheetItem?
     @Environment(\.openURL) private var openURL
     private var mapPosition: Binding<MapCameraPosition> {
         Binding(
@@ -133,9 +138,31 @@ struct ServiceDetailsView: View {
                                     
                                     Text(row.arrivalTimeText)
                                         .accessibilityLabel(row.arrivalAccessibilityText)
+                                    
+                                    if let note = row.note {
+                                        Button {
+                                            selectedDepartureNote = DepartureNoteSheetItem(id: row.id, note: note)
+                                        } label: {
+                                            Image(systemName: "info.circle")
+                                        }
+                                        .buttonStyle(.plain)
+                                        .accessibilityLabel("Show departure note")
+                                    }
                                 }
                                 .foregroundColor(row.isPastDeparture ? Color(UIColor.systemGray2) : Color(UIColor.label))
                                 .accessibilityElement(children: .combine)
+                            }
+
+                            if let sharedNote = section.sharedNote {
+                                HStack(alignment: .top, spacing: 6) {
+                                    Image(systemName: "info.circle")
+                                    Text(sharedNote)
+                                }
+                                .font(.footnote)
+                                .foregroundColor(Color(UIColor.secondaryLabel))
+                                .padding(.top, 0)
+                                .listRowInsets(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+                                .listRowSeparator(.hidden)
                             }
                         } header: {
                             HStack {
@@ -161,6 +188,26 @@ struct ServiceDetailsView: View {
                 }
             }
             .listStyle(.plain)
+            .sheet(item: $selectedDepartureNote) { noteItem in
+                NavigationStack {
+                    Text(noteItem.note)
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                        .padding()
+                    .navigationTitle("Note")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button(role: .close) {
+                                selectedDepartureNote = nil
+                            }
+                        }
+                    }
+                }
+                .presentationDetents([.fraction(0.25), .medium])
+                .presentationDragIndicator(.visible)
+            }
             .sheet(
                 isPresented: $showingDateSelection,
                 onDismiss: {
