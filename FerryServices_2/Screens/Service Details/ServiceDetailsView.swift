@@ -195,7 +195,7 @@ struct ServiceDetailsView: View {
                 Text(ServiceDetailsViewModel.Copy.errorAlertMessage)
             }
             .task {
-                await viewModel.fetchLatestService()
+                await viewModel.handleDidBecomeActive()
             }
             .refreshable {
                 await viewModel.fetchLatestService()
@@ -215,20 +215,20 @@ struct ServiceDetailsView: View {
                         .foregroundStyle(.secondary)
                     Button(ServiceDetailsViewModel.Copy.retryButtonTitle) {
                         Task {
-                            await viewModel.fetchLatestService()
+                            await viewModel.handleDidBecomeActive()
                         }
                     }
                 } else {
                     ProgressView(ServiceDetailsViewModel.Copy.loadingTitle)
                     Button(ServiceDetailsViewModel.Copy.retryButtonTitle) {
                         Task {
-                            await viewModel.fetchLatestService()
+                            await viewModel.handleDidBecomeActive()
                         }
                     }
                 }
             }
             .task {
-                await viewModel.fetchLatestService()
+                await viewModel.handleDidBecomeActive()
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 Task {
