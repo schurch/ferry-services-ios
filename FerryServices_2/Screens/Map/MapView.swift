@@ -76,7 +76,7 @@ struct UIKitServiceMapView: UIViewRepresentable {
             let locationAnnotations: [ServiceAnnotation] = service.locations.map { location in
                 let subtitle: String? = {
                     guard let nextDeparture = location.nextDeparture else { return nil }
-                    return "Next departure: \(nextDeparture.departure.formatted(UIKitServiceMapView.departureTimeFormatStyle))"
+                    return "Next departure: \(nextDeparture.departure.formatted(UIKitServiceMapView.departureTimeFormatStyle)) to \(nextDeparture.destination.name)"
                 }()
 
                 return ServiceAnnotation(
@@ -181,7 +181,7 @@ struct UIKitServiceMapView: UIViewRepresentable {
                 label.text = "\(speedText) • \(relativeDateText)"
             case .location(let location):
                 if let nextDeparture = location.nextDeparture {
-                    label.text = "Next departure: \(nextDeparture.departure.formatted(UIKitServiceMapView.departureTimeFormatStyle))"
+                    label.text = "Next departure: \(nextDeparture.departure.formatted(UIKitServiceMapView.departureTimeFormatStyle)) to \(nextDeparture.destination.name)"
                 } else {
                     label.text = "No upcoming departure info"
                 }
