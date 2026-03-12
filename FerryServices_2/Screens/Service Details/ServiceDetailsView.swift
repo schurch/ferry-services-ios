@@ -126,6 +126,19 @@ struct ServiceDetailsView: View {
                         }
                         .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
                         .listRowSeparator(.hidden)
+
+                        if let sharedNote = viewModel.globallySharedScheduledDepartureNote {
+                            HStack(alignment: .top) {
+                                Image(systemName: "info.circle")
+                                    .foregroundColor(Color(UIColor.systemGray))
+                                Text(sharedNote)
+                                    .font(.footnote)
+                                    .foregroundColor(Color(UIColor.systemGray))
+                            }
+                            .padding(.bottom, -6)
+                            .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                            .listRowSeparator(.hidden)
+                        }
                     }
                     
                     ForEach(viewModel.scheduledDepartureSections) { section in
@@ -155,12 +168,13 @@ struct ServiceDetailsView: View {
                             }
 
                             if let sharedNote = section.sharedNote {
-                                HStack(alignment: .top, spacing: 6) {
+                                HStack(alignment: .top) {
                                     Image(systemName: "info.circle")
+                                        .foregroundColor(Color(UIColor.systemGray))
                                     Text(sharedNote)
+                                        .font(.footnote)
+                                        .foregroundColor(Color(UIColor.systemGray))
                                 }
-                                .font(.footnote)
-                                .foregroundColor(Color(UIColor.secondaryLabel))
                                 .padding(.top, 0)
                                 .listRowInsets(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
                                 .listRowSeparator(.hidden)

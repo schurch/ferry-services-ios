@@ -133,6 +133,7 @@ class ServiceDetailsViewModel {
     
     var scheduledDepartureSections: [ScheduledDepartureSection] {
         let now = Date()
+        let globalSharedNote = globallySharedScheduledDepartureNote
         return (service?.locations ?? [])
             .sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending })
             .flatMap { location in
@@ -159,7 +160,7 @@ class ServiceDetailsViewModel {
                             arrivalTimeText: arrivalTime,
                             departureAccessibilityText: "\(departureTime) departure",
                             arrivalAccessibilityText: "\(arrivalTime) arrival",
-                            note: sharedNote == nil ? rowNote : nil,
+                            note: (globalSharedNote == nil && sharedNote == nil) ? rowNote : nil,
                             isPastDeparture: departureInfo.departure <= now
                         )
                     }
@@ -167,11 +168,22 @@ class ServiceDetailsViewModel {
                     return ScheduledDepartureSection(
                         originName: location.name,
                         destinationName: departures.first?.destination.name ?? Copy.unknownDestination,
-                        sharedNote: sharedNote,
+                        sharedNote: globalSharedNote == nil ? sharedNote : nil,
                         rows: rows
                     )
                 }
             }
+    }
+
+    var globallySharedScheduledDepartureNote: String? {
+        guard let locations = service?.locations else { return nil }
+
+        let allDepartures = locations.compactMap(\.scheduledDepartures).flatMap { $0 }
+        guard !allDepartures.isEmpty else { return nil }
+
+        let notes = allDepartures.map(\.note).map(Self.normalizedNote)
+        guard let first = notes.first, first != nil else { return nil }
+        return notes.allSatisfy({ $0 == first }) ? first : nil
     }
     
     var serviceOperator: Service.ServiceOperator? {
