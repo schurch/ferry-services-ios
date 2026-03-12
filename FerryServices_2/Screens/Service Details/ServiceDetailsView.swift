@@ -191,6 +191,20 @@ struct ServiceDetailsView: View {
                             .accessibilityElement(children: .combine)
                         }
                     }
+
+                    if let reportURL = viewModel.departureErrorReportURL {
+                        Section {
+                            Text(
+                                LocalizedStringKey(
+                                    "If you spot an issue with the timetable, please get in [contact](\(reportURL.absoluteString))."
+                                )
+                            )
+                            .font(.footnote)
+                            .foregroundColor(Color(UIColor.systemGray))
+                            .tint(.colorTint)
+                            .listRowSeparator(.hidden)
+                        }
+                    }
                 }
                 
                 if let serviceOperator = viewModel.serviceOperator {

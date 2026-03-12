@@ -27,6 +27,7 @@ struct Annotation: Identifiable {
 class ServiceDetailsViewModel {
     struct Copy {
         static let departureDatePrefix = "Departures on "
+        static let reportTimetableIssueTitle = "Report timetable issue"
         static let doneButtonTitle = "Done"
         static let okButtonTitle = "OK"
         static let departureDatePickerTitle = "Departure Date"
@@ -38,6 +39,7 @@ class ServiceDetailsViewModel {
         static let unknownDestination = ""
         static let travelineURL = "https://www.traveline.info"
         static let moreInfoURL = "ferryservices://more-info"
+        static let supportEmail = "stefan.church@gmail.com"
     }
     
     struct ScheduledDepartureSection: Identifiable {
@@ -197,8 +199,56 @@ class ServiceDetailsViewModel {
     var notificationSettingsURL: URL? {
         URL(string: UIApplication.openNotificationSettingsURLString)
     }
+
+    var departureErrorReportURL: URL? {
+        var components = URLComponents()
+        components.scheme = "mailto"
+        components.path = Copy.supportEmail
+        components.queryItems = [
+            URLQueryItem(
+                name: "subject",
+                value: "Timetable issue - Service \(serviceID)"
+            ),
+            URLQueryItem(
+                name: "body",
+                value: departureErrorEmailBody
+            )
+        ]
+        return components.url
+    }
     
     private var serviceID: Int
+
+    private var departureErrorEmailBody: String {
+        let now = Date().formatted(.iso8601)
+        let departureDate = date.formatted(
+            Date.ISO8601FormatStyle(timeZone: Calendar.current.timeZone).year().month().day()
+        )
+        let serviceArea = service?.area ?? "Unknown"
+        let serviceRoute = service?.route ?? "Unknown"
+        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "Unknown"
+        let buildNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "Unknown"
+        let deviceName = UIDevice.current.name
+        let deviceModel = UIDevice.current.model
+        let osVersion = "\(UIDevice.current.systemName) \(UIDevice.current.systemVersion)"
+
+        return """
+        Please describe the timetable issue:
+
+        ---
+        Context
+        - Service ID: \(serviceID)
+        - Service area: \(serviceArea)
+        - Service route: \(serviceRoute)
+        - Departures date selected: \(departureDate)
+        - Report generated at: \(now)
+        - Time zone: \(TimeZone.current.identifier)
+        - App version: \(appVersion) (\(buildNumber))
+        - Device: \(deviceName) (\(deviceModel))
+        - OS: \(osVersion)
+        ---
+        """
+    }
 
     private static func normalizedNote(_ value: String?) -> String? {
         guard let value else { return nil }
