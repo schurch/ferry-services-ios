@@ -194,14 +194,15 @@ struct ServiceDetailsView: View {
 
                     if let reportURL = viewModel.departureErrorReportURL {
                         Section {
-                            Text(
-                                LocalizedStringKey(
-                                    "If you spot an issue with the timetable, please get in [contact](\(reportURL.absoluteString))."
-                                )
-                            )
+                            HStack(spacing: 0) {
+                                Text("If you spot an issue with the timetable, please get in ")
+                                    .foregroundColor(Color(UIColor.systemGray))
+                                Link("contact", destination: reportURL)
+                                    .foregroundStyle(.colorTint)
+                                Text(".")
+                                    .foregroundColor(Color(UIColor.systemGray))
+                            }
                             .font(.footnote)
-                            .foregroundColor(Color(UIColor.systemGray))
-                            .tint(.colorTint)
                             .listRowSeparator(.hidden)
                         }
                     }
