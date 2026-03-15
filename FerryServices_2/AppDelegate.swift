@@ -10,6 +10,8 @@ import UIKit
 import Sentry
 
 class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency UNUserNotificationCenterDelegate {
+    private var isRequestingNotificationAuthorization = false
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         SentrySDK.start { options in
             options.dsn = AppConfig.sentryDSN
@@ -18,6 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency UNUserNot
         AppPreferences.shared.registerDefaults()
         
         UNUserNotificationCenter.current().delegate = self
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleDidBecomeActiveNotification),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
         
         // Remove old shortcut items
         application.shortcutItems?.removeAll()
@@ -26,15 +35,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency UNUserNot
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
+        handleDidBecomeActive()
+    }
+
+    @objc
+    private func handleDidBecomeActiveNotification() {
+        handleDidBecomeActive()
+    }
+
+    private func handleDidBecomeActive() {
         Task { @MainActor in
+            await syncPushAuthorizationAndRegistrationIfNeeded()
+        }
+    }
+
+    @MainActor
+    private func syncPushAuthorizationAndRegistrationIfNeeded() async {
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
+
+        switch settings.authorizationStatus {
+        case .notDetermined:
+            guard !isRequestingNotificationAuthorization else { return }
+            isRequestingNotificationAuthorization = true
             do {
-                let granted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
+                let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
                 if granted {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
             } catch {
                 print("Failed get permissions for notifications: \(error)")
             }
+            isRequestingNotificationAuthorization = false
+        case .authorized, .provisional, .ephemeral:
+            UIApplication.shared.registerForRemoteNotifications()
+        case .denied:
+            break
+        @unknown default:
+            break
         }
     }
     
@@ -105,6 +143,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency UNUserNot
             serviceID: serviceId,
             seedService: seedService
         )
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
 }
