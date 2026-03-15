@@ -193,18 +193,14 @@ struct ServiceDetailsView: View {
                     }
 
                     if let reportURL = viewModel.departureErrorReportURL {
-                        let reportLinkActionURL = "ferryservices://report-timetable-issue"
+                        let reportLinkActionURL = URL(string: "ferryservices://report-timetable-issue")!
                         Section {
-                            Text(
-                                LocalizedStringKey(
-                                    "If you spot an issue with the timetable, please get in [contact](\(reportLinkActionURL))."
-                                )
-                            )
+                            Text("If you spot an issue with the timetable, please get in [contact](ferryservices://report-timetable-issue).")
                             .font(.footnote)
                             .foregroundColor(Color(UIColor.systemGray))
                             .tint(.colorTint)
                             .environment(\.openURL, OpenURLAction { url in
-                                if url.absoluteString == reportLinkActionURL {
+                                if url == reportLinkActionURL {
                                     openURL(reportURL)
                                     return .handled
                                 } else {
