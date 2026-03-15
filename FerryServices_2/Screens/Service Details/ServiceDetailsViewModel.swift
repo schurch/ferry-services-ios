@@ -233,7 +233,6 @@ class ServiceDetailsViewModel {
         let osVersion = "\(UIDevice.current.systemName) \(UIDevice.current.systemVersion)"
 
         return """
-        Please describe the timetable issue:
 
         ---
         Context
