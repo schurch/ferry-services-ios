@@ -48,8 +48,15 @@ final class SettingsViewModel {
     }
 
     func refreshNotificationState() async {
+        notificationsState = .loading
+
         guard await areNotificationsAuthorized() else {
             notificationsState = .notAuthorized
+            return
+        }
+
+        // APNs registration can still be in flight immediately after returning from iOS Settings.
+        guard AppPreferences.shared.isRegisteredForNotifications else {
             return
         }
 

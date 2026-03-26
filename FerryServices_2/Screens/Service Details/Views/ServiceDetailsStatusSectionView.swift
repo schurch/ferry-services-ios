@@ -34,6 +34,15 @@ struct ServiceDetailsStatusSectionView: View {
                     NavigationLink("Enable notifications to subscribe", destination: EmptyView())
                 }
                 .listRowSeparator(.hidden)
+            } else if hasLoadedNotificationsAuthorization && !isRegisteredForNotifications {
+                HStack {
+                    Text("Subscribe to updates")
+                    Spacer()
+                    ProgressView()
+                        .id(UUID())
+                        .padding(.trailing, 12)
+                }
+                .listRowSeparator(.hidden)
             } else if hasLoadedNotificationsAuthorization && isRegisteredForNotifications {
                 if loadingSubscribed {
                     HStack {

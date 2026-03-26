@@ -70,6 +70,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency UNUserNot
         case .authorized, .provisional, .ephemeral:
             UIApplication.shared.registerForRemoteNotifications()
         case .denied:
+            AppPreferences.shared.isRegisteredForNotifications = false
+            NotificationCenter.default.post(name: .registeredForNotifications, object: self)
             break
         @unknown default:
             break
@@ -91,6 +93,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency UNUserNot
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        AppPreferences.shared.isRegisteredForNotifications = false
+        NotificationCenter.default.post(name: .registeredForNotifications, object: self)
         print("Failed to register for remote notifications: \(error)")
     }
     

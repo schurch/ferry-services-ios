@@ -79,6 +79,9 @@ struct SettingsView: View {
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             Task { await viewModel.refreshNotificationState() }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .registeredForNotifications)) { _ in
+            Task { await viewModel.refreshNotificationState() }
+        }
     }
 }
 
