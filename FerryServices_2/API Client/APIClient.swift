@@ -103,12 +103,27 @@ class APIClient {
     static func fetchTimetableDocuments(serviceID: Int? = nil) async throws -> [TimetableDocument] {
         do {
             let response = try await client.listTimetableDocuments(
-                query: .init(serviceID: serviceID)
+                query: .init(serviceID: serviceID),
+                headers: .init(ifNoneMatch: try await TimetableDocumentMetadataStore.eTag(serviceID: serviceID))
             )
             refreshOfflineSnapshotInBackground()
-            return try response.ok.body.applicationJsonCharsetUtf8
+            switch response {
+            case .ok(let ok):
+                let documents = try ok.body.applicationJsonCharsetUtf8
+                try await TimetableDocumentMetadataStore.save(
+                    documents: documents,
+                    eTag: ok.headers.eTag,
+                    serviceID: serviceID
+                )
+                return documents
+            case .undocumented(statusCode: 304, _):
+                return try await TimetableDocumentMetadataStore.documents(serviceID: serviceID)
+            default:
+                _ = try response.ok
+                throw APIError.badResponseCode
+            }
         } catch {
-            return try await OfflineSnapshotStore.timetableDocuments(serviceID: serviceID)
+            return try await TimetableDocumentMetadataStore.documents(serviceID: serviceID)
         }
     }
 
@@ -123,9 +138,18 @@ class APIClient {
     private static func refreshOfflineSnapshotInBackground() {
         Task.detached {
             do {
-                let response = try await client.getOfflineSnapshot()
-                let snapshot = try response.ok.body.applicationJsonCharsetUtf8
-                try await OfflineSnapshotStore.save(snapshot: snapshot)
+                let response = try await client.getOfflineSnapshot(
+                    headers: .init(ifNoneMatch: try await OfflineSnapshotStore.eTag())
+                )
+                switch response {
+                case .ok(let ok):
+                    let snapshot = try ok.body.applicationJsonCharsetUtf8
+                    try await OfflineSnapshotStore.save(snapshot: snapshot, eTag: ok.headers.eTag)
+                case .undocumented(statusCode: 304, _):
+                    break
+                default:
+                    break
+                }
             } catch {
                 // Best-effort cache refresh.
             }

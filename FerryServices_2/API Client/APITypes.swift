@@ -64,9 +64,14 @@ enum OfflineSnapshotStore {
     private static let snapshotFileName = "offline-snapshot"
     private static let snapshotFileExtension = "json"
     private static var cachedSnapshot: OfflineSnapshot?
+    private static var cachedMetadata: SnapshotMetadata?
 
     private static var snapshotCacheLocation: URL {
         applicationSupportDirectory.appendingPathComponent("offline-snapshot.json")
+    }
+
+    private static var metadataLocation: URL {
+        applicationSupportDirectory.appendingPathComponent("offline-snapshot-metadata.json")
     }
 
     private static var applicationSupportDirectory: URL {
@@ -75,7 +80,7 @@ enum OfflineSnapshotStore {
         return directory.appendingPathComponent("Offline", isDirectory: true)
     }
 
-    static func save(snapshot: OfflineSnapshot) throws {
+    static func save(snapshot: OfflineSnapshot, eTag: String?) throws {
         try FileManager.default.createDirectory(
             at: applicationSupportDirectory,
             withIntermediateDirectories: true
@@ -83,6 +88,11 @@ enum OfflineSnapshotStore {
         let data = try APIEncoder.shared.encode(snapshot)
         try data.write(to: snapshotCacheLocation, options: .atomic)
         cachedSnapshot = snapshot
+
+        let metadata = SnapshotMetadata(eTag: eTag, dataVersion: snapshot.dataVersion)
+        let metadataData = try APIEncoder.shared.encode(metadata)
+        try metadataData.write(to: metadataLocation, options: .atomic)
+        cachedMetadata = metadata
     }
 
     static func snapshot() throws -> OfflineSnapshot {
@@ -112,6 +122,14 @@ enum OfflineSnapshotStore {
         let snapshot = try APIDecoder.shared.decode(OfflineSnapshot.self, from: data)
         cachedSnapshot = snapshot
         return snapshot
+    }
+
+    static func eTag() throws -> String? {
+        if let eTag = try metadata()?.eTag {
+            return eTag
+        }
+
+        return try snapshot().dataVersion
     }
 
     static func services() throws -> [Service] {
@@ -246,5 +264,94 @@ enum OfflineSnapshotStore {
                 document.serviceIds.map { serviceID in (serviceID, document) }
             }, by: { $0.0 }).mapValues { $0.map(\.1) }
         }
+    }
+
+    private static func metadata() throws -> SnapshotMetadata? {
+        if let cachedMetadata {
+            return cachedMetadata
+        }
+
+        guard FileManager.default.fileExists(atPath: metadataLocation.path) else {
+            return nil
+        }
+
+        let data = try Data(contentsOf: metadataLocation)
+        let metadata = try APIDecoder.shared.decode(SnapshotMetadata.self, from: data)
+        cachedMetadata = metadata
+        return metadata
+    }
+
+    private struct SnapshotMetadata: Codable {
+        let eTag: String?
+        let dataVersion: String
+    }
+}
+
+@MainActor
+enum TimetableDocumentMetadataStore {
+    private static var cachedEntries: [String: CachedDocuments] = [:]
+
+    private static var cacheDirectory: URL {
+        let directory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+            ?? FileManager.default.temporaryDirectory
+        return directory.appendingPathComponent("TimetableDocumentMetadata", isDirectory: true)
+    }
+
+    static func eTag(serviceID: Int?) throws -> String? {
+        try cachedDocuments(serviceID: serviceID)?.eTag
+    }
+
+    static func save(
+        documents: [TimetableDocument],
+        eTag: String?,
+        serviceID: Int?
+    ) throws {
+        try FileManager.default.createDirectory(
+            at: cacheDirectory,
+            withIntermediateDirectories: true
+        )
+
+        let cachedDocuments = CachedDocuments(eTag: eTag, documents: documents)
+        let data = try APIEncoder.shared.encode(cachedDocuments)
+        try data.write(to: cacheLocation(serviceID: serviceID), options: .atomic)
+        cachedEntries[cacheKey(serviceID: serviceID)] = cachedDocuments
+    }
+
+    static func documents(serviceID: Int?) throws -> [TimetableDocument] {
+        if let cachedDocuments = try cachedDocuments(serviceID: serviceID) {
+            return cachedDocuments.documents
+        }
+
+        return try OfflineSnapshotStore.timetableDocuments(serviceID: serviceID)
+    }
+
+    private static func cachedDocuments(serviceID: Int?) throws -> CachedDocuments? {
+        let key = cacheKey(serviceID: serviceID)
+        if let cachedDocuments = cachedEntries[key] {
+            return cachedDocuments
+        }
+
+        let location = cacheLocation(serviceID: serviceID)
+        guard FileManager.default.fileExists(atPath: location.path) else {
+            return nil
+        }
+
+        let data = try Data(contentsOf: location)
+        let cachedDocuments = try APIDecoder.shared.decode(CachedDocuments.self, from: data)
+        cachedEntries[key] = cachedDocuments
+        return cachedDocuments
+    }
+
+    private static func cacheLocation(serviceID: Int?) -> URL {
+        cacheDirectory.appendingPathComponent("\(cacheKey(serviceID: serviceID)).json")
+    }
+
+    private static func cacheKey(serviceID: Int?) -> String {
+        serviceID.map { "service-\($0)" } ?? "all"
+    }
+
+    private struct CachedDocuments: Codable {
+        let eTag: String?
+        let documents: [TimetableDocument]
     }
 }
