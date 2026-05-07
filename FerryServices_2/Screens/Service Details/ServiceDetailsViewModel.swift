@@ -44,7 +44,7 @@ class ServiceDetailsViewModel {
     
     struct ScheduledDepartureSection: Identifiable {
         struct Row: Identifiable {
-            let id: UUID
+            let id: String
             let departureTimeText: String
             let arrivalTimeText: String
             let departureAccessibilityText: String
@@ -84,7 +84,7 @@ class ServiceDetailsViewModel {
             )
         })
         
-        let vessels = service.vessels?.map({
+        let vessels = service.vessels.map({
             Annotation(
                 coordinate: CLLocationCoordinate2D(
                     latitude: $0.latitude,
@@ -92,7 +92,7 @@ class ServiceDetailsViewModel {
                 ),
                 type: .vessel(course: $0.course ?? 0)
             )
-        }) ?? []
+        })
         
         return vessels + locations
     }
@@ -140,7 +140,7 @@ class ServiceDetailsViewModel {
             .sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending })
             .flatMap { location in
                 groupedScheduledDepartures(for: location).map { departures in
-                    let notes = departures.map(\.note).map(Self.normalizedNote)
+                    let notes = departures.map(\.notes).map(Self.normalizedNote)
                     let sharedNote: String? = {
                         guard let firstNote = notes.first, firstNote != nil else {
                             return nil
@@ -154,7 +154,7 @@ class ServiceDetailsViewModel {
                     let rows = departures.map { departureInfo in
                         let departureTime = departureInfo.departure.formatted(Date.timeFormatStyle)
                         let arrivalTime = departureInfo.arrival.formatted(Date.timeFormatStyle)
-                        let rowNote = Self.normalizedNote(departureInfo.note)
+                        let rowNote = Self.normalizedNote(departureInfo.notes)
                         
                         return ScheduledDepartureSection.Row(
                             id: departureInfo.id,
@@ -183,7 +183,7 @@ class ServiceDetailsViewModel {
         let allDepartures = locations.compactMap(\.scheduledDepartures).flatMap { $0 }
         guard !allDepartures.isEmpty else { return nil }
 
-        let notes = allDepartures.map(\.note).map(Self.normalizedNote)
+        let notes = allDepartures.map(\.notes).map(Self.normalizedNote)
         guard let first = notes.first, first != nil else { return nil }
         return notes.allSatisfy({ $0 == first }) ? first : nil
     }

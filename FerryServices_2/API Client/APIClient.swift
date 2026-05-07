@@ -7,183 +7,106 @@
 //
 
 import Foundation
+import OpenAPIRuntime
+import OpenAPIURLSession
 
 class APIClient {
-    private struct CreateInstallationBody: Encodable {
-        let deviceToken: String
-        let deviceType = "IOS"
-    }
-    
-    private struct CreateInstallationServiceBody: Encodable {
-        let serviceID: Int
-    }
-    
-//    static let baseURL = URL(string: "http://192.168.86.27:3001")
-//    static let baseURL = URL(string: "http://localhost:3001")
-//    private static let baseURL = URL(string: "http://test.scottishferryapp.com")
-    private static let baseURL = AppConfig.apiBaseURL
-    private static let root = "/api"
+    private static let client = Client(
+        serverURL: AppConfig.apiBaseURL,
+        configuration: .init(dateTranscoder: FerryServicesDateTranscoder()),
+        transport: URLSessionTransport()
+    )
     
     static func fetchServices() async throws -> [Service] {
-        let url = try makeURL(path: "\(APIClient.root)/services/")
-        return try await sendAndCacheResult(request: URLRequest(url: url))
+        let response = try await client.listServices()
+        let services = try response.ok.body.applicationJsonCharsetUtf8
+        cacheServices(services)
+        return services
     }
         
     static func fetchService(serviceID: Int, date: Date) async throws -> Service {
-        let url = try makeURL(path: "\(APIClient.root)/services/\(serviceID)").appending(
-            queryItems: [
-                URLQueryItem(
-                    name: "departuresDate",
-                    value: date.formatted(
-                        Date.ISO8601FormatStyle(timeZone: Calendar.current.timeZone)
-                            .year()
-                            .month()
-                            .day()
-                    )
-                )
-            ]
+        let departuresDate = date.formatted(
+            Date.ISO8601FormatStyle(timeZone: Calendar.current.timeZone)
+                .year()
+                .month()
+                .day()
         )
-        
-        return try await send(request: URLRequest(url: url))
+        let response = try await client.getService(
+            path: .init(serviceID: serviceID),
+            query: .init(departuresDate: departuresDate)
+        )
+        return try response.ok.body.applicationJsonCharsetUtf8
     }
     
     static func fetchService(serviceID: Int) async throws -> Service {
-        let url = try makeURL(path: "\(APIClient.root)/services/\(serviceID)")
-        return try await send(request: URLRequest(url: url))
+        let response = try await client.getService(path: .init(serviceID: serviceID))
+        return try response.ok.body.applicationJsonCharsetUtf8
     }
     
     @discardableResult static func addService(for installationID: UUID, serviceID: Int) async throws -> [Service] {
-        let url = try makeURL(path: "\(APIClient.root)/installations/\(installationID)/services")
-        let request = try createRequest(with: url, body: CreateInstallationServiceBody(serviceID: serviceID))
-        return try await send(request: request)
+        let response = try await client.addInstallationService(
+            path: .init(installationID: installationID.uuidString),
+            body: .applicationJsonCharsetUtf8(.init(serviceId: serviceID))
+        )
+        return try response.ok.body.applicationJsonCharsetUtf8
     }
     
     @discardableResult static func removeService(for installationID: UUID, serviceID: Int) async throws -> [Service] {
-        let url = try makeURL(path: "\(APIClient.root)/installations/\(installationID)/services/\(serviceID)")
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        
-        return try await send(request: request)
+        let response = try await client.deleteInstallationService(
+            path: .init(
+                installationID: installationID.uuidString,
+                serviceID: serviceID
+            )
+        )
+        return try response.ok.body.applicationJsonCharsetUtf8
     }
     
     @discardableResult static func createInstallation(installationID: UUID, deviceToken: String) async throws -> [Service] {
-        let url = try makeURL(path: "\(APIClient.root)/installations/\(installationID)")
-        let request = try createRequest(with: url, body: CreateInstallationBody(deviceToken: deviceToken))
-        return try await send(request: request)
+        let response = try await client.createInstallation(
+            path: .init(installationID: installationID.uuidString),
+            body: .applicationJsonCharsetUtf8(
+                .init(
+                    deviceToken: deviceToken,
+                    deviceType: .ios
+                )
+            )
+        )
+        return try response.ok.body.applicationJsonCharsetUtf8
     }
     
     static func getPushEnabledStatus(installationID: UUID) async throws -> Bool {
-        let url = try makeURL(path: "\(APIClient.root)/installations/\(installationID)/push-status")
-        let result: PushStatus = try await send(request: URLRequest(url: url))
-        return result.enabled
+        let response = try await client.getPushStatus(path: .init(installationID: installationID.uuidString))
+        return try response.ok.body.applicationJsonCharsetUtf8.enabled
     }
     
     static func updatePushEnabledStatus(installationID: UUID, isEnabled: Bool) async throws {
-        let url = try makeURL(path: "\(APIClient.root)/installations/\(installationID)/push-status")
-        let request = try createRequest(with: url, body: PushStatus(enabled: isEnabled))
-        let _: PushStatus = try await send(request: request)
+        let response = try await client.updatePushStatus(
+            path: .init(installationID: installationID.uuidString),
+            body: .applicationJsonCharsetUtf8(.init(enabled: isEnabled))
+        )
+        _ = try response.ok.body.applicationJsonCharsetUtf8
     }
     
-    private static func send<T: Decodable>(request: URLRequest) async throws -> T {
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        guard let response = response as? HTTPURLResponse else {
-            throw APIError.expectedHTTPResponse
-        }
-        
-        switch response.statusCode {
-        case 200..<300:
-            return try APIDecoder.shared.decode(T.self, from: data)
-        default:
-            throw APIError.badResponseCode
-        }
-    }
-    
-    private static func sendAndCacheResult(request: URLRequest) async throws -> [Service] {
-        let services: [Service] = try await send(request: request)
-        let servicesToCache: [Service] = services.map {
-            let locationsWithoutNotes = $0.locations.map { location in
-                let scheduledDeparturesWithoutNotes = location.scheduledDepartures?.map { departure in
-                    Service.Location.ScheduledDeparture(
-                        id: departure.id,
-                        departure: departure.departure,
-                        arrival: departure.arrival,
-                        destination: departure.destination,
-                        note: nil
-                    )
-                }
-                let nextDepartureWithoutNote = location.nextDeparture.map { departure in
-                    Service.Location.ScheduledDeparture(
-                        id: departure.id,
-                        departure: departure.departure,
-                        arrival: departure.arrival,
-                        destination: departure.destination,
-                        note: nil
-                    )
-                }
-
-                return Service.Location(
-                    id: location.id,
-                    name: location.name,
-                    latitude: location.latitude,
-                    longitude: location.longitude,
-                    weather: location.weather,
-                    scheduledDepartures: scheduledDeparturesWithoutNotes,
-                    nextDeparture: nextDepartureWithoutNote,
-                    nextRailDeparture: location.nextRailDeparture
-                )
-            }
-
-            return Service(
-                serviceId: $0.serviceId,
-                status: .unknown,
-                area: $0.area,
-                route: $0.route,
-                disruptionReason: nil,
-                lastUpdatedDate: nil,
-                updated: nil,
-                additionalInfo: nil,
-                locations: locationsWithoutNotes,
-                vessels: [],
-                operator: $0.operator,
-                scheduledDeparturesAvailable: nil
-            )
-        }
-        
+    private static func cacheServices(_ services: [Service]) {
         do {
-            let data = try APIEncoder.shared.encode(servicesToCache)
+            let data = try APIEncoder.shared.encode(services)
             try data.write(to: Service.servicesCacheLocation)
         } catch let error {
             print("Error caching services: \(error)")
         }
-        
-        return services
     }
-    
-    private static func createRequest<T: Encodable>(with url: URL, body: T) throws -> URLRequest {
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
+}
+
+private struct FerryServicesDateTranscoder: DateTranscoder {
+    func encode(_ date: Date) throws -> String {
+        try ISO8601DateTranscoder.iso8601WithFractionalSeconds.encode(date)
+    }
+
+    func decode(_ dateString: String) throws -> Date {
         do {
-            request.httpBody = try encoder.encode(body)
+            return try ISO8601DateTranscoder.iso8601WithFractionalSeconds.decode(dateString)
         } catch {
-            throw APIError.requestEncodingFailed
+            return try ISO8601DateTranscoder.iso8601.decode(dateString)
         }
-        
-        var headers = request.allHTTPHeaderFields ?? [:]
-        headers["Content-Type"] = "application/json"
-        request.allHTTPHeaderFields = headers
-        
-        return request
-    }
-
-    private static func makeURL(path: String) throws -> URL {
-        guard let url = URL(string: path, relativeTo: baseURL) else {
-            throw APIError.invalidURL
-        }
-
-        return url
     }
 }

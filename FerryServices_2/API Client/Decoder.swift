@@ -11,7 +11,6 @@ import Foundation
 struct APIDecoder {
     static let shared: JSONDecoder = {
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
         decoder.dateDecodingStrategy = .custom { dateDecoder in
             let string = try dateDecoder.singleValueContainer().decode(String.self)
             let dateFormatter = ISO8601DateFormatter()
@@ -31,7 +30,6 @@ struct APIDecoder {
 struct APIEncoder {
     static let shared: JSONEncoder = {
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
         encoder.dateEncodingStrategy = .iso8601
         return encoder
     }()

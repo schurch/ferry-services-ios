@@ -12,7 +12,7 @@ import Combine
 
 struct ServiceDetailsView: View {
     private struct DepartureNoteSheetItem: Identifiable {
-        let id: UUID
+        let id: String
         let note: String
     }
     

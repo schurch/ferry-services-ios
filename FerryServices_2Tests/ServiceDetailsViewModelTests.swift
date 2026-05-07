@@ -50,25 +50,25 @@ struct ServiceDetailsViewModelTests {
             scheduledDeparturesAvailable: true,
             vessels: [
                 Vessel(
-                    mmsi: 123,
-                    name: "MV Test",
-                    speed: 10,
                     course: 45,
+                    lastReceived: base,
                     latitude: 55,
                     longitude: -5,
-                    lastReceived: base
+                    mmsi: 123,
+                    name: "MV Test",
+                    speed: 10
                 )
             ]
         )
 
         let viewModel = ServiceDetailsViewModel(serviceID: 77, service: service)
 
-        #expect(viewModel.sortedLocationsByName.map(\.name) == ["Alpha", "Zeta"])
-        #expect(viewModel.scheduledDepartureSections.map(\.originName) == ["Alpha", "Alpha", "Zeta"])
+        #expect(viewModel.sortedLocationsByName.map { $0.name } == ["Alpha", "Zeta"])
+        #expect(viewModel.scheduledDepartureSections.map { $0.originName } == ["Alpha", "Alpha", "Zeta"])
 
         let alphaSections = viewModel.scheduledDepartureSections.filter { $0.originName == "Alpha" }
         #expect(alphaSections.count == 2)
-        #expect(alphaSections.map(\.destinationName).sorted() == ["Brodick", "Campbeltown"])
+        #expect(alphaSections.map { $0.destinationName }.sorted() == ["Brodick", "Campbeltown"])
         #expect(alphaSections.first { $0.destinationName == "Brodick" }?.rows.count == 2)
 
         #expect(viewModel.showScheduledDepartureWarning)

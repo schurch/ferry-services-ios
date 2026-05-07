@@ -8,14 +8,14 @@ enum TestDataFactory {
         website: String? = nil
     ) -> Service.ServiceOperator {
         Service.ServiceOperator(
+            email: nil,
+            facebook: nil,
             id: id,
+            internationalNumber: nil,
+            localNumber: nil,
             name: name,
             website: website,
-            localNumber: nil,
-            internationalNumber: nil,
-            email: nil,
-            x: nil,
-            facebook: nil
+            x: nil
         )
     }
 
@@ -26,14 +26,19 @@ enum TestDataFactory {
         destinationName: String
     ) -> Service.Location.ScheduledDeparture {
         Service.Location.ScheduledDeparture(
-            departure: departure,
             arrival: arrival,
+            departure: departure,
             destination: .init(
                 id: destinationID,
-                name: destinationName,
                 latitude: 55.0,
-                longitude: -5.0
-            )
+                longitude: -5.0,
+                name: destinationName,
+                nextDeparture: nil,
+                nextRailDeparture: nil,
+                scheduledDepartures: nil,
+                weather: nil
+            ),
+            notes: nil
         )
     }
 
@@ -44,13 +49,13 @@ enum TestDataFactory {
     ) -> Service.Location {
         Service.Location(
             id: id,
-            name: name,
             latitude: 55.0,
             longitude: -5.0,
-            weather: nil,
-            scheduledDepartures: scheduledDepartures,
+            name: name,
             nextDeparture: nil,
-            nextRailDeparture: nil
+            nextRailDeparture: nil,
+            scheduledDepartures: scheduledDepartures,
+            weather: nil
         )
     }
 
@@ -66,18 +71,19 @@ enum TestDataFactory {
         vessels: [Vessel]? = nil
     ) -> Service {
         Service(
-            serviceId: id,
-            status: status,
+            additionalInfo: additionalInfo,
             area: area,
-            route: route,
             disruptionReason: nil,
             lastUpdatedDate: nil,
-            updated: nil,
-            additionalInfo: additionalInfo,
             locations: locations,
-            vessels: vessels,
-            operator: serviceOperator,
-            scheduledDeparturesAvailable: scheduledDeparturesAvailable
+            _operator: serviceOperator,
+            route: route,
+            scheduledDeparturesAvailable: scheduledDeparturesAvailable,
+            serviceId: id,
+            status: status,
+            timetableDocuments: nil,
+            updated: Date(),
+            vessels: vessels ?? []
         )
     }
 }

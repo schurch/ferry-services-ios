@@ -1,0 +1,8 @@
+generate:
+  - types
+  - client
+accessModifier: internal
+namingStrategy: idiomatic
+typeOverrides:
+  schemas:
+    ServiceStatus: FerryServices_2.ServiceStatus

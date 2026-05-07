@@ -46,7 +46,7 @@ struct UIKitServiceMapView: UIViewRepresentable {
         let locationCoordinates = service.locations.map {
             CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
         }
-        let vesselCoordinates = (service.vessels ?? []).map {
+        let vesselCoordinates = service.vessels.map {
             CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
         }
         let focusCoordinates = if fitToLocationsOnly, !locationCoordinates.isEmpty {
@@ -90,7 +90,7 @@ struct UIKitServiceMapView: UIViewRepresentable {
                 )
             }
 
-            let vesselAnnotations: [ServiceAnnotation] = (service.vessels ?? []).map { vessel in
+            let vesselAnnotations: [ServiceAnnotation] = service.vessels.map { vessel in
                 let subtitle: String = {
                     if let speed = vessel.speed {
                         return "\(speed.formatted(.number.precision(.fractionLength(1)))) kn"
