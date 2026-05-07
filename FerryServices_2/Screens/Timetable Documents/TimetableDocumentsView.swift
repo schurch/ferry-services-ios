@@ -8,7 +8,7 @@ final class TimetableDocumentsViewModel {
     var documents: [TimetableDocument] = []
     var isLoading = false
     var errorMessage: String?
-    var previewDocument: PreviewDocument?
+    var previewURL: URL?
 
     private let serviceID: Int?
     private var downloadingDocumentIDs: Set<Int> = []
@@ -42,7 +42,7 @@ final class TimetableDocumentsViewModel {
             defer { downloadingDocumentIDs.remove(document.id) }
 
             do {
-                previewDocument = PreviewDocument(url: try await APIClient.downloadTimetableDocument(document))
+                previewURL = try await APIClient.downloadTimetableDocument(document)
             } catch {
                 errorMessage = "Unable to download this timetable document."
             }
@@ -112,9 +112,7 @@ struct TimetableDocumentsView: View {
         .refreshable {
             await viewModel.loadDocuments()
         }
-        .sheet(item: previewDocumentBinding) { item in
-            QuickLookPreview(url: item.url)
-        }
+        .quickLookPreview(previewURLBinding)
         .alert("Timetables", isPresented: errorIsPresented) {
             Button("OK", role: .cancel) { }
         } message: {
@@ -141,50 +139,10 @@ struct TimetableDocumentsView: View {
         )
     }
 
-    private var previewDocumentBinding: Binding<PreviewDocument?> {
+    private var previewURLBinding: Binding<URL?> {
         Binding(
-            get: { viewModel.previewDocument },
-            set: { viewModel.previewDocument = $0 }
+            get: { viewModel.previewURL },
+            set: { viewModel.previewURL = $0 }
         )
-    }
-}
-
-struct PreviewDocument: Identifiable {
-    let id = UUID()
-    let url: URL
-}
-
-private struct QuickLookPreview: UIViewControllerRepresentable {
-    let url: URL
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(url: url)
-    }
-
-    func makeUIViewController(context: Context) -> QLPreviewController {
-        let controller = QLPreviewController()
-        controller.dataSource = context.coordinator
-        return controller
-    }
-
-    func updateUIViewController(_ uiViewController: QLPreviewController, context: Context) {}
-
-    final class Coordinator: NSObject, QLPreviewControllerDataSource {
-        let url: URL
-
-        init(url: URL) {
-            self.url = url
-        }
-
-        func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-            1
-        }
-
-        func previewController(
-            _ controller: QLPreviewController,
-            previewItemAt index: Int
-        ) -> QLPreviewItem {
-            url as NSURL
-        }
     }
 }
