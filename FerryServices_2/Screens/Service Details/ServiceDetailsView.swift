@@ -35,12 +35,14 @@ struct ServiceDetailsView: View {
     
     var showDisruptionInfo: (String) -> Void
     var showMap: (Service) -> Void
+    var showTimetableDocuments: (Int, String) -> Void
     
     init(
         serviceID: Int,
         service: Service?,
         showDisruptionInfo: @escaping (String) -> Void,
-        showMap: @escaping (Service) -> Void
+        showMap: @escaping (Service) -> Void,
+        showTimetableDocuments: @escaping (Int, String) -> Void
     ) {
         _viewModel = State(
             initialValue: ServiceDetailsViewModel(
@@ -50,6 +52,7 @@ struct ServiceDetailsView: View {
         )
         self.showDisruptionInfo = showDisruptionInfo
         self.showMap = showMap
+        self.showTimetableDocuments = showTimetableDocuments
     }
     
     var body: some View {
@@ -86,6 +89,24 @@ struct ServiceDetailsView: View {
                     }
                     .padding(.top, 8)
                     .listRowSeparator(.hidden)
+                }
+
+                if !viewModel.timetableDocuments.isEmpty {
+                    Section {
+                        Button {
+                            showTimetableDocuments(service.serviceId, "\(service.area) Timetables")
+                        } label: {
+                            HStack {
+                                Label("Timetable Documents", systemImage: "doc.text")
+                                Spacer()
+                                Text("\(viewModel.timetableDocuments.count)")
+                                    .foregroundStyle(.secondary)
+                                Image(systemName: "chevron.forward")
+                                    .font(Font.system(.caption).weight(.bold))
+                                    .foregroundColor(Color(UIColor.tertiaryLabel))
+                            }
+                        }
+                    }
                 }
                 
                 if viewModel.shouldShowScheduledDepartures {

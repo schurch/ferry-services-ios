@@ -60,16 +60,17 @@ class ServicesViewModel {
     }
     
     var sections: Sections
+    var isLoading: Bool = false
     var searchText = "" {
         didSet {
             refreshSections()
         }
     }
     
-    private var services: [Service] = Service.defaultServices
+    private var services: [Service] = []
     
     init() {
-        sections = ServicesViewModel.createSections(services: Service.defaultServices)
+        sections = ServicesViewModel.createSections(services: [])
     }
     
     init(initialServices: [Service], searchText: String = "") {
@@ -79,6 +80,9 @@ class ServicesViewModel {
     }
     
     func fetchServices() async {
+        isLoading = services.isEmpty
+        defer { isLoading = false }
+
         do {
             services = try await APIClient.fetchServices()
             refreshSections()

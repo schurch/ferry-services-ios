@@ -18,10 +18,13 @@ class APIClient {
     )
     
     static func fetchServices() async throws -> [Service] {
-        let response = try await client.listServices()
-        let services = try response.ok.body.applicationJsonCharsetUtf8
-        cacheServices(services)
-        return services
+        do {
+            let response = try await client.listServices()
+            refreshOfflineSnapshotInBackground()
+            return try response.ok.body.applicationJsonCharsetUtf8
+        } catch {
+            return try await OfflineSnapshotStore.services()
+        }
     }
         
     static func fetchService(serviceID: Int, date: Date) async throws -> Service {
@@ -31,16 +34,26 @@ class APIClient {
                 .month()
                 .day()
         )
-        let response = try await client.getService(
-            path: .init(serviceID: serviceID),
-            query: .init(departuresDate: departuresDate)
-        )
-        return try response.ok.body.applicationJsonCharsetUtf8
+        do {
+            let response = try await client.getService(
+                path: .init(serviceID: serviceID),
+                query: .init(departuresDate: departuresDate)
+            )
+            refreshOfflineSnapshotInBackground()
+            return try response.ok.body.applicationJsonCharsetUtf8
+        } catch {
+            return try await OfflineSnapshotStore.service(serviceID: serviceID, date: date)
+        }
     }
     
     static func fetchService(serviceID: Int) async throws -> Service {
-        let response = try await client.getService(path: .init(serviceID: serviceID))
-        return try response.ok.body.applicationJsonCharsetUtf8
+        do {
+            let response = try await client.getService(path: .init(serviceID: serviceID))
+            refreshOfflineSnapshotInBackground()
+            return try response.ok.body.applicationJsonCharsetUtf8
+        } catch {
+            return try await OfflineSnapshotStore.service(serviceID: serviceID)
+        }
     }
     
     @discardableResult static func addService(for installationID: UUID, serviceID: Int) async throws -> [Service] {
@@ -86,14 +99,81 @@ class APIClient {
         )
         _ = try response.ok.body.applicationJsonCharsetUtf8
     }
-    
-    private static func cacheServices(_ services: [Service]) {
+
+    static func fetchTimetableDocuments(serviceID: Int? = nil) async throws -> [TimetableDocument] {
         do {
-            let data = try APIEncoder.shared.encode(services)
-            try data.write(to: Service.servicesCacheLocation)
-        } catch let error {
-            print("Error caching services: \(error)")
+            let response = try await client.listTimetableDocuments(
+                query: .init(serviceID: serviceID)
+            )
+            refreshOfflineSnapshotInBackground()
+            return try response.ok.body.applicationJsonCharsetUtf8
+        } catch {
+            return try await OfflineSnapshotStore.timetableDocuments(serviceID: serviceID)
         }
+    }
+
+    static func localTimetableDocumentURL(for document: TimetableDocument) -> URL? {
+        TimetableDocumentStore.localURL(for: document)
+    }
+
+    static func downloadTimetableDocument(_ document: TimetableDocument) async throws -> URL {
+        try await TimetableDocumentStore.download(document: document)
+    }
+
+    private static func refreshOfflineSnapshotInBackground() {
+        Task.detached {
+            do {
+                let response = try await client.getOfflineSnapshot()
+                let snapshot = try response.ok.body.applicationJsonCharsetUtf8
+                try await OfflineSnapshotStore.save(snapshot: snapshot)
+            } catch {
+                // Best-effort cache refresh.
+            }
+        }
+    }
+}
+
+private enum TimetableDocumentStore {
+    private static var documentsDirectory: URL {
+        let directory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+            ?? FileManager.default.temporaryDirectory
+        return directory.appendingPathComponent("TimetableDocuments", isDirectory: true)
+    }
+
+    static func localURL(for document: TimetableDocument) -> URL? {
+        let url = fileURL(for: document)
+        return FileManager.default.fileExists(atPath: url.path) ? url : nil
+    }
+
+    static func download(document: TimetableDocument) async throws -> URL {
+        if let localURL = localURL(for: document) {
+            return localURL
+        }
+
+        guard let remoteURL = URL(string: document.sourceUrl) else {
+            throw APIError.invalidURL
+        }
+
+        try FileManager.default.createDirectory(
+            at: documentsDirectory,
+            withIntermediateDirectories: true
+        )
+
+        let (temporaryURL, _) = try await URLSession.shared.download(from: remoteURL)
+        let destinationURL = fileURL(for: document)
+        try? FileManager.default.removeItem(at: destinationURL)
+        try FileManager.default.moveItem(at: temporaryURL, to: destinationURL)
+        return destinationURL
+    }
+
+    private static func fileURL(for document: TimetableDocument) -> URL {
+        let hash = document.contentHash ?? "unknown"
+        let extensionValue = URL(string: document.sourceUrl)?.pathExtension
+        let pathExtension = (extensionValue?.isEmpty == false ? extensionValue : nil)
+            ?? (document.contentType == "application/pdf" ? "pdf" : "download")
+        return documentsDirectory.appendingPathComponent(
+            "\(document.id)-\(hash).\(pathExtension)"
+        )
     }
 }
 

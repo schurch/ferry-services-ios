@@ -70,6 +70,7 @@ class ServiceDetailsViewModel {
     var hasLoadedNotificationsAuthorization: Bool = false
     var isRegisteredForNotifications: Bool = false
     var failedToLoadService: Bool = false
+    var timetableDocuments: [TimetableDocument] = []
     
     var annotations: [Annotation] {
         guard let service else { return [] }
@@ -275,12 +276,14 @@ class ServiceDetailsViewModel {
         }
         
         self.subscribed = AppPreferences.shared.subscribedServiceIDs.contains(serviceID)
+        self.timetableDocuments = seedService?.timetableDocuments ?? []
         
         checkIsRegisteredForNotifications()
     }
     
     func handleDidBecomeActive() async {
         await fetchLatestService()
+        await fetchTimetableDocuments()
         await checkIsEnabledForNotifications()
     }
     
@@ -352,6 +355,14 @@ class ServiceDetailsViewModel {
             applyService(fallback)
         } else {
             failedToLoadService = true
+        }
+    }
+
+    func fetchTimetableDocuments() async {
+        do {
+            timetableDocuments = try await APIClient.fetchTimetableDocuments(serviceID: serviceID)
+        } catch {
+            timetableDocuments = service?.timetableDocuments ?? []
         }
     }
     

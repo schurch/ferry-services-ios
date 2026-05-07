@@ -14,10 +14,18 @@ struct RootView: View {
             .navigationTitle("Services")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingSettings = true
-                    } label: {
-                        Image(systemName: "gearshape")
+                    HStack {
+                        Button {
+                            navigationState.pushTimetableDocuments()
+                        } label: {
+                            Image(systemName: "doc.text")
+                        }
+
+                        Button {
+                            showingSettings = true
+                        } label: {
+                            Image(systemName: "gearshape")
+                        }
                     }
                 }
             }
@@ -36,6 +44,12 @@ struct RootView: View {
                             },
                             showMap: { service in
                                 navigationState.pushMap(service: service)
+                            },
+                            showTimetableDocuments: { serviceID, title in
+                                navigationState.pushTimetableDocuments(
+                                    serviceID: serviceID,
+                                    title: title
+                                )
                             }
                         )
                     } else {
@@ -44,6 +58,13 @@ struct RootView: View {
                 case .map(let id):
                     if let service = navigationState.mapService(for: id) {
                         MapView(service: service)
+                    }
+                case .timetableDocuments(let id):
+                    if let payload = navigationState.timetableDocuments(for: id) {
+                        TimetableDocumentsView(
+                            serviceID: payload.serviceID,
+                            title: payload.title
+                        )
                     }
                 case .webInfo(let id):
                     if let html = navigationState.webInfo(for: id) {

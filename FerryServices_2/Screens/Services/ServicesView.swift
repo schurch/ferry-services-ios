@@ -16,6 +16,12 @@ struct ServicesView: View {
     
     var body: some View {
         List {
+            if viewModel.isLoading {
+                ProgressView()
+                    .frame(maxWidth: .infinity)
+                    .listRowSeparator(.hidden)
+            }
+
             switch viewModel.sections {
             case .single(let rows):
                 ForEach(rows) { row in

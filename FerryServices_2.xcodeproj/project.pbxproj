@@ -15,6 +15,7 @@
 		F82000032F80000100AA0001 /* openapi.json in Resources */ = {isa = PBXBuildFile; fileRef = F82000082F80000100AA0001 /* openapi.json */; };
 		F82000042F80000100AA0001 /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = F82000142F80000100AA0001 /* OpenAPIRuntime */; };
 		F82000052F80000100AA0001 /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = F82000152F80000100AA0001 /* OpenAPIURLSession */; };
+		F82100022F90000100AA0001 /* TimetableDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82100012F90000100AA0001 /* TimetableDocumentsView.swift */; };
 		F836406E2A6A4C27008F44AB /* ServiceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */; };
 		F83640702A6BD702008F44AB /* ServiceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406F2A6BD702008F44AB /* ServiceDetailsViewModel.swift */; };
 		F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6D2A88963900849ABA /* Service+Extensions.swift */; };
@@ -69,7 +70,7 @@
 		FDB2A774257B2293000B0659 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = FDB2A773257B2293000B0659 /* Sentry */; };
 		FDB2A77E257B25E0000B0659 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2A77D257B25E0000B0659 /* CoreServices.framework */; };
 		FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDB2A789257B2716000B0659 /* Launch Screen.storyboard */; };
-		FDC03DE919DFDD8D000CE1FA /* services.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* services.json */; };
+		FDC03DE919DFDD8D000CE1FA /* offline-snapshot.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* offline-snapshot.json */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +115,7 @@
 		F82000062F80000100AA0001 /* APITypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITypes.swift; sourceTree = "<group>"; };
 		F82000072F80000100AA0001 /* openapi-generator-config.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = "openapi-generator-config.yaml"; sourceTree = "<group>"; };
 		F82000082F80000100AA0001 /* openapi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = openapi.json; sourceTree = "<group>"; };
+		F82100012F90000100AA0001 /* TimetableDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDocumentsView.swift; sourceTree = "<group>"; };
 		F836406D2A6A4C27008F44AB /* ServiceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsView.swift; sourceTree = "<group>"; };
 		F836406F2A6BD702008F44AB /* ServiceDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsViewModel.swift; sourceTree = "<group>"; };
 		F8726C6D2A88963900849ABA /* Service+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Service+Extensions.swift"; sourceTree = "<group>"; };
@@ -180,7 +182,7 @@
 		FDB2A789257B2716000B0659 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
-		FDC03DE819DFDD8D000CE1FA /* services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
+		FDC03DE819DFDD8D000CE1FA /* offline-snapshot.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "offline-snapshot.json"; sourceTree = "<group>"; };
 		FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FerryServices_2.entitlements; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -300,9 +302,18 @@
 				FD1B5F8B258479150098B96B /* Service Details */,
 				FD1B5F9E258479150098B96B /* Services */,
 				F8FCD1072C30CEB20059492D /* Settings */,
+				F82100032F90000100AA0001 /* Timetable Documents */,
 				FD1B5F9A258479150098B96B /* Web Information */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		F82100032F90000100AA0001 /* Timetable Documents */ = {
+			isa = PBXGroup;
+			children = (
+				F82100012F90000100AA0001 /* TimetableDocumentsView.swift */,
+			);
+			path = "Timetable Documents";
 			sourceTree = "<group>";
 		};
 		FD1B5F8B258479150098B96B /* Service Details */ = {
@@ -419,7 +430,7 @@
 		FD753ED3197A256E00CC5DE3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FDC03DE819DFDD8D000CE1FA /* services.json */,
+				FDC03DE819DFDD8D000CE1FA /* offline-snapshot.json */,
 				FD753ED4197A256E00CC5DE3 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -569,7 +580,7 @@
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				F82000032F80000100AA0001 /* openapi.json in Resources */,
 				F82000022F80000100AA0001 /* openapi-generator-config.yaml in Resources */,
-				FDC03DE919DFDD8D000CE1FA /* services.json in Resources */,
+				FDC03DE919DFDD8D000CE1FA /* offline-snapshot.json in Resources */,
 				FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -623,6 +634,7 @@
 				F88848082C957C81004A6848 /* DisruptionIndicator.swift in Sources */,
 				FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */,
 				F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */,
+				F82100022F90000100AA0001 /* TimetableDocumentsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

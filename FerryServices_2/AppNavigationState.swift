@@ -9,12 +9,18 @@ final class AppNavigationState {
     enum Destination: Hashable {
         case serviceDetails(UUID)
         case map(UUID)
+        case timetableDocuments(UUID)
         case webInfo(UUID)
     }
     
     struct ServiceDetailsPayload {
         let serviceID: Int
         let seedService: Service?
+    }
+
+    struct TimetableDocumentsPayload {
+        let serviceID: Int?
+        let title: String
     }
 
     var path: [Destination] = [] {
@@ -26,6 +32,7 @@ final class AppNavigationState {
 
     private var serviceDetailsPayloads: [UUID: ServiceDetailsPayload] = [:]
     private var mapServices: [UUID: Service] = [:]
+    private var timetableDocumentsPayloads: [UUID: TimetableDocumentsPayload] = [:]
     private var webInfoHTML: [UUID: String] = [:]
     
     func pushServiceDetails(service: Service) {
@@ -51,6 +58,15 @@ final class AppNavigationState {
         path.append(.map(id))
     }
 
+    func pushTimetableDocuments(serviceID: Int? = nil, title: String = "Timetables") {
+        let id = UUID()
+        timetableDocumentsPayloads[id] = TimetableDocumentsPayload(
+            serviceID: serviceID,
+            title: title
+        )
+        path.append(.timetableDocuments(id))
+    }
+
     func pushWebInfo(html: String) {
         let id = UUID()
         webInfoHTML[id] = html
@@ -59,6 +75,10 @@ final class AppNavigationState {
 
     func mapService(for id: UUID) -> Service? {
         mapServices[id]
+    }
+
+    func timetableDocuments(for id: UUID) -> TimetableDocumentsPayload? {
+        timetableDocumentsPayloads[id]
     }
 
     func webInfo(for id: UUID) -> String? {
@@ -71,6 +91,11 @@ final class AppNavigationState {
         
         let mapIDs = activeIDs(for: \.mapID)
         mapServices = mapServices.filter { mapIDs.contains($0.key) }
+
+        let timetableDocumentsIDs = activeIDs(for: \.timetableDocumentsID)
+        timetableDocumentsPayloads = timetableDocumentsPayloads.filter {
+            timetableDocumentsIDs.contains($0.key)
+        }
 
         let webInfoIDs = activeIDs(for: \.webInfoID)
         webInfoHTML = webInfoHTML.filter { webInfoIDs.contains($0.key) }
@@ -88,6 +113,10 @@ private extension AppNavigationState.Destination {
     
     var mapID: UUID? {
         if case .map(let id) = self { id } else { nil }
+    }
+
+    var timetableDocumentsID: UUID? {
+        if case .timetableDocuments(let id) = self { id } else { nil }
     }
     
     var webInfoID: UUID? {
