@@ -20,6 +20,8 @@
 		F83640702A6BD702008F44AB /* ServiceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836406F2A6BD702008F44AB /* ServiceDetailsViewModel.swift */; };
 		F8726C6E2A88963900849ABA /* Service+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6D2A88963900849ABA /* Service+Extensions.swift */; };
 		F8726C702A88A3BC00849ABA /* ServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8726C6F2A88A3BC00849ABA /* ServicesViewModel.swift */; };
+		F88848082C957C81004A6848 /* DisruptionIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88848072C957C81004A6848 /* DisruptionIndicator.swift */; };
+		F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */; };
 		F8A111102F70000100AAA001 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A111112F70000100AAA001 /* MapViewModel.swift */; };
 		F8A111122F70000100AAA001 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A111132F70000100AAA001 /* SettingsViewModel.swift */; };
 		F8A111142F70000100AAA001 /* WebInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A111152F70000100AAA001 /* WebInformationViewModel.swift */; };
@@ -28,9 +30,12 @@
 		F8A1111A2F70000100AAA001 /* ServiceOperatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A1111B2F70000100AAA001 /* ServiceOperatorView.swift */; };
 		F8A1111C2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A1111D2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift */; };
 		F8A1111E2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A1111F2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift */; };
-		F88848082C957C81004A6848 /* DisruptionIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88848072C957C81004A6848 /* DisruptionIndicator.swift */; };
-		F89E0BA6264FB65200A232E5 /* Status+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */; };
 		F8AC22302A8F31E1001C01FE /* Operator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */; };
+		F8B200012F70000100AAA001 /* AppNavigationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B200022F70000100AAA001 /* AppNavigationStateTests.swift */; };
+		F8B200032F70000100AAA001 /* ServicesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B200042F70000100AAA001 /* ServicesViewModelTests.swift */; };
+		F8B200052F70000100AAA001 /* ServiceDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B200062F70000100AAA001 /* ServiceDetailsViewModelTests.swift */; };
+		F8B200072F70000100AAA001 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B200082F70000100AAA001 /* SettingsViewModelTests.swift */; };
+		F8B200092F70000100AAA001 /* TestDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B2000A2F70000100AAA001 /* TestDataFactory.swift */; };
 		F8EBB3052A887F8F003DF8F3 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */; };
 		F8EFFA702B71E28F004EBA8D /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EFFA6F2B71E28E004EBA8D /* UserDefaultKeys.swift */; };
 		F8EFFA722B71E2A7004EBA8D /* Installation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EFFA712B71E2A7004EBA8D /* Installation.swift */; };
@@ -49,11 +54,6 @@
 		FD1B5FD4258479E10098B96B /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1B5FD3258479E10098B96B /* Decoder.swift */; };
 		FD753ED6197A256E00CC5DE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD753ED5197A256E00CC5DE3 /* AppDelegate.swift */; };
 		FD753EDD197A256E00CC5DE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD753EDC197A256E00CC5DE3 /* Images.xcassets */; };
-		F8B200012F70000100AAA001 /* AppNavigationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B200022F70000100AAA001 /* AppNavigationStateTests.swift */; };
-		F8B200032F70000100AAA001 /* ServicesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B200042F70000100AAA001 /* ServicesViewModelTests.swift */; };
-		F8B200052F70000100AAA001 /* ServiceDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B200062F70000100AAA001 /* ServiceDetailsViewModelTests.swift */; };
-		F8B200072F70000100AAA001 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B200082F70000100AAA001 /* SettingsViewModelTests.swift */; };
-		F8B200092F70000100AAA001 /* TestDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B2000A2F70000100AAA001 /* TestDataFactory.swift */; };
 		FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD839D6E257B112E00D12705 /* Colors.xcassets */; };
 		FD8819E61A998BDA002A976A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E51A998BDA002A976A /* AudioToolbox.framework */; };
 		FD8819E81A998BE4002A976A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD8819E71A998BE4002A976A /* CFNetwork.framework */; };
@@ -109,9 +109,9 @@
 
 /* Begin PBXFileReference section */
 		02D9493F193C4A87EAD799AC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8111585281E148600DE8E59 /* MapViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewHelpers.swift; sourceTree = "<group>"; };
 		F8111589281E148600DE8E59 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		F811158B281E148600DE8E59 /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
-		F8111585281E148600DE8E59 /* MapViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewHelpers.swift; sourceTree = "<group>"; };
 		F82000062F80000100AA0001 /* APITypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITypes.swift; sourceTree = "<group>"; };
 		F82000072F80000100AA0001 /* openapi-generator-config.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = "openapi-generator-config.yaml"; sourceTree = "<group>"; };
 		F82000082F80000100AA0001 /* openapi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = openapi.json; sourceTree = "<group>"; };
@@ -122,8 +122,6 @@
 		F8726C6F2A88A3BC00849ABA /* ServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesViewModel.swift; sourceTree = "<group>"; };
 		F88848072C957C81004A6848 /* DisruptionIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionIndicator.swift; sourceTree = "<group>"; };
 		F89E0BA5264FB65200A232E5 /* Status+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Status+Extensions.swift"; sourceTree = "<group>"; };
-		F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operator+Extensions.swift"; sourceTree = "<group>"; };
-		F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
 		F8A111112F70000100AAA001 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		F8A111132F70000100AAA001 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		F8A111152F70000100AAA001 /* WebInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebInformationViewModel.swift; sourceTree = "<group>"; };
@@ -132,6 +130,13 @@
 		F8A1111B2F70000100AAA001 /* ServiceOperatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceOperatorView.swift; sourceTree = "<group>"; };
 		F8A1111D2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsHeaderSectionView.swift; sourceTree = "<group>"; };
 		F8A1111F2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsStatusSectionView.swift; sourceTree = "<group>"; };
+		F8AC222F2A8F31E1001C01FE /* Operator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operator+Extensions.swift"; sourceTree = "<group>"; };
+		F8B200022F70000100AAA001 /* AppNavigationStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationStateTests.swift; sourceTree = "<group>"; };
+		F8B200042F70000100AAA001 /* ServicesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesViewModelTests.swift; sourceTree = "<group>"; };
+		F8B200062F70000100AAA001 /* ServiceDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsViewModelTests.swift; sourceTree = "<group>"; };
+		F8B200082F70000100AAA001 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
+		F8B2000A2F70000100AAA001 /* TestDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataFactory.swift; sourceTree = "<group>"; };
+		F8EBB3042A887F8F003DF8F3 /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
 		F8EFFA6F2B71E28E004EBA8D /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		F8EFFA712B71E2A7004EBA8D /* Installation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Installation.swift; sourceTree = "<group>"; };
 		F8EFFA732B71E2D0004EBA8D /* NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNames.swift; sourceTree = "<group>"; };
@@ -154,11 +159,6 @@
 		FD753EDC197A256E00CC5DE3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD753EE2197A256E00CC5DE3 /* FerryServices_2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FerryServices_2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD753EE7197A256E00CC5DE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8B200022F70000100AAA001 /* AppNavigationStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationStateTests.swift; sourceTree = "<group>"; };
-		F8B200042F70000100AAA001 /* ServicesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesViewModelTests.swift; sourceTree = "<group>"; };
-		F8B200062F70000100AAA001 /* ServiceDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailsViewModelTests.swift; sourceTree = "<group>"; };
-		F8B200082F70000100AAA001 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
-		F8B2000A2F70000100AAA001 /* TestDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataFactory.swift; sourceTree = "<group>"; };
 		FD839D6E257B112E00D12705 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		FD8819E51A998BDA002A976A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FD8819E71A998BE4002A976A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -260,10 +260,30 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		F82100032F90000100AA0001 /* Timetable Documents */ = {
+			isa = PBXGroup;
+			children = (
+				F82100012F90000100AA0001 /* TimetableDocumentsView.swift */,
+			);
+			path = "Timetable Documents";
+			sourceTree = "<group>";
+		};
 		F88848062C957C6D004A6848 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				F88848072C957C81004A6848 /* DisruptionIndicator.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F8A111202F70000100AAA001 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F8A111172F70000100AAA001 /* DisruptionInfoView.swift */,
+				F8A111192F70000100AAA001 /* LocationInformationView.swift */,
+				F8A1111B2F70000100AAA001 /* ServiceOperatorView.swift */,
+				F8A1111D2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift */,
+				F8A1111F2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -308,14 +328,6 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
-		F82100032F90000100AA0001 /* Timetable Documents */ = {
-			isa = PBXGroup;
-			children = (
-				F82100012F90000100AA0001 /* TimetableDocumentsView.swift */,
-			);
-			path = "Timetable Documents";
-			sourceTree = "<group>";
-		};
 		FD1B5F8B258479150098B96B /* Service Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,18 +336,6 @@
 				F8A111202F70000100AAA001 /* Views */,
 			);
 			path = "Service Details";
-			sourceTree = "<group>";
-		};
-		F8A111202F70000100AAA001 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				F8A111172F70000100AAA001 /* DisruptionInfoView.swift */,
-				F8A111192F70000100AAA001 /* LocationInformationView.swift */,
-				F8A1111B2F70000100AAA001 /* ServiceOperatorView.swift */,
-				F8A1111D2F70000100AAA001 /* ServiceDetailsHeaderSectionView.swift */,
-				F8A1111F2F70000100AAA001 /* ServiceDetailsStatusSectionView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		FD1B5F98258479150098B96B /* Map */ = {
@@ -653,14 +653,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F82000092F80000100AA0001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = F82000102F80000100AA0001 /* OpenAPIGenerator */;
+		};
 		FD753EE4197A256E00CC5DE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FD753ECF197A256E00CC5DE3 /* FerryServices_2 */;
 			targetProxy = FD753EE3197A256E00CC5DE3 /* PBXContainerItemProxy */;
-		};
-		F82000092F80000100AA0001 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = F82000102F80000100AA0001 /* OpenAPIGenerator */;
 		};
 /* End PBXTargetDependency section */
 
@@ -799,7 +799,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.88;
+				MARKETING_VERSION = 2.89;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -830,7 +830,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.88;
+				MARKETING_VERSION = 2.89;
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefanchurch.ferryservices;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
