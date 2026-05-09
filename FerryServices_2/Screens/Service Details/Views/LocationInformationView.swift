@@ -3,6 +3,14 @@ import SwiftUI
 struct LocationInformation: View {
     let location: Service.Location
 
+    private var contentRowCount: Int {
+        var count = 0
+        if location.nextDeparture != nil { count += 1 }
+        if location.nextRailDeparture != nil { count += 1 }
+        if location.weather != nil { count += 2 }
+        return count
+    }
+
     var body: some View {
         let textVerticalSpacing: CGFloat = 4
 
@@ -30,8 +38,10 @@ struct LocationInformation: View {
                     .accessibilityElement(children: .combine)
                 }
 
-                Divider()
-                    .padding(.leading, 55)
+                if contentRowCount > 1 {
+                    Divider()
+                        .padding(.leading, 55)
+                }
             }
 
             if let railDeparture = location.nextRailDeparture {
@@ -68,8 +78,10 @@ struct LocationInformation: View {
                     .accessibilityElement(children: .combine)
                 }
 
-                Divider()
-                    .padding(.leading, 55)
+                if location.weather != nil {
+                    Divider()
+                        .padding(.leading, 55)
+                }
             }
 
             if let weather = location.weather {
@@ -118,6 +130,7 @@ struct LocationInformation: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .overlay(
             RoundedRectangle(cornerRadius: 6)

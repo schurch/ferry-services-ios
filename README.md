@@ -68,3 +68,13 @@ The app currently targets:
 - `https://scottishferryapp.com/api`
 
 See `FerryServices_2/API Client/APIClient.swift` for endpoint usage.
+
+## Offline Snapshot
+
+The app ships with a bundled SQLite offline snapshot at `FerryServices_2/offline-snapshot.sqlite3` and refreshes it from `/api/offline/snapshot.sqlite3` using `ETag` headers.
+
+To refresh both the checked-in OpenAPI document and bundled snapshot during development:
+
+```bash
+./Scripts/update-openapi.sh
+```

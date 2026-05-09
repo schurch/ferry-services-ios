@@ -101,7 +101,9 @@ struct ServiceDetailsView: View {
                             Button {
                                 showingDateSelection = true
                             } label: {
-                                Text("\(ServiceDetailsViewModel.Copy.departureDatePrefix)\(viewModel.selectedDateValueTitle)")
+                                Text(ServiceDetailsViewModel.Copy.departureDatePrefix)
+                                + Text(viewModel.selectedDateValueTitle)
+                                    .foregroundStyle(Color.accentColor)
                             }
                         }
                         .font(.body)

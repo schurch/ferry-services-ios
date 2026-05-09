@@ -70,7 +70,7 @@
 		FDB2A774257B2293000B0659 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = FDB2A773257B2293000B0659 /* Sentry */; };
 		FDB2A77E257B25E0000B0659 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB2A77D257B25E0000B0659 /* CoreServices.framework */; };
 		FDB2A78A257B2716000B0659 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDB2A789257B2716000B0659 /* Launch Screen.storyboard */; };
-		FDC03DE919DFDD8D000CE1FA /* offline-snapshot.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* offline-snapshot.json */; };
+		FDC03DE919DFDD8D000CE1FA /* offline-snapshot.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = FDC03DE819DFDD8D000CE1FA /* offline-snapshot.sqlite3 */; };
 		FDE0814F1983B9F600760870 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDE0814E1983B9F600760870 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -182,7 +182,7 @@
 		FDB2A789257B2716000B0659 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		FDB7695A1DA0AF33009F0CC1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		FDBD7DC01DB18FDD00698A70 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
-		FDC03DE819DFDD8D000CE1FA /* offline-snapshot.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "offline-snapshot.json"; sourceTree = "<group>"; };
+		FDC03DE819DFDD8D000CE1FA /* offline-snapshot.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "offline-snapshot.sqlite3"; sourceTree = "<group>"; };
 		FDC34B5D1D9736B600A12758 /* FerryServices_2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FerryServices_2.entitlements; sourceTree = "<group>"; };
 		FDE0814E1983B9F600760870 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -422,7 +422,7 @@
 		FD753ED3197A256E00CC5DE3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FDC03DE819DFDD8D000CE1FA /* offline-snapshot.json */,
+				FDC03DE819DFDD8D000CE1FA /* offline-snapshot.sqlite3 */,
 				FD753ED4197A256E00CC5DE3 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -572,7 +572,7 @@
 				FD075CE41A734FDF00C78250 /* Settings.bundle in Resources */,
 				F82000032F80000100AA0001 /* openapi.json in Resources */,
 				F82000022F80000100AA0001 /* openapi-generator-config.yaml in Resources */,
-				FDC03DE919DFDD8D000CE1FA /* offline-snapshot.json in Resources */,
+				FDC03DE919DFDD8D000CE1FA /* offline-snapshot.sqlite3 in Resources */,
 				FD839D6F257B112E00D12705 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -138,14 +138,26 @@ class APIClient {
     private static func refreshOfflineSnapshotInBackground() {
         Task.detached {
             do {
-                let response = try await client.getOfflineSnapshot(
-                    headers: .init(ifNoneMatch: try await OfflineSnapshotStore.eTag())
+                var request = URLRequest(
+                    url: AppConfig.apiBaseURL
+                        .appendingPathComponent("api")
+                        .appendingPathComponent("offline")
+                        .appendingPathComponent("snapshot.sqlite3")
                 )
-                switch response {
-                case .ok(let ok):
-                    let snapshot = try ok.body.applicationJsonCharsetUtf8
-                    try await OfflineSnapshotStore.save(snapshot: snapshot, eTag: ok.headers.eTag)
-                case .undocumented(statusCode: 304, _):
+                if let eTag = try await OfflineSnapshotStore.eTag() {
+                    request.setValue(eTag, forHTTPHeaderField: "If-None-Match")
+                }
+
+                let (data, response) = try await URLSession.shared.data(for: request)
+                guard let response = response as? HTTPURLResponse else { return }
+
+                switch response.statusCode {
+                case 200:
+                    try await OfflineSnapshotStore.save(
+                        snapshotData: data,
+                        eTag: response.value(forHTTPHeaderField: "ETag")
+                    )
+                case 304:
                     break
                 default:
                     break
