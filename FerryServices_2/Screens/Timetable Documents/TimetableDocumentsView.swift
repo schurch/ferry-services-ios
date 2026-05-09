@@ -5,13 +5,31 @@ import SwiftUI
 @MainActor
 @Observable
 final class TimetableDocumentsViewModel {
+    enum Filter: String, CaseIterable, Identifiable {
+        case all
+        case downloaded
+
+        var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .all:
+                "All Timetables"
+            case .downloaded:
+                "Downloaded"
+            }
+        }
+    }
+
     var documents: [TimetableDocument] = []
     var isLoading = false
     var errorMessage: String?
     var previewURL: URL?
+    var selectedFilter: Filter = .all
 
     private let serviceID: Int?
     private var downloadingDocumentIDs: Set<Int> = []
+    private var downloadedDocumentIDs: Set<Int> = []
 
     init(serviceID: Int? = nil) {
         self.serviceID = serviceID
@@ -23,7 +41,9 @@ final class TimetableDocumentsViewModel {
 
         do {
             documents = try await APIClient.fetchTimetableDocuments(serviceID: serviceID)
+            refreshDownloadedDocumentIDs()
         } catch {
+            refreshDownloadedDocumentIDs()
             errorMessage = "Unable to load timetable documents."
         }
     }
@@ -33,7 +53,16 @@ final class TimetableDocumentsViewModel {
     }
 
     func isDownloaded(_ document: TimetableDocument) -> Bool {
-        APIClient.localTimetableDocumentURL(for: document) != nil
+        downloadedDocumentIDs.contains(document.id)
+    }
+
+    var filteredDocuments: [TimetableDocument] {
+        switch selectedFilter {
+        case .all:
+            documents
+        case .downloaded:
+            documents.filter(isDownloaded)
+        }
     }
 
     func open(_ document: TimetableDocument) {
@@ -43,10 +72,48 @@ final class TimetableDocumentsViewModel {
 
             do {
                 previewURL = try await APIClient.downloadTimetableDocument(document)
+                downloadedDocumentIDs.insert(document.id)
             } catch {
-                errorMessage = "Unable to download this timetable document."
+                errorMessage = downloadErrorMessage(for: document, error: error)
             }
         }
+    }
+
+    func delete(_ document: TimetableDocument) {
+        do {
+            let localURL = APIClient.localTimetableDocumentURL(for: document)
+            try APIClient.deleteLocalTimetableDocument(document)
+            downloadedDocumentIDs.remove(document.id)
+            if previewURL == localURL {
+                previewURL = nil
+            }
+        } catch {
+            errorMessage = "Couldn’t remove the downloaded timetable. Please try again."
+        }
+    }
+
+    private func downloadErrorMessage(for document: TimetableDocument, error: Error) -> String {
+        let title = document.title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let documentName = title.isEmpty ? "this timetable" : "\"\(title)\""
+
+        if let urlError = error as? URLError {
+            switch urlError.code {
+            case .notConnectedToInternet, .networkConnectionLost, .timedOut, .cannotConnectToHost:
+                return "Couldn’t download \(documentName). Check your connection and try again."
+            default:
+                break
+            }
+        }
+
+        return "Couldn’t download \(documentName) right now. Please try again."
+    }
+
+    private func refreshDownloadedDocumentIDs() {
+        downloadedDocumentIDs = Set(
+            documents
+                .filter { APIClient.localTimetableDocumentURL(for: $0) != nil }
+                .map(\.id)
+        )
     }
 }
 
@@ -68,73 +135,92 @@ struct TimetableDocumentsView: View {
     }
 
     var body: some View {
-        List {
-            if viewModel.isLoading, viewModel.documents.isEmpty {
-                ProgressView()
-                    .frame(maxWidth: .infinity)
-                    .listRowSeparator(.hidden)
-            }
+        ZStack {
+            List {
+                ForEach(groupedDocuments) { group in
+                    Section {
+                        ForEach(group.documents) { document in
+                            Button {
+                                viewModel.open(document)
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(displayTitle(for: document))
+                                            .foregroundStyle(.primary)
 
-            ForEach(groupedDocuments) { group in
-                Section {
-                    ForEach(group.documents) { document in
-                        Button {
-                            viewModel.open(document)
-                        } label: {
-                            HStack {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(displayTitle(for: document))
-                                        .foregroundStyle(.primary)
+                                        if let subtitle = subtitle(for: document) {
+                                            Text(subtitle)
+                                                .font(.subheadline)
+                                                .foregroundStyle(.secondary)
+                                        }
+                                    }
 
-                                    if let subtitle = subtitle(for: document) {
-                                        Text(subtitle)
-                                            .font(.subheadline)
+                                    Spacer()
+
+                                    if viewModel.isDownloading(document) {
+                                        ProgressView()
+                                    } else if viewModel.isDownloaded(document) {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundStyle(.green)
+                                    } else {
+                                        Image(systemName: "arrow.down.circle")
                                             .foregroundStyle(.secondary)
                                     }
                                 }
-
-                                Spacer()
-
-                                if viewModel.isDownloading(document) {
-                                    ProgressView()
-                                } else if viewModel.isDownloaded(document) {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundStyle(.green)
-                                } else {
-                                    Image(systemName: "arrow.down.circle")
-                                        .foregroundStyle(.secondary)
+                                .padding(.top, 2)
+                                .padding(.bottom, 2)
+                            }
+                            .accessibilityElement(children: .combine)
+                            .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                if viewModel.isDownloaded(document) {
+                                    Button {
+                                        viewModel.delete(document)
+                                    } label: {
+                                        Label("Delete Download", systemImage: "trash")
+                                    }
+                                    .tint(.red)
                                 }
                             }
-                            .padding(.top, 2)
-                            .padding(.bottom, 2)
                         }
-                        .accessibilityElement(children: .combine)
-                        .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
-                    }
-                } header: {
-                    HStack(spacing: 8) {
-                        if let imageName = group.imageName {
-                            Image(imageName)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 25)
-                                .accessibilityHidden(true)
-                        }
+                    } header: {
+                        HStack(spacing: 8) {
+                            if let imageName = group.imageName {
+                                Image(imageName)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 25)
+                                    .accessibilityHidden(true)
+                            }
 
-                        Text(group.name)
+                            Text(group.name)
+                        }
                     }
                 }
             }
+            .opacity(shouldShowPlaceholder ? 0 : 1)
 
-            if !viewModel.isLoading, viewModel.documents.isEmpty {
-                Text("No timetable documents available.")
-                    .foregroundStyle(.secondary)
+            if shouldShowPlaceholder {
+                placeholderView
             }
         }
         .navigationTitle(title)
         .background(.colorBackground)
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Picker("Filter", selection: $viewModel.selectedFilter) {
+                        ForEach(TimetableDocumentsViewModel.Filter.allCases) { filter in
+                            Text(filter.title).tag(filter)
+                        }
+                    }
+                } label: {
+                    Image(systemName: viewModel.selectedFilter == .downloaded ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
+                }
+            }
+        }
         .task {
             await viewModel.loadDocuments()
         }
@@ -150,7 +236,7 @@ struct TimetableDocumentsView: View {
     }
 
     private var groupedDocuments: [DocumentGroup] {
-        Dictionary(grouping: viewModel.documents, by: \.organisationName)
+        Dictionary(grouping: viewModel.filteredDocuments, by: \.organisationName)
             .values
             .sorted { ($0.first?.organisationName ?? "").localizedCaseInsensitiveCompare($1.first?.organisationName ?? "") == .orderedAscending }
             .map { documents in
@@ -164,6 +250,29 @@ struct TimetableDocumentsView: View {
                     documents: sortedDocuments
                 )
             }
+    }
+
+    private var emptyStateText: String {
+        switch viewModel.selectedFilter {
+        case .all:
+            "No timetable documents available."
+        case .downloaded:
+            "No downloaded timetables."
+        }
+    }
+
+    private var shouldShowPlaceholder: Bool {
+        groupedDocuments.isEmpty
+    }
+
+    @ViewBuilder
+    private var placeholderView: some View {
+        if viewModel.isLoading && viewModel.documents.isEmpty {
+            ProgressView()
+        } else if groupedDocuments.isEmpty {
+            Text(emptyStateText)
+                .foregroundStyle(.secondary)
+        }
     }
 
     private static func imageName(forOrganisationID organisationID: Int?) -> String? {

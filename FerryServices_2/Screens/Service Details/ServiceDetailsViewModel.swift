@@ -102,6 +102,10 @@ class ServiceDetailsViewModel {
         (service?.locations ?? [])
             .sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending })
     }
+
+    var visibleLocations: [Service.Location] {
+        sortedLocationsByName.compactMap(locationForDisplay)
+    }
     
     var shouldShowScheduledDepartures: Bool {
         service?.scheduledDeparturesAvailable == true
@@ -314,6 +318,7 @@ class ServiceDetailsViewModel {
                 }
                 AppPreferences.shared.subscribedServiceIDs = Array(subscribedIDs).sorted()
             } catch {
+                self.subscribed.toggle()
                 showSubscribedError = true
             }
         }
@@ -364,6 +369,66 @@ class ServiceDetailsViewModel {
         } catch {
             timetableDocuments = service?.timetableDocuments ?? []
         }
+    }
+
+    private func locationForDisplay(_ location: Service.Location) -> Service.Location? {
+        let nextDeparture = nextDepartureForDisplay(at: location)
+        guard nextDeparture != nil || location.nextRailDeparture != nil || location.weather != nil else {
+            return nil
+        }
+
+        return Service.Location(
+            id: location.id,
+            latitude: location.latitude,
+            longitude: location.longitude,
+            name: location.name,
+            nextDeparture: nextDeparture,
+            nextRailDeparture: location.nextRailDeparture,
+            scheduledDepartures: location.scheduledDepartures,
+            weather: location.weather
+        )
+    }
+
+    private func nextDepartureForDisplay(
+        at location: Service.Location,
+        now: Date = Date()
+    ) -> Service.Location.ScheduledDeparture? {
+        if let localNextDeparture = calculatedLocalNextDeparture(at: location, now: now) {
+            return localNextDeparture
+        }
+
+        guard Calendar.current.isDate(date, inSameDayAs: now) else {
+            return nil
+        }
+
+        guard let nextDeparture = location.nextDeparture else {
+            return nil
+        }
+
+        return nextDeparture.departure >= now ? nextDeparture : nil
+    }
+
+    private func calculatedLocalNextDeparture(
+        at location: Service.Location,
+        now: Date
+    ) -> Service.Location.ScheduledDeparture? {
+        guard let scheduledDepartures = location.scheduledDepartures, !scheduledDepartures.isEmpty else {
+            return nil
+        }
+
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: now)
+        let startOfSelectedDate = calendar.startOfDay(for: date)
+
+        if startOfSelectedDate < startOfToday {
+            return nil
+        }
+
+        if calendar.isDate(date, inSameDayAs: now) {
+            return scheduledDepartures.first(where: { $0.departure >= now })
+        }
+
+        return scheduledDepartures.first
     }
     
 }

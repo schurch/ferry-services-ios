@@ -103,4 +103,44 @@ struct ServiceDetailsViewModelTests {
 
         #expect(!withoutLinksViewModel.scheduledDepartureInfoText.contains(ServiceDetailsViewModel.Copy.moreInfoURL))
     }
+
+    @Test @MainActor
+    func visibleLocationsUseLocalDepartureCalculationAndHideEmptyCards() {
+        let now = Date()
+        let upcomingDeparture = TestDataFactory.makeScheduledDeparture(
+            departure: now.addingTimeInterval(3_600),
+            arrival: now.addingTimeInterval(5_400),
+            destinationID: 10,
+            destinationName: "Arran"
+        )
+        let departedEarlier = TestDataFactory.makeScheduledDeparture(
+            departure: now.addingTimeInterval(-3_600),
+            arrival: now.addingTimeInterval(-1_800),
+            destinationID: 11,
+            destinationName: "Bute"
+        )
+
+        let service = TestDataFactory.makeService(
+            id: 7,
+            area: "Area",
+            route: "Route",
+            locations: [
+                TestDataFactory.makeLocation(
+                    id: 1,
+                    name: "With Timetable",
+                    scheduledDepartures: [departedEarlier, upcomingDeparture]
+                ),
+                TestDataFactory.makeLocation(
+                    id: 2,
+                    name: "No Info"
+                )
+            ]
+        )
+
+        let viewModel = ServiceDetailsViewModel(serviceID: 7, service: service)
+
+        #expect(viewModel.visibleLocations.count == 1)
+        #expect(viewModel.visibleLocations.first?.name == "With Timetable")
+        #expect(viewModel.visibleLocations.first?.nextDeparture?.id == upcomingDeparture.id)
+    }
 }

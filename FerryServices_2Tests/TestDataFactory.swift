@@ -45,17 +45,20 @@ enum TestDataFactory {
     static func makeLocation(
         id: Int,
         name: String,
-        scheduledDepartures: [Service.Location.ScheduledDeparture]? = nil
+        nextDeparture: Service.Location.ScheduledDeparture? = nil,
+        nextRailDeparture: Service.Location.RailDeparture? = nil,
+        scheduledDepartures: [Service.Location.ScheduledDeparture]? = nil,
+        weather: Service.Location.Weather? = nil
     ) -> Service.Location {
         Service.Location(
             id: id,
             latitude: 55.0,
             longitude: -5.0,
             name: name,
-            nextDeparture: nil,
-            nextRailDeparture: nil,
+            nextDeparture: nextDeparture,
+            nextRailDeparture: nextRailDeparture,
             scheduledDepartures: scheduledDepartures,
-            weather: nil
+            weather: weather
         )
     }
 

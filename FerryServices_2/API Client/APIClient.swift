@@ -131,6 +131,10 @@ class APIClient {
         TimetableDocumentStore.localURL(for: document)
     }
 
+    static func deleteLocalTimetableDocument(_ document: TimetableDocument) throws {
+        try TimetableDocumentStore.delete(document: document)
+    }
+
     static func downloadTimetableDocument(_ document: TimetableDocument) async throws -> URL {
         try await TimetableDocumentStore.download(document: document)
     }
@@ -200,6 +204,15 @@ private enum TimetableDocumentStore {
         try? FileManager.default.removeItem(at: destinationURL)
         try FileManager.default.moveItem(at: temporaryURL, to: destinationURL)
         return destinationURL
+    }
+
+    static func delete(document: TimetableDocument) throws {
+        let destinationURL = fileURL(for: document)
+        guard FileManager.default.fileExists(atPath: destinationURL.path) else {
+            return
+        }
+
+        try FileManager.default.removeItem(at: destinationURL)
     }
 
     private static func fileURL(for document: TimetableDocument) -> URL {

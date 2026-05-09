@@ -87,7 +87,7 @@ struct ServiceDetailsView: View {
                     showDisruptionInfo: showDisruptionInfo
                 )
                 
-                ForEach(viewModel.sortedLocationsByName) { location in
+                ForEach(viewModel.visibleLocations) { location in
                     Section {
                         LocationInformation(location: location)
                     }
