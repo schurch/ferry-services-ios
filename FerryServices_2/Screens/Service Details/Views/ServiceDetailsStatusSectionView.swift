@@ -2,12 +2,14 @@ import SwiftUI
 
 struct ServiceDetailsStatusSectionView: View {
     let service: Service
+    let timetableDocumentCount: Int
     let hasLoadedNotificationsAuthorization: Bool
     let isEnabledForNotifications: Bool
     let isRegisteredForNotifications: Bool
     let loadingSubscribed: Bool
     @Binding var subscribed: Bool
     let updateSubscribed: (Bool) -> Void
+    let showTimetableDocuments: () -> Void
     let openNotificationSettings: () -> Void
     let showDisruptionInfo: (String) -> Void
 
@@ -26,6 +28,33 @@ struct ServiceDetailsStatusSectionView: View {
             }
             .listRowSeparator(.hidden)
             .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+
+            if timetableDocumentCount > 0 {
+                Button {
+                    showTimetableDocuments()
+                } label: {
+                    HStack(spacing: 20) {
+                        Image(systemName: "doc.text")
+                            .frame(width: 25, height: 25)
+                            .accessibilityHidden(true)
+
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("View timetables")
+                            Text(timetableSummaryText)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                                .padding(.top, 2)
+                        }
+
+                        Spacer()
+
+                        Image(systemName: "chevron.forward")
+                            .font(.caption.weight(.semibold))
+                            .foregroundColor(Color(UIColor.tertiaryLabel))
+                    }
+                }
+                .foregroundStyle(.primary)
+            }
 
             if hasLoadedNotificationsAuthorization && !isEnabledForNotifications {
                 Button {
@@ -63,4 +92,9 @@ struct ServiceDetailsStatusSectionView: View {
             }
         }
     }
+
+    private var timetableSummaryText: String {
+        timetableDocumentCount == 1 ? "1 document" : "\(timetableDocumentCount) documents"
+    }
+
 }

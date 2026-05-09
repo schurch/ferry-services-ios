@@ -69,12 +69,16 @@ struct ServiceDetailsView: View {
 
                 ServiceDetailsStatusSectionView(
                     service: service,
+                    timetableDocumentCount: viewModel.timetableDocuments.count,
                     hasLoadedNotificationsAuthorization: viewModel.hasLoadedNotificationsAuthorization,
                     isEnabledForNotifications: viewModel.isEnabledForNotifications,
                     isRegisteredForNotifications: viewModel.isRegisteredForNotifications,
                     loadingSubscribed: viewModel.loadingSubscribed,
                     subscribed: $viewModel.subscribed,
                     updateSubscribed: { viewModel.updateSubscribed(subscribed: $0) },
+                    showTimetableDocuments: {
+                        showTimetableDocuments(service.serviceId, "\(service.area) Timetables")
+                    },
                     openNotificationSettings: {
                         if let url = viewModel.notificationSettingsURL {
                             openURL(url)
@@ -90,24 +94,6 @@ struct ServiceDetailsView: View {
                     .padding(.top, 8)
                     .listRowSeparator(.hidden)
                 }
-
-                if !viewModel.timetableDocuments.isEmpty {
-                    Section {
-                        Button {
-                            showTimetableDocuments(service.serviceId, "\(service.area) Timetables")
-                        } label: {
-                            HStack {
-                                Label("Timetable Documents", systemImage: "doc.text")
-                                Spacer()
-                                Text("\(viewModel.timetableDocuments.count)")
-                                    .foregroundStyle(.secondary)
-                                Image(systemName: "chevron.forward")
-                                    .font(Font.system(.caption).weight(.bold))
-                                    .foregroundColor(Color(UIColor.tertiaryLabel))
-                            }
-                        }
-                    }
-                }
                 
                 if viewModel.shouldShowScheduledDepartures {
                     Section {
@@ -116,7 +102,6 @@ struct ServiceDetailsView: View {
                                 showingDateSelection = true
                             } label: {
                                 Text("\(ServiceDetailsViewModel.Copy.departureDatePrefix)\(viewModel.selectedDateValueTitle)")
-                                    .foregroundColor(.colorTint)
                             }
                         }
                         .font(.body)
@@ -219,7 +204,6 @@ struct ServiceDetailsView: View {
                             Text("If you spot an issue with the timetable, please get in [contact](ferryservices://report-timetable-issue).")
                             .font(.footnote)
                             .foregroundColor(Color(UIColor.systemGray))
-                            .tint(.colorTint)
                             .environment(\.openURL, OpenURLAction { url in
                                 if url == reportLinkActionURL {
                                     openURL(reportURL)
@@ -350,4 +334,5 @@ private extension ServiceDetailsView {
             await viewModel.handleDidBecomeActive()
         }
     }
+
 }

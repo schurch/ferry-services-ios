@@ -297,13 +297,6 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		FD1B5F83258479150098B96B /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		FD1B5F86258479150098B96B /* API Client */ = {
 			isa = PBXGroup;
 			children = (
@@ -419,7 +412,6 @@
 				FD753EDC197A256E00CC5DE3 /* Images.xcassets */,
 				FD1B5F86258479150098B96B /* API Client */,
 				FD1B5FA4258479150098B96B /* Library */,
-				FD1B5F83258479150098B96B /* Model */,
 				FD1B5F8A258479150098B96B /* Screens */,
 				FD753ED3197A256E00CC5DE3 /* Supporting Files */,
 				F88848062C957C6D004A6848 /* Views */,

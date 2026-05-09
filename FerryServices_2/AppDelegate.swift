@@ -142,7 +142,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency UNUserNot
             SentrySDK.capture(message: message)
         }
         
-        AppNavigationState.shared.path = []
+        AppNavigationState.shared.selectedTab = .services
+        AppNavigationState.shared.servicesPath = []
         AppNavigationState.shared.pushServiceDetails(
             serviceID: serviceId,
             seedService: seedService

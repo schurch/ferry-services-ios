@@ -6,6 +6,11 @@ import Observation
 final class AppNavigationState {
     static let shared = AppNavigationState()
 
+    enum Tab {
+        case services
+        case timetables
+    }
+
     enum Destination: Hashable {
         case serviceDetails(UUID)
         case map(UUID)
@@ -23,7 +28,13 @@ final class AppNavigationState {
         let title: String
     }
 
-    var path: [Destination] = [] {
+    var selectedTab: Tab = .services
+    var servicesPath: [Destination] = [] {
+        didSet {
+            pruneNavigationPayloads()
+        }
+    }
+    var timetablesPath: [Destination] = [] {
         didSet {
             pruneNavigationPayloads()
         }
@@ -45,7 +56,8 @@ final class AppNavigationState {
             serviceID: serviceID,
             seedService: seedService
         )
-        path.append(.serviceDetails(id))
+        selectedTab = .services
+        servicesPath.append(.serviceDetails(id))
     }
     
     func serviceDetails(for id: UUID) -> ServiceDetailsPayload? {
@@ -55,22 +67,30 @@ final class AppNavigationState {
     func pushMap(service: Service) {
         let id = UUID()
         mapServices[id] = service
-        path.append(.map(id))
+        selectedTab = .services
+        servicesPath.append(.map(id))
     }
 
-    func pushTimetableDocuments(serviceID: Int? = nil, title: String = "Timetables") {
+    func showTimetablesTab() {
+        selectedTab = .timetables
+        timetablesPath.removeAll()
+    }
+
+    func pushServiceTimetableDocuments(serviceID: Int? = nil, title: String = "Timetables") {
         let id = UUID()
         timetableDocumentsPayloads[id] = TimetableDocumentsPayload(
             serviceID: serviceID,
             title: title
         )
-        path.append(.timetableDocuments(id))
+        selectedTab = .services
+        servicesPath.append(.timetableDocuments(id))
     }
 
     func pushWebInfo(html: String) {
         let id = UUID()
         webInfoHTML[id] = html
-        path.append(.webInfo(id))
+        selectedTab = .services
+        servicesPath.append(.webInfo(id))
     }
 
     func mapService(for id: UUID) -> Service? {
@@ -102,7 +122,7 @@ final class AppNavigationState {
     }
     
     private func activeIDs(for keyPath: KeyPath<Destination, UUID?>) -> Set<UUID> {
-        Set(path.compactMap { $0[keyPath: keyPath] })
+        Set((servicesPath + timetablesPath).compactMap { $0[keyPath: keyPath] })
     }
 }
 

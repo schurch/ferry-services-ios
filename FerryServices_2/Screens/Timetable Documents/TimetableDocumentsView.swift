@@ -51,6 +51,14 @@ final class TimetableDocumentsViewModel {
 }
 
 struct TimetableDocumentsView: View {
+    private struct DocumentGroup: Identifiable {
+        let name: String
+        let imageName: String?
+        let documents: [TimetableDocument]
+
+        var id: String { name }
+    }
+
     @State private var viewModel: TimetableDocumentsViewModel
     let title: String
 
@@ -63,24 +71,26 @@ struct TimetableDocumentsView: View {
         List {
             if viewModel.isLoading, viewModel.documents.isEmpty {
                 ProgressView()
+                    .frame(maxWidth: .infinity)
+                    .listRowSeparator(.hidden)
             }
 
-            ForEach(groupedDocuments, id: \.key) { group in
-                Section(group.key) {
-                    ForEach(group.value) { document in
+            ForEach(groupedDocuments) { group in
+                Section {
+                    ForEach(group.documents) { document in
                         Button {
                             viewModel.open(document)
                         } label: {
-                            HStack(spacing: 12) {
-                                Image(systemName: "doc.text")
-                                    .foregroundStyle(.colorTint)
-
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(document.title)
+                            HStack {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(displayTitle(for: document))
                                         .foregroundStyle(.primary)
-                                    Text(document.organisationName)
-                                        .font(.subheadline)
-                                        .foregroundStyle(.secondary)
+
+                                    if let subtitle = subtitle(for: document) {
+                                        Text(subtitle)
+                                            .font(.subheadline)
+                                            .foregroundStyle(.secondary)
+                                    }
                                 }
 
                                 Spacer()
@@ -95,7 +105,23 @@ struct TimetableDocumentsView: View {
                                         .foregroundStyle(.secondary)
                                 }
                             }
+                            .padding(.top, 2)
+                            .padding(.bottom, 2)
                         }
+                        .accessibilityElement(children: .combine)
+                        .alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                    }
+                } header: {
+                    HStack(spacing: 8) {
+                        if let imageName = group.imageName {
+                            Image(imageName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25)
+                                .accessibilityHidden(true)
+                        }
+
+                        Text(group.name)
                     }
                 }
             }
@@ -106,6 +132,9 @@ struct TimetableDocumentsView: View {
             }
         }
         .navigationTitle(title)
+        .background(.colorBackground)
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
         .task {
             await viewModel.loadDocuments()
         }
@@ -120,12 +149,77 @@ struct TimetableDocumentsView: View {
         }
     }
 
-    private var groupedDocuments: [(key: String, value: [TimetableDocument])] {
+    private var groupedDocuments: [DocumentGroup] {
         Dictionary(grouping: viewModel.documents, by: \.organisationName)
-            .mapValues { documents in
-                documents.sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
+            .values
+            .sorted { ($0.first?.organisationName ?? "").localizedCaseInsensitiveCompare($1.first?.organisationName ?? "") == .orderedAscending }
+            .map { documents in
+                let sortedDocuments = documents.sorted {
+                    $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
+                }
+                let name = sortedDocuments.first?.organisationName ?? ""
+                return DocumentGroup(
+                    name: name,
+                    imageName: Self.imageName(forOrganisationID: sortedDocuments.first?.organisationId),
+                    documents: sortedDocuments
+                )
             }
-            .sorted { $0.key.localizedCaseInsensitiveCompare($1.key) == .orderedAscending }
+    }
+
+    private static func imageName(forOrganisationID organisationID: Int?) -> String? {
+        switch organisationID {
+        case 1: return "calmac-logo"
+        default: return nil
+        }
+    }
+
+    private func displayTitle(for document: TimetableDocument) -> String {
+        var title = document.title.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        let redundantPrefixes = [
+            "\(document.organisationName): ",
+            "Caledonian MacBrayne: "
+        ]
+
+        for prefix in redundantPrefixes where title.hasPrefix(prefix) {
+            title.removeFirst(prefix.count)
+            break
+        }
+
+        let printablePrefix = "Download a printable "
+        if title.localizedLowercase.hasPrefix(printablePrefix.localizedLowercase) {
+            title.removeFirst(printablePrefix.count)
+        }
+
+        if title == title.lowercased() {
+            return title.localizedCapitalized
+        }
+
+        return title
+    }
+
+    private func subtitle(for document: TimetableDocument) -> String? {
+        let routes = document.serviceIds
+            .compactMap { serviceRoutesByID[$0] }
+            .uniquedPreservingOrder()
+
+        guard !routes.isEmpty else { return nil }
+
+        if routes.count == 1 {
+            return routes[0]
+        }
+
+        if routes.count == 2 {
+            return routes.joined(separator: " • ")
+        }
+
+        return "Applies to \(routes.count) services"
+    }
+
+    private var serviceRoutesByID: [Int: String] {
+        Dictionary(
+            uniqueKeysWithValues: Service.defaultServices.map { ($0.serviceId, $0.route) }
+        )
     }
 
     private var errorIsPresented: Binding<Bool> {
@@ -144,5 +238,12 @@ struct TimetableDocumentsView: View {
             get: { viewModel.previewURL },
             set: { viewModel.previewURL = $0 }
         )
+    }
+}
+
+private extension Array where Element: Hashable {
+    func uniquedPreservingOrder() -> [Element] {
+        var seen = Set<Element>()
+        return filter { seen.insert($0).inserted }
     }
 }

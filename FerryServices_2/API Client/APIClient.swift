@@ -191,13 +191,42 @@ private enum TimetableDocumentStore {
     }
 
     private static func fileURL(for document: TimetableDocument) -> URL {
-        let hash = document.contentHash ?? "unknown"
         let extensionValue = URL(string: document.sourceUrl)?.pathExtension
         let pathExtension = (extensionValue?.isEmpty == false ? extensionValue : nil)
             ?? (document.contentType == "application/pdf" ? "pdf" : "download")
+        let baseName = sanitizedFilenameBase(for: document)
         return documentsDirectory.appendingPathComponent(
-            "\(document.id)-\(hash).\(pathExtension)"
+            "\(baseName).\(pathExtension)"
         )
+    }
+
+    private static func sanitizedFilenameBase(for document: TimetableDocument) -> String {
+        var title = document.title.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        let redundantPrefixes = [
+            "\(document.organisationName): ",
+            "Caledonian MacBrayne: "
+        ]
+
+        for prefix in redundantPrefixes where title.hasPrefix(prefix) {
+            title.removeFirst(prefix.count)
+            break
+        }
+
+        let printablePrefix = "Download a printable "
+        if title.localizedLowercase.hasPrefix(printablePrefix.localizedLowercase) {
+            title.removeFirst(printablePrefix.count)
+        }
+
+        let invalidCharacters = CharacterSet(charactersIn: "/:\\?%*|\"<>")
+        let sanitizedTitle = title
+            .components(separatedBy: invalidCharacters)
+            .joined(separator: "-")
+            .replacingOccurrences(of: "  ", with: " ")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+
+        let fallback = sanitizedTitle.isEmpty ? "Timetable" : sanitizedTitle
+        return "\(fallback)-\(document.id)"
     }
 }
 

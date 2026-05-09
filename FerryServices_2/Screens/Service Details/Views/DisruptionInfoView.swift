@@ -11,10 +11,10 @@ struct DisruptionInfoView: View {
 
             if !(service.additionalInfo ?? "").isEmpty {
                 Spacer()
-                Image(systemName: "info.circle")
-                    .foregroundColor(.accentColor)
+                Image(systemName: "chevron.forward")
+                    .font(.caption.weight(.semibold))
+                    .foregroundColor(Color(UIColor.tertiaryLabel))
             }
         }
-        .padding([.top, .bottom], 5)
     }
 }

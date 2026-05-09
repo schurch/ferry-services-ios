@@ -8,7 +8,6 @@ struct FerryServicesApp: App {
     var body: some Scene {
         WindowGroup {
             RootView(navigationState: navigationState)
-                .tint(.colorTint)
         }
     }
 }
