@@ -379,12 +379,12 @@ class ServiceDetailsViewModel {
 
         return Service.Location(
             id: location.id,
+            name: location.name,
             latitude: location.latitude,
             longitude: location.longitude,
-            name: location.name,
+            scheduledDepartures: location.scheduledDepartures,
             nextDeparture: nextDeparture,
             nextRailDeparture: location.nextRailDeparture,
-            scheduledDepartures: location.scheduledDepartures,
             weather: location.weather
         )
     }

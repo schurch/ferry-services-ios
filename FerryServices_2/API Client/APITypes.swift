@@ -42,7 +42,7 @@ extension Components.Schemas.LocationResponse: Identifiable {
 }
 
 extension Components.Schemas.DepartureResponse: Identifiable {
-    typealias DepatureLocation = Components.Schemas.LocationResponse
+    typealias DepatureLocation = Components.Schemas.DepartureDestination
 
     var id: String {
         "\(departure.timeIntervalSince1970)-\(arrival.timeIntervalSince1970)-\(destination.id)"
@@ -228,30 +228,30 @@ enum OfflineSnapshotStore {
             let departures = departuresByOrigin[location.locationID]
             return Service.Location(
                 id: location.locationID,
+                name: location.name,
                 latitude: location.latitude,
                 longitude: location.longitude,
-                name: location.name,
+                scheduledDepartures: departures?.isEmpty == false ? departures : nil,
                 nextDeparture: departures?.first,
                 nextRailDeparture: nil,
-                scheduledDepartures: departures?.isEmpty == false ? departures : nil,
                 weather: nil
             )
         }
 
         return Service(
-            additionalInfo: nil,
+            serviceId: serviceRow.serviceID,
             area: serviceRow.area,
+            route: serviceRow.route,
+            status: .unknown,
+            locations: hydratedLocations,
+            additionalInfo: nil,
             disruptionReason: nil,
             lastUpdatedDate: nil,
-            locations: hydratedLocations,
+            vessels: [],
             _operator: hydrateOrganisation(serviceRow.organisation),
-            route: serviceRow.route,
             scheduledDeparturesAvailable: serviceRow.scheduledDeparturesAvailable,
-            serviceId: serviceRow.serviceID,
-            status: .unknown,
-            timetableDocuments: [],
             updated: generatedAt,
-            vessels: []
+            timetableDocuments: []
         )
     }
 
@@ -300,24 +300,20 @@ enum OfflineSnapshotStore {
             return (
                 fromLocationID,
                 try Service.Location.ScheduledDeparture(
-                    arrival: parseUTCDate(arrivalString),
-                    departure: parseUTCDate(departureString),
-                    destination: Service.Location(
+                    destination: Service.Location.ScheduledDeparture.DepatureLocation(
                         id: destination.locationID,
-                        latitude: destination.latitude,
-                        longitude: destination.longitude,
                         name: destination.name,
-                        nextDeparture: nil,
-                        nextRailDeparture: nil,
-                        scheduledDepartures: nil,
-                        weather: nil
+                        latitude: destination.latitude,
+                        longitude: destination.longitude
                     ),
+                    departure: parseUTCDate(departureString),
+                    arrival: parseUTCDate(arrivalString),
                     notes: sqliteColumnText(statement, index: 4)
                 )
             )
         }
 
-        return Dictionary(grouping: rows, by: \.0).mapValues { $0.map(\.1) }
+        return Dictionary(grouping: rows, by: { $0.0 }).mapValues { $0.map { $0.1 } }
     }
 
     private static func fetchServiceRows(in db: OpaquePointer, serviceID: Int?) throws -> [ServiceRow] {
@@ -399,14 +395,14 @@ enum OfflineSnapshotStore {
 
     private static func hydrateOrganisation(_ organisation: OrganisationRow) -> Service.ServiceOperator {
         Service.ServiceOperator(
-            email: organisation.email,
-            facebook: organisation.facebook,
             id: organisation.organisationID,
-            internationalNumber: organisation.internationalNumber,
-            localNumber: organisation.localNumber,
             name: organisation.name,
             website: organisation.website,
-            x: organisation.x
+            localNumber: organisation.localNumber,
+            internationalNumber: organisation.internationalNumber,
+            email: organisation.email,
+            x: organisation.x,
+            facebook: organisation.facebook
         )
     }
 

@@ -21,7 +21,7 @@ class APIClient {
         do {
             let response = try await client.listServices()
             refreshOfflineSnapshotInBackground()
-            return try response.ok.body.applicationJsonCharsetUtf8
+            return try response.ok.body.json
         } catch {
             return try await OfflineSnapshotStore.services()
         }
@@ -40,7 +40,7 @@ class APIClient {
                 query: .init(departuresDate: departuresDate)
             )
             refreshOfflineSnapshotInBackground()
-            return try response.ok.body.applicationJsonCharsetUtf8
+            return try response.ok.body.json
         } catch {
             return try await OfflineSnapshotStore.service(serviceID: serviceID, date: date)
         }
@@ -50,7 +50,7 @@ class APIClient {
         do {
             let response = try await client.getService(path: .init(serviceID: serviceID))
             refreshOfflineSnapshotInBackground()
-            return try response.ok.body.applicationJsonCharsetUtf8
+            return try response.ok.body.json
         } catch {
             return try await OfflineSnapshotStore.service(serviceID: serviceID)
         }
@@ -59,9 +59,9 @@ class APIClient {
     @discardableResult static func addService(for installationID: UUID, serviceID: Int) async throws -> [Service] {
         let response = try await client.addInstallationService(
             path: .init(installationID: installationID.uuidString),
-            body: .applicationJsonCharsetUtf8(.init(serviceId: serviceID))
+            body: .json(.init(serviceId: serviceID))
         )
-        return try response.ok.body.applicationJsonCharsetUtf8
+        return try response.ok.body.json
     }
     
     @discardableResult static func removeService(for installationID: UUID, serviceID: Int) async throws -> [Service] {
@@ -71,33 +71,33 @@ class APIClient {
                 serviceID: serviceID
             )
         )
-        return try response.ok.body.applicationJsonCharsetUtf8
+        return try response.ok.body.json
     }
     
     @discardableResult static func createInstallation(installationID: UUID, deviceToken: String) async throws -> [Service] {
         let response = try await client.createInstallation(
             path: .init(installationID: installationID.uuidString),
-            body: .applicationJsonCharsetUtf8(
+            body: .json(
                 .init(
                     deviceToken: deviceToken,
                     deviceType: .ios
                 )
             )
         )
-        return try response.ok.body.applicationJsonCharsetUtf8
+        return try response.ok.body.json
     }
     
     static func getPushEnabledStatus(installationID: UUID) async throws -> Bool {
         let response = try await client.getPushStatus(path: .init(installationID: installationID.uuidString))
-        return try response.ok.body.applicationJsonCharsetUtf8.enabled
+        return try response.ok.body.json.enabled
     }
     
     static func updatePushEnabledStatus(installationID: UUID, isEnabled: Bool) async throws {
         let response = try await client.updatePushStatus(
             path: .init(installationID: installationID.uuidString),
-            body: .applicationJsonCharsetUtf8(.init(enabled: isEnabled))
+            body: .json(.init(enabled: isEnabled))
         )
-        _ = try response.ok.body.applicationJsonCharsetUtf8
+        _ = try response.ok.body.json
     }
 
     static func fetchTimetableDocuments(serviceID: Int? = nil) async throws -> [TimetableDocument] {
@@ -109,10 +109,10 @@ class APIClient {
             refreshOfflineSnapshotInBackground()
             switch response {
             case .ok(let ok):
-                let documents = try ok.body.applicationJsonCharsetUtf8
+                let documents = try ok.body.json
                 try await TimetableDocumentMetadataStore.save(
                     documents: documents,
-                    eTag: ok.headers.eTag,
+                    eTag: ok.headers.eTag?.value as? String,
                     serviceID: serviceID
                 )
                 return documents
